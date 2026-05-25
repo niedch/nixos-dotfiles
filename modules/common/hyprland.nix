@@ -7,7 +7,7 @@
 		portalPackage = inputs.hyprland.packages.${pkgs.system}.xdg-desktop-portal-hyprland;
 	};
 
-	environment.sessionVariable = {
+	environment.sessionVariables = {
 		NIXOS_OZONE_WL = "1";
 		WLR_NO_HARDWARE_CURSORS = "1";
 	};
