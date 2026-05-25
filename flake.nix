@@ -30,7 +30,7 @@
 				] ++ extraModules;
 			};
 		in {
-			nixosConfiguration = {
+			nixosConfigurations = {
 				desktop = mkSystem "desktop" "x86_64-linux" [];
 			};
 		};
