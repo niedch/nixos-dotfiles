@@ -7,10 +7,10 @@
 		home-manager = {
 			url = "github:nix-community/home-manager";
 			inputs.nixpkgs.follows = "nixpkgs";
-		}
+		};
 
 		hyprland.url = "github:hyprwm/Hyprland";
-	}
+	};
 
 	outputs = {self, nixpkgs, home-manager, hyprland, ...  } @ inputs:
 		let 
@@ -24,7 +24,7 @@
 					home-manager.useGlobalPkgs = true;
 					home-manager.useUserPackages = true;
 					home-manager.extraSpecialArgs = { inherit inputs; };
-					home-manager.users.nic = import ../home/common;
+					home-manager.users.nic = import ./home/common;
 				}
 				./hosts/${hostname}
 				] ++ extraModules;
