@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   imports =
@@ -17,12 +17,14 @@
   networking.networkmanager.enable = true;
   time.timeZone = "Europe/Vienna";
 
+  programs.zsh.enable = true;
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.nic = {
     description = "Christoph";
     isNormalUser = true;
     extraGroups = [ "networkmanager" "wheel" ];
-    # shell = pkgs.zsh;
+    shell = pkgs.zsh;
   };
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];

@@ -4,6 +4,8 @@
 	imports = [
 		../hyprland
 		../nvim
+		../zsh
+		../mise
 	];
 
 	home.username = "nic";

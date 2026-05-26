@@ -40,7 +40,6 @@ return {
 				"gopls",
 				"jdtls",
 				"vtsls",
-        "typos_lsp",
         "zls",
         "buf_ls",
         "rust_analyzer",
