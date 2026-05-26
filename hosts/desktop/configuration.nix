@@ -20,11 +20,12 @@
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.nic = {
-    isNormalUser = true;
     description = "Christoph";
     extraGroups = [ "networkmanager" "wheel" ];
     shell = pkgs.zsh;
   };
+
+  users.users.nic.isNormalUser = true;
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
