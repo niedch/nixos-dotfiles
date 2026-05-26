@@ -6,4 +6,6 @@
 		package = inputs.hyprland.packages.${pkgs.system}.hyprland;
 		systemd.enable = true;
 	};
+
+	xdg.configFile."hypr/hyprland.lua".source = ./hyprland.lua;
 }
