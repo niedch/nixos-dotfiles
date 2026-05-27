@@ -18,6 +18,7 @@
 		git
 		ghostty
 		opencode
+		docker-compose
 	];
 
 }
