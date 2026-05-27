@@ -29,6 +29,8 @@
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
+  services.qemuGuest.enable = true;
+
   environment.pathsToLink = [ "/share/applications" "/share/xdg-desktop-portal" ];
 
   system.stateVersion = "25.11";
