@@ -3,6 +3,7 @@
 {
 	imports = [
 		../hyprland
+		../waybar
 		../nvim
 		../zsh
 		../mise
