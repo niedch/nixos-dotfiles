@@ -24,6 +24,17 @@ hl.config({
 			natural_scroll = true,
 		},
 	},
+	decoration = {
+		blur = {
+			enabled = false,
+		},
+		shadow = {
+			enabled = false,
+		},
+	},
+	animations = {
+		enabled = false,
+	},
 })
 
 hl.bind(mainMod .. " + Return",        hl.dsp.exec_cmd("ghostty"))

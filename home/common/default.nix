@@ -17,7 +17,7 @@
 	home.packages = with pkgs; [
 		git
 		waybar
-		wofi
+		rofi
 		dunst
 		wl-clipboard
 		ghostty
