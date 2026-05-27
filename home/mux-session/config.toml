@@ -1,0 +1,79 @@
+search_paths = [ "/home/nic/Projects", "/home/nic/Work_Repos" ]
+preview_provider = "readme"
+
+[default]
+[[default.window]]
+window_name = "vim"
+primary = true
+cmd = "vim ."
+
+[[default.window]]
+window_name = "Runner"
+
+[[default.window]]
+window_name = "OpenCode"
+cmd = """
+opencode .
+"""
+
+
+[[project]]
+name = "mux-session"
+
+[[project.window]]
+window_name = "nvim"
+primary = true
+cmd = "vim ."
+
+[[project.window]]
+window_name = "tester"
+
+[[project.window.panel_config]]
+panel_direction = "h"
+cmd = "just test"
+
+[[project.window.panel_config]]
+panel_direction = "h"
+cmd = "btop"
+
+[[project.window]]
+window_name = "opencode"
+cmd = "opencode"
+
+[[project.window]]
+window_name = "Fetcher"
+cmd = """
+git fetch
+exit
+"""
+
+
+[[project]]
+name = "EDDI"
+
+[[project.window]]
+window_name = "nvim"
+primary = true
+cmd = "vim ."
+
+[[project.window]]
+window_name = "tester"
+
+[[project.window.panel_config]]
+panel_direction = "h"
+cmd = ""
+
+[[project.window.panel_config]]
+panel_direction = "h"
+cmd = "lazydocker"
+
+[[project.window]]
+window_name = "opencode"
+cmd = "opencode"
+
+[[project.window]]
+window_name = "Fetcher"
+cmd = """
+git fetch
+exit
+"""

@@ -4,6 +4,8 @@
 	imports = [
 		../hyprland
 		../waybar
+		../tmux
+		../mux-session
 		../nvim
 		../zsh
 		../mise
