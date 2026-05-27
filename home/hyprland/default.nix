@@ -8,10 +8,13 @@
 	};
 
 	systemd.user.services.polkit-gnome = {
-		description = "PolicyKit Authentication Agent";
-		wantedBy = [ "hyprland-session.target" ];
-		partOf = [ "hyprland-session.target" ];
-		serviceConfig = {
+		Unit = {
+			Description = "PolicyKit Authentication Agent";
+		};
+		Install = {
+			WantedBy = [ "hyprland-session.target" ];
+		};
+		Service = {
 			ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
 			Restart = "on-failure";
 			RestartSec = 1;
@@ -35,7 +38,7 @@
 
 	home.packages = with pkgs; [
 		waybar
-		rofi-wayland
+		rofi
 		mako
 		wl-clipboard
 		bibata-cursors

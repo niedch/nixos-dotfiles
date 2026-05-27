@@ -254,10 +254,10 @@ hl.bind("ALT + SHIFT + TAB",           hl.dsp.exec_cmd("hyprctl dispatch cyclene
 hl.bind("ALT + TAB",                   hl.dsp.window.bring_to_top())
 
 -- Resize windows
-hl.bind(mainMod .. " + -",             hl.dsp.exec_cmd("hyprctl dispatch resizeactive -100 0"))
-hl.bind(mainMod .. " + =",             hl.dsp.exec_cmd("hyprctl dispatch resizeactive 100 0"))
-hl.bind(mainMod .. " + SHIFT + -",     hl.dsp.exec_cmd("hyprctl dispatch resizeactive 0 -100"))
-hl.bind(mainMod .. " + SHIFT + =",     hl.dsp.exec_cmd("hyprctl dispatch resizeactive 0 100"))
+	hl.bind(mainMod .. " + minus",             hl.dsp.exec_cmd("hyprctl dispatch resizeactive -100 0"))
+	hl.bind(mainMod .. " + equal",             hl.dsp.exec_cmd("hyprctl dispatch resizeactive 100 0"))
+	hl.bind(mainMod .. " + SHIFT + minus",     hl.dsp.exec_cmd("hyprctl dispatch resizeactive 0 -100"))
+	hl.bind(mainMod .. " + SHIFT + equal",     hl.dsp.exec_cmd("hyprctl dispatch resizeactive 0 100"))
 
 -- Mouse
 hl.bind(mainMod .. " + mouse:272",     hl.dsp.window.drag(),   { mouse = true })
