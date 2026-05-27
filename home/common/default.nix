@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: 
+{ pkgs, ... }: 
 
 {
 	imports = [
@@ -16,10 +16,6 @@
 
 	home.packages = with pkgs; [
 		git
-		waybar
-		rofi
-		dunst
-		wl-clipboard
 		ghostty
 		opencode
 	];

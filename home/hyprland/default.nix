@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ pkgs, inputs, ... }:
 
 {
 	wayland.windowManager.hyprland = {
@@ -8,4 +8,11 @@
 	};
 
 	xdg.configFile."hypr/hyprland.lua".source = ./hyprland.lua;
+
+	home.packages = with pkgs; [
+		waybar
+		rofi
+		dunst
+		wl-clipboard
+  ];
 }
