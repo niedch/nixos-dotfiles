@@ -3,10 +3,9 @@
 {
   programs.waybar = {
     enable = true;
-    package = pkgs.waybar.override { withHyprland = true; };
     systemd = {
       enable = true;
-      targets = [ "hyprland-session.target" ];
+      target = "hyprland-session.target";
     };
   };
 
