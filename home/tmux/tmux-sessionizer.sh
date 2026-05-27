@@ -1,2 +1,3 @@
 #!/usr/bin/env bash
-/home/nic/go/bin/mux-session
+/home/nic/.local/share/mise/shims/mux-session
+

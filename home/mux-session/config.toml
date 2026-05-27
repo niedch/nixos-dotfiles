@@ -1,4 +1,4 @@
-search_paths = [ "/home/nic/Projects", "/home/nic/Work_Repos" ]
+search_paths = [ "/home/nic/project" ]
 preview_provider = "readme"
 
 [default]
@@ -30,7 +30,7 @@ window_name = "tester"
 
 [[project.window.panel_config]]
 panel_direction = "h"
-cmd = "just test"
+cmd = "mise test"
 
 [[project.window.panel_config]]
 panel_direction = "h"
