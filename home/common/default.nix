@@ -2,6 +2,7 @@
 
 {
 	imports = [
+		../ghostty
 		../hyprland
 		../waybar
 		../tmux
@@ -19,7 +20,6 @@
 
 	home.packages = with pkgs; [
 		git
-		ghostty
 		opencode
 		docker-compose
 	];
