@@ -18,6 +18,14 @@
 
   networking.networkmanager.enable = true;
 
+  programs.zsh = {
+    enable = true;
+    promptInit = ''
+      PROMPT='%F{green}%n@%m%f %F{blue}%~%f
+%F{blue}%(!.#.>)%f '
+    '';
+  };
+
   time.timeZone = "Europe/Vienna";
 
   system.stateVersion = "25.11"; # Did you read the comment?
