@@ -18,13 +18,7 @@
 
   networking.networkmanager.enable = true;
 
-  programs.zsh = {
-    enable = true;
-    promptInit = ''
-      PROMPT='%F{green}%n@%m%f %F{blue}%~%f
-%F{blue}%(!.#.>)%f '
-    '';
-  };
+  programs.zsh.enable = true;
 
   time.timeZone = "Europe/Vienna";
 

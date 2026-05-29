@@ -12,6 +12,11 @@
 
   programs.home-manager.enable = true;
 
+  programs.zsh.initContent = ''
+    PROMPT='%F{green}%n@%m%f %F{blue}%~%f
+%F{blue}%(!.#.>)%f '
+  '';
+
   home.packages = with pkgs; [
     git
   ];
