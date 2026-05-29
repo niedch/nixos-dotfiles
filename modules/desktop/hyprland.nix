@@ -28,7 +28,4 @@
 
 	security.polkit.enable = true;
 	hardware.graphics.enable = true;
-
-	boot.kernelParams = [ "video=1920x1080@60" ];
-	boot.kernelModules = [ "virtio_gpu" ];
 }

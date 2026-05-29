@@ -14,20 +14,38 @@
 
 	outputs = {self, nixpkgs, home-manager, hyprland, ...  } @ inputs: {
 		nixosConfigurations = {
-			 desktop = nixpkgs.lib.nixosSystem {
+			desktop = nixpkgs.lib.nixosSystem {
 				system = "x86_64-linux";
 				specialArgs = { inherit inputs; };
-        modules = [
-          ./hosts/desktop
-          ./modules/common
-          home-manager.nixosModules.home-manager {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.backupFileExtension = "backup";
-            home-manager.extraSpecialArgs = { inherit inputs; };
-            home-manager.users.nic = import ./home/common/default.nix;
-          }
-        ];
+				modules = [
+					./hosts/desktop
+					./modules/common
+					./modules/desktop
+					home-manager.nixosModules.home-manager {
+						home-manager.useGlobalPkgs = true;
+						home-manager.useUserPackages = true;
+						home-manager.backupFileExtension = "backup";
+						home-manager.extraSpecialArgs = { inherit inputs; };
+						home-manager.users.nic = import ./home/desktop.nix;
+					}
+				];
+			};
+
+			server = nixpkgs.lib.nixosSystem {
+				system = "x86_64-linux";
+				specialArgs = { inherit inputs; };
+				modules = [
+					./hosts/server
+					./modules/common
+					./modules/server
+					home-manager.nixosModules.home-manager {
+						home-manager.useGlobalPkgs = true;
+						home-manager.useUserPackages = true;
+						home-manager.backupFileExtension = "backup";
+						home-manager.extraSpecialArgs = { inherit inputs; };
+						home-manager.users.nic = import ./home/server.nix;
+					}
+				];
 			};
 		};
 	};

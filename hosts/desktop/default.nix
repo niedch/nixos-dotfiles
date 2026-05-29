@@ -17,19 +17,12 @@
   networking.networkmanager.enable = true;
   time.timeZone = "Europe/Vienna";
 
-  programs.zsh.enable = true;
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.nic = {
-    description = "Christoph";
-    isNormalUser = true;
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
-    shell = pkgs.zsh;
-  };
-
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   services.qemuGuest.enable = true;
+
+  boot.kernelParams = [ "video=1920x1080@60" ];
+  boot.kernelModules = [ "virtio_gpu" ];
 
   environment.pathsToLink = [ "/share/applications" "/share/xdg-desktop-portal" ];
 

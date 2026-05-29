@@ -1,10 +1,17 @@
 # Multi-host setup
 
-The flake is structured to support multiple hosts. Currently only `desktop` is defined.
+The flake is structured to support multiple hosts. Currently `desktop` and `server` are defined.
 
 ## How it works
 
-Each host lives under `hosts/<name>/` and is registered in `flake.nix` under `nixosConfigurations`. All hosts share the same `modules/common` and the same `home/common` home-manager config.
+Each host lives under `hosts/<name>/` and is registered in `flake.nix` under `nixosConfigurations`. All hosts share the same `modules/common` (Docker, users). Desktop and server have their own role-specific modules:
+
+- `modules/desktop/` - Hyprland, display manager, fonts
+- `modules/server/` - SSH, firewall
+
+Home-manager configs are also split:
+- `home/common/` - Full desktop config (all modules)
+- `home/server/` - Minimal server config (tmux, zsh, nvim only)
 
 ## Adding a new host
 
@@ -33,16 +40,7 @@ This generates `hardware-configuration.nix` automatically. Create `default.nix` 
 
   programs.zsh.enable = true;
 
-  users.users.nic = {
-    description = "Christoph";
-    isNormalUser = true;
-    extraGroups = [ "networkmanager" "wheel" ];
-    shell = pkgs.zsh;
-  };
-
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
-  environment.pathsToLink = [ "/share/applications" "/share/xdg-desktop-portal" ];
 
   system.stateVersion = "25.11";
 }
@@ -50,7 +48,7 @@ This generates `hardware-configuration.nix` automatically. Create `default.nix` 
 
 ### 2. Register in `flake.nix`
 
-Add a new entry alongside `desktop`:
+Add a new entry alongside existing hosts:
 
 ```nix
 nixosConfigurations = {
@@ -62,6 +60,7 @@ nixosConfigurations = {
     modules = [
       ./hosts/laptop
       ./modules/common
+      ./modules/desktop  # or ./modules/server
       home-manager.nixosModules.home-manager {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
@@ -83,3 +82,12 @@ sudo nixos-rebuild switch --flake .#laptop
 ## Per-host overrides
 
 If a host needs different home-manager config, create a variant under `home/` (e.g. `home/laptop/`) and reference it instead of `home/common/default.nix`.
+
+## Server setup
+
+The server configuration uses:
+- `modules/common/` - Shared modules (Docker, users)
+- `modules/server/` - Server-specific modules (SSH, firewall)
+- `home/server/` - Minimal home config (tmux, zsh, nvim only)
+
+To customize the server, edit files in `modules/server/` and `home/server/`.
