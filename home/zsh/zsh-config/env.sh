@@ -1,1 +1,1 @@
-export $(xargs < $ZSH_HOME/env/.env)
+# export $(xargs < $ZSH_HOME/env/.env)
