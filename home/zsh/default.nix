@@ -3,6 +3,7 @@
 {
     home.packages = with pkgs; [
         fzf
+        zsh-autosuggestions
     ];
 
     programs.zsh = {
@@ -12,8 +13,8 @@
             theme = "robbyrussell";
             plugins = [
                 "git"
-                "zsh-autosuggestions"
             ];
+            customPkgs = with pkgs; [ zsh-autosuggestions ];
         };
         envExtra = ''
             export MANPATH="/usr/local/man:$MANPATH"
