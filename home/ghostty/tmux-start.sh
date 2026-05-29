@@ -1,4 +1,3 @@
-#!/bin/zsh
 SESSION_NAME="ghostty"
 
 echo "Starting tmux-start"
