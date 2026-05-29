@@ -37,13 +37,13 @@
 				modules = [
 					./hosts/server
 					./modules/common
-					./modules/server
+					./modules/desktop
 					home-manager.nixosModules.home-manager {
 						home-manager.useGlobalPkgs = true;
 						home-manager.useUserPackages = true;
 						home-manager.backupFileExtension = "backup";
 						home-manager.extraSpecialArgs = { inherit inputs; };
-						home-manager.users.nic = import ./home/server.nix;
+						home-manager.users.nic = import ./home/desktop.nix;
 					}
 				];
 			};
