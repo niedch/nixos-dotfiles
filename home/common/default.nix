@@ -23,5 +23,4 @@
 		opencode
 		docker-compose
 	];
-
 }

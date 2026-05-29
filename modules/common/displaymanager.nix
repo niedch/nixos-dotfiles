@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 {
-	programs.ly = {
+	services.displayManager.ly = {
 		enable = true;
 	};
 }
