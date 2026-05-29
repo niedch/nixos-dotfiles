@@ -5,7 +5,8 @@
 
 {
   imports =
-    [ (modulesPath + "/profiles/qemu-guest.nix")
+    [ 
+    (modulesPath + "/profiles/qemu-guest.nix")
     ];
 
   boot.initrd.availableKernelModules = [ "ahci" "xhci_pci" "virtio_pci" "sr_mod" "virtio_blk" ];
@@ -13,14 +14,14 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/dea54f6d-ca0f-4e82-81e0-50d859f99daa";
-      fsType = "ext4";
-    };
+  fileSystems."/" = { 
+    device = "/dev/disk/by-uuid/dea54f6d-ca0f-4e82-81e0-50d859f99daa";
+    fsType = "ext4";
+  };
 
-  swapDevices =
-    [ { device = "/dev/disk/by-uuid/ebb02ae4-0b3b-4e2f-ae0a-2252b0d6c2cf"; }
-    ];
+  swapDevices = [ 
+  { device = "/dev/disk/by-uuid/ebb02ae4-0b3b-4e2f-ae0a-2252b0d6c2cf"; }
+  ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 }
