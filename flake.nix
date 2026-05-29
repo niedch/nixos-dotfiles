@@ -18,7 +18,7 @@
 				system = "x86_64-linux";
 				specialArgs = { inherit inputs; };
 				modules = [
-					./hosts/desktop
+					./hosts/virtual-machine
 					./modules/common
 					./modules/desktop
 					home-manager.nixosModules.home-manager {
@@ -35,7 +35,7 @@
 				system = "x86_64-linux";
 				specialArgs = { inherit inputs; };
 				modules = [
-					./hosts/server
+					./hosts/dobby
 					./modules/common
 					./modules/server
 					home-manager.nixosModules.home-manager {
