@@ -1,18 +1,9 @@
 { pkgs, ... }:
 
-let
-  walkerConfig = pkgs.formats.toml { }.generate "config.toml" {
-    theme = "kanso";
-    close_when_open = true;
-    single_click_activation = true;
-    as_window = false;
-    placeholders.default = { input = "Search"; list = "No Results"; };
-  };
-in
 {
   home.packages = [ pkgs.walker pkgs.elephant ];
 
-  xdg.configFile."walker/config.toml".source = walkerConfig;
+  xdg.configFile."walker/config.toml".source = ./config.toml;
 
   systemd.user.services.elephant = {
     Unit = {

@@ -1,0 +1,8 @@
+theme = "kanso"
+close_when_open = true
+single_click_activation = true
+as_window = false
+
+[placeholders.default]
+input = "Search"
+list = "No Results"
