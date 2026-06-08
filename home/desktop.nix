@@ -5,6 +5,7 @@
     ./ghostty
     ./hyprland
     ./waybar
+    ./themes
     ./wofi
     ./tmux
     ./mux-session

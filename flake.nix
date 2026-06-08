@@ -10,9 +10,14 @@
 		};
 
 		hyprland.url = "github:hyprwm/Hyprland";
+
+		nix-omarchy-theme = {
+			url = "github:niedch/nix-omarchy-theme";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
 	};
 
-	outputs = {self, nixpkgs, home-manager, hyprland, ...  } @ inputs: {
+	outputs = {self, nixpkgs, home-manager, hyprland, nix-omarchy-theme, ...  } @ inputs: {
 		nixosConfigurations = {
 			desktop = nixpkgs.lib.nixosSystem {
 				specialArgs = { inherit inputs; };
