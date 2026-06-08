@@ -1,4 +1,9 @@
-dofile(os.getenv("HOME") .. "/.config/hypr/theme.lua")
+local theme_file = os.getenv("HOME") .. "/.config/hypr/theme.lua"
+local f = io.open(theme_file, "r")
+if f then
+	f:close()
+	dofile(theme_file)
+end
 
 local mainMod = "SUPER"
 local terminal = "ghostty"
@@ -159,8 +164,6 @@ hl.bind(mainMod .. " + Space",         hl.dsp.exec_cmd(menu))
 -- Window management
 hl.bind(mainMod .. " + Q",             hl.dsp.window.close())
 hl.bind(mainMod .. " + M",             hl.dsp.exec_cmd("hyprctl dispatch exit"))
-hl.bind(mainMod .. " + T",             hl.dsp.window.float({ action = "toggle" }))
-hl.bind(mainMod .. " + V",             hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + F",             hl.dsp.window.fullscreen())
 hl.bind(mainMod .. " + P",             hl.dsp.window.pseudo())
 
