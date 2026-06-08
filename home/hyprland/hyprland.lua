@@ -3,7 +3,7 @@ dofile(os.getenv("HOME") .. "/.config/hypr/theme.lua")
 local mainMod = "SUPER"
 local terminal = "ghostty"
 local fileManager = "nautilus"
-local menu = "wofi --show drun"
+local menu = "walker"
 
 hl.on("hyprland.start", function()
 	hl.exec_cmd("waybar")

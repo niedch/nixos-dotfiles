@@ -6,7 +6,7 @@
     ./hyprland
     ./waybar
     ./themes
-    ./wofi
+    ./walker
     ./tmux
     ./mux-session
     ./nvim

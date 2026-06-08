@@ -14,9 +14,12 @@
       };
     };
 
+    selectorCommand = "walker --dmenu";
+
     symlinks = {
       "hypr/theme.lua".source = "hyprland.lua";
       "waybar/colors.css".source = "waybar.css";
+      "walker/themes/kanso/style.css".source = "walker.css";
     };
   };
 }
