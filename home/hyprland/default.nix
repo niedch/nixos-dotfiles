@@ -37,8 +37,6 @@
 	xdg.configFile."hypr/hyprsunset.conf".source = ./hyprsunset.conf;
 
 	home.packages = with pkgs; [
-		waybar
-		rofi
 		mako
 		wl-clipboard
 		bibata-cursors

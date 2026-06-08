@@ -1,7 +1,7 @@
 local mainMod = "SUPER"
 local terminal = "ghostty"
 local fileManager = "nautilus"
-local menu = "rofi -show drun"
+local menu = "wofi --show drun"
 
 hl.on("hyprland.start", function()
 	hl.exec_cmd("waybar")

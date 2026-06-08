@@ -5,6 +5,7 @@
     ./ghostty
     ./hyprland
     ./waybar
+    ./wofi
     ./tmux
     ./mux-session
     ./nvim
