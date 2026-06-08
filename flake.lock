@@ -411,6 +411,23 @@
         "type": "github"
       }
     },
+    "nix-omarchy-theme": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1780899807,
+        "narHash": "sha256-3eQ+sxXNQ3iO7j5I7fJpWMl1DxGws7ohbxinrjPEtvI=",
+        "path": "/home/nic/Projects/nix-omarchy-theme",
+        "type": "path"
+      },
+      "original": {
+        "path": "/home/nic/Projects/nix-omarchy-theme",
+        "type": "path"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1779357205,
@@ -470,6 +487,7 @@
       "inputs": {
         "home-manager": "home-manager",
         "hyprland": "hyprland",
+        "nix-omarchy-theme": "nix-omarchy-theme",
         "nixpkgs": "nixpkgs_2"
       }
     },

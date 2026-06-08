@@ -12,7 +12,7 @@
 		hyprland.url = "github:hyprwm/Hyprland";
 
 		nix-omarchy-theme = {
-			url = "github:niedch/nix-omarchy-theme";
+			url = "path:/home/nic/Projects/nix-omarchy-theme";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 	};

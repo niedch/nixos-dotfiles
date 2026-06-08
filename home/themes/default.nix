@@ -16,7 +16,6 @@
 
     symlinks = {
       "hypr/theme.lua".source = "hyprland.lua";
-      "hypr/hyprlock.conf".source = "hyprlock.conf";
       "waybar/colors.css".source = "waybar.css";
     };
   };

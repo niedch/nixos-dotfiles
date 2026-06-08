@@ -4,7 +4,7 @@
 	wayland.windowManager.hyprland = {
 		enable = true;
 		package = inputs.hyprland.packages.${pkgs.system}.hyprland;
-		systemd.enable = true;
+		systemd.enable = false;
 	};
 
 	systemd.user.services.polkit-gnome = {
@@ -31,6 +31,7 @@
 		};
 	};
 
+	xdg.configFile."hypr/hyprland.lua".source = ./hyprland.lua;
 	xdg.configFile."hypr/hypridle.conf".source = ./hypridle.conf;
 	xdg.configFile."hypr/hyprsunset.conf".source = ./hyprsunset.conf;
 
