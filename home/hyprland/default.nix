@@ -44,7 +44,7 @@
 
 	home.activation.setGnomeIconTheme = lib.hm.dag.entryAfter [ "setupThemes" ] ''
 		ICON_THEME=$(cat "$HOME/.themes-src/current/icons.theme" 2>/dev/null || echo "Adwaita")
-		gsettings set org.gnome.desktop.interface icon-theme "$ICON_THEME"
+		${pkgs.dconf}/bin/dconf write /org/gnome/desktop/interface/icon-theme "'$ICON_THEME'"
 	'';
 
 	xdg.configFile."hypr/hyprland.lua".source = ./hyprland.lua;

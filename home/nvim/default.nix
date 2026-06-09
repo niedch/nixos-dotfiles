@@ -5,6 +5,7 @@
         neovim
         nodejs
         go
+        ripgrep
         cargo
         rustc
         gcc
