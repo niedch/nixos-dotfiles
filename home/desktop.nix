@@ -13,6 +13,7 @@
     ./nvim
     ./zsh
     ./mise
+    ./opencode
   ];
 
   home.username = "nic";

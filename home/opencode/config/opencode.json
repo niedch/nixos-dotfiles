@@ -1,0 +1,39 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "autoupdate": false,
+  "default_agent": "build",
+  "agent": {
+    "build": {
+      "mode": "primary",
+      "model": "opencode-go/deepseek-v4-flash"
+    },
+    "plan": {
+      "mode": "primary",
+      "model": "opencode-go/glm-5.1"
+    },
+    "explore": {
+      "description": "Fast agent specialized for exploring codebases and answering search questions",
+      "model": "opencode-go/deepseek-v4-flash",
+      "mode": "subagent",
+      "permission": {
+        "edit": "deny",
+        "bash": "deny",
+        "todowrite": "deny"
+      }
+    },
+    "general": {
+      "model": "opencode-go/deepseek-v4-flash"
+    },
+    "researcher": {
+      "description": "Explores code structure and answers architecture questions (read-only)",
+      "mode": "subagent",
+      "model": "opencode-go/deepseek-v4-flash",
+      "prompt": "{file:./prompts/researcher.md}",
+      "permission": {
+        "edit": "deny",
+        "bash": "deny",
+        "todowrite": "deny"
+      }
+    }
+  }
+}
