@@ -1,7 +1,17 @@
 { pkgs, ... }:
 
+let
+  omarchy-launch-walker = pkgs.writeShellScriptBin "omarchy-launch-walker" ''
+    GSK_RENDERER=cairo exec ${pkgs.walker}/bin/walker \
+      --width 644 --maxheight 300 --minheight 300 "$@"
+  '';
+
+  omarchy-restart-walker = pkgs.writeShellScriptBin "omarchy-restart-walker" ''
+    systemctl --user restart elephant.service walker.service
+  '';
+in
 {
-  home.packages = [ pkgs.walker pkgs.elephant ];
+  home.packages = [ pkgs.walker pkgs.elephant omarchy-launch-walker omarchy-restart-walker ];
 
   xdg.configFile."walker/config.toml".source = ./config.toml;
   xdg.configFile."walker/themes/kanso/layout.xml".source = ./kanso-layout.xml;
@@ -67,4 +77,41 @@
       }
     end
   '';
+  systemd.user.services.elephant = {
+    Unit = {
+      Description = "Elephant launcher backend";
+      After = [ "graphical-session.target" ];
+      PartOf = [ "graphical-session.target" ];
+      ConditionEnvironment = "WAYLAND_DISPLAY";
+    };
+    Service = {
+      Type = "simple";
+      ExecStart = "${pkgs.elephant}/bin/elephant";
+      Restart = "on-failure";
+      RestartSec = 1;
+      ExecStopPost = "${pkgs.coreutils}/bin/rm -f /tmp/elephant.sock";
+    };
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
+  };
+
+  systemd.user.services.walker = {
+    Unit = {
+      Description = "Walker - Application Runner";
+      ConditionEnvironment = "WAYLAND_DISPLAY";
+      After = [ "graphical-session.target" "elephant.service" ];
+      Requires = [ "elephant.service" ];
+      PartOf = [ "graphical-session.target" ];
+    };
+    Service = {
+      Environment = "GSK_RENDERER=cairo";
+      ExecStart = "${pkgs.walker}/bin/walker --gapplication-service";
+      Restart = "always";
+      RestartSec = 2;
+    };
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
+  };
 }

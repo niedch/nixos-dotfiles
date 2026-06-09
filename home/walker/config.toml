@@ -45,4 +45,4 @@ provider = "clipboard"
 
 [[emergencies]]
 text = "Restart Walker"
-command = "systemctl --user restart walker.service"
+command = "omarchy-restart-walker"

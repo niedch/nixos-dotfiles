@@ -8,7 +8,7 @@ end
 local mainMod = "SUPER"
 local terminal = "ghostty"
 local fileManager = "nautilus"
-local menu = "walker"
+local menu = "omarchy-launch-walker"
 
 hl.on("hyprland.start", function()
 	hl.exec_cmd("elephant")
@@ -151,6 +151,7 @@ hl.window_rule({
 	opacity = 0.9,
 })
 
+hl.layer_rule({ rule = "no_anim", match = "namespace:walker" })
 hl.workspace_rule({ workspace = "w[tv1]", gaps_in = 0, gaps_out = 0, border_size = 0 })
 hl.workspace_rule({ workspace = "f[1]",   gaps_in = 0, gaps_out = 0, border_size = 0 })
 
@@ -160,6 +161,8 @@ hl.bind(mainMod .. " + SHIFT + Return", hl.dsp.exec_cmd("xdg-open ~"))
 hl.bind(mainMod .. " + SHIFT + F",     hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + SHIFT + N",     hl.dsp.exec_cmd(terminal .. " -e nvim"))
 hl.bind(mainMod .. " + Space",         hl.dsp.exec_cmd(menu))
+hl.bind(mainMod .. " + CTRL + E",      hl.dsp.exec_cmd(menu .. " -m symbols"))
+hl.bind(mainMod .. " + CTRL + V",      hl.dsp.exec_cmd(menu .. " -m clipboard"))
 
 -- Window management
 hl.bind(mainMod .. " + Q",             hl.dsp.window.close())
