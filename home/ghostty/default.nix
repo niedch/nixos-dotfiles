@@ -5,7 +5,7 @@
 		enable = true;
 		package = pkgs.ghostty;
 		settings = {
-			"config-file" = "?~/.config/omarchy/current/theme/ghostty.conf";
+			"config-file" = "?~/.themes-src/current/ghostty.conf";
 
 			"font-family" = "JetBrainsMono Nerd Font Mono";
 			"font-style" = "Regular";
@@ -33,10 +33,8 @@
 			];
 
 			"mouse-scroll-multiplier" = 0.95;
-
+      "async-backend" = "epoll";
 			"command" = "~/.config/ghostty/tmux-start.sh";
-
-			"async-backend" = "epoll";
 		};
 	};
 

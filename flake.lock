@@ -418,8 +418,8 @@
         ]
       },
       "locked": {
-        "lastModified": 1780914308,
-        "narHash": "sha256-7XvLkGFOdTw6+kvKEmPQJ5kC0vLT0MlJBfVzymYH9e4=",
+        "lastModified": 1781004600,
+        "narHash": "sha256-3bWr6XCVIKUYKOF6feYmTqplkzy9fFm9vIKFoxm5n3I=",
         "path": "/home/nic/Projects/nix-omarchy-theme",
         "type": "path"
       },
