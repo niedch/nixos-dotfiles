@@ -16,7 +16,7 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("waybar")
 	hl.exec_cmd("mako")
 	hl.exec_cmd("hypridle")
-	hl.exec_cmd("swaybg -i ~/.config/omarchy/current/background -m fill")
+	hl.exec_cmd("swaybg -i ~/.themes-src/current-background -m fill")
 end)
 
 hl.monitor({
