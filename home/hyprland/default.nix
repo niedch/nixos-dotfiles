@@ -42,7 +42,6 @@
 		mako
 		wl-clipboard
 		bibata-cursors
-		swaybg
 		hypridle
 		hyprpicker
 		playerctl

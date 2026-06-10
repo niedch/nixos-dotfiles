@@ -5,6 +5,7 @@
     ./chromium
     ./ghostty
     ./hyprland
+    ./swaybg
     ./waybar
     ./themes
     ./walker
