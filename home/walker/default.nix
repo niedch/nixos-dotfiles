@@ -53,7 +53,7 @@ in
           Text = "Kanso  ",
           Value = "kanso",
           Actions = {
-            activate = "echo 'Theme switching not wired yet'",
+            activate = "theme-switcher",
           },
         },
       }

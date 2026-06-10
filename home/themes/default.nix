@@ -49,8 +49,18 @@ in
 
     symlinks = {
       "hypr/theme.lua".source = "hyprland.lua";
+      "hypr/hyprlock-theme.conf".source = "hyprlock.conf";
       "waybar/colors.css".source = "waybar.css";
       "walker/themes/kanso/style.css".source = "walker.css";
+      "mako/config".source = "mako.ini";
     };
+  };
+
+  xdg.configFile."theme-switcher/hooks/theme-set.d/01-notify.sample" = {
+    executable = true;
+    text = ''
+      #!/usr/bin/env bash
+      notify-send -u low "Theme activated" "$1"
+    '';
   };
 }
