@@ -22,29 +22,16 @@
 		};
 	};
 
-	gtk = {
-		enable = true;
-		theme.name = "Adwaita-dark";
-		cursorTheme = {
-			package = pkgs.bibata-cursors;
-			name = "Bibata-Modern-Classic";
-			size = 12;
-		};
-	};
-
-	dconf = {
-		enable = true;
-		settings = {
-			"org/gnome/desktop/interface" = {
-				color-scheme = "prefer-dark";
-				gtk-theme = "Adwaita-dark";
-			};
-		};
-	};
-
 	home.activation.setGnomeIconTheme = lib.hm.dag.entryAfter [ "setupThemes" ] ''
 		ICON_THEME=$(cat "$HOME/.themes-src/current/icons.theme" 2>/dev/null || echo "Adwaita")
 		${pkgs.dconf}/bin/dconf write /org/gnome/desktop/interface/icon-theme "'$ICON_THEME'"
+
+		for dir in "$HOME/.config/gtk-3.0" "$HOME/.config/gtk-4.0"; do
+			mkdir -p "$dir"
+			rm -f "$dir/settings.ini" "$dir/gtk.css" 2>/dev/null || true
+			ln -sfn "$HOME/.themes-src/current/settings.ini" "$dir/settings.ini" 2>/dev/null || true
+			ln -sfn "$HOME/.themes-src/current/gtk.css" "$dir/gtk.css" 2>/dev/null || true
+		done
 	'';
 
 	xdg.configFile."hypr/hyprland.lua".source = ./hyprland.lua;

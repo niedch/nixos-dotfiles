@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, pkgs, ... }:
 
 let
   omarchyRepo = "https://github.com/basecamp/omarchy.git";
@@ -38,6 +38,14 @@ in
     };
 
     selectorCommand = "walker --dmenu";
+
+    gtk = {
+      cursorTheme = {
+        name = "Bibata-Modern-Classic";
+        package = pkgs.bibata-cursors;
+        size = 12;
+      };
+    };
 
     symlinks = {
       "hypr/theme.lua".source = "hyprland.lua";
