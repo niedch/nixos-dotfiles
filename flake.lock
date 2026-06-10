@@ -418,14 +418,17 @@
         ]
       },
       "locked": {
-        "lastModified": 1781072558,
-        "narHash": "sha256-rzIa7AJ5CY0C8SRgWXw+Gie31FFa658+ABF0OOPcbso=",
-        "path": "/home/nic/Projects/nix-omarchy-theme",
-        "type": "path"
+        "lastModified": 1781076403,
+        "narHash": "sha256-j1r2Jw2PDOnMFBFfEkJxK7TzPE0xPG64uT3t4Fn2jHg=",
+        "owner": "niedch",
+        "repo": "nix-omarchy-theme",
+        "rev": "651d8510a2f9d5f04757dd9dd05e3692a5188aa6",
+        "type": "github"
       },
       "original": {
-        "path": "/home/nic/Projects/nix-omarchy-theme",
-        "type": "path"
+        "owner": "niedch",
+        "repo": "nix-omarchy-theme",
+        "type": "github"
       }
     },
     "nixpkgs": {

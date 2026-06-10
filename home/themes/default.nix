@@ -2,8 +2,8 @@
 
 let
   omarchyRepo = "https://github.com/basecamp/omarchy.git";
-  omarchyRef = "dev";
-  omarchyHash = "sha256-ipvHygN3eiSSyQszUwf00khNg/Tf/BEDlZmiRWUhXRc=";
+  omarchyRef = "9cf1852525a5f7de26d3162db9d61e2f5c1d5523";
+  omarchyHash = "sha256-9zkIEgD/L5+eK5fuQNXbBd5XXO+NwH6QWGiDI//kGas=";
 in
 {
   imports = [ inputs.nix-omarchy-theme.homeManagerModules.default ];
@@ -21,7 +21,7 @@ in
       gruvbox = { url = omarchyRepo; ref = omarchyRef; hash = omarchyHash; subpath = "themes/gruvbox"; };
       hackerman = { url = omarchyRepo; ref = omarchyRef; hash = omarchyHash; subpath = "themes/hackerman"; };
       kanagawa = { url = omarchyRepo; ref = omarchyRef; hash = omarchyHash; subpath = "themes/kanagawa"; };
-      kanso = { url = "https://github.com/HANCORE-linux/omarchy-kanso-theme.git"; ref = "main"; hash = "sha256-AfwCqhF7WMtavS+Z1YTO1YU3XsfGiwDyGhjhzYyvsfY="; };
+      kanso = { url = "https://github.com/HANCORE-linux/omarchy-kanso-theme.git"; ref = "bc405d36b93e0abff39c22eda14d1f33121319f3"; hash = "sha256-AfwCqhF7WMtavS+Z1YTO1YU3XsfGiwDyGhjhzYyvsfY="; };
       last-horizon = { url = omarchyRepo; ref = omarchyRef; hash = omarchyHash; subpath = "themes/last-horizon"; };
       lumon = { url = omarchyRepo; ref = omarchyRef; hash = omarchyHash; subpath = "themes/lumon"; };
       matte-black = { url = omarchyRepo; ref = omarchyRef; hash = omarchyHash; subpath = "themes/matte-black"; };
