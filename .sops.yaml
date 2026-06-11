@@ -1,0 +1,10 @@
+keys:
+  - &admin_nic age1jamvvkqedtd5x2gx72723k5ad77zmqxvgy42e3l0quvf7n9dgdgsj66a6g
+  - &host_laptop age1z4mv8yv6xaht54e9a4ryyg4z6dvf26ngz4zdtvn62mrxp2ewuadqlnc8dz
+
+creation_rules:
+  - path_regex: ^secrets/secrets\.yaml$
+    key_groups:
+      - age:
+          - *admin_nic
+          - *host_laptop

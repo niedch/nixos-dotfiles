@@ -5,6 +5,7 @@
     ./docker.nix
     ./users.nix
     ./ssh.nix
+    ./sops.nix
   ];
 
   nixpkgs.config.allowUnfree = true;

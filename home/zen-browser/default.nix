@@ -12,5 +12,12 @@
       terminal = false;
       categories = [ "Network" "WebBrowser" ];
     };
+
+    github = {
+      name = "github";
+      exec = "${inputs.zen-browser.packages.${pkgs.system}.default}/bin/zen -P Webapp --new-window https://github.com/";
+      terminal = false;
+      categories = [ "Network" "WebBrowser" ];
+    };
   };
 }
