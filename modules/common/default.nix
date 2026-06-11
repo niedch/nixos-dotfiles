@@ -4,6 +4,7 @@
   imports = [
     ./docker.nix
     ./users.nix
+    ./ssh.nix
   ];
 
   nixpkgs.config.allowUnfree = true;

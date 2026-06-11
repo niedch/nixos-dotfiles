@@ -1,0 +1,8 @@
+hl.on("hyprland.start", function()
+	hl.exec_cmd("elephant")
+	hl.exec_cmd("walker --gapplication-service")
+	hl.exec_cmd("waybar")
+	hl.exec_cmd("mako")
+	hl.exec_cmd("hypridle")
+	hl.exec_cmd("swaybg -i ~/.themes-src/current-background -m fill")
+end)
