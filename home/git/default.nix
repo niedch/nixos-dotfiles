@@ -10,5 +10,10 @@
 
     userName = "nic";
     userEmail = "christoph.niederer99@gmail.com";
+
+    extraConfig = {
+      push.autoSetupRemote = true;
+      pull.rebase = true;
+    };
   };
 }
