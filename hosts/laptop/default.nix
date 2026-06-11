@@ -23,34 +23,10 @@
 
   hardware.bluetooth.enable = true;
 
-  # NVIDIA PRIME offload (Optimus)
-  hardware.nvidia = {
-    package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
-    modesetting.enable = true;
-    nvidiaSettings = true;
-    open = false;
-
-    prime = {
-      offload = {
-        enable = true;
-        enableOffloadCmd = true;
-      };
-      sync.enable = false;
-      intelBusId = "PCI:0:2:0";
-      nvidiaBusId = "PCI:1:0:0";
-    };
-
-    powerManagement.enable = false;
-    powerManagement.finegrained = false;
-  };
-
-  services.xserver.videoDrivers = [ "nvidia" ];
+  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
 
   boot.kernelParams = [ "nvidia_drm.fbdev=1" ];
-  boot.kernelModules = [ "nvidia" "nvidia_drm" "nvidia_modeset" "nvidia_uvm" ];
-  boot.blacklistedKernelModules = [ "nouveau" ];
 
-  # NVIDIA env vars for Wayland/Hyprland
   environment.sessionVariables = {
     __NV_PRIME_RENDER_OFFLOAD = "1";
     __GLX_VENDOR_LIBRARY_NAME = "nvidia";

@@ -10,8 +10,3 @@ hl.env("XDG_CURRENT_DESKTOP", "Hyprland")
 hl.env("XDG_SESSION_DESKTOP", "Hyprland")
 hl.env("XDG_SESSION_TYPE", "wayland")
 
--- NVIDIA PRIME offload
-hl.env("__NV_PRIME_RENDER_OFFLOAD", "1")
-hl.env("__GLX_VENDOR_LIBRARY_NAME", "nvidia")
-hl.env("__VK_LAYER_NV_optimus", "NVIDIA_only")
-hl.env("LIBVA_DRIVER_NAME", "nvidia")
