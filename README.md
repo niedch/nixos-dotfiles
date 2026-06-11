@@ -1,43 +1,134 @@
 # nixos-dotfiles
 
-Multi-host NixOS + Hyprland configuration.
+Multi-host NixOS + Hyprland configuration managed via flakes and home-manager.
+
+## Hosts
+
+| Host       | Type        | Hostname | Boot        | Key Features                              |
+|------------|-------------|----------|-------------|-------------------------------------------|
+| `desktop`  | QEMU/KVM VM | `nixos`  | GRUB        | Desktop VM, virtio GPU, QEMU guest tools  |
+| `laptop`   | Physical    | `nixos`  | systemd-boot | Dell Precision 5530, NVIDIA, Bluetooth, CUPS, PipeWire |
+| `dobby`    | Server      | `dobby`  | systemd-boot | Minimal, no desktop, SSH-only             |
 
 ## Usage
 
 ```bash
-sudo nixos-rebuild switch --flake .#desktop
+sudo nixos-rebuild switch --flake .#desktop   # Desktop VM
+sudo nixos-rebuild switch --flake .#laptop    # Dell Precision 5530
+sudo nixos-rebuild switch --flake .#dobby     # Server
+```
+
+## Architecture
+
+Three-layer design:
+
+```
+flake.nix                     # Entry point, defines hosts + flake inputs
+├── hosts/<host>/             # Host-specific NixOS config (hardware, boot, locale)
+├── modules/                  # Reusable NixOS system modules
+│   ├── common/               #   Shared by all hosts (docker, sops, users, ssh)
+│   ├── desktop/              #   Desktop-only (Hyprland, Ly, fonts)
+│   └── server/               #   Server-only (SSH daemon, firewall)
+└── home/                     # Home-manager user configs
+    ├── desktop.nix           #   Full desktop config (15+ submodules)
+    └── server.nix            #   Minimal server config (3 submodules)
 ```
 
 ## Structure
 
 ```
-├── flake.nix              # Flake entry point
+├── flake.nix                  # Flake entry point — 3 NixOS configurations
+├── flake.lock                 # Pinned flake inputs
+├── .sops.yaml                 # SOPS age key configuration
+├── secrets/
+│   └── secrets.yaml           # Encrypted secrets
 ├── hosts/
-│   └── desktop/           # Desktop host config (QEMU/KVM VM)
-├── home/
-│   ├── common/            # Central home-manager config
-│   ├── hyprland/          # Hyprland window manager config
-│   ├── mise/              # Mise dev tool version manager
-│   ├── nvim/              # Neovim (LazyVim) + dev tools
-│   └── zsh/               # Zsh + oh-my-zsh + custom scripts
-└── modules/
-    └── common/
-        └── hyprland.nix   # System-level Hyprland enable
+│   ├── virtual-machine/       # Desktop VM host (GRUB, QEMU guest)
+│   ├── laptop/                # Dell Precision 5530 (NVIDIA, Bluetooth, CUPS)
+│   └── dobby/                 # Server host (minimal, SSH)
+├── modules/
+│   ├── common/                # Shared system modules
+│   │   ├── docker.nix         # Docker daemon + auto-prune
+│   │   ├── sops.nix           # SOPS secrets configuration
+│   │   ├── ssh.nix            # SSH server enable
+│   │   └── users.nix          # User "nic" definition
+│   ├── desktop/               # Desktop system modules
+│   │   ├── displaymanager.nix # Ly display manager
+│   │   ├── fonts.nix          # JetBrains Mono Nerd Font + Omarchy font
+│   │   └── hyprland.nix       # Hyprland system enable + Wayland env
+│   └── server/                # Server system modules
+│       └── openssh.nix        # SSH daemon config + firewall
+└── home/
+    ├── desktop.nix            # Desktop home-manager entry point
+    ├── server.nix             # Server home-manager entry point
+    ├── hyprland/              # Hyprland WM (Lua config, vim keybinds)
+    ├── waybar/                # Waybar status bar (JSONC + CSS)
+    ├── walker/                # Walker launcher + Elephant backend
+    ├── ghostty/               # Ghostty terminal emulator
+    ├── swaybg/                # Sway background utility
+    ├── themes/                # Omarchy theme system (20+ themes)
+    ├── tmux/                  # Tmux config + sessionizer scripts
+    ├── mux-session/           # Tmux session manager with project configs
+    ├── nvim/                  # Neovim (LazyVim) + Go/Rust/TS toolchain
+    ├── zsh/                   # Zsh + oh-my-zsh + custom scripts
+    ├── mise/                  # Mise version manager
+    ├── git/                   # Git user config
+    ├── ssh/                   # SSH client config + SOPS-managed keys
+    ├── zen-browser/           # Zen Browser + webapp desktop entries
+    └── opencode/              # Opencode AI agent with custom agents
 ```
 
-## Components
+## Flake Inputs
+
+| Input | Source | Purpose |
+|-------|--------|---------|
+| `nixpkgs` | nixos-26.05 | Main package repository |
+| `home-manager` | release-26.05 | User-level config management |
+| `hyprland` | Hyprwm/Hyprland | Wayland compositor |
+| `nix-omarchy-theme` | Local path | Theme framework |
+| `sops-nix` | Mic92/sops-nix | Secrets management |
+| `nixos-hardware` | NixOS/nixos-hardware | Hardware profiles (Dell 5530) |
+| `zen-browser` | youwen5/zen-browser-flake | Firefox-based browser |
+| `gazelle-tui` | Zeus-Deus/gazelle-tui | TUI file manager |
+
+## Key Components
 
 | Path | Description |
-|---|---|
-| `hosts/desktop/` | NixOS host config: hostname `nixos`, user `nic`, GRUB boot, Vienna timezone |
-| `home/hyprland/` | Hyprland WM with Lua config, autostart waybar/dunst, vim-style keybinds |
-| `home/zsh/` | Oh-my-zsh with fzf, custom shell scripts (aliases, git, kube, mise, etc.) |
-| `home/nvim/` | LazyVim-based Neovim config with plugins for Go, Rust, Java, TypeScript |
-| `home/mise/` | Mise config managing tools (java, node, rust, maven, opencode, etc.) |
-| `modules/common/` | Shared NixOS modules (Hyprland system enable, env vars) |
+|------|-------------|
+| `hosts/virtual-machine/` | Desktop VM host: hostname `nixos`, GRUB boot, QEMU guest tools |
+| `hosts/laptop/` | Laptop host: Dell Precision 5530, NVIDIA legacy 580, PipeWire, CUPS, Bluetooth |
+| `hosts/dobby/` | Server host: minimal, SSH-only, no desktop |
+| `modules/common/` | Shared NixOS modules (Docker, SOPS, SSH, users) |
+| `modules/desktop/` | Desktop system modules (Hyprland, Ly DM, fonts) |
+| `modules/server/` | Server system modules (SSH daemon, firewall) |
+| `home/desktop.nix` | Full desktop home-manager entry point |
+| `home/server.nix` | Minimal server home-manager entry point |
+| `home/hyprland/` | Hyprland WM with Lua config, vim-style keybinds, window rules |
+| `home/waybar/` | Waybar status bar with custom CSS and cava audio viz |
+| `home/walker/` | Walker app launcher + Elephant backend as systemd services |
+| `home/ghostty/` | Ghostty terminal with JetBrains Mono, tmux auto-start |
+| `home/themes/` | Omarchy theme system — 20+ themes symlinked to hypr/waybar/walker configs |
+| `home/tmux/` | Tmux with custom sessionizer, popup, and opener scripts |
+| `home/mux-session/` | Tmux session manager with per-project configs |
+| `home/nvim/` | LazyVim-based Neovim config with Go, Rust, Java, TypeScript tooling |
+| `home/zsh/` | Oh-my-zsh with fzf, autosuggestions, custom shell scripts |
+| `home/mise/` | Mise version manager (java, node, rust, maven, opencode) |
+| `home/git/` | Git user config with autoSetupRemote and pull.rebase |
+| `home/ssh/` | SSH client config with SOPS-managed ed25519 key |
+| `home/zen-browser/` | Zen Browser with YouTube & GitHub webapp desktop entries |
+| `home/opencode/` | Opencode AI coding agent with custom agents (build, plan, explore) |
+
+## Secrets
+
+Secrets are encrypted with [SOPS](https://github.com/getsops/sops) using [age](https://age-encryption.org/). Two recipients are configured — admin key and laptop key. Secrets are stored in `secrets/secrets.yaml` and decrypted at build time via `sops-nix`.
+
+## Theming
+
+The [Omarchy theme system](https://github.com/anomalyco/nix-omarchy-theme) provides 20+ themes (kanso, catppuccin, nord, tokyo-night, gruvbox, etc.), symlinked to Hyprland, Waybar, Walker, and mako configs. Default theme: `kanso`.
 
 ## Adding a new host
 
-1. Create a new directory under `hosts/` (e.g. `hosts/laptop/`)
-2. Add a new `nixosConfigurations.laptop = ...` entry in `flake.nix`
-3. Rebuild with `sudo nixos-rebuild switch --flake .#laptop`
+1. Create a new directory under `hosts/` (e.g. `hosts/new-host/`)
+2. Add a `nixosConfigurations.new-host = ...` entry in `flake.nix`, importing `modules/common` and optionally `modules/desktop` or `modules/server`
+3. Create a corresponding home-manager entry point under `home/` if needed
+4. Rebuild with `sudo nixos-rebuild switch --flake .#new-host`
