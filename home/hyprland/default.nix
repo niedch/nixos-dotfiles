@@ -24,7 +24,7 @@
 
 	home.activation.setGnomeIconTheme = lib.hm.dag.entryAfter [ "setupThemes" ] ''
 		ICON_THEME=$(cat "$HOME/.themes-src/current/icons.theme" 2>/dev/null || echo "Adwaita")
-		${pkgs.dconf}/bin/dconf write /org/gnome/desktop/interface/icon-theme "'$ICON_THEME'"
+		${pkgs.dconf}/bin/dconf write /org/gnome/desktop/interface/icon-theme "'$ICON_THEME'" || true
 
 		for dir in "$HOME/.config/gtk-3.0" "$HOME/.config/gtk-4.0"; do
 			mkdir -p "$dir"
@@ -36,6 +36,7 @@
 
 	xdg.configFile."hypr/hyprland.lua".source = ./hyprland.lua;
 	xdg.configFile."hypr/hypridle.conf".source = ./hypridle.conf;
+	xdg.configFile."hypr/hyprlock.conf".source = ./hyprlock.conf;
 	xdg.configFile."hypr/hyprsunset.conf".source = ./hyprsunset.conf;
 
 	home.packages = with pkgs; [
@@ -43,6 +44,7 @@
 		wl-clipboard
 		bibata-cursors
 		hypridle
+		hyprlock
 		hyprpicker
 		playerctl
 		brightnessctl

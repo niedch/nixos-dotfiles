@@ -27,5 +27,6 @@
 	};
 
 	security.polkit.enable = true;
+	security.pam.services.hyprlock = {};
 	hardware.graphics.enable = true;
 }

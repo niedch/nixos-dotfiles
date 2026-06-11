@@ -107,7 +107,7 @@ hl.config({
 		hide_special_on_workspace_change = true,
 	},
 	input = {
-		kb_layout = "us",
+		kb_layout = "at",
 		kb_options = "compose:caps",
 		repeat_rate = 40,
 		repeat_delay = 600,
@@ -141,8 +141,8 @@ hl.window_rule({
 })
 
 hl.window_rule({
-	name  = "chromium-opacity",
-	match = { class = "chromium" },
+	name  = "zen-opacity",
+	match = { class = "zen-beta" },
 	opacity = 0.95,
 })
 
@@ -150,6 +150,38 @@ hl.window_rule({
 	name  = "youtube-opacity",
 	match = { class = "chrome-www.youtube.com__-Default" },
 	opacity = 0.9,
+})
+
+hl.window_rule({
+	name   = "gazelle",
+	match  = { class = "org\\.omarchy\\.Gazelle" },
+	float  = true,
+	center = true,
+	size   = { 800, 600 },
+})
+
+hl.window_rule({
+	name   = "bluetui",
+	match  = { class = "org\\.omarchy\\.Bluetui" },
+	float  = true,
+	center = true,
+	size   = { 800, 600 },
+})
+
+hl.window_rule({
+	name   = "btop",
+	match  = { class = "org\\.omarchy\\.Btop" },
+	float  = true,
+	center = true,
+	size   = { 800, 600 },
+})
+
+hl.window_rule({
+	name   = "wiremix",
+	match  = { class = "org\\.omarchy\\.Wiremix" },
+	float  = true,
+	center = true,
+	size   = { 800, 600 },
 })
 
 hl.layer_rule({ no_anim = true, match = { namespace = "walker" } })
@@ -168,7 +200,7 @@ hl.bind(mainMod .. " + CTRL + E",      hl.dsp.exec_cmd(menu .. " -m symbols"))
 hl.bind(mainMod .. " + CTRL + V",      hl.dsp.exec_cmd(menu .. " -m clipboard"))
 
 -- Window management
-hl.bind(mainMod .. " + Q",             hl.dsp.window.close())
+hl.bind(mainMod .. " + W",             hl.dsp.window.close())
 hl.bind(mainMod .. " + M",             hl.dsp.exec_cmd("hyprctl dispatch exit"))
 hl.bind(mainMod .. " + F",             hl.dsp.window.fullscreen())
 hl.bind(mainMod .. " + P",             hl.dsp.window.pseudo())

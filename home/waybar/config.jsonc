@@ -57,7 +57,7 @@
   "cpu": {
     "interval": 5,
     "format": "󰍛",
-    "on-click": "omarchy-launch-or-focus-tui btop",
+    "on-click": "ghostty --class=org.omarchy.Btop -e btop",
     "on-click-right": "xdg-terminal-exec"
   },
   "clock": {
@@ -94,7 +94,7 @@
     "tooltip-format-disconnected": "Disconnected",
     "interval": 3,
     "spacing": 1,
-    "on-click": "omarchy-launch-wifi"
+    "on-click": "ghostty --class=org.omarchy.Gazelle -e gazelle"
   },
   "battery": {
     "format": "{capacity}% {icon}",
@@ -123,7 +123,7 @@
     "format-connected": "󰂱",
     "format-no-controller": "",
     "tooltip-format": "Devices connected: {num_connections}",
-    "on-click": "omarchy-launch-bluetooth"
+    "on-click": "ghostty --class=org.omarchy.Bluetui -e bluetui"
   },
   "custom/separator": {
     "format": "|", 
@@ -131,7 +131,7 @@
   },
   "pulseaudio": {
     "format": "{icon}",
-    "on-click": "omarchy-launch-audio",
+    "on-click": "ghostty --class=org.omarchy.Wiremix -e wiremix",
     "on-click-right": "pamixer -t",
     "tooltip-format": "Playing at {volume}%",
     "scroll-step": 5,

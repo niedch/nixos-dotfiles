@@ -1,8 +1,8 @@
-{pkgs, ...}:
+{pkgs, inputs, ...}:
 
 {
   imports = [
-    ./chromium
+    ./zen-browser
     ./ghostty
     ./hyprland
     ./swaybg
@@ -15,6 +15,7 @@
     ./zsh
     ./mise
     ./opencode
+    ./git
   ];
 
   home.username = "nic";
@@ -24,8 +25,14 @@
   programs.home-manager.enable = true;
 
   home.packages = with pkgs; [
-    git
-    opencode
     docker-compose
+    nodejs
+    btop
+    bluetui
+    wiremix
+    spotify
+    python3
+    gnumake
+    inputs."gazelle-tui".packages.${pkgs.system}.default
   ];
 }
