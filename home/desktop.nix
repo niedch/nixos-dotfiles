@@ -16,6 +16,7 @@
     ./mise
     ./opencode
     ./git
+    ./ssh
   ];
 
   home.username = "nic";
@@ -24,10 +25,13 @@
 
   programs.home-manager.enable = true;
 
+  sops.defaultSopsFile = ../secrets/secrets.yaml;
+  sops.age.keyFile = "/home/nic/.config/sops/age/keys.txt";
+
   home.packages = with pkgs; [
     docker-compose
     nodejs
-    btop
+    (btop.override { cudaSupport = true; })
     bluetui
     wiremix
     spotify

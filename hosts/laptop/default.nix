@@ -23,6 +23,41 @@
 
   hardware.bluetooth.enable = true;
 
+  # NVIDIA PRIME offload (Optimus)
+  hardware.nvidia = {
+    package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
+    modesetting.enable = true;
+    nvidiaSettings = true;
+    open = false;
+
+    prime = {
+      offload = {
+        enable = true;
+        enableOffloadCmd = true;
+      };
+      sync.enable = false;
+      intelBusId = "PCI:0:2:0";
+      nvidiaBusId = "PCI:1:0:0";
+    };
+
+    powerManagement.enable = false;
+    powerManagement.finegrained = false;
+  };
+
+  services.xserver.videoDrivers = [ "nvidia" ];
+
+  boot.kernelParams = [ "nvidia_drm.fbdev=1" ];
+  boot.kernelModules = [ "nvidia" "nvidia_drm" "nvidia_modeset" "nvidia_uvm" ];
+  boot.blacklistedKernelModules = [ "nouveau" ];
+
+  # NVIDIA env vars for Wayland/Hyprland
+  environment.sessionVariables = {
+    __NV_PRIME_RENDER_OFFLOAD = "1";
+    __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+    __VK_LAYER_NV_optimus = "NVIDIA_only";
+    LIBVA_DRIVER_NAME = "nvidia";
+  };
+
   # Set your time zone.
   time.timeZone = "Europe/Vienna";
 
@@ -61,4 +96,14 @@
   };
 
   system.stateVersion = "25.11"; # Did you read the comment?
+
+  sops.secrets = {
+    mock_secret = {};
+    example_api_key = {};
+    OPENCODE_API_KEY = {
+      owner = "nic";
+      group = "users";
+      mode = "0440";
+    };
+  };
 }

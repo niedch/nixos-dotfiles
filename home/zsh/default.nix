@@ -27,6 +27,7 @@
             export DISABLE_MAGIC_FUNCTIONS="true"
             export DISABLE_AUTO_TITLE="true"
             export DISABLE_UNTRACKED_FILES_DIRTY="true"
+            export OPENCODE_API_KEY=$(cat /run/secrets/OPENCODE_API_KEY)
         '';
         initContent = ''
             source $HOME/.config/zsh/homes.sh
