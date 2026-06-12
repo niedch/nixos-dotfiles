@@ -31,6 +31,7 @@
   home.packages = with pkgs; [
     docker-compose
     nodejs
+    localsend
     (btop.override { cudaSupport = true; })
     bluetui
     wiremix
