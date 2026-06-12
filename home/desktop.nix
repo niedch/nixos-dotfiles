@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./zen-browser
+    ./brave
     ./ghostty
     ./hyprland
     ./swaybg
