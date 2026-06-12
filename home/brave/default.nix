@@ -34,6 +34,9 @@ let
     { name = "Slack"; domain = "app.slack.com"; url = "https://app.slack.com/client/T2M6RN37H/C2M6Y5066"; sha256 = "sha256-3vONfw6TIFUEiBaCgZTV6voOvziOTzYs/wnJ1+6cmos="; }
     { name = "Gmail"; domain = "mail.google.com"; url = "https://mail.google.com/mail/u/0"; sha256 = "sha256-Y+/P6e7aTMWJZcdYekhYhmEsv4eOzY/D5N1ZTbMaZ/0="; }
     { name = "Google Drive"; domain = "drive.google.com"; url = "https://drive.google.com/drive/home"; sha256 = "sha256-fuA69CVNn4VrCPc+NPizUmurse15VLVVexFnwyOKkZw="; }
+    { name = "Amazon Prime"; domain = "www.amazon.de"; url = "https://www.amazon.de/gp/video/storefront"; sha256 = "sha256-fmf7jmxDAC4Jx9Nj87FYpxbcCfQEPMBYvMAbIGu9CX0="; }
+    { name = "Youtube"; domain = "www.youtube.com"; url = "https://www.youtube.com/ "; sha256 = "sha256-mgW2+OtFC+nvo6Axs8EGHoWrWog8OPeKHffMsECoaEo="; }
+    { name = "Twitch"; domain = "www.twitch.tv"; url = "https://www.twitch.tv/"; sha256 = "sha256-PwTSKGIAQhu4rQxJlXeo+0Ei1kWd0Ks/wBTPnC8GiWM="; }
   ];
 in
 {
