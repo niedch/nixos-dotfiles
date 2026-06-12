@@ -455,14 +455,17 @@
         ]
       },
       "locked": {
-        "lastModified": 1781200386,
-        "narHash": "sha256-XbYsX2h6mf+roAzOZYhezvUwhbj4iNKFD4qV1tLf8Bg=",
-        "path": "/home/nic/Projects/nix-omarchy-theme",
-        "type": "path"
+        "lastModified": 1781238372,
+        "narHash": "sha256-pflrp+KRnWkeiEtpb8S1qlQFsOP22C6vldl6WkD6oGQ=",
+        "owner": "niedch",
+        "repo": "nix-omarchy-theme",
+        "rev": "ed0142e47f073e90acf8a67bfedc2c616b0adf64",
+        "type": "github"
       },
       "original": {
-        "path": "/home/nic/Projects/nix-omarchy-theme",
-        "type": "path"
+        "owner": "niedch",
+        "repo": "nix-omarchy-theme",
+        "type": "github"
       }
     },
     "nixos-hardware": {

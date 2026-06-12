@@ -74,7 +74,7 @@ hl.config({
 		hide_special_on_workspace_change = true,
 	},
 	input = {
-		kb_layout = "at",
+		kb_layout = "us",
 		kb_options = "compose:caps",
 		repeat_rate = 40,
 		repeat_delay = 600,
