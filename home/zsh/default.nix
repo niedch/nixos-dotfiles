@@ -28,6 +28,10 @@
             export DISABLE_AUTO_TITLE="true"
             export DISABLE_UNTRACKED_FILES_DIRTY="true"
             export OPENCODE_API_KEY=$(cat /run/secrets/OPENCODE_API_KEY)
+            export GEMINI_API_KEY=$(cat /run/secrets/GEMINI_API_KEY)
+            export GOOGLE_GENERATIVE_AI_API_KEY=$(cat /run/secrets/GOOGLE_GENERATIVE_AI_API_KEY)
+            export GITHUB_ENTERPRISE_API_KEY=$(cat /run/secrets/GITHUB_ENTERPRISE_API_KEY)
+            export OPENCODE_GO=$(cat /run/secrets/OPENCODE_GO)
         '';
         initContent = ''
             source $HOME/.config/zsh/homes.sh
