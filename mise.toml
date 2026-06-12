@@ -1,0 +1,13 @@
+[tasks.update-nix-omarchy-theme]
+description = "Update the nix-omarchy-theme flake dependency to its latest commit"
+run = "nix flake update nix-omarchy-theme"
+
+[tasks.build]
+description = "Build a NixOS configuration (e.g. laptop, desktop, dobby)"
+usage = 'arg "<host>" help="Host configuration name"'
+run = "nix build .#nixosConfigurations.${usage_host?}.config.system.build.toplevel"
+
+[tasks.switch]
+description = "Switch to a NixOS configuration with sudo (e.g. laptop, desktop, dobby)"
+usage = 'arg "<host>" help="Host configuration name"'
+run = "sudo nixos-rebuild switch --flake .#${usage_host?}"

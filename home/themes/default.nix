@@ -17,11 +17,8 @@ in
       catppuccin = { url = omarchyRepo; ref = omarchyRef; hash = omarchyHash; subpath = "themes/catppuccin"; };
       ethereal = { url = omarchyRepo; ref = omarchyRef; hash = omarchyHash; subpath = "themes/ethereal"; };
       everforest = { url = omarchyRepo; ref = omarchyRef; hash = omarchyHash; subpath = "themes/everforest"; };
-      flexoki-light = { url = omarchyRepo; ref = omarchyRef; hash = omarchyHash; subpath = "themes/flexoki-light"; };
       gruvbox = { url = omarchyRepo; ref = omarchyRef; hash = omarchyHash; subpath = "themes/gruvbox"; };
-      hackerman = { url = omarchyRepo; ref = omarchyRef; hash = omarchyHash; subpath = "themes/hackerman"; };
-      kanagawa = { url = omarchyRepo; ref = omarchyRef; hash = omarchyHash; subpath = "themes/kanagawa"; };
-      kanso = { url = "https://github.com/HANCORE-linux/omarchy-kanso-theme.git"; ref = "bc405d36b93e0abff39c22eda14d1f33121319f3"; hash = "sha256-AfwCqhF7WMtavS+Z1YTO1YU3XsfGiwDyGhjhzYyvsfY="; };
+      kanso = { url = "https://github.com/HANCORE-linux/omarchy-kanso-theme.git"; ref = "bc405d36b93e0abff39c22eda14d1f33121319f3"; hash = "sha256-AfwCqhF7WMtavS+Z1YTO1YU3XsfGiwDyGhjhzYyvsfY="; defaultBackground = "BG4b.jpg"; };
       last-horizon = { url = omarchyRepo; ref = omarchyRef; hash = omarchyHash; subpath = "themes/last-horizon"; };
       lumon = { url = omarchyRepo; ref = omarchyRef; hash = omarchyHash; subpath = "themes/lumon"; };
       matte-black = { url = omarchyRepo; ref = omarchyRef; hash = omarchyHash; subpath = "themes/matte-black"; };
