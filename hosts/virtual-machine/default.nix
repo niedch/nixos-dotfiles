@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   imports =
@@ -27,4 +27,5 @@
   environment.pathsToLink = [ "/share/applications" "/share/xdg-desktop-portal" ];
 
   system.stateVersion = "25.11";
+
 }

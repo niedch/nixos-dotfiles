@@ -73,13 +73,4 @@
 
   system.stateVersion = "25.11"; # Did you read the comment?
 
-  sops.secrets = {
-    mock_secret = {};
-    example_api_key = {};
-    OPENCODE_API_KEY = {
-      owner = "nic";
-      group = "users";
-      mode = "0440";
-    };
-  };
 }
