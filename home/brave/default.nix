@@ -1,87 +1,46 @@
 { pkgs, ... }:
 
 let
-  favicon-fetch = pkgs.writeShellApplication {
-    name = "favicon-fetch";
-    runtimeInputs = [ pkgs.curl pkgs.imagemagick ];
-    text = ''
-      set -euo pipefail
-
-      if [ $# -ne 2 ]; then
-        echo "Usage: favicon-fetch <name> <url>"
-        exit 1
-      fi
-
-      name=$1
-      url=$2
-
-      if [[ ! $url =~ ^[a-zA-Z][a-zA-Z0-9+.-]*: ]]; then
-        url="https://$url"
-      fi
-
-      reporoot=$(git rev-parse --show-toplevel 2>/dev/null || echo "$HOME/Projects/nixos-dotfiles")
-      outdir="$reporoot/home/brave/icons"
-      mkdir -p "$outdir"
-      output="$outdir/''${name}.png"
-
-      domain=$(echo "$url" | sed 's|https\?://||; s|/.*||')
-      api_url="https://www.google.com/s2/favicons?domain=$domain&sz=128"
-
-      echo "Fetching favicon for $domain ..."
-      if ! curl -fsSL -o "$output" "$api_url" || [ ! -s "$output" ]; then
-        echo "Error: Failed to fetch favicon from $api_url"
-        exit 1
-      fi
-
-      mime=$(file -b --mime-type "$output" 2>/dev/null || echo "")
-      if [ "$mime" = "image/x-icon" ] || [ "$mime" = "image/vnd.microsoft.icon" ]; then
-        echo "Converting ICO to PNG ..."
-        tmp=$(mktemp)
-        convert "$output" -resize 256x256 PNG32:"$tmp" && mv "$tmp" "$output"
-      fi
-
-      echo "$(wc -c < "$output" | tr -d ' ') bytes written to $output"
+  fetchFavicon = { name, domain, sha256 }:
+    let
+      sanitized = builtins.replaceStrings [ " " ] [ "-" ] name;
+      rawIcon = pkgs.fetchurl {
+        url = "https://www.google.com/s2/favicons?domain=${domain}&sz=128";
+        name = "${sanitized}-favicon";
+        inherit sha256;
+      };
+    in
+    pkgs.runCommand "${sanitized}-favicon.png" {
+      nativeBuildInputs = [ pkgs.imagemagick ];
+    } ''
+      convert ${rawIcon} -resize 256x256 PNG32:$out
     '';
-  };
 
+  mkWebApp = { name, domain, url, sha256 }:
+    let
+      iconPath = fetchFavicon { inherit name domain sha256; };
+    in
+    {
+      inherit name;
+      exec = "${pkgs.brave}/bin/brave --start-maximized --app=${url}";
+      icon = "${iconPath}";
+      terminal = false;
+      type = "Application";
+      categories = [ "Network" "WebBrowser" ];
+    };
+
+  webApps = [
+    { name = "Github"; domain = "www.github.com"; url = "https://www.github.com"; sha256 = "sha256-GoH7+/Co7+CoqaFvCVHmedu9oTH+AUoVAXYFYZmWjgY="; }
+    { name = "Slack"; domain = "app.slack.com"; url = "https://app.slack.com/client/T2M6RN37H/C2M6Y5066"; sha256 = "sha256-3vONfw6TIFUEiBaCgZTV6voOvziOTzYs/wnJ1+6cmos="; }
+    { name = "Gmail"; domain = "mail.google.com"; url = "https://mail.google.com/mail/u/0"; sha256 = "sha256-Y+/P6e7aTMWJZcdYekhYhmEsv4eOzY/D5N1ZTbMaZ/0="; }
+    { name = "Google Drive"; domain = "drive.google.com"; url = "https://drive.google.com/drive/home"; sha256 = "sha256-fuA69CVNn4VrCPc+NPizUmurse15VLVVexFnwyOKkZw="; }
+  ];
 in
 {
-  xdg.desktopEntries.Github = {
-    name = "Github";
-    exec = "${pkgs.brave}/bin/brave --app=https://www.github.com";
-    icon = "${./icons/github.png}";
-    terminal = false;
-    type = "Application";
-    categories = [ "Network" "WebBrowser" ];
-  };
-
-  xdg.desktopEntries.Slack = {
-    name = "Slack";
-    exec = "${pkgs.brave}/bin/brave --app=https://app.slack.com/client/T2M6RN37H/C2M6Y5066";
-    icon = "${./icons/slack.png}";
-    terminal = false;
-    type = "Application";
-    categories = [ "Network" "WebBrowser" ];
-  };
-
-  xdg.desktopEntries.Gmail = {
-    name = "Gmail";
-    exec = "${pkgs.brave}/bin/brave --app=https://mail.google.com/mail/u/0";
-    icon = "${./icons/gmail.png}";
-    terminal = false;
-    type = "Application";
-    categories = [ "Network" "WebBrowser" ];
-  };
-
-  xdg.desktopEntries.Gdrive = {
-    name = "Google Drive";
-    exec = "${pkgs.brave}/bin/brave --app=https://drive.google.com/drive/home";
-    icon = "${./icons/gdrive.png}";
-    terminal = false;
-    type = "Application";
-    categories = [ "Network" "WebBrowser" ];
-  };
-  home.packages = [ favicon-fetch ];
+  xdg.desktopEntries = builtins.listToAttrs (map (app: {
+    name = app.name;
+    value = mkWebApp app;
+  }) webApps);
 
   programs.brave = {
     enable = true;
@@ -91,7 +50,7 @@ in
     ];
 
     extensions = [
-      { id = "cjpalhdlnbpafiamejdnhcphjbkeiagm"; }   # uBlock Origin
+      { id = "cjpalhdlnbpafiamejdnhcphjbkeiagm"; }
     ];
   };
 }

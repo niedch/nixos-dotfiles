@@ -78,7 +78,7 @@ hl.config({
 		kb_options = "compose:caps",
 		repeat_rate = 40,
 		repeat_delay = 600,
-		sensitivity = 1,
+		sensitivity = -0.3,
 		follow_mouse = 1,
 		numlock_by_default = false,
 		touchpad = {
