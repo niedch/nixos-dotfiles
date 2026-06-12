@@ -78,7 +78,7 @@ hl.config({
 		kb_options = "compose:caps",
 		repeat_rate = 40,
 		repeat_delay = 600,
-		sensitivity = -0.5,
+		sensitivity = 1,
 		follow_mouse = 1,
 		numlock_by_default = false,
 		touchpad = {
@@ -86,3 +86,15 @@ hl.config({
 		},
 	},
 })
+
+hl.curve("slideEase", { type = "bezier", points = { {0.25, 0.1}, {0.25, 1.0} } })
+hl.curve("fastSnap", { type = "bezier", points = { {0.05, 0.7}, {0.1, 1.0} } })
+
+hl.animation({ leaf = "windows",        enabled = true, speed = 0.4, bezier = "fastSnap", style = "popin" })
+hl.animation({ leaf = "windowsOut",     enabled = true, speed = 0.4, bezier = "fastSnap", style = "popin" })
+hl.animation({ leaf = "fade",           enabled = true, speed = 0.3, bezier = "fastSnap" })
+hl.animation({ leaf = "workspaces",     enabled = true, speed = 1, bezier = "fastSnap", style = "slide" })
+hl.animation({ leaf = "border",         enabled = true, speed = 0.8, bezier = "fastSnap" })
+hl.animation({ leaf = "specialWorkspace",   enabled = true, speed = 1, bezier = "slideEase", style = "slidefadevert" })
+hl.animation({ leaf = "specialWorkspaceIn",  enabled = true, speed = 1, bezier = "slideEase", style = "slidefadevert" })
+hl.animation({ leaf = "specialWorkspaceOut", enabled = true, speed = 1, bezier = "slideEase", style = "slidefadevert" })

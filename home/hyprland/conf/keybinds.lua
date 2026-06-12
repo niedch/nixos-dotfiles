@@ -16,10 +16,6 @@ hl.bind(mainMod .. " + F",             hl.dsp.window.fullscreen())
 hl.bind(mainMod .. " + P",             hl.dsp.window.pseudo())
 
 -- Focus movement
-hl.bind(mainMod .. " + h",             hl.dsp.focus({ direction = "left" }))
-hl.bind(mainMod .. " + l",             hl.dsp.focus({ direction = "right" }))
-hl.bind(mainMod .. " + k",             hl.dsp.focus({ direction = "up" }))
-hl.bind(mainMod .. " + j",             hl.dsp.focus({ direction = "down" }))
 hl.bind(mainMod .. " + left",          hl.dsp.focus({ direction = "left" }))
 hl.bind(mainMod .. " + right",         hl.dsp.focus({ direction = "right" }))
 hl.bind(mainMod .. " + up",            hl.dsp.focus({ direction = "up" }))
@@ -33,9 +29,15 @@ for i = 1, 10 do
 	hl.bind(mainMod .. " + SHIFT + ALT + " .. key, hl.dsp.exec_cmd("hyprctl dispatch movetoworkspacesilent " .. i))
 end
 
--- Scratchpad
-hl.bind(mainMod .. " + S",             hl.dsp.workspace.toggle_special("scratchpad"))
-hl.bind(mainMod .. " + ALT + S",       hl.dsp.exec_cmd("hyprctl dispatch movetoworkspacesilent special:scratchpad"))
+-- Special workspaces
+hl.bind(mainMod .. " + j", hl.dsp.workspace.toggle_special("j-workspace"))
+hl.bind(mainMod .. " + k", hl.dsp.workspace.toggle_special("k-workspace"))
+hl.bind(mainMod .. " + l", hl.dsp.workspace.toggle_special("l-workspace"))
+hl.bind(mainMod .. " + s", hl.dsp.workspace.toggle_special("s-workspace"))
+hl.bind("CTRL + ALT + j", hl.dsp.workspace.toggle_special("j-workspace"))
+hl.bind("CTRL + ALT + k", hl.dsp.workspace.toggle_special("k-workspace"))
+hl.bind("CTRL + ALT + l", hl.dsp.workspace.toggle_special("l-workspace"))
+hl.bind("CTRL + ALT + s", hl.dsp.workspace.toggle_special("s-workspace"))
 
 -- Workspace navigation
 hl.bind(mainMod .. " + mouse_down",    hl.dsp.focus({ workspace = "e+1" }))
