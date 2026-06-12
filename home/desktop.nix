@@ -30,6 +30,7 @@
 
   home.packages = with pkgs; [
     docker-compose
+    lazydocker
     nodejs
     localsend
     (btop.override { cudaSupport = true; })

@@ -148,7 +148,12 @@ local config = {
 -- Needed for debugging
 config["on_attach"] = function(client, bufnr)
 	jdtls.setup_dap({ hotcodereplace = "off" })
-	require("jdtls.dap").setup_dap_main_class_configs()
+	vim.schedule(function()
+		local clients = vim.lsp.get_clients({ bufnr = bufnr, name = "jdtls" })
+		if #clients > 0 then
+			pcall(require("jdtls.dap").setup_dap_main_class_configs)
+		end
+	end)
 end
 
 -- This starts a new client & server, or attaches to an existing client & server based on the `root_dir`.
