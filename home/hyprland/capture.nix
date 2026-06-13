@@ -35,7 +35,9 @@ let
   capture-screenrecord = pkgs.writeShellScriptBin "capture-screenrecord" ''
     if pgrep -x wf-recorder > /dev/null 2>&1; then
       pkill -SIGINT wf-recorder
-      ${pkgs.libnotify}/bin/notify-send "Recording stopped" "Screen recording saved"
+      if [ -f /tmp/wf-recorder-last-file ]; then
+        ${pkgs.xdg-utils}/bin/xdg-open "$(cat /tmp/wf-recorder-last-file)"
+      fi
     else
       FILE="$HOME/Videos/$(date +%Y-%m-%d_%H-%M-%S).mp4"
       echo "$FILE" > /tmp/wf-recorder-last-file
@@ -72,6 +74,7 @@ in
     satty
     tesseract
     mpv
+    qimgv
     wf-recorder
     capture-screenshot-region
     capture-screenshot-fullscreen
