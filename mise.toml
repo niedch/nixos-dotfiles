@@ -11,3 +11,7 @@ run = "nix build .#nixosConfigurations.${usage_host?}.config.system.build.toplev
 description = "Switch to a NixOS configuration with sudo (e.g. laptop, desktop, dobby)"
 usage = 'arg "<host>" help="Host configuration name"'
 run = "sudo nixos-rebuild switch --flake .#${usage_host?}"
+
+[tasks.cleanup]
+description = "Cleanup old NixOS Derivations"
+run = "sudo nix-collect-garbage -d"
