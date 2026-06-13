@@ -1,8 +1,8 @@
 # Todos
 
 - [x] Clipboard manager
+- [x] Screenshot & Screenrecord
 - [ ] Rclone Setup
-- [ ] Screenshot & Screenrecord
 - [ ] Try different file browser
 - [ ] Quickshell maybe
 

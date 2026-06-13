@@ -111,8 +111,8 @@ end
 hl.bind(mainMod .. " + COMMA",         hl.dsp.exec_cmd("makoctl dismiss"))
 hl.bind(mainMod .. " + SHIFT + COMMA", hl.dsp.exec_cmd("makoctl dismiss --all"))
 
--- Screenshots and color picker
-hl.bind("Print",                       hl.dsp.exec_cmd("grim -g \"$(slurp)\""))
+-- Capture menu and color picker
+hl.bind("Print",                       hl.dsp.exec_cmd("capture-menu"))
 hl.bind(mainMod .. " + Print",         hl.dsp.exec_cmd("pkill hyprpicker; hyprpicker -a"))
 
 -- Lock screen

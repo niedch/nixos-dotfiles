@@ -16,5 +16,10 @@
     executable = true;
   };
 
+  xdg.configFile."waybar/indicators/screen-recording.sh" = {
+    source = ./indicators/screen-recording.sh;
+    executable = true;
+  };
+
   home.packages = with pkgs; [ cava ];
 }
