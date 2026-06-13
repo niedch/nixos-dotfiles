@@ -9,6 +9,11 @@ hl.bind(mainMod .. " + Space",         hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + CTRL + E",      hl.dsp.exec_cmd(menu .. " -m symbols"))
 hl.bind(mainMod .. " + CTRL + V",      hl.dsp.exec_cmd(menu .. " -m clipboard"))
 
+-- Universal copy/paste/cut
+hl.bind(mainMod .. " + C", hl.dsp.send_shortcut({ mods = "CTRL", key = "Insert" }))
+hl.bind(mainMod .. " + V", hl.dsp.send_shortcut({ mods = "SHIFT", key = "Insert" }))
+hl.bind(mainMod .. " + X", hl.dsp.send_shortcut({ mods = "CTRL", key = "X" }))
+
 -- Window management
 hl.bind(mainMod .. " + W",             hl.dsp.window.close())
 hl.bind(mainMod .. " + M",             hl.dsp.exec_cmd("hyprctl dispatch exit"))
