@@ -1,4 +1,4 @@
-{pkgs, inputs, ...}:
+{pkgs, lib, inputs, ...}:
 
 {
   imports = [
@@ -33,6 +33,8 @@
     lazydocker
     nodejs
     localsend
+    nixfmt
+    github-cli
     (btop.override { cudaSupport = true; })
     bluetui
     wiremix
@@ -42,6 +44,10 @@
     obsidian
     inputs."gazelle-tui".packages.${pkgs.system}.default
   ];
+
+  home.activation.githubAuth = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    ${lib.getExe pkgs.github-cli} auth login --with-token < /run/secrets/GITHUB_TOKEN
+  '';
 
   xdg.configFile."comd/config.toml".text = ''
 [global]
