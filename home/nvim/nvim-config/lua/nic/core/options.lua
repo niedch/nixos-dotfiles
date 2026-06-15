@@ -50,10 +50,10 @@ vim.filetype.add({
 		["rest"] = "http",
 		["zul"] = "xml",
 		["jenkinsfile"] = "groovy",
+		["prompt"] = "markdown",
 	},
 	pattern = {
 		["Jenkinsfile.*"] = "groovy",
-		["*.prompt"] = "markdown",
 	},
 })
 

@@ -64,7 +64,7 @@
     "format": "{:L%A %H:%M}",
     "format-alt": "{:L%d %B W%V %Y}",
     "tooltip-format": "<span>{calendar}</span>",
-    "on-click-right": "omarchy-launch-or-focus-webapp calendar.google.com https://calendar.google.com/calendar/u/0/r",
+    "on-click-right": "brave --app=https://calendar.google.com/calendar/u/0/r/month",
     "calendar": {
       "mode": "month",
       "mode-mon-col": 3,
@@ -77,11 +77,11 @@
     }
   },
   "custom/weather": {
-    "exec": "$OMARCHY_PATH/default/waybar/weather.sh",
+    "exec": "~/.config/waybar/weather.sh",
     "return-type": "json",
     "interval": 60,
     "tooltip": false,
-    "on-click": "notify-send -u low \"$(omarchy-weather-status)\""
+    "on-click": "brave --app=https://wttr.in"
   },
   "network": {
     "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
@@ -164,8 +164,8 @@
     "return-type": "json"
   },
   "custom/idle-indicator": {
-    "on-click": "omarchy-toggle-idle",
-    "exec": "$OMARCHY_PATH/default/waybar/indicators/idle.sh",
+    "on-click": "~/.config/waybar/bin/omarchy-toggle-idle",
+    "exec": "~/.config/waybar/indicators/idle.sh",
     "signal": 9,
     "return-type": "json"
   },
@@ -185,8 +185,8 @@
     "max-length": 30
   },
   "custom/notification-silencing-indicator": {
-    "on-click": "omarchy-toggle-notification-silencing",
-    "exec": "$OMARCHY_PATH/default/waybar/indicators/notification-silencing.sh",
+    "on-click": "~/.config/waybar/bin/omarchy-toggle-notification-silencing",
+    "exec": "~/.config/waybar/indicators/notification-silencing.sh",
     "signal": 10,
     "return-type": "json"
   },

@@ -19,6 +19,7 @@ in
   xdg.configFile."elephant/calc.toml".source = ./elephant/calc.toml;
   xdg.configFile."elephant/desktopapplications.toml".source = ./elephant/desktopapplications.toml;
   xdg.configFile."elephant/symbols.toml".source = ./elephant/symbols.toml;
+  xdg.configFile."elephant/websearch.toml".source = ./elephant/websearch.toml;
 
   xdg.configFile."elephant/menus/omarchy_background_selector.lua".text = ''
     Name = "omarchyBackgroundSelector"
