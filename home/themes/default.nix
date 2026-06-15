@@ -37,6 +37,9 @@ in
     selectorCommand = "walker --dmenu";
 
     gtk = {
+      iconTheme = {
+        package = pkgs.yaru-theme;
+      };
       cursorTheme = {
         name = "Bibata-Modern-Classic";
         package = pkgs.bibata-cursors;

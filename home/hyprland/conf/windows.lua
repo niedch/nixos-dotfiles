@@ -30,8 +30,8 @@ hl.window_rule({
 })
 
 hl.window_rule({
-	name   = "gazelle",
-	match  = { class = "org\\.omarchy\\.Gazelle" },
+	name   = "wlctl",
+	match  = { class = "org\\.omarchy\\.wlctl" },
 	float  = true,
 	center = true,
 	size   = { 800, 600 },

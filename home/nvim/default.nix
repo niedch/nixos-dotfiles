@@ -9,6 +9,7 @@
         cargo
         rustc
         gcc
+        tree-sitter
     ];
 
     xdg.configFile."nvim".source = ./nvim-config;

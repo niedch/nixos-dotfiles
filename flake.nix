@@ -14,12 +14,12 @@
 		nix-omarchy-theme = {
 			url = "github:niedch/nix-omarchy-theme";
 			inputs.nixpkgs.follows = "nixpkgs";
-
 		};
 
-		gazelle-tui.url = "github:Zeus-Deus/gazelle-tui";
-
-		zen-browser.url = "github:youwen5/zen-browser-flake";
+    wlctl = {
+			url = "github:aashish-thapa/wlctl";
+			inputs.nixpkgs.follows = "nixpkgs";
+    };
 
 		sops-nix = {
 			url = "github:Mic92/sops-nix";
@@ -32,7 +32,7 @@
     };
 	};
 
-	outputs = {self, nixpkgs, home-manager, hyprland, nix-omarchy-theme, zen-browser, sops-nix, nixos-hardware, ...  } @ inputs: {
+	outputs = {self, nixpkgs, home-manager, hyprland, nix-omarchy-theme, sops-nix, wlctl, nixos-hardware, ...  } @ inputs: {
 		nixosConfigurations = {
 			desktop = nixpkgs.lib.nixosSystem {
 				specialArgs = { inherit inputs; };

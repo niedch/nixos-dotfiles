@@ -1,31 +1,26 @@
-# Nautilus Theming
+# Nautilus & GTK Theming
 
-Nautilus (and other GNOME/GTK apps) picks up the theme and icon pack via **dconf/gsettings**.
+Nautilus (and other GNOME/libadwaita apps) picks up theming from **`nix-omarchy-theme`**, which handles everything via `home.activation.setupThemes` and the `theme-switcher` script.
 
-## How it works
+## What `nix-omarchy-theme` does
 
-Two paths keep the icon theme in sync with Omarchy's current theme:
+On `home-manager switch` and live `theme-switcher`:
 
-### 1. `home-manager switch` — `home/hyprland/default.nix`
+| Setting | Source | Mechanism |
+|---------|--------|-----------|
+| `gtk-theme` | `gtk.theme` file in theme, or `Adwaita`/`Adwaita-dark` | dconf + `settings.ini` + `GTK_THEME` env var |
+| `icon-theme` | `icons.theme` file in theme, or `gtk.iconTheme` Nix option | dconf + `settings.ini` |
+| `color-scheme` | `prefer-light`/`prefer-dark` based on `light.mode` | dconf only |
+| `cursor-theme` | `gtk.cursorTheme.name` Nix option | dconf + `settings.ini` |
+| GTK CSS overrides | `gtk.css` template with theme colors | Symlinked to `~/.config/gtk-3.0/` and `~/.config/gtk-4.0/` |
 
-- `gtk.theme.name = "Adwaita-dark"` — writes `gtk-theme-name` to `~/.config/gtk-3.0/settings.ini` and `~/.config/gtk-4.0/settings.ini` for GTK3/4 apps
-- `dconf.settings."org/gnome/desktop/interface"` — declaratively sets `color-scheme` and `gtk-theme` in the dconf database
-- `home.activation.setGnomeIconTheme` — reads `~/.themes-src/current/icons.theme` and runs `gsettings set org.gnome.desktop.interface icon-theme` on every rebuild
+## How it propagates to apps
 
-### 2. Live theme switch — `nix-omarchy-theme-manager/flake.nix`
-
-The `theme-switcher` script (aliased to `ts`) now updates gsettings after switching:
-
-- `icon-theme` → read from `~/.themes-src/current/icons.theme`
-- `gtk-theme` → `"Adwaita-dark"`
-- `color-scheme` → `"prefer-dark"`
-
-## Files changed
-
-| File | Change |
-|------|--------|
-| `home/hyprland/default.nix` | Added `gtk.theme.name`, `dconf` block, `home.activation.setGnomeIconTheme` |
-| `nix-omarchy-theme-manager/flake.nix` | Added gsettings commands to `theme-switcher` script |
+- **dconf/gsettings** — picked up by GNOME apps and Wayland sessions
+- **`~/.config/environment.d/theme.conf`** — read by systemd user services on login; sets `GTK_THEME` and `ADW_DISABLE_PORTAL`
+- **zsh init** — `theme.conf` is sourced on shell start so terminal-launched apps inherit both variables
+- **`GTK_THEME=Name:dark` env var** — forces libadwaita apps (Nautilus) to use the theme
+- **`ADW_DISABLE_PORTAL=1`** — required on Hyprland because `xdg-desktop-portal-hyprland` doesn't implement `org.freedesktop.portal.Settings`. Without it, libadwaita apps fail to read `color-scheme` from the portal and fall back to light mode instead of reading dconf
 
 ## Theme ↔ icon mapping
 

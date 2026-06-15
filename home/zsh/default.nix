@@ -24,12 +24,13 @@
                 export EDITOR='nvim'
             fi
             export JDTLS_JVM_ARGS="-javaagent:$HOME/.config/nvim/lib/lombok.jar"
+
             export DISABLE_MAGIC_FUNCTIONS="true"
             export DISABLE_AUTO_TITLE="true"
             export DISABLE_UNTRACKED_FILES_DIRTY="true"
+
             export GEMINI_API_KEY=$(cat /run/secrets/GEMINI_API_KEY)
             export GOOGLE_GENERATIVE_AI_API_KEY=$(cat /run/secrets/GOOGLE_GENERATIVE_AI_API_KEY)
-            export GITHUB_ENTERPRISE_API_KEY=$(cat /run/secrets/GITHUB_ENTERPRISE_API_KEY)
             export OPENCODE_GO=$(cat /run/secrets/OPENCODE_GO)
         '';
         initContent = ''

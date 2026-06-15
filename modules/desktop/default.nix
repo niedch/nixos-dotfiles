@@ -18,6 +18,8 @@
   systemd.services.fwupd-refresh.serviceConfig.ExecStart =
     lib.mkForce "${pkgs.fwupd}/bin/fwupdmgr refresh --ignore-embargo";
 
+  systemd.timers.fwupd-refresh.enable = false;
+
   # localsend uses this port for LAN discovery and file transfer
   networking.firewall = {
     allowedTCPPorts = [ 53317 ];

@@ -94,7 +94,7 @@
     "tooltip-format-disconnected": "Disconnected",
     "interval": 3,
     "spacing": 1,
-    "on-click": "ghostty --class=org.omarchy.Gazelle -e gazelle"
+    "on-click": "ghostty --class=org.omarchy.wlctl -e wlctl"
   },
   "battery": {
     "format": "{capacity}% {icon}",

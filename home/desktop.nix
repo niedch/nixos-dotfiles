@@ -34,7 +34,6 @@
     nodejs
     localsend
     nixfmt
-    github-cli
     (btop.override { cudaSupport = true; })
     bluetui
     wiremix
@@ -42,12 +41,10 @@
     python3
     gnumake
     obsidian
-    inputs."gazelle-tui".packages.${pkgs.system}.default
+    inputs.wlctl.packages.${pkgs.system}.default
+    fd
+    unzip
   ];
-
-  home.activation.githubAuth = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    ${lib.getExe pkgs.github-cli} auth login --with-token < /run/secrets/GITHUB_TOKEN
-  '';
 
   xdg.configFile."comd/config.toml".text = ''
 [global]
