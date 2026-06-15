@@ -33,6 +33,7 @@
   sops.age.keyFile = "/home/nic/.config/sops/age/keys.txt";
 
   home.packages = with pkgs; [
+    yaru-theme
     docker-compose
     lazydocker
     nodejs
