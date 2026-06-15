@@ -32,6 +32,13 @@
 	xdg.configFile."hypr/hyprsunset.conf".source = ./hyprsunset.conf;
 
 
+	xdg.portal = {
+		extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
+		config.hyprland = {
+			default = [ "hyprland" "gtk" ];
+		};
+	};
+
 	home.packages = with pkgs; [
 		mako
 		wl-clipboard

@@ -36,17 +36,6 @@ in
 
     selectorCommand = "walker --dmenu";
 
-    gtk = {
-      iconTheme = {
-        package = pkgs.yaru-theme;
-      };
-      cursorTheme = {
-        name = "Bibata-Modern-Classic";
-        package = pkgs.bibata-cursors;
-        size = 12;
-      };
-    };
-
     symlinks = {
       "hypr/theme.lua".source = "hyprland.lua";
       "hypr/hyprlock-theme.conf".source = "hyprlock.conf";
