@@ -9,15 +9,14 @@
     '')
   ];
 
-  programs.git = {
-    enable = true;
+    programs.git = {
+      enable = true;
 
-    userName = "nic";
-    userEmail = "christoph.niederer99@gmail.com";
-
-    extraConfig = {
-      push.autoSetupRemote = true;
-      pull.rebase = true;
+      settings = {
+        user.name = "nic";
+        user.email = "christoph.niederer99@gmail.com";
+        push.autoSetupRemote = true;
+        pull.rebase = true;
+      };
     };
-  };
 }

@@ -61,6 +61,12 @@ hl.window_rule({
 	size   = { 800, 600 },
 })
 
+hl.window_rule({
+	name   = "steam-float",
+	match  = { class = "steam" },
+	float  = true,
+})
+
 hl.layer_rule({ no_anim = true, match = { namespace = "walker" } })
 hl.workspace_rule({ workspace = "w[tv1]", gaps_in = 0, gaps_out = 0, border_size = 0 })
 hl.workspace_rule({ workspace = "f[1]",   gaps_in = 0, gaps_out = 0, border_size = 0 })

@@ -45,5 +45,6 @@
 		polkit_gnome
 		libnotify
 		jq
+    swaybg
 	];
 }

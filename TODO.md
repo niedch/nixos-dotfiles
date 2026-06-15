@@ -6,4 +6,3 @@
 - [ ] Try different file browser
 - [ ] Quickshell maybe
 
-

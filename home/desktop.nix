@@ -1,11 +1,15 @@
-{pkgs, lib, inputs, ...}:
+{
+  pkgs,
+  lib,
+  inputs,
+  ...
+}:
 
 {
   imports = [
     ./brave
     ./ghostty
     ./hyprland
-    ./swaybg
     ./waybar
     ./themes
     ./walker
@@ -44,13 +48,14 @@
     inputs.wlctl.packages.${pkgs.system}.default
     fd
     unzip
+    jetbrains.idea
   ];
 
   xdg.configFile."comd/config.toml".text = ''
-[global]
-system_prompt = """
-You are a helper Bot for Bash! Only responded with a single line of bash. Only bash! No Backticks!
-"""
-model = "gemini-2.5-flash"
+    [global]
+    system_prompt = """
+    You are a helper Bot for Bash! Only responded with a single line of bash. Only bash! No Backticks!
+    """
+    model = "gemini-2.5-flash"
   '';
 }

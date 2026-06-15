@@ -4,11 +4,12 @@
     ./hyprland.nix
     ./displaymanager.nix
     ./fonts.nix
+    ./steam.nix
   ];
 
   services.fwupd = {
     enable = true;
-    extraRemotes = [];
+    extraRemotes = [ ];
   };
 
   # fwupd-refresh.service periodically checks for firmware updates from LVFS.
@@ -25,4 +26,5 @@
     allowedTCPPorts = [ 53317 ];
     allowedUDPPorts = [ 53317 ];
   };
+
 }

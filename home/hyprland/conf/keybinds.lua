@@ -1,7 +1,7 @@
 -- Applications
 hl.bind(mainMod .. " + Return",        hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. " + SHIFT + Return", hl.dsp.exec_cmd("xdg-open ~"))
-hl.bind(mainMod .. " + SHIFT + F",     hl.dsp.exec_cmd(fileManager))
+hl.bind(mainMod .. " + SHIFT + F",     hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + SHIFT + N",     hl.dsp.exec_cmd(terminal .. " -e nvim"))
 hl.bind(mainMod .. " + SHIFT + T",     hl.dsp.exec_cmd("theme-switcher"))
 hl.bind(mainMod .. " + SHIFT + B",     hl.dsp.exec_cmd("theme-wallpaper"))

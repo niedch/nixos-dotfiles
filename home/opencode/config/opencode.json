@@ -34,6 +34,16 @@
         "bash": "deny",
         "todowrite": "deny"
       }
+    },
+    "pr-summarizer": {
+      "description": "Summarizes GitHub pull request comments using gh CLI and deepseek-v4-flash",
+      "mode": "subagent",
+      "model": "opencode-go/deepseek-v4-flash",
+      "prompt": "{file:./prompts/pr-summarizer.md}",
+      "permission": {
+        "edit": "deny",
+        "todowrite": "deny"
+      }
     }
   }
 }
