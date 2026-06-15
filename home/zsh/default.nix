@@ -15,7 +15,7 @@
             ];
         };
         autosuggestion.enable = true;
-        envExtra = ''
+        initContent = ''
             export MANPATH="/usr/local/man:$MANPATH"
             export LANG=en_US.UTF-8
             if [[ -n $SSH_CONNECTION ]]; then
@@ -32,8 +32,7 @@
             export GEMINI_API_KEY=$(cat /run/secrets/GEMINI_API_KEY)
             export GOOGLE_GENERATIVE_AI_API_KEY=$(cat /run/secrets/GOOGLE_GENERATIVE_AI_API_KEY)
             export OPENCODE_GO=$(cat /run/secrets/OPENCODE_GO)
-        '';
-        initContent = ''
+
             source $HOME/.config/zsh/homes.sh
             for f in $HOME/.config/zsh/*.sh; do
                 name=$(basename "$f")

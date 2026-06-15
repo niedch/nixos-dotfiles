@@ -45,7 +45,7 @@
     python3
     gnumake
     obsidian
-    inputs.wlctl.packages.${pkgs.system}.default
+    inputs.wlctl.packages.${pkgs.stdenv.hostPlatform.system}.default
     fd
     unzip
     jetbrains.idea
