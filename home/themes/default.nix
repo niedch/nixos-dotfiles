@@ -1,3 +1,8 @@
+# To update a theme's ref and hash:
+#   1. Set hash to "" (empty string)
+#   2. Run: nix build .#homeConfigurations.<name>.activationPackage 2>&1 | grep "got:"
+#   3. Copy the suggested hash back into this file
+#   Or use: nix-prefetch-git <url> <ref>
 {
   inputs,
   pkgs,
@@ -50,6 +55,12 @@ in {
         hash = "sha256-AfwCqhF7WMtavS+Z1YTO1YU3XsfGiwDyGhjhzYyvsfY=";
         defaultBackground = "BG4b.jpg";
       };
+      mechanoona = {
+        url = "https://github.com/HANCORE-linux/omarchy-mechanoonna-theme.git";
+        ref = "612e122cfc0e3475559e081ca41cd99d2356b4a3";
+        hash = "sha256-fr0swq4pXBVxzCxv8pK5rj9v3ed2DMKFjkvfq6cE2ro=";
+      };
+      
       last-horizon = {
         url = omarchyRepo;
         ref = omarchyRef;
