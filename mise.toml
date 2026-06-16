@@ -23,7 +23,7 @@ run = """
 git add .
 msg=$(mise run commit-with-gen)
 git commit -e -m "$msg"
-mise run switch .${usage_host?}
+mise run switch ${usage_host?}
 """
 
 [tasks.cleanup]
