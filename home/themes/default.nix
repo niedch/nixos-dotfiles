@@ -57,6 +57,17 @@ in {
           {
             url = "https://w.wallhaven.cc/full/3q/wallhaven-3qrdr6.jpg";
             hash = "sha256-sDmF+oM7eMsT+3W9fgdGbN0hAi7IeIAl/IhlAYo1CK8=";
+            filename = "BG_Painting.jpg";
+          }
+          {
+            url = "https://w.wallhaven.cc/full/6l/wallhaven-6lwr2x.jpg";
+            hash = "sha256-qGpudZv+1GeBfjd/LWOZmGZTn/KayjxpZw4zSKLwdpA=";
+            filename = "BG_Tirol.jpg";
+          }
+          {
+            url = "https://w.wallhaven.cc/full/3q/wallhaven-3qr15y.jpg";
+            hash = "sha256-IHhL4heE3ON+PGvY+Nwz9qyIPb8Cq56rHjtlByrJkDc=";
+            filename = "BG_SW_Scoul.jpg";
           }
         ];
       };
@@ -100,6 +111,7 @@ in {
           {
             url = "https://w.wallhaven.cc/full/5y/wallhaven-5yr1p8.png";
             hash = "sha256-G0rbcCmDKK91Iz2jymVxQs9TlzRFwdnbkhWibVnOu4g=";
+            filename = "BG_PixelArt_Lake.png";
           }
         ];
       };
