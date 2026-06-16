@@ -18,10 +18,12 @@ run = "sudo nixos-rebuild switch --flake .#${usage_host?}"
 
 [tasks.rebuild]
 description = "Stage all changes, generate commit message, open editor to commit, and push"
+usage = 'arg "<host>" help="Host configuration name"'
 run = """
 git add .
 msg=$(mise run commit-with-gen)
 git commit -e -m "$msg"
+mise run switch .${usage_host?}
 """
 
 [tasks.cleanup]
