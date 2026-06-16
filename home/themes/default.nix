@@ -5,7 +5,6 @@
 #   Or use: nix-prefetch-git <url> <ref>
 {
   inputs,
-  pkgs,
   ...
 }: let
   omarchyRepo = "https://github.com/basecamp/omarchy.git";
@@ -54,6 +53,12 @@ in {
         ref = "bc405d36b93e0abff39c22eda14d1f33121319f3";
         hash = "sha256-AfwCqhF7WMtavS+Z1YTO1YU3XsfGiwDyGhjhzYyvsfY=";
         defaultBackground = "BG4b.jpg";
+        extraBackgrounds = [
+          {
+            url = "https://w.wallhaven.cc/full/3q/wallhaven-3qrdr6.jpg";
+            hash = "sha256-sDmF+oM7eMsT+3W9fgdGbN0hAi7IeIAl/IhlAYo1CK8=";
+          }
+        ];
       };
       mechanoona = {
         url = "https://github.com/HANCORE-linux/omarchy-mechanoonna-theme.git";
