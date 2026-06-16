@@ -95,7 +95,13 @@ in {
         ref = omarchyRef;
         hash = omarchyHash;
         subpath = "themes/nord";
-        defaultBackground = "2-night-hawks.png";
+        defaultBackground = "wallhaven-5yr1p8.png";
+        extraBackgrounds = [
+          {
+            url = "https://w.wallhaven.cc/full/5y/wallhaven-5yr1p8.png";
+            hash = "sha256-G0rbcCmDKK91Iz2jymVxQs9TlzRFwdnbkhWibVnOu4g=";
+          }
+        ];
       };
       osaka-jade = {
         url = omarchyRepo;
