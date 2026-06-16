@@ -44,6 +44,14 @@ in {
         ref = omarchyRef;
         hash = omarchyHash;
         subpath = "themes/gruvbox";
+        defaultBackground = "6-houses.png";
+        extraBackgrounds = [
+        {
+          url = "https://w.wallhaven.cc/full/9m/wallhaven-9mj8yw.png";
+          hash = "sha256-m+CJrkoRp48ZY8LHBWBN7MnxWReLKxkKweKWdOvg1Fg=";
+          filename = "6-houses.png";
+        }
+        ];
       };
       kanso = {
         url = "https://github.com/HANCORE-linux/omarchy-kanso-theme.git";
@@ -108,7 +116,7 @@ in {
           {
             url = "https://w.wallhaven.cc/full/vm/wallhaven-vmdpd5.jpg";
             hash = "sha256-2qkUwLAvqEegpMZqWnJmnI7VhV2+AGj4ALecHisc+YY=";
-            filename = "3_Snow.jpg";
+            filename = "3-Snow.jpg";
           }
         ];
       };
