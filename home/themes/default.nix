@@ -109,9 +109,9 @@ in {
         defaultBackground = "wallhaven-5yr1p8.png";
         extraBackgrounds = [
           {
-            url = "https://w.wallhaven.cc/full/5y/wallhaven-5yr1p8.png";
-            hash = "sha256-G0rbcCmDKK91Iz2jymVxQs9TlzRFwdnbkhWibVnOu4g=";
-            filename = "BG_PixelArt_Lake.png";
+            url = "https://w.wallhaven.cc/full/vm/wallhaven-vmdpd5.jpg";
+            hash = "sha256-2qkUwLAvqEegpMZqWnJmnI7VhV2+AGj4ALecHisc+YY=";
+            filename = "3_Snow.jpg";
           }
         ];
       };
