@@ -6,7 +6,10 @@
     faviconDomain ? null,
   }: let
     sanitized = builtins.replaceStrings [" "] ["-"] name;
-    domain = if faviconDomain != null then faviconDomain else builtins.head (builtins.match "https://([^/]+).*" url);
+    domain =
+      if faviconDomain != null
+      then faviconDomain
+      else builtins.head (builtins.match "https://([^/]+).*" url);
     rawIcon = pkgs.fetchurl {
       url = "https://www.google.com/s2/favicons?domain=${domain}&sz=256";
       name = "${sanitized}-favicon.png";
