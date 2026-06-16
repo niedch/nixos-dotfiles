@@ -59,8 +59,8 @@ in {
         url = "https://github.com/HANCORE-linux/omarchy-mechanoonna-theme.git";
         ref = "612e122cfc0e3475559e081ca41cd99d2356b4a3";
         hash = "sha256-fr0swq4pXBVxzCxv8pK5rj9v3ed2DMKFjkvfq6cE2ro=";
+        defaultBackground = "BG3.jpg";
       };
-      
       last-horizon = {
         url = omarchyRepo;
         ref = omarchyRef;
