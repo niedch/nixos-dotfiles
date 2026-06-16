@@ -90,6 +90,7 @@ in {
         ref = omarchyRef;
         hash = omarchyHash;
         subpath = "themes/nord";
+        defaultBackground = "2-night-hawks.png";
       };
       osaka-jade = {
         url = omarchyRepo;
