@@ -31,16 +31,20 @@ for i = 1, 10 do
 	local key = i % 10
 	hl.bind(mainMod .. " + " .. key,          hl.dsp.focus({ workspace = i }))
 	hl.bind(mainMod .. " + SHIFT + " .. key,  hl.dsp.window.move({ workspace = i }))
-	hl.bind(mainMod .. " + SHIFT + ALT + " .. key, hl.dsp.exec_cmd("hyprctl dispatch movetoworkspacesilent " .. i))
+end
+
+-- Workspaces (Ctrl+Alt row)
+local ctrl_alt_keys = { "q", "w", "e", "r", "t", "y", "u", "i", "o", "p" }
+for i, key in ipairs(ctrl_alt_keys) do
+	hl.bind("CTRL + ALT + " .. key,              hl.dsp.focus({ workspace = i }))
+	hl.bind("CTRL + ALT + SHIFT + " .. key,      hl.dsp.window.move({ workspace = i }))
 end
 
 -- Special workspaces
 hl.bind(mainMod .. " + j", hl.dsp.workspace.toggle_special("j-workspace"))
-hl.bind(mainMod .. " + k", hl.dsp.workspace.toggle_special("k-workspace"))
 hl.bind(mainMod .. " + l", hl.dsp.workspace.toggle_special("l-workspace"))
 hl.bind(mainMod .. " + s", hl.dsp.workspace.toggle_special("s-workspace"))
 hl.bind("CTRL + ALT + j", hl.dsp.workspace.toggle_special("j-workspace"))
-hl.bind("CTRL + ALT + k", hl.dsp.workspace.toggle_special("k-workspace"))
 hl.bind("CTRL + ALT + l", hl.dsp.workspace.toggle_special("l-workspace"))
 hl.bind("CTRL + ALT + s", hl.dsp.workspace.toggle_special("s-workspace"))
 

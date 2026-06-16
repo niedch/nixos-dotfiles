@@ -179,6 +179,8 @@ in {
       "walker/themes/kanso/style.css".source = "walker.css";
       "mako/config".source = "mako.ini";
       "btop/themes/btop.theme".source = "btop.theme";
+      "gtk-3.0/settings.ini".source = "settings-3.0.ini";
+      "gtk-4.0/settings.ini".source = "settings-4.0.ini";
     };
   };
 }
