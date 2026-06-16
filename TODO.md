@@ -6,3 +6,5 @@
 - [ ] Try different file browser
 - [ ] Quickshell maybe
 
+
+- [ ] Add another todo
