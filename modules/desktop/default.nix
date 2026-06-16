@@ -1,5 +1,8 @@
-{ pkgs, lib, ... }:
 {
+  pkgs,
+  lib,
+  ...
+}: {
   imports = [
     ./hyprland.nix
     ./displaymanager.nix
@@ -9,7 +12,7 @@
 
   services.fwupd = {
     enable = true;
-    extraRemotes = [ ];
+    extraRemotes = [];
   };
 
   # fwupd-refresh.service periodically checks for firmware updates from LVFS.
@@ -23,8 +26,7 @@
 
   # localsend uses this port for LAN discovery and file transfer
   networking.firewall = {
-    allowedTCPPorts = [ 53317 ];
-    allowedUDPPorts = [ 53317 ];
+    allowedTCPPorts = [53317];
+    allowedUDPPorts = [53317];
   };
-
 }

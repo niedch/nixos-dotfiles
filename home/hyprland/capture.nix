@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-let
+{pkgs, ...}: let
   capture-screenshot-region = pkgs.writeShellScriptBin "capture-screenshot-region" ''
     grim -g "$(${pkgs.slurp}/bin/slurp)" "$HOME/Pictures/$(date +%Y-%m-%d_%H-%M-%S).png" \
       && ${pkgs.libnotify}/bin/notify-send "Screenshot saved" "$HOME/Pictures/$(date +%Y-%m-%d_%H-%M-%S).png"
@@ -21,14 +19,14 @@ let
   capture-screenshot-smart = pkgs.writeShellScriptBin "capture-screenshot-smart" ''
     GEOM=$(${pkgs.hyprland}/bin/hyprctl activewindow -j | ${pkgs.jq}/bin/jq -r '"\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1])"')
     ${pkgs.grim}/bin/grim -g "$GEOM" "$HOME/Pictures/$(date +%Y-%m-%d_%H-%M-%S).png" \
-      && ${pkgs.libnotify}/bin/notify-send "Screenshot saved"
+      && ${pkgs.libnotify}/bin/notify-send "Screenshot saved $HOME/Pictures/$(date +%Y-%m-%d_%H-%M-%S).png"
   '';
 
   capture-screenshot-text-extract = pkgs.writeShellScriptBin "capture-screenshot-text-extract" ''
     TEMP=$(mktemp /tmp/screenshot-text-extract-XXXXXX.png)
     ${pkgs.grim}/bin/grim -g "$(${pkgs.slurp}/bin/slurp)" "$TEMP"
     ${pkgs.tesseract}/bin/tesseract "$TEMP" - | ${pkgs.wl-clipboard}/bin/wl-copy
-    ${pkgs.libnotify}/bin/notify-send "Text Extract" "Text copied to clipboard"
+    ${pkgs.libnotify}/bin/notify-send "Text Extract" "Text copied to clipboard: $TEMP"
     rm -f "$TEMP"
   '';
 
@@ -66,8 +64,7 @@ let
       "Screen Recording Toggle") capture-screenrecord ;;
     esac
   '';
-in
-{
+in {
   home.packages = with pkgs; [
     grim
     slurp

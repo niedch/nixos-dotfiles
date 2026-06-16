@@ -1,5 +1,4 @@
-{pkgs, ...}:
-{
+{pkgs, ...}: {
   services.openssh = {
     enable = true;
     settings = {
@@ -9,6 +8,6 @@
   };
 
   networking.firewall = {
-    allowedTCPPorts = [ 22 ];
+    allowedTCPPorts = [22];
   };
 }

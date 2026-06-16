@@ -1,11 +1,8 @@
 {
   pkgs,
-  lib,
   inputs,
   ...
-}:
-
-{
+}: {
   imports = [
     ./brave
     ./ghostty
@@ -39,7 +36,7 @@
     nodejs
     localsend
     nixfmt
-    (btop.override { cudaSupport = true; })
+    (btop.override {cudaSupport = true;})
     bluetui
     wiremix
     spotify

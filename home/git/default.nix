@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   home.packages = with pkgs; [
     git
     github-cli
@@ -9,14 +7,14 @@
     '')
   ];
 
-    programs.git = {
-      enable = true;
+  programs.git = {
+    enable = true;
 
-      settings = {
-        user.name = "nic";
-        user.email = "christoph.niederer99@gmail.com";
-        push.autoSetupRemote = true;
-        pull.rebase = true;
-      };
+    settings = {
+      user.name = "nic";
+      user.email = "christoph.niederer99@gmail.com";
+      push.autoSetupRemote = true;
+      pull.rebase = true;
     };
+  };
 }

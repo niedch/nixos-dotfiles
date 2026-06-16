@@ -1,7 +1,5 @@
-{ pkgs, ... }:
-
-{
-	services.displayManager.ly = {
-		enable = true;
-	};
+{pkgs, ...}: {
+  services.displayManager.ly = {
+    enable = true;
+  };
 }

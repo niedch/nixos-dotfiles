@@ -1,9 +1,11 @@
-{ config, pkgs, ... }:
-
 {
-    home.packages = with pkgs; [
-        mise
-    ];
+  config,
+  pkgs,
+  ...
+}: {
+  home.packages = with pkgs; [
+    mise
+  ];
 
-    xdg.configFile."mise/config.toml".source = ./config.toml;
+  xdg.configFile."mise/config.toml".source = ./config.toml;
 }

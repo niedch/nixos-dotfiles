@@ -1,15 +1,15 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ config, pkgs, ... }:
-
 {
-  imports =
-    [ 
-      ./hardware-configuration.nix
-      ./power.nix
-    ];
+  config,
+  pkgs,
+  ...
+}: {
+  imports = [
+    ./hardware-configuration.nix
+    ./power.nix
+  ];
 
   # Bootloader.
   # boot.loader.systemd-boot.enable = true;
@@ -20,17 +20,17 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "nixos"; # Define your hostname.
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = ["nix-command" "flakes"];
 
   networking.networkmanager.enable = true;
-  networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  networking.wireless.enable = true; # Enables wireless support via wpa_supplicant.
   # networking.networkmanager.wifi.backend = "iwd";
 
   hardware.bluetooth.enable = true;
 
   hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
 
-  boot.kernelParams = [ "nvidia_drm.fbdev=1" ];
+  boot.kernelParams = ["nvidia_drm.fbdev=1"];
 
   environment.sessionVariables = {
     __NV_PRIME_RENDER_OFFLOAD = "1";
@@ -77,5 +77,4 @@
   };
 
   system.stateVersion = "25.11"; # Did you read the comment?
-
 }

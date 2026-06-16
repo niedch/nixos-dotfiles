@@ -2,6 +2,10 @@
 description = "Update the nix-omarchy-theme flake dependency to its latest commit"
 run = "nix flake update nix-omarchy-theme"
 
+[tasks.format]
+description = "Formats this project"
+run = "nix run nixpkgs#alejandra -- . 2>&1"
+
 [tasks.build]
 description = "Build a NixOS configuration (e.g. laptop, desktop, dobby)"
 usage = 'arg "<host>" help="Host configuration name"'

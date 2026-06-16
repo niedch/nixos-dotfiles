@@ -1,11 +1,9 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   programs.waybar = {
     enable = true;
     systemd = {
       enable = true;
-      targets = [ "hyprland-session.target" ];
+      targets = ["hyprland-session.target"];
     };
   };
 
@@ -51,5 +49,5 @@
     executable = true;
   };
 
-  home.packages = with pkgs; [ cava ];
+  home.packages = with pkgs; [cava];
 }

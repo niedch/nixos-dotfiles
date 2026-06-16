@@ -1,6 +1,8 @@
-{ config, pkgs, ... }:
-
 {
+  config,
+  pkgs,
+  ...
+}: {
   sops.secrets = {
     "git_ed25519" = {
       path = "${config.home.homeDirectory}/.ssh/git_ed25519";
