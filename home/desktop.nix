@@ -26,6 +26,14 @@
 
   programs.home-manager.enable = true;
 
+  programs.btop = {
+    enable = true;
+    package = pkgs.btop.override { cudaSupport = true; };
+    settings = {
+      color_theme = "btop";
+    };
+  };
+
   sops.defaultSopsFile = ../secrets/secrets.yaml;
   sops.age.keyFile = "/home/nic/.config/sops/age/keys.txt";
 
@@ -36,7 +44,6 @@
     nodejs
     localsend
     nixfmt
-    (btop.override {cudaSupport = true;})
     bluetui
     wiremix
     spotify

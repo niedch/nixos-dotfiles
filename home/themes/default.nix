@@ -138,6 +138,7 @@ in {
       "waybar/colors.css".source = "waybar.css";
       "walker/themes/kanso/style.css".source = "walker.css";
       "mako/config".source = "mako.ini";
+      "btop/themes/btop.theme".source = "btop.theme";
     };
   };
 }
