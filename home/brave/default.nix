@@ -3,9 +3,10 @@
     name,
     url,
     sha256,
+    faviconDomain ? null,
   }: let
     sanitized = builtins.replaceStrings [" "] ["-"] name;
-    domain = builtins.head (builtins.match "https://([^/]+).*" url);
+    domain = if faviconDomain != null then faviconDomain else builtins.head (builtins.match "https://([^/]+).*" url);
     rawIcon = pkgs.fetchurl {
       url = "https://www.google.com/s2/favicons?domain=${domain}&sz=256";
       name = "${sanitized}-favicon.png";
@@ -18,8 +19,9 @@
     name,
     url,
     sha256,
+    faviconDomain ? null,
   }: let
-    iconPath = fetchFavicon {inherit name url sha256;};
+    iconPath = fetchFavicon {inherit name url sha256 faviconDomain;};
   in {
     inherit name;
     exec = "${pkgs.brave}/bin/brave --start-maximized --app=${url}";
@@ -79,6 +81,12 @@
       name = "Discord";
       url = "https://discord.com/channels/@me";
       sha256 = "sha256-Q51DlMl/2XLwrAR7UDh35Ley44dvw92ePp7MOP0Ojlo=";
+    }
+    {
+      name = "Whatsapp";
+      url = "https://web.whatsapp.com/";
+      sha256 = "sha256-X7icJI6OfjNFIp3sos3/k8EPlMswZ0veNqsdsbtkPac=";
+      faviconDomain = "whatsapp.com";
     }
   ];
 in {
