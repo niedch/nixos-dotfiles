@@ -8,7 +8,7 @@ end
 mainMod = "SUPER"
 terminal = "ghostty"
 fileManager = "nautilus"
-menu = "omarchy-launch-walker"
+menu = "launch-walker"
 
 local conf_dir = os.getenv("HOME") .. "/.config/hypr/conf"
 dofile(conf_dir .. "/env.lua")

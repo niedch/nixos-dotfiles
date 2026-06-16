@@ -1,7 +1,6 @@
 {pkgs, ...}: let
-  launch-walker = pkgs.writeShellScriptBin "omarchy-launch-walker" ''
-    GSK_RENDERER=cairo exec ${pkgs.walker}/bin/walker \
-      --width 644 --maxheight 300 --minheight 300 "$@"
+  launch-walker = pkgs.writeShellScriptBin "launch-walker" ''
+    GSK_RENDERER=cairo exec ${pkgs.walker}/bin/walker "$@"
   '';
 
   restart-walker = pkgs.writeShellScriptBin "omarchy-restart-walker" ''
