@@ -46,7 +46,7 @@
       sha256 = "sha256-3vONfw6TIFUEiBaCgZTV6voOvziOTzYs/wnJ1+6cmos=";
     }
     {
-      name = "Gmail";
+      name = "Goggle Mail";
       url = "https://mail.google.com/mail/u/0";
       sha256 = "sha256-Y+/P6e7aTMWJZcdYekhYhmEsv4eOzY/D5N1ZTbMaZ/0=";
     }

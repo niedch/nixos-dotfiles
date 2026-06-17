@@ -1,6 +1,6 @@
 {config, pkgs, ...}: let
   remote = "G-Drive:Documents";
-  mountPoint = "/media/gdrive";
+  mountPoint = "/media/Google-Drive";
 in {
   environment.systemPackages = [pkgs.rclone];
 
