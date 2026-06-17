@@ -9,6 +9,8 @@ hl.env("ELECTRON_OZONE_PLATFORM_HINT", "wayland")
 hl.env("XDG_CURRENT_DESKTOP", "Hyprland")
 hl.env("XDG_SESSION_DESKTOP", "Hyprland")
 hl.env("XDG_SESSION_TYPE", "wayland")
+hl.env("WLR_NO_HARDWARE_CURSORS", "1")
+hl.env("WLR_DRM_DEVICES", "/dev/dri/by-path/pci-0000:00:02.0-card")
 
 local gtk_theme_file = os.getenv("HOME") .. "/.themes-src/current/gtk.theme"
 local f = io.open(gtk_theme_file, "r")

@@ -10,7 +10,7 @@
   users.users.nic = {
     description = "Christoph Niederer";
     isNormalUser = true;
-    extraGroups = ["networkmanager" "wheel" "docker"];
+    extraGroups = ["networkmanager" "wheel" "docker" "video"];
     shell = pkgs.zsh;
   };
 }

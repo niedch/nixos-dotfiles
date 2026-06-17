@@ -27,7 +27,7 @@
     iconPath = fetchFavicon {inherit name url sha256 faviconDomain;};
   in {
     inherit name;
-    exec = "${pkgs.brave}/bin/brave --start-maximized --app=${url}";
+    exec = "${pkgs.chromium}/bin/chromium --start-maximized --app=${url}";
     icon = "${iconPath}";
     terminal = false;
     type = "Application";
@@ -92,6 +92,7 @@
       faviconDomain = "whatsapp.com";
     }
   ];
+
 in {
   xdg.desktopEntries = builtins.listToAttrs (map (app: {
       name = app.name;
@@ -99,11 +100,10 @@ in {
     })
     webApps);
 
-  programs.brave = {
+  programs.chromium = {
     enable = true;
 
     commandLineArgs = [
-      "--enable-features=BraveVerticalTab"
       "--ignore-gpu-blocklist"
       "--enable-gpu-rasterization"
       "--enable-features=Vulkan,UseSkiaRenderer"

@@ -69,7 +69,7 @@ hl.window_rule({
 
 hl.window_rule({
     name   = "wttr",
-    match  = { class = "brave-wttr\\.in__-Default" },
+    match  = { class = "chromium-wttr\\.in__-Default" },
     float  = true,
     center = true,
     size   = { 900, 700 },
@@ -77,7 +77,7 @@ hl.window_rule({
 
 hl.window_rule({
     name   = "calendar",
-    match  = { class = "brave-calendar\\.google\\.com__calendar_u_0_r_month-Default" },
+    match  = { class = "chromium-calendar\\.google\\.com__calendar_u_0_r_month-Default" },
     float  = true,
     center = true,
     size   = { 1000, 750 },

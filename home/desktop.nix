@@ -4,7 +4,7 @@
   ...
 }: {
   imports = [
-    ./brave
+    ./chromium
     ./ghostty
     ./hyprland
     ./waybar

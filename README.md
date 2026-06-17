@@ -73,7 +73,7 @@ flake.nix                     # Entry point, defines hosts + flake inputs
     ├── zsh/                   # Zsh + oh-my-zsh + custom scripts
     ├── mise/                  # Mise version manager
     ├── git/                   # Git user config
-    ├── brave/                 # Brave browser + webapp desktop entries with auto-fetched favicons
+    ├── chromium/              # Chromium browser + webapp desktop entries with auto-fetched favicons
     ├── ssh/                   # SSH client config + SOPS-managed keys
     └── opencode/              # Opencode AI agent with custom agents
 ```
@@ -115,7 +115,7 @@ flake.nix                     # Entry point, defines hosts + flake inputs
 | `home/mise/` | Mise version manager (java, node, rust, maven, opencode) |
 | `home/git/` | Git user config with autoSetupRemote and pull.rebase |
 | `home/ssh/` | SSH client config with SOPS-managed ed25519 key |
-| `home/brave/` | Brave browser + webapp desktop entries with auto-fetched favicons via `pkgs.fetchurl` + `imagemagick` |
+| `home/chromium/` | Chromium browser + webapp desktop entries with auto-fetched favicons via `pkgs.fetchurl` + `imagemagick` |
 | `home/opencode/` | Opencode AI coding agent with custom agents (build, plan, explore) |
 
 ## Secrets
@@ -126,13 +126,13 @@ Secrets are encrypted with [SOPS](https://github.com/getsops/sops) using [age](h
 
 The [Omarchy theme system](https://github.com/anomalyco/nix-omarchy-theme) provides 20+ themes (kanso, catppuccin, nord, tokyo-night, gruvbox, etc.), symlinked to Hyprland, Waybar, Walker, and mako configs. Default theme: `kanso`.
 
-## Brave web apps
+## Chromium web apps
 
-`home/brave/` registers web apps as desktop entries via `xdg.desktopEntries`, each launching in an app window under Brave. Favicons are auto-fetched at build time using Google's favicon API.
+`home/chromium/` registers web apps as desktop entries via `xdg.desktopEntries`, each launching in an app window under Chromium. Favicons are auto-fetched at build time using Google's favicon API.
 
 ### Adding a new web app
 
-Add one line to the `webApps` list in `home/brave/default.nix:32`:
+Add one line to the `webApps` list in `home/chromium/default.nix:32`:
 
 ```nix
 { name = "App Name"; domain = "example.com"; url = "https://example.com"; sha256 = "..."; }

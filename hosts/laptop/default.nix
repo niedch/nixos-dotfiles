@@ -30,6 +30,11 @@
   # Legacy driver for Quadro P2000 Mobile (Pascal) — dropped from production 595.x
   hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
 
+  boot.kernelParams = ["nvidia_drm.fbdev=1"];
+
+  # btop needs this for Intel GPU monitoring (perf_event_open on i915 PMU counters)
+  boot.kernel.sysctl."kernel.perf_event_paranoid" = 0;
+
   # Set your time zone.
   time.timeZone = "Europe/Vienna";
 

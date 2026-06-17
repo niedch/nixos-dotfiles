@@ -11,7 +11,7 @@
   ];
 
   # dconf D-Bus service is required for gsettings changes to propagate through
-  # xdg-desktop-portal to apps like Brave/Chromium (prefers-color-scheme).
+  # xdg-desktop-portal to apps like Chromium (prefers-color-scheme).
   programs.dconf.enable = true;
 
   services.fwupd = {
@@ -34,11 +34,11 @@
     allowedUDPPorts = [53317];
   };
 
-  # Brave only reads policies from /etc/brave/policies/managed/ (not ~/.config/brave/)
+  # Chromium only reads policies from /etc/chromium/policies/managed/ (not ~/.config/chromium/)
   # Symlink it to the user config so the theme-switcher (omarchy-themes) can update
   # colors dynamically without needing root.
   systemd.tmpfiles.rules = [
-    "d /etc/brave 0755 root root -"
-    "L+ /etc/brave/policies/managed - - - - /home/nic/.config/brave/policies/managed"
+    "d /etc/chromium 0755 root root -"
+    "L+ /etc/chromium/policies/managed - - - - /home/nic/.config/chromium/policies/managed"
   ];
 }
