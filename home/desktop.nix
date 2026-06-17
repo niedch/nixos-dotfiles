@@ -18,6 +18,7 @@
     ./opencode
     ./git
     ./ssh
+    ./obsidian
   ];
 
   home.username = "nic";
@@ -82,7 +83,6 @@
     spotify
     python3
     gnumake
-    obsidian
     inputs.wlctl.packages.${pkgs.stdenv.hostPlatform.system}.default
     fd
     unzip

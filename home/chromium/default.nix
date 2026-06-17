@@ -91,6 +91,16 @@
       sha256 = "sha256-X7icJI6OfjNFIp3sos3/k8EPlMswZ0veNqsdsbtkPac=";
       faviconDomain = "whatsapp.com";
     }
+    {
+      name = "Willhaben";
+      url = "https://www.willhaben.at/iad";
+      sha256 = "sha256-YAAVyEp58SlCG7aci4PhYv+qNyaL2m17RV+OoJaqKAQ=";
+    }
+    {
+      name = "Parquet";
+      url = "https://app.parqet.com/p/64b6a3073306abbdfb6634ca";
+      sha256 = "sha256-YAAVyEp58SlCG7aci4PhYv+qNyaL2m17RV+OoJaqKAQ=";
+    }
   ];
 in {
   xdg.desktopEntries = builtins.listToAttrs (map (app: {
