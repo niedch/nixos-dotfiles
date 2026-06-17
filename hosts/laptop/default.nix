@@ -24,20 +24,11 @@
 
   networking.networkmanager.enable = true;
   networking.wireless.enable = true; # Enables wireless support via wpa_supplicant.
-  # networking.networkmanager.wifi.backend = "iwd";
 
   hardware.bluetooth.enable = true;
 
+  # Legacy driver for Quadro P2000 Mobile (Pascal) — dropped from production 595.x
   hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
-
-  boot.kernelParams = ["nvidia_drm.fbdev=1"];
-
-  environment.sessionVariables = {
-    __NV_PRIME_RENDER_OFFLOAD = "1";
-    __GLX_VENDOR_LIBRARY_NAME = "nvidia";
-    __VK_LAYER_NV_optimus = "NVIDIA_only";
-    LIBVA_DRIVER_NAME = "nvidia";
-  };
 
   # Set your time zone.
   time.timeZone = "Europe/Vienna";

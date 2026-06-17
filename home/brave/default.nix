@@ -104,6 +104,11 @@ in {
 
     commandLineArgs = [
       "--enable-features=BraveVerticalTab"
+      "--ignore-gpu-blocklist"
+      "--enable-gpu-rasterization"
+      "--enable-features=Vulkan,UseSkiaRenderer"
+      "--enable-features=VaapiVideoDecoder,VaapiVideoEncoder,UseMultiPlaneFormatForSoftwareOverlayVideo"
+      "--disable-gpu-driver-bug-workarounds"
     ];
 
     extensions = [
