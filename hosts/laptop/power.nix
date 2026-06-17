@@ -39,7 +39,7 @@
     finegrained = true;
   };
 
-  boot.kernelParams = [ "processor.max_cstate=9" "nmi_watchdog=0" ];
+  boot.kernelParams = ["processor.max_cstate=9" "nmi_watchdog=0"];
 
   boot.kernel.sysctl = {
     "kernel.nmi_watchdog" = 0;
@@ -47,5 +47,5 @@
   };
 
   networking.networkmanager.wifi.powersave = true;
-  environment.systemPackages = [ pkgs.powertop ];
+  environment.systemPackages = [pkgs.powertop];
 }

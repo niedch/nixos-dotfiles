@@ -46,11 +46,11 @@ in {
         subpath = "themes/gruvbox";
         defaultBackground = "6-houses.png";
         extraBackgrounds = [
-        {
-          url = "https://w.wallhaven.cc/full/9m/wallhaven-9mj8yw.png";
-          hash = "sha256-m+CJrkoRp48ZY8LHBWBN7MnxWReLKxkKweKWdOvg1Fg=";
-          filename = "6-houses.png";
-        }
+          {
+            url = "https://w.wallhaven.cc/full/9m/wallhaven-9mj8yw.png";
+            hash = "sha256-m+CJrkoRp48ZY8LHBWBN7MnxWReLKxkKweKWdOvg1Fg=";
+            filename = "6-houses.png";
+          }
         ];
       };
       kanso = {

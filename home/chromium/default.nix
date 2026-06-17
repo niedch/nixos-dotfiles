@@ -92,7 +92,6 @@
       faviconDomain = "whatsapp.com";
     }
   ];
-
 in {
   xdg.desktopEntries = builtins.listToAttrs (map (app: {
       name = app.name;
