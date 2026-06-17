@@ -1,16 +1,11 @@
 {pkgs, ...}: let
-  launch-walker = pkgs.writeShellScriptBin "launch-walker" ''
-    GSK_RENDERER=cairo exec ${pkgs.walker}/bin/walker "$@"
-  '';
-
-  restart-walker = pkgs.writeShellScriptBin "omarchy-restart-walker" ''
+  restart-walker = pkgs.writeShellScriptBin "restart-walker" ''
     systemctl --user restart elephant.service walker.service
   '';
 in {
   home.packages = [
     pkgs.walker
     pkgs.elephant
-    launch-walker
     restart-walker
   ];
 
