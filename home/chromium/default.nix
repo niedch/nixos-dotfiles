@@ -94,7 +94,7 @@
     {
       name = "Willhaben";
       url = "https://www.willhaben.at/iad";
-      sha256 = "sha256-YAAVyEp58SlCG7aci4PhYv+qNyaL2m17RV+OoJaqKAQ=";
+      sha256 = "sha256-0AXzy1WvWV+s/84IOzF5HLRJHXUML9ap0/hSAj2JMVE=";
     }
     {
       name = "Parquet";
