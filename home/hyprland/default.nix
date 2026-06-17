@@ -4,27 +4,15 @@
   lib,
   ...
 }: {
-  imports = [./capture.nix];
+  imports = [
+    ./capture.nix
+    ./services.nix
+  ];
 
   wayland.windowManager.hyprland = {
     enable = true;
     package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
-    systemd.enable = false;
-  };
-
-  systemd.user.services.polkit-gnome = {
-    Unit = {
-      Description = "PolicyKit Authentication Agent";
-    };
-    Install = {
-      WantedBy = ["hyprland-session.target"];
-    };
-    Service = {
-      ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
-      Restart = "on-failure";
-      RestartSec = 1;
-      TimeoutStopSec = 10;
-    };
+    systemd.enable = true;
   };
 
   xdg.configFile."hypr/hyprland.lua".source = ./hyprland.lua;
