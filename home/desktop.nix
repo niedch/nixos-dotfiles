@@ -54,6 +54,7 @@
     fd
     unzip
     jetbrains.idea
+    zathura
   ];
 
   xdg.configFile."comd/config.toml".text = ''

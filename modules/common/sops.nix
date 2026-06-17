@@ -26,5 +26,11 @@
       group = "users";
       mode = "0440";
     };
+
+    rclone-config = {
+      owner = "root";
+      group = "root";
+      mode = "0400";
+    };
   };
 }

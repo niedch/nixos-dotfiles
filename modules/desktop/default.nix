@@ -8,6 +8,7 @@
     ./displaymanager.nix
     ./fonts.nix
     ./steam.nix
+    ./rclone.nix
   ];
 
   # dconf D-Bus service is required for gsettings changes to propagate through
