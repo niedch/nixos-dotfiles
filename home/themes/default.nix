@@ -105,6 +105,14 @@ in {
         ref = omarchyRef;
         hash = omarchyHash;
         subpath = "themes/miasma";
+        defaultBackground = "03-house.jpg";
+        extraBackgrounds = [
+        {
+          url = "https://w.wallhaven.cc/full/je/wallhaven-jexkwm.jpg";
+          hash = "sha256-RIwA/16yaZiBy7b0pUDBl12QeI/kAajUAY9Vu6e18r4=";
+          filename = "03-house.jpg";
+        }
+        ];
       };
       nord = {
         url = omarchyRepo;
