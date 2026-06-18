@@ -34,11 +34,6 @@
     };
   };
 
-  hardware.nvidia.powerManagement = {
-    enable = true;
-    finegrained = true;
-  };
-
   boot.kernelParams = ["processor.max_cstate=9" "nmi_watchdog=0"];
 
   boot.kernel.sysctl = {

@@ -1,6 +1,3 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
 {
   config,
   pkgs,
@@ -12,25 +9,21 @@
   ];
 
   # Bootloader.
-  # boot.loader.systemd-boot.enable = true;
   boot.loader.limine = {
     enable = true;
   };
-
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "nixos"; # Define your hostname.
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
   networking.networkmanager.enable = true;
-  networking.wireless.enable = true; # Enables wireless support via wpa_supplicant.
+  networking.wireless.enable = true;
 
   hardware.bluetooth.enable = true;
 
   # Legacy driver for Quadro P2000 Mobile (Pascal) — dropped from production 595.x
   hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
-
-  boot.kernelParams = ["nvidia_drm.fbdev=1"];
 
   # btop needs this for Intel GPU monitoring (perf_event_open on i915 PMU counters)
   boot.kernel.sysctl."kernel.perf_event_paranoid" = 0;
@@ -64,8 +57,6 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
 
     # use the example session manager (no others are packaged yet so this is enabled by default,
     # no need to redefine it in your config for now)
