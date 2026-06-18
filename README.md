@@ -65,7 +65,8 @@ flake.nix                     # Entry point, defines hosts + flake inputs
     ├── waybar/                # Waybar status bar (JSONC + CSS)
     ├── walker/                # Walker launcher + Elephant backend
     ├── ghostty/               # Ghostty terminal emulator
-    ├── swaybg/                # Sway background utility
+    ├── kdenlive/              # Kdenlive video editor config
+    ├── obsidian/              # Obsidian note-taking app config
     ├── themes/                # Omarchy theme system (20+ themes)
     ├── tmux/                  # Tmux config + sessionizer scripts
     ├── mux-session/           # Tmux session manager with project configs
@@ -85,11 +86,10 @@ flake.nix                     # Entry point, defines hosts + flake inputs
 | `nixpkgs` | nixos-26.05 | Main package repository |
 | `home-manager` | release-26.05 | User-level config management |
 | `hyprland` | Hyprwm/Hyprland | Wayland compositor |
-| `nix-omarchy-theme` | Local path | Theme framework |
+| `nix-omarchy-theme` | niedch/nix-omarchy-theme | Theme framework |
 | `sops-nix` | Mic92/sops-nix | Secrets management |
 | `nixos-hardware` | NixOS/nixos-hardware | Hardware profiles (Dell 5530) |
-| `zen-browser` | youwen5/zen-browser-flake | Firefox-based browser |
-| `gazelle-tui` | Zeus-Deus/gazelle-tui | TUI file manager |
+| `wlctl` | aashish-thapa/wlctl | Wayland display manager controller |
 
 ## Key Components
 
@@ -107,6 +107,8 @@ flake.nix                     # Entry point, defines hosts + flake inputs
 | `home/waybar/` | Waybar status bar with custom CSS and cava audio viz |
 | `home/walker/` | Walker app launcher + Elephant backend as systemd services |
 | `home/ghostty/` | Ghostty terminal with JetBrains Mono, tmux auto-start |
+| `home/kdenlive/` | Kdenlive video editor config |
+| `home/obsidian/` | Obsidian note-taking app config |
 | `home/themes/` | Omarchy theme system — 20+ themes symlinked to hypr/waybar/walker configs |
 | `home/tmux/` | Tmux with custom sessionizer, popup, and opener scripts |
 | `home/mux-session/` | Tmux session manager with per-project configs |

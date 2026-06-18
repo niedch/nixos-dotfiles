@@ -2,8 +2,6 @@
 
 - [x] Clipboard manager
 - [x] Screenshot & Screenrecord
-- [ ] Rclone Setup
+- [x] Rclone Setup
 - [ ] Quickshell maybe
 
-
-- [ ] Add another todo
