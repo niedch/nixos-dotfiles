@@ -44,7 +44,7 @@
       PartOf = ["hyprland-session.target"];
     };
     Service = {
-      ExecStart = "${pkgs.swaybg}/bin/swaybg -i %h/.share/local/themes/current-background -m fill";
+      ExecStart = "${pkgs.swaybg}/bin/swaybg -i %h/.local/share/themes/current-background -m fill";
       Restart = "always";
       RestartSec = 2;
     };
