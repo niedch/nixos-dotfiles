@@ -88,6 +88,7 @@
     unzip
     jetbrains.idea
     zathura
+    kdePackages.kdenlive
   ];
 
   xdg.configFile."comd/config.toml".text = ''
