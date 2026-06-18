@@ -7,6 +7,7 @@
     ./chromium
     ./ghostty
     ./hyprland
+    ./kdenlive
     ./waybar
     ./themes
     ./walker
@@ -88,7 +89,6 @@
     unzip
     jetbrains.idea
     zathura
-    kdePackages.kdenlive
   ];
 
   xdg.configFile."comd/config.toml".text = ''
