@@ -84,11 +84,9 @@ in {
       };
       koyanagi = {
         url = "https://github.com/YutaKoyanagi10/omarchy-koyanagi-theme.git";
-        ref = "612e122cfc0e3475559e081ca41cd99d2356b4a3";
-        hash = "sha256-fr0swq4pXBVxzCxv8pK5rj9v3ed2DMKFjkvfq6cE2ro=";
-        defaultBackground = "BG3.jpg";
+        ref = "a09f41ab0a4d2d2e5a5647c0c40ca092cf67b816";
+        hash = "sha256-95XZzgiDxkxD3nCJneaNL27iJR5bdwtIKtPWbokSpcI=";
       };
-https://github.com/YutaKoyanagi10/omarchy-koyanagi-theme
       last-horizon = {
         url = omarchyRepo;
         ref = omarchyRef;
