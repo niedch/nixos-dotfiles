@@ -3,7 +3,7 @@
     enable = true;
     package = pkgs.ghostty;
     settings = {
-      "config-file" = "?~/.themes-src/current/ghostty.conf";
+      "config-file" = "?~/.local/share/themes/current/ghostty.conf";
 
       "font-family" = "JetBrainsMono Nerd Font Mono";
       "font-style" = "Regular";

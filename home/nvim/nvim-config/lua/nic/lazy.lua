@@ -13,7 +13,7 @@ vim.opt.rtp:prepend(lazypath)
 
 local plugins = { { import = "nic.plugins" }, { import = "nic.plugins.lsp" } }
 
-local theme_file = vim.fn.expand("~/.themes-src/current/neovim.lua")
+local theme_file = vim.fn.expand("~/.local/share/themes/current/neovim.lua")
 if vim.loop.fs_stat(theme_file) then
 	vim.list_extend(plugins, dofile(theme_file))
 end

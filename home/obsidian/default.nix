@@ -3,6 +3,6 @@
 
   home.file."Projects/obsidian-vault/.obsidian/snippets/obsidian.css" = {
     source = config.lib.file.mkOutOfStoreSymlink
-      "${config.home.homeDirectory}/.themes-src/current/obsidian.css";
+      "${config.home.homeDirectory}/.local/share/themes/current/obsidian.css";
   };
 }
