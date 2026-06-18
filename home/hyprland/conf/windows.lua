@@ -62,22 +62,22 @@ hl.window_rule({
 })
 
 hl.window_rule({
+	name   = "weathr",
+	match  = { class = "org\\.omarchy\\.Weathr" },
+	float  = true,
+	center = true,
+	size   = { 800, 600 },
+})
+
+hl.window_rule({
 	name   = "steam-float",
 	match  = { class = "steam" },
 	float  = true,
 })
 
 hl.window_rule({
-    name   = "wttr",
-    match  = { class = "chromium-wttr\\.in__-Default" },
-    float  = true,
-    center = true,
-    size   = { 900, 700 },
-})
-
-hl.window_rule({
     name   = "calendar",
-    match  = { class = "chromium-calendar\\.google\\.com__calendar_u_0_r_month-Default" },
+    match  = { class = "chrome-calendar\\.google\\.com__calendar_u_0_r_month-Default" },
     float  = true,
     center = true,
     size   = { 1000, 750 },

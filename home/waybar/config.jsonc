@@ -62,9 +62,8 @@
   },
   "clock": {
     "format": "{:L%A %H:%M}",
-    "format-alt": "{:L%d %B W%V %Y}",
     "tooltip-format": "<span>{calendar}</span>",
-    "on-click-right": "chromium --app=https://calendar.google.com/calendar/u/0/r/month",
+    "on-click": "chromium --app=https://calendar.google.com/calendar/u/0/r/month",
     "calendar": {
       "mode": "month",
       "mode-mon-col": 3,
@@ -81,7 +80,7 @@
     "return-type": "json",
     "interval": 60,
     "tooltip": false,
-    "on-click": "chromium --app=https://wttr.in"
+    "on-click": "ghostty --class=org.omarchy.Weathr -e weathr"
   },
   "network": {
     "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],

@@ -89,6 +89,7 @@
     unzip
     jetbrains.idea
     zathura
+    weathr
   ];
 
   xdg.configFile."comd/config.toml".text = ''
