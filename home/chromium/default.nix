@@ -101,6 +101,12 @@
       url = "https://app.parqet.com/p/64b6a3073306abbdfb6634ca";
       sha256 = "sha256-YAAVyEp58SlCG7aci4PhYv+qNyaL2m17RV+OoJaqKAQ=";
     }
+    {
+      name = "Autoscout24";
+      url = "https://www.autoscout24.at";
+      sha256 = "sha256-1qg93YWOaPGj4V44XCixqGQKFjI3Z8iqi1J04/gD8fE=";
+    }
+
   ];
 in {
   xdg.desktopEntries = builtins.listToAttrs (map (app: {
