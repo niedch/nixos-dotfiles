@@ -12,6 +12,14 @@
       path = "${config.home.homeDirectory}/.ssh/git_ed25519.pub";
       mode = "0644";
     };
+    "id_ed25519" = {
+      path = "${config.home.homeDirectory}/.ssh/id_ed25519";
+      mode = "0600";
+    };
+    "id_ed25519_pub" = {
+      path = "${config.home.homeDirectory}/.ssh/id_ed25519.pub";
+      mode = "0644";
+    };
   };
 
   programs.ssh = {

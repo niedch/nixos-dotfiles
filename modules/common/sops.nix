@@ -1,4 +1,6 @@
 {config, ...}: {
+  # Add a secret:
+  #   $ nix shell nixpkgs#sops -c bash -c 'cd /home/nic/Projects/nixos-dotfiles && sops set secrets/secrets.yaml "[\"<name>\"]" "$(jq -Rs . < <file>)"'
   sops.defaultSopsFile = ./../../secrets/secrets.yaml;
   sops.age.sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
 
@@ -31,6 +33,18 @@
       owner = "root";
       group = "root";
       mode = "0400";
+    };
+
+    id_ed25519 = {
+      owner = "nic";
+      group = "users";
+      mode = "0600";
+    };
+
+    id_ed25519_pub = {
+      owner = "nic";
+      group = "users";
+      mode = "0644";
     };
   };
 }
