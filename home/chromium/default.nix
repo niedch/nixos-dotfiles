@@ -106,6 +106,11 @@
       url = "https://www.autoscout24.at";
       sha256 = "sha256-1qg93YWOaPGj4V44XCixqGQKFjI3Z8iqi1J04/gD8fE=";
     }
+    {
+      name = "ICloud";
+      url = "https://www.icloud.com/";
+      sha256 = "sha256-O+rCyHdWrOmbxHS5dQoJQRJntODA1fptQq06fREMEOc=";
+    }
 
   ];
 in {

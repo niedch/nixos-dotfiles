@@ -189,7 +189,7 @@ in {
       "hypr/theme.lua".source = "hyprland.lua";
       "hypr/hyprlock-theme.conf".source = "hyprlock.conf";
       "waybar/colors.css".source = "waybar.css";
-      "walker/themes/kanso/style.css".source = "walker.css";
+      "walker/themes/default/style.css".source = "walker.css";
       "mako/config".source = "mako.ini";
       "btop/themes/btop.theme".source = "btop.theme";
       "gtk-3.0/settings.ini" = { source = "settings-3.0.ini"; recursive = false; };

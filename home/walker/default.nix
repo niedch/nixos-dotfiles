@@ -51,7 +51,7 @@ in {
   };
 
   xdg.configFile."walker/config.toml".source = ./config.toml;
-  xdg.configFile."walker/themes/kanso/layout.xml".source = ./kanso-layout.xml;
+  xdg.configFile."walker/themes/default/layout.xml".source = ./layout.xml;
 
   xdg.configFile."elephant/calc.toml".source = ./elephant/calc.toml;
   xdg.configFile."elephant/desktopapplications.toml".source = ./elephant/desktopapplications.toml;

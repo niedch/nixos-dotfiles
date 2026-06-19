@@ -8,7 +8,12 @@
     {
       name = "I-Cloud";
       remote = "Icloud:";
-      mountPoint = "/media/Icloud";
+      mountPoint = "/media/ICloud";
+    }
+    {
+      name = "Dropbox";
+      remote = "Dropbox:";
+      mountPoint = "/media/Dropbox";
     }
   ];
 in {
