@@ -82,6 +82,11 @@ in {
         hash = "sha256-fr0swq4pXBVxzCxv8pK5rj9v3ed2DMKFjkvfq6cE2ro=";
         defaultBackground = "BG3.jpg";
       };
+      the-greek = {
+        url = "https://github.com/HANCORE-linux/omarchy-thegreek-theme.git";
+        ref = "c2129dd8b17ae64e54a43d6e714eb9d66876edae";
+        hash = "sha256-C9YnCkbVS17h10MoE+Z34HmSVd6/hoE+svNDTO3ZXTA=";
+      };
       koyanagi = {
         url = "https://github.com/YutaKoyanagi10/omarchy-koyanagi-theme.git";
         ref = "a09f41ab0a4d2d2e5a5647c0c40ca092cf67b816";
