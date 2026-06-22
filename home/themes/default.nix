@@ -200,5 +200,15 @@ in {
       "gtk-3.0/settings.ini" = { source = "settings-3.0.ini"; recursive = false; };
       "gtk-4.0/settings.ini" = { source = "settings-4.0.ini"; recursive = false; };
     };
+
+    # afterHooks = {
+    #   "07_reload_chromium_policy" = ''
+    #     CURRENT="''${CURRENT:-$HOME/.local/share/themes/current}"
+    #     if [ -f "$CURRENT/chromium-policy.json" ]; then
+    #       mkdir -p "$HOME/.config/chromium/policies/managed"
+    #       cat "$CURRENT/chromium-policy.json" > "$HOME/.config/chromium/policies/managed/color.json"
+    #     fi
+    #   '';
+    # };
   };
 }
