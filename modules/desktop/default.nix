@@ -34,12 +34,4 @@
     allowedTCPPorts = [53317];
     allowedUDPPorts = [53317];
   };
-
-  # Chromium only reads policies from /etc/chromium/policies/managed/ (not ~/.config/chromium/)
-  # Symlink it to the user config so the theme-switcher (omarchy-themes) can update
-  # colors dynamically without needing root.
-  systemd.tmpfiles.rules = [
-    "d /etc/chromium 0755 root root -"
-    "L+ /etc/chromium/policies/managed - - - - /home/nic/.config/chromium/policies/managed"
-  ];
 }
