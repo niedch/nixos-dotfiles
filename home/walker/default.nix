@@ -51,6 +51,7 @@ in {
   };
 
   xdg.configFile."walker/config.toml".source = ./config.toml;
+  xdg.configFile."walker/themes/default/style.css".source = ./style.css;
   xdg.configFile."walker/themes/default/layout.xml".source = ./layout.xml;
 
   xdg.configFile."elephant/calc.toml".source = ./elephant/calc.toml;
