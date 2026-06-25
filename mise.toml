@@ -26,6 +26,12 @@ git commit -e -m "$msg"
 mise run switch ${usage_host?}
 """
 
+[tasks.remote-switch]
+description = "Remote switch to a NixOS configuration via SSH (e.g. raspberry-pi)"
+usage = """arg "<host>" help="Host configuration name"
+arg "<target>" help="SSH target (user@host)""""
+run = "NIX_SSHOPTS=\"-t\" nixos-rebuild switch --flake .#${usage_host?} --target-host ${usage_target?} --use-remote-sudo --option require-sigs false"
+
 [tasks.cleanup]
 description = "Cleanup old NixOS Derivations"
 run = "sudo nix-collect-garbage -d"

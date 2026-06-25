@@ -24,6 +24,7 @@
 
   # Legacy driver for Quadro P2000 Mobile (Pascal) — dropped from production 595.x
   hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
+  hardware.nvidia-container-toolkit.enable = true;
 
   # btop needs this for Intel GPU monitoring (perf_event_open on i915 PMU counters)
   boot.kernel.sysctl."kernel.perf_event_paranoid" = 0;

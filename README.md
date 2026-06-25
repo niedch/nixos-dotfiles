@@ -9,13 +9,15 @@ Multi-host NixOS + Hyprland configuration managed via flakes and home-manager.
 | `desktop`  | QEMU/KVM VM | `nixos`  | GRUB        | Desktop VM, virtio GPU, QEMU guest tools  |
 | `laptop`   | Physical    | `nixos`  | systemd-boot | Dell Precision 5530, NVIDIA, Bluetooth, CUPS, PipeWire |
 | `dobby`    | Server      | `dobby`  | systemd-boot | Minimal, no desktop, SSH-only             |
+| `raspberry-pi` | Physical | `rpi`    | extlinux     | Raspberry Pi (aarch64), minimal SSH       |
 
 ## Usage
 
 ```bash
-sudo nixos-rebuild switch --flake .#desktop   # Desktop VM
-sudo nixos-rebuild switch --flake .#laptop    # Dell Precision 5530
-sudo nixos-rebuild switch --flake .#dobby     # Server
+sudo nixos-rebuild switch --flake .#desktop       # Desktop VM
+sudo nixos-rebuild switch --flake .#laptop        # Dell Precision 5530
+sudo nixos-rebuild switch --flake .#dobby         # Server
+sudo nixos-rebuild switch --flake .#raspberry-pi  # Raspberry Pi (aarch64)
 ```
 
 ## Architecture
@@ -37,7 +39,7 @@ flake.nix                     # Entry point, defines hosts + flake inputs
 ## Structure
 
 ```
-├── flake.nix                  # Flake entry point — 3 NixOS configurations
+├── flake.nix                  # Flake entry point — 4 NixOS configurations
 ├── flake.lock                 # Pinned flake inputs
 ├── .sops.yaml                 # SOPS age key configuration
 ├── secrets/
@@ -45,9 +47,11 @@ flake.nix                     # Entry point, defines hosts + flake inputs
 ├── hosts/
 │   ├── virtual-machine/       # Desktop VM host (GRUB, QEMU guest)
 │   ├── laptop/                # Dell Precision 5530 (NVIDIA, Bluetooth, CUPS)
-│   └── dobby/                 # Server host (minimal, SSH)
+│   ├── dobby/                 # Server host (minimal, SSH)
+│   └── rpi/                   # Raspberry Pi (aarch64, minimal SSH)
 ├── modules/
 │   ├── common/                # Shared system modules
+│   │   ├── binfmt.nix         # QEMU binfmt for cross-arch builds (aarch64)
 │   │   ├── docker.nix         # Docker daemon + auto-prune
 │   │   ├── sops.nix           # SOPS secrets configuration
 │   │   ├── ssh.nix            # SSH server enable

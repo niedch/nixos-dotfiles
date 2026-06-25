@@ -1,7 +1,5 @@
 {pkgs, ...}: {
   imports = [
-    ./tmux
-    ./zsh
     ./nvim
   ];
 
