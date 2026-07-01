@@ -5,11 +5,8 @@
 }: let
   homebridgeScripts = pkgs.runCommand "homebridge-scripts" {} ''
     mkdir -p $out
-    for f in ${./home-bridge-scripts}/*.sh; do
-      [ -f "$f" ] && cp "$f" $out/
-    done
+    cp ${./usb_toggle.sh} $out/usb_toggle.sh
     chmod +x $out/*
-    true
   '';
 in {
   services.homebridge = {
@@ -28,8 +25,11 @@ in {
             {
               type = "Switch";
               name = "USB-1-1";
-              on = "TRUE";
+              on = "FALSE";
               state_cmd = "bash /var/lib/homebridge/scripts/usb_toggle.sh";
+              polling = [
+                { characteristic = "on"; interval = 60; }
+              ];
             }
           ];
         }
@@ -39,7 +39,7 @@ in {
 
   services.avahi = {
     enable = true;
-    nssmdns = true;
+    nssmdns4 = true;
     publish = {
       enable = true;
       addresses = true;
@@ -59,19 +59,28 @@ in {
 
   systemd.services.homebridge.serviceConfig.TimeoutStartSec = 600;
 
-  security.sudo.extraRules = [
-    {
-      users = [config.services.homebridge.user];
-      commands = [
-        {
-          command = "${pkgs.coreutils}/bin/tee /sys/bus/usb/drivers/usb/bind";
-          options = ["NOPASSWD"];
-        }
-        {
-          command = "${pkgs.coreutils}/bin/tee /sys/bus/usb/drivers/usb/unbind";
-          options = ["NOPASSWD"];
-        }
-      ];
-    }
-  ];
+  systemd.services.usb-default-off = {
+    description = "Unbind USB device 1-1 at boot (default off)";
+    after = ["sysinit.target"];
+    before = ["homebridge.service"];
+    wantedBy = ["multi-user.target"];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+    };
+    script = ''
+      if [ -L /sys/bus/usb/drivers/usb/1-1 ]; then
+        echo '1-1' > /sys/bus/usb/drivers/usb/unbind
+      fi
+    '';
+  };
+
+  users.groups.usb-toggler = {};
+
+  users.users.${config.services.homebridge.user}.extraGroups = ["usb-toggler"];
+
+  services.udev.extraRules = ''
+    SUBSYSTEM=="usb", ACTION=="add", RUN+="${pkgs.coreutils}/bin/chmod 0660 /sys/bus/usb/drivers/usb/bind /sys/bus/usb/drivers/usb/unbind"
+    SUBSYSTEM=="usb", ACTION=="add", RUN+="${pkgs.coreutils}/bin/chgrp usb-toggler /sys/bus/usb/drivers/usb/bind /sys/bus/usb/drivers/usb/unbind"
+  '';
 }

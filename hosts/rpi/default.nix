@@ -18,20 +18,13 @@
 
   time.timeZone = "Europe/Vienna";
 
-  users.groups.usb-toggler = {};
-
   users.users.nic = {
     isNormalUser = true;
-    extraGroups = ["wheel" "usb-toggler"];
+    extraGroups = ["wheel"];
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPrMVVkKpJ532z3GkVnxeQE6SDZXoih0wYCmnaYnaR+f christoph.niederer99@gmail.com"
     ];
   };
-
-  services.udev.extraRules = ''
-    SUBSYSTEM=="usb", ACTION=="add", RUN+="${pkgs.coreutils}/bin/chmod 0660 /sys/bus/usb/drivers/usb/bind /sys/bus/usb/drivers/usb/unbind"
-    SUBSYSTEM=="usb", ACTION=="add", RUN+="${pkgs.coreutils}/bin/chgrp usb-toggler /sys/bus/usb/drivers/usb/bind /sys/bus/usb/drivers/usb/unbind"
-  '';
 
   nix.settings.require-sigs = false;
 
