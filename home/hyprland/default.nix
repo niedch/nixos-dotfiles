@@ -28,6 +28,13 @@
     };
   };
 
+  dconf.settings = {
+    "org/gnome/desktop/interface" = {
+      cursor-size = 24;
+      text-scaling-factor = 1.0;
+    };
+  };
+
   home.packages = with pkgs; [
     mako
     wl-clipboard

@@ -111,6 +111,13 @@
       url = "https://www.icloud.com/";
       sha256 = "sha256-O+rCyHdWrOmbxHS5dQoJQRJntODA1fptQq06fREMEOc=";
     }
+    {
+      name = "Schwab";
+      url = "https://client.schwab.com/app/accounts/summary/";
+      sha256 = "sha256-qi5H4olBvxjJu11zS9FDRhmFtTcUqvnG9vMIs4azRaA=";
+
+      faviconDomain = "schwab.com";
+    }
   ];
 in {
   xdg.desktopEntries = builtins.listToAttrs (map (app: {

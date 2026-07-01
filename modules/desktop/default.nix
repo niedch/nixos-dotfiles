@@ -9,6 +9,7 @@
     ./fonts.nix
     ./steam.nix
     ./rclone.nix
+    ./gnome-calendar.nix
   ];
 
   # dconf D-Bus service is required for gsettings changes to propagate through

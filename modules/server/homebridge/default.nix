@@ -28,7 +28,10 @@ in {
               on = "FALSE";
               state_cmd = "bash /var/lib/homebridge/scripts/usb_toggle.sh";
               polling = [
-                { characteristic = "on"; interval = 60; }
+                {
+                  characteristic = "on";
+                  interval = 60;
+                }
               ];
             }
           ];
