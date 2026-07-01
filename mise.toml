@@ -2,6 +2,10 @@
 description = "Update the nix-omarchy-theme flake dependency to its latest commit"
 run = "nix flake update nix-omarchy-theme"
 
+[tasks.update]
+description = "Update the nix-omarchy-theme flake dependency to its latest commit"
+run = "nix flake update"
+
 [tasks.format]
 description = "Formats this project"
 run = "nix run nixpkgs#alejandra -- . 2>&1"

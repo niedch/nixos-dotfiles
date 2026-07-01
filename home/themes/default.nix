@@ -48,14 +48,6 @@ in {
         ref = omarchyRef;
         hash = omarchyHash;
         subpath = "themes/gruvbox";
-        defaultBackground = "6-houses.png";
-        extraBackgrounds = [
-          {
-            url = "https://w.wallhaven.cc/full/9m/wallhaven-9mj8yw.png";
-            hash = "sha256-m+CJrkoRp48ZY8LHBWBN7MnxWReLKxkKweKWdOvg1Fg=";
-            filename = "6-houses.png";
-          }
-        ];
       };
       kanso = {
         url = "https://github.com/HANCORE-linux/omarchy-kanso-theme.git";
@@ -67,16 +59,6 @@ in {
             url = "https://w.wallhaven.cc/full/3q/wallhaven-3qrdr6.jpg";
             hash = "sha256-sDmF+oM7eMsT+3W9fgdGbN0hAi7IeIAl/IhlAYo1CK8=";
             filename = "BG_Painting.jpg";
-          }
-          {
-            url = "https://w.wallhaven.cc/full/6l/wallhaven-6lwr2x.jpg";
-            hash = "sha256-qGpudZv+1GeBfjd/LWOZmGZTn/KayjxpZw4zSKLwdpA=";
-            filename = "BG_Tirol.jpg";
-          }
-          {
-            url = "https://w.wallhaven.cc/full/3q/wallhaven-3qr15y.jpg";
-            hash = "sha256-IHhL4heE3ON+PGvY+Nwz9qyIPb8Cq56rHjtlByrJkDc=";
-            filename = "BG_SW_Scoul.jpg";
           }
         ];
       };
@@ -101,12 +83,6 @@ in {
         ref = omarchyRef;
         hash = omarchyHash;
         subpath = "themes/last-horizon";
-      };
-      lumon = {
-        url = omarchyRepo;
-        ref = omarchyRef;
-        hash = omarchyHash;
-        subpath = "themes/lumon";
       };
       matte-black = {
         url = omarchyRepo;
@@ -141,18 +117,6 @@ in {
             filename = "3-Snow.jpg";
           }
         ];
-      };
-      osaka-jade = {
-        url = omarchyRepo;
-        ref = omarchyRef;
-        hash = omarchyHash;
-        subpath = "themes/osaka-jade";
-      };
-      retro-82 = {
-        url = omarchyRepo;
-        ref = omarchyRef;
-        hash = omarchyHash;
-        subpath = "themes/retro-82";
       };
       ristretto = {
         url = omarchyRepo;
@@ -213,14 +177,5 @@ in {
       "gtk-4.0/gtk.css".source = "gtk.css";
     };
 
-    # afterHooks = {
-    #   "07_reload_chromium_policy" = ''
-    #     CURRENT="''${CURRENT:-$HOME/.local/share/themes/current}"
-    #     if [ -f "$CURRENT/chromium-policy.json" ]; then
-    #       mkdir -p "$HOME/.config/chromium/policies/managed"
-    #       cat "$CURRENT/chromium-policy.json" > "$HOME/.config/chromium/policies/managed/color.json"
-    #     fi
-    #   '';
-    # };
   };
 }
