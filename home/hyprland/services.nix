@@ -1,7 +1,4 @@
-{
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   systemd.user.services.mako = {
     Unit = {
       Description = "Mako - Notification Daemon";

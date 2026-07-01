@@ -111,7 +111,6 @@
       url = "https://www.icloud.com/";
       sha256 = "sha256-O+rCyHdWrOmbxHS5dQoJQRJntODA1fptQq06fREMEOc=";
     }
-
   ];
 in {
   xdg.desktopEntries = builtins.listToAttrs (map (app: {

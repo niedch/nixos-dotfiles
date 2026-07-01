@@ -3,7 +3,11 @@
 #   2. Run: nix build .#homeConfigurations.<name>.activationPackage 2>&1 | grep "got:"
 #   3. Copy the suggested hash back into this file
 #   Or use: nix-prefetch-git <url> <ref>
-{inputs, pkgs, ...}: let
+{
+  inputs,
+  pkgs,
+  ...
+}: let
   omarchyRepo = "https://github.com/basecamp/omarchy.git";
   omarchyRef = "9cf1852525a5f7de26d3162db9d61e2f5c1d5523";
   omarchyHash = "sha256-9zkIEgD/L5+eK5fuQNXbBd5XXO+NwH6QWGiDI//kGas=";
@@ -117,11 +121,11 @@ in {
         subpath = "themes/miasma";
         defaultBackground = "03-house.jpg";
         extraBackgrounds = [
-        {
-          url = "https://w.wallhaven.cc/full/je/wallhaven-jexkwm.jpg";
-          hash = "sha256-RIwA/16yaZiBy7b0pUDBl12QeI/kAajUAY9Vu6e18r4=";
-          filename = "03-house.jpg";
-        }
+          {
+            url = "https://w.wallhaven.cc/full/je/wallhaven-jexkwm.jpg";
+            hash = "sha256-RIwA/16yaZiBy7b0pUDBl12QeI/kAajUAY9Vu6e18r4=";
+            filename = "03-house.jpg";
+          }
         ];
       };
       nord = {
@@ -197,8 +201,14 @@ in {
       "walker/themes/default/walker.css".source = "walker.css";
       "mako/config".source = "mako.ini";
       "btop/themes/btop.theme".source = "btop.theme";
-      "gtk-3.0/settings.ini" = { source = "settings-3.0.ini"; recursive = false; };
-      "gtk-4.0/settings.ini" = { source = "settings-4.0.ini"; recursive = false; };
+      "gtk-3.0/settings.ini" = {
+        source = "settings-3.0.ini";
+        recursive = false;
+      };
+      "gtk-4.0/settings.ini" = {
+        source = "settings-4.0.ini";
+        recursive = false;
+      };
     };
 
     # afterHooks = {

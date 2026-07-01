@@ -90,6 +90,7 @@
           ./modules/common/sops.nix
           ./modules/common/ssh.nix
           ./modules/server
+          ./modules/server/home-bridge.nix
           sops-nix.nixosModules.sops
           home-manager.nixosModules.home-manager
           {

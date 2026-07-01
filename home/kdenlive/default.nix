@@ -1,7 +1,4 @@
-{
-  pkgs,
-  ...
-}: let
+{pkgs, ...}: let
   kdenlive-wrapped = pkgs.symlinkJoin {
     name = "kdenlive-wrapped";
     paths = [pkgs.kdePackages.kdenlive];
