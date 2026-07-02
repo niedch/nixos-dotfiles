@@ -91,6 +91,7 @@
     jetbrains.idea
     zathura
     weathr
+    signal-desktop
   ];
 
   xdg.configFile."comd/config.toml".text = ''
