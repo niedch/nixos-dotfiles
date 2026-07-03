@@ -115,8 +115,13 @@
       name = "Schwab";
       url = "https://client.schwab.com/app/accounts/summary/";
       sha256 = "sha256-qi5H4olBvxjJu11zS9FDRhmFtTcUqvnG9vMIs4azRaA=";
-
       faviconDomain = "schwab.com";
+    }
+    {
+      name = "Grok";
+      url = "https://grok.com/";
+      sha256 = "sha256-qi5H4olBvxjJu11zS9FDRhmFtTcUqvnG9vMIs4azRaA=";
+      faviconDomain = "grok.com";
     }
   ];
 in {

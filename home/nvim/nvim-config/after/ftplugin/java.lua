@@ -1,3 +1,7 @@
+if not vim.g.has_lsp then
+	return
+end
+
 -- JDTLS (Java LSP) configuration
 local home = vim.env.HOME -- Get the home directory
 

@@ -11,7 +11,12 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-local plugins = { { import = "nic.plugins" }, { import = "nic.plugins.lsp" } }
+vim.g.has_lsp = vim.loop.fs_stat(vim.fn.expand("$HOME/.config/nvim-lsp-enabled")) ~= nil
+
+local plugins = { { import = "nic.plugins" } }
+if vim.g.has_lsp then
+	table.insert(plugins, { import = "nic.plugins.lsp" })
+end
 
 local theme_file = vim.fn.expand("~/.local/share/themes/current/neovim.lua")
 if vim.loop.fs_stat(theme_file) then
