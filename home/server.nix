@@ -1,4 +1,5 @@
 {pkgs, ...}: {
+
   imports = [
     ./nvim
   ];
@@ -7,6 +8,7 @@
   home.homeDirectory = "/home/nic";
   home.stateVersion = "25.11";
 
+  home.nvim.lsp.enable = false;
   programs.home-manager.enable = true;
 
   programs.zsh.initContent = ''

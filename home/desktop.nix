@@ -3,6 +3,7 @@
   inputs,
   ...
 }: {
+
   imports = [
     ./chromium
     ./ghostty
@@ -27,6 +28,7 @@
   home.homeDirectory = "/home/nic";
   home.stateVersion = "26.05";
 
+  home.nvim.lsp.enable = true;
   programs.home-manager.enable = true;
 
   xdg.mime.enable = true;
@@ -74,17 +76,13 @@
   sops.age.keyFile = "/home/nic/.config/sops/age/keys.txt";
 
   home.packages = with pkgs; [
-    yaru-theme
     docker-compose
     lazydocker
-    nodejs
     localsend
     nixfmt
     bluetui
     wiremix
     spotify
-    python3
-    gnumake
     inputs.wlctl.packages.${pkgs.stdenv.hostPlatform.system}.default
     fd
     unzip
@@ -92,11 +90,18 @@
     zathura
     weathr
     signal-desktop
+  ] ++ [
+    # AWT dependency for the eddi project
     libX11
     libxext
     libxrender
     libxi
     libxtst
+  ] ++ [
+    # Programming languages
+    nodejs
+    python3
+    gnumake
   ];
 
   xdg.configFile."comd/config.toml".text = ''

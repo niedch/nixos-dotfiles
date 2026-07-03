@@ -5,7 +5,6 @@
 #   Or use: nix-prefetch-git <url> <ref>
 {
   inputs,
-  pkgs,
   ...
 }: let
   omarchyRepo = "https://github.com/basecamp/omarchy.git";

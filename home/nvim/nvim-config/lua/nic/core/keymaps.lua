@@ -59,7 +59,7 @@ vim.keymap.set("n", "<C-w>z", "<cmd>silent :tabnew %<CR>")
 -- because LazyVim.safe_keymap_set defers mappings to run after user config, always overwriting
 -- any earlier vim.keymap.set for the same key. Hooking into LazyVimKeymaps ensures this runs after.
 vim.api.nvim_create_autocmd("User", { pattern = "LazyVimKeymaps", once = true, callback = function()
-  vim.keymap.set("n", "<leader>bb", "<cmd>lua require'dap'.toggle_breakpoint()<cr>")
+	vim.keymap.set("n", "<leader>bb", "<cmd>lua require'dap'.toggle_breakpoint()<cr>")
 end })
 vim.keymap.set("n", "<leader>bc", "<cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<cr>")
 vim.keymap.set("n", "<leader>bl", "<cmd>lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<cr>")
