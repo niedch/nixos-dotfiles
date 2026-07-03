@@ -130,7 +130,7 @@ Secrets are encrypted with [SOPS](https://github.com/getsops/sops) using [age](h
 
 ## Theming
 
-The [Omarchy theme system](https://github.com/anomalyco/nix-omarchy-theme) provides 20+ themes (kanso, catppuccin, nord, tokyo-night, gruvbox, etc.), symlinked to Hyprland, Waybar, Walker, and mako configs. Default theme: `kanso`.
+The [Omarchy theme system](https://github.com/niedch/nix-omarchy-theme) provides 20+ themes (kanso, catppuccin, nord, tokyo-night, gruvbox, etc.), symlinked to Hyprland, Waybar, Walker, and mako configs. Default theme: `kanso`.
 
 ## Chromium web apps
 
