@@ -71,12 +71,13 @@ in {
       the-greek = {
         url = "https://github.com/HANCORE-linux/omarchy-thegreek-theme.git";
         ref = "c2129dd8b17ae64e54a43d6e714eb9d66876edae";
-        hash = "sha256-sB4rpjNvfiBItTkjUB1lMUolsouuL6guDZWGjhMsoxA=";
+        hash = "sha256-njw+hvqZUZXxzuu7kMxWV/ez6gKWEyy3nFr6TxsAlyk=";
       };
       koyanagi = {
         url = "https://github.com/YutaKoyanagi10/omarchy-koyanagi-theme.git";
         ref = "a09f41ab0a4d2d2e5a5647c0c40ca092cf67b816";
         hash = "sha256-95XZzgiDxkxD3nCJneaNL27iJR5bdwtIKtPWbokSpcI=";
+        defaultBackground = "background_3.jpg";
       };
       last-horizon = {
         url = omarchyRepo;
