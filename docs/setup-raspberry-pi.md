@@ -26,7 +26,7 @@ Download the latest aarch64 SD image from Hydra:
 nix-shell -p wget zstd
 ```
 
-Browse to the [latest successful build](https://hydra.nixos.org/job/nixos/trunk-combined/nixos.sd_image.aarch64-linux)
+Browse to the [latest successful build](https://hydra.nixos.org/job/nix/maintenance-2.34/dockerImage.aarch64-linux)
 and copy the link to the build product `.img.zst`. Then:
 
 ```bash
