@@ -26,6 +26,11 @@
           export EDITOR='nvim'
       fi
       export JDTLS_JVM_ARGS="-javaagent:$HOME/.config/nvim/lib/lombok.jar"
+      if [ -n "$LD_LIBRARY_PATH" ]; then
+          export LD_LIBRARY_PATH="/etc/profiles/per-user/nic/lib:$LD_LIBRARY_PATH"
+      else
+          export LD_LIBRARY_PATH="/etc/profiles/per-user/nic/lib"
+      fi
 
       export DISABLE_MAGIC_FUNCTIONS="true"
       export DISABLE_AUTO_TITLE="true"

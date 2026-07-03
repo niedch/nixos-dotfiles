@@ -92,6 +92,11 @@
     zathura
     weathr
     signal-desktop
+    libX11
+    libxext
+    libxrender
+    libxi
+    libxtst
   ];
 
   xdg.configFile."comd/config.toml".text = ''
