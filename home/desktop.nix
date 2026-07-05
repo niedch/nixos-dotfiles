@@ -3,7 +3,6 @@
   inputs,
   ...
 }: {
-
   imports = [
     ./chromium
     ./ghostty
@@ -75,34 +74,37 @@
   sops.defaultSopsFile = ../secrets/secrets.yaml;
   sops.age.keyFile = "/home/nic/.config/sops/age/keys.txt";
 
-  home.packages = with pkgs; [
-    docker-compose
-    lazydocker
-    localsend
-    nixfmt
-    bluetui
-    wiremix
-    spotify
-    inputs.wlctl.packages.${pkgs.stdenv.hostPlatform.system}.default
-    fd
-    unzip
-    jetbrains.idea
-    zathura
-    weathr
-    signal-desktop
-  ] ++ [
-    # AWT dependency for the eddi project
-    libX11
-    libxext
-    libxrender
-    libxi
-    libxtst
-  ] ++ [
-    # Programming languages
-    nodejs
-    python3
-    gnumake
-  ];
+  home.packages = with pkgs;
+    [
+      docker-compose
+      lazydocker
+      localsend
+      nixfmt
+      bluetui
+      wiremix
+      spotify
+      inputs.wlctl.packages.${pkgs.stdenv.hostPlatform.system}.default
+      fd
+      unzip
+      jetbrains.idea
+      zathura
+      weathr
+      signal-desktop
+    ]
+    ++ [
+      # AWT dependency for the eddi project
+      libX11
+      libxext
+      libxrender
+      libxi
+      libxtst
+    ]
+    ++ [
+      # Programming languages
+      nodejs
+      python3
+      gnumake
+    ];
 
   xdg.configFile."comd/config.toml".text = ''
     [global]
