@@ -9,7 +9,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    hyprland.url = "github:hyprwm/Hyprland";
+    hyprland = {
+      url = "github:hyprwm/Hyprland";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     nix-omarchy-theme = {
       url = "github:niedch/nix-omarchy-theme";
