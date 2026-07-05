@@ -3,6 +3,7 @@ keys:
   - &host_laptop age1z4mv8yv6xaht54e9a4ryyg4z6dvf26ngz4zdtvn62mrxp2ewuadqlnc8dz
   - &host_vm age16q0t68ehuldfkmqte2kpa9pj4hpjdh05fnczqr0wgrzqy4up8swq74ar8g
   - &host_rpi age1zpq27cmrclffrh6jyuxnnfwtafuqvdgl7tartcdystgzxm6eue7sgatuyr
+  - &host_dobby age1nmp02p66tanun20d72fvr59fslfnadktl7faxha3nghq22437f9qlkwa93
 
 creation_rules:
   - path_regex: ^secrets/secrets\.yaml$
@@ -12,3 +13,4 @@ creation_rules:
           - *host_laptop
           - *host_vm
           - *host_rpi
+          - *host_dobby
