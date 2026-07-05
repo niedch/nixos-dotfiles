@@ -27,6 +27,5 @@
   };
 
   nix.settings.require-sigs = false;
-
   system.stateVersion = "26.05";
 }

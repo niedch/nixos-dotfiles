@@ -24,5 +24,6 @@
 
   time.timeZone = "Europe/Vienna";
 
+  nix.settings.require-sigs = false;
   system.stateVersion = "25.11"; # Did you read the comment?
 }
