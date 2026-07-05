@@ -8,6 +8,7 @@
     ./ghostty
     ./hyprland
     ./kdenlive
+    ./music
     ./waybar
     ./themes
     ./walker
@@ -82,7 +83,6 @@
       nixfmt
       bluetui
       wiremix
-      spotify
       inputs.wlctl.packages.${pkgs.stdenv.hostPlatform.system}.default
       fd
       unzip

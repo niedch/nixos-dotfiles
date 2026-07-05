@@ -3,7 +3,7 @@
 #   2. Run: nix build .#homeConfigurations.<name>.activationPackage 2>&1 | grep "got:"
 #   3. Copy the suggested hash back into this file
 #   Or use: nix-prefetch-git <url> <ref>
-{inputs, ...}: let
+{inputs, pkgs, ...}: let
   omarchyRepo = "https://github.com/basecamp/omarchy.git";
   omarchyRef = "9cf1852525a5f7de26d3162db9d61e2f5c1d5523";
   omarchyHash = "sha256-9zkIEgD/L5+eK5fuQNXbBd5XXO+NwH6QWGiDI//kGas=";
@@ -172,6 +172,22 @@ in {
       };
       "gtk-3.0/gtk.css".source = "gtk.css";
       "gtk-4.0/gtk.css".source = "gtk.css";
+      "spicetify/Themes/Omarchy/color.ini".source = "color.ini";
+    };
+
+    afterHooks = {
+      "04_spicetify_apply" = ''
+        spicetify -s refresh 2>/dev/null || spicetify -n backup apply 2>/dev/null || true
+        for PORT in 9222 8088; do
+          WS_URL=$(curl -sf http://localhost:$PORT/json/list 2>/dev/null | \
+            ${pkgs.jq}/bin/jq -r '.[] | select(.url | contains("spotify")) | .webSocketDebuggerUrl' 2>/dev/null || true)
+          if [ -n "$WS_URL" ]; then break; fi
+        done
+        if [ -n "$WS_URL" ]; then
+          echo '{"id":0,"method":"Runtime.evaluate","params":{"expression":"window.location.reload()"}}' | \
+            ${pkgs.websocat}/bin/websocat "$WS_URL" 2>/dev/null || true
+        fi
+      '';
     };
   };
 }
