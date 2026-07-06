@@ -10,6 +10,7 @@
     ./steam.nix
     ./rclone.nix
     ./gnome-calendar.nix
+    ./samba-mount.nix
   ];
 
   # dconf D-Bus service is required for gsettings changes to propagate through

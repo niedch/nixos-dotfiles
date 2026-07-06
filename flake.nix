@@ -92,6 +92,7 @@
           ./hosts/rpi
           ./modules/common/sops.nix
           ./modules/common/ssh.nix
+          ./modules/common/users.nix
           ./modules/server
           ./modules/server/homebridge
           sops-nix.nixosModules.sops
@@ -112,7 +113,8 @@
         modules = [
           ./hosts/dobby
           ./modules/common
-          ./modules/server
+          ./modules/server/openssh.nix
+          ./modules/server/immich.nix
           sops-nix.nixosModules.sops
           home-manager.nixosModules.home-manager
           {

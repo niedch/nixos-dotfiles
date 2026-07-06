@@ -1,6 +1,8 @@
 {pkgs, ...}: {
   imports = [
     ./nvim
+    ./zsh
+    ./mise
   ];
 
   home.username = "nic";
