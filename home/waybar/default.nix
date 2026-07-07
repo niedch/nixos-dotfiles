@@ -3,7 +3,6 @@
     enable = true;
     systemd = {
       enable = true;
-      targets = ["hyprland-session.target"];
     };
   };
 

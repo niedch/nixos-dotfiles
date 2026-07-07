@@ -7,6 +7,7 @@
     ./chromium
     ./ghostty
     ./hyprland
+    ./menu
     ./kdenlive
     ./music
     ./waybar
@@ -90,6 +91,8 @@
       zathura
       weathr
       signal-desktop
+      mpv
+      qimgv
     ]
     ++ [
       # AWT dependency for the eddi project

@@ -62,18 +62,18 @@ in {
   systemd.user.services.elephant = {
     Unit = {
       Description = "Elephant - Walker Backend";
-      ConditionEnvironment = "WAYLAND_DISPLAY";
-      After = ["hyprland-session.target"];
-      PartOf = ["hyprland-session.target"];
+      # ConditionEnvironment = "WAYLAND_DISPLAY";
+      # After = ["hyprland-session.target"];
+      # PartOf = ["hyprland-session.target"];
     };
     Service = {
       ExecStart = "${pkgs.elephant}/bin/elephant";
       Restart = "always";
       RestartSec = 2;
     };
-    Install = {
-      WantedBy = ["hyprland-session.target"];
-    };
+    # Install = {
+    #   # WantedBy = ["hyprland-session.target"];
+    # };
   };
 
   systemd.user.services.walker = {
@@ -81,11 +81,11 @@ in {
       Description = "Walker - Application Runner";
       ConditionEnvironment = "WAYLAND_DISPLAY";
       After = [
-        "hyprland-session.target"
+        # "hyprland-session.target"
         "elephant.service"
       ];
       Requires = ["elephant.service"];
-      PartOf = ["hyprland-session.target"];
+      # PartOf = ["hyprland-session.target"];
     };
     Service = {
       Environment = "GSK_RENDERER=cairo";
@@ -93,8 +93,8 @@ in {
       Restart = "always";
       RestartSec = 2;
     };
-    Install = {
-      WantedBy = ["hyprland-session.target"];
-    };
+    # Install = {
+    #   WantedBy = ["hyprland-session.target"];
+    # };
   };
 }

@@ -16,23 +16,6 @@
     };
   };
 
-  systemd.user.services.hypridle = {
-    Unit = {
-      Description = "Hypridle - Idle Manager";
-      ConditionEnvironment = "WAYLAND_DISPLAY";
-      After = ["hyprland-session.target"];
-      PartOf = ["hyprland-session.target"];
-    };
-    Service = {
-      ExecStart = "${pkgs.hypridle}/bin/hypridle";
-      Restart = "always";
-      RestartSec = 2;
-    };
-    Install = {
-      WantedBy = ["hyprland-session.target"];
-    };
-  };
-
   systemd.user.services.swaybg = {
     Unit = {
       Description = "SwayBG - Wallpaper";

@@ -5,7 +5,6 @@
   ...
 }: {
   imports = [
-    ./capture.nix
     ./services.nix
   ];
 
@@ -49,5 +48,7 @@
     libnotify
     jq
     swaybg
+    wayfreeze
+    wl-screenrec
   ];
 }

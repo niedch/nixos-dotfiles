@@ -16,7 +16,7 @@
     databases = ["immich"];
     compression = "zstd";
     compressionLevel = 6;
-    startAt = "*-*-* 12:30:00";
+    startAt = "*-*-* 16:50:00";
   };
 
   services.restic.backups.immich = {
@@ -28,7 +28,7 @@
     ];
     initialize = true;
     timerConfig = {
-      OnCalendar = "13:00";
+      OnCalendar = "17:10";
       Persistent = true;
       RandomizedDelaySec = "30m";
     };
@@ -40,8 +40,8 @@
   };
 
   systemd.services.restic-backups-immich = {
-    after = ["postgresqlBackup.service"];
-    requires = ["postgresqlBackup.service"];
+    after = ["postgresqlBackup-immich.service"];
+    requires = ["postgresqlBackup-immich.service"];
   };
 
   sops.secrets.RESTIC_PASSWORD = {

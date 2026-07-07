@@ -158,9 +158,11 @@
     "on-scroll-right": ""
   },
   "custom/screenrecording-indicator": {
-    "on-click": "capture-screenrecord",
+    "on-click": "cmd-screenrecord --stop-recording",
     "exec": "~/.config/waybar/indicators/screen-recording.sh",
-    "return-type": "json"
+    "signal": 8,
+    "return-type": "json",
+    "min-length": 5
   },
   "custom/idle-indicator": {
     "on-click": "~/.config/waybar/bin/omarchy-toggle-idle",

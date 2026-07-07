@@ -6,6 +6,7 @@ hl.bind(mainMod .. " + SHIFT + N",     hl.dsp.exec_cmd(terminal .. " -e nvim"))
 hl.bind(mainMod .. " + SHIFT + T",     hl.dsp.exec_cmd("theme-switcher"))
 hl.bind(mainMod .. " + SHIFT + B",     hl.dsp.exec_cmd("theme-wallpaper"))
 hl.bind(mainMod .. " + Space",         hl.dsp.exec_cmd(menu))
+hl.bind(mainMod .. " + ALT + Space",   hl.dsp.exec_cmd("menu"))
 hl.bind(mainMod .. " + CTRL + E",      hl.dsp.exec_cmd(menu .. " -m symbols"))
 hl.bind(mainMod .. " + CTRL + V",      hl.dsp.exec_cmd(menu .. " -m clipboard"))
 
@@ -116,7 +117,7 @@ hl.bind(mainMod .. " + COMMA",         hl.dsp.exec_cmd("makoctl dismiss"))
 hl.bind(mainMod .. " + SHIFT + COMMA", hl.dsp.exec_cmd("makoctl dismiss --all"))
 
 -- Capture menu and color picker
-hl.bind("Print",                       hl.dsp.exec_cmd("capture-menu"))
+hl.bind("Print",                       hl.dsp.exec_cmd("menu Capture"))
 hl.bind(mainMod .. " + Print",         hl.dsp.exec_cmd("pkill hyprpicker; hyprpicker -a"))
 
 -- Lock screen

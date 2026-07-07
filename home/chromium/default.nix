@@ -120,8 +120,20 @@
     {
       name = "Grok";
       url = "https://grok.com/";
-      sha256 = "sha256-qi5H4olBvxjJu11zS9FDRhmFtTcUqvnG9vMIs4azRaA=";
+      sha256 = "sha256-2HzWUXEiSN98X+AyNIJS9SuqwUvxfXs84cPFx6FjR44=";
       faviconDomain = "grok.com";
+    }
+    {
+      name = "Immich";
+      url = "http://dobby:2283";
+      sha256 = "sha256-cGUuF6CpOGF1GwIlzg8iQNO1B+IXG2+6Vjjs3ZOXK4c=";
+      faviconDomain = "immich.app";
+    }
+    {
+      name = "Homebridge";
+      url = "http://rpi:8581";
+      sha256 = "sha256-cZWpdxzW2KWyEzueE79Rj0MxAc/X9PVXDelYk8oi9H0=";
+      faviconDomain = "homebridge.io";
     }
   ];
 in {
