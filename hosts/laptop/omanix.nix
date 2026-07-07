@@ -6,12 +6,12 @@
 }: {
   imports = [
     inputs.omanix.nixosModules.default
-    ../../modules/desktop/displaymanager.nix
+    # ../../modules/desktop/displaymanager.nix
   ];
 
   omanix = {
     enable = true;
-    login.enable = false; # keep Ly display manager
+    login.enable = true; # keep Ly display manager
     theme = "tokyo-night";
     wallpaperIndex = 0;
     steam.enable = true;
