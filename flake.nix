@@ -4,6 +4,11 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
 
+    nixos-hardware = {
+      url = "github:NixOS/nixos-hardware";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     home-manager = {
       url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -11,11 +16,6 @@
 
     hyprland = {
       url = "github:hyprwm/Hyprland";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    nix-omarchy-theme = {
-      url = "github:niedch/nix-omarchy-theme";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -29,8 +29,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixos-hardware = {
-      url = "github:NixOS/nixos-hardware";
+    nix-omarchy-theme = {
+      url = "github:niedch/nix-omarchy-theme";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    mux-session = {
+      url = "github:niedch/mux-session";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -44,90 +49,65 @@
     sops-nix,
     wlctl,
     nixos-hardware,
+    mux-session,
     ...
-  } @ inputs: {
+  } @ inputs: let
+    mkSystem = extraModules:
+      nixpkgs.lib.nixosSystem {
+        specialArgs = {inherit inputs;};
+        modules =
+          extraModules
+          ++ [
+            sops-nix.nixosModules.sops
+            home-manager.nixosModules.home-manager
+          ];
+      };
+
+    mkHM = userConfig: {
+      home-manager.useGlobalPkgs = true;
+      home-manager.useUserPackages = true;
+      home-manager.backupFileExtension = "backup";
+      home-manager.extraSpecialArgs = {inherit inputs;};
+      home-manager.sharedModules = [sops-nix.homeManagerModules.sops];
+      home-manager.users.nic = userConfig;
+    };
+  in {
     nixosConfigurations = {
-      desktop = nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs;};
-        modules = [
-          ./hosts/virtual-machine
-          ./modules/common
-          ./modules/desktop
-          sops-nix.nixosModules.sops
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.backupFileExtension = "backup";
-            home-manager.extraSpecialArgs = {inherit inputs;};
-            home-manager.sharedModules = [sops-nix.homeManagerModules.sops];
-            home-manager.users.nic = import ./home/desktop.nix;
-          }
-        ];
-      };
+      desktop = mkSystem [
+        ./hosts/virtual-machine
+        ./modules/common
+        ./modules/desktop
+        (mkHM (import ./home/desktop.nix))
+      ];
 
-      laptop = nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs;};
-        modules = [
-          ./hosts/laptop
-          ./modules/common
-          ./modules/desktop
-          nixos-hardware.nixosModules.dell-precision-5530
-          sops-nix.nixosModules.sops
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.backupFileExtension = "backup";
-            home-manager.extraSpecialArgs = {inherit inputs;};
-            home-manager.sharedModules = [sops-nix.homeManagerModules.sops];
-            home-manager.users.nic = import ./home/desktop.nix;
-          }
-        ];
-      };
+      laptop = mkSystem [
+        ./hosts/laptop
+        ./modules/common
+        ./modules/desktop
+        nixos-hardware.nixosModules.dell-precision-5530
+        (mkHM (import ./home/desktop.nix))
+      ];
 
-      raspberry-pi = nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs;};
-        modules = [
-          ./hosts/rpi
-          ./modules/common/sops.nix
-          ./modules/common/ssh.nix
-          ./modules/common/users.nix
-          ./modules/server
-          ./modules/server/homebridge
-          sops-nix.nixosModules.sops
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.backupFileExtension = "backup";
-            home-manager.extraSpecialArgs = {inherit inputs;};
-            home-manager.sharedModules = [sops-nix.homeManagerModules.sops];
-            home-manager.users.nic = import ./home/server.nix;
-          }
-        ];
-      };
+      raspberry-pi = mkSystem [
+        # nixos-hardware.nixosModules.raspberry-pi-3
+        ./hosts/rpi
+        ./modules/common/sops.nix
+        ./modules/common/ssh.nix
+        ./modules/common/users.nix
+        ./modules/server
+        ./modules/server/homebridge
+        (mkHM (import ./home/server.nix))
+      ];
 
-      dobby = nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs;};
-        modules = [
-          ./hosts/dobby
-          ./modules/common
-          ./modules/server/openssh.nix
-          ./modules/server/immich.nix
-          ./modules/server/samba.nix
-          sops-nix.nixosModules.sops
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.backupFileExtension = "backup";
-            home-manager.extraSpecialArgs = {inherit inputs;};
-            home-manager.sharedModules = [sops-nix.homeManagerModules.sops];
-            home-manager.users.nic = import ./home/server.nix;
-          }
-        ];
-      };
+      dobby = mkSystem [
+        ./hosts/dobby
+        ./modules/common
+        nixos-hardware.nixosModules.common-pc-ssd
+        ./modules/server/openssh.nix
+        ./modules/server/immich.nix
+        ./modules/server/samba.nix
+        (mkHM (import ./home/server.nix))
+      ];
     };
   };
 }

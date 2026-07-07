@@ -1,4 +1,8 @@
-{config, pkgs, ...}: let
+{
+  config,
+  pkgs,
+  ...
+}: let
   shareName = "share";
   sharePath = "/srv/samba/share";
 in {

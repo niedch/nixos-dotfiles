@@ -1,4 +1,8 @@
-{config, pkgs, ...}: {
+{
+  config,
+  pkgs,
+  ...
+}: {
   environment.systemPackages = [pkgs.cifs-utils];
 
   sops.secrets.SAMBA_PASSWORD = {

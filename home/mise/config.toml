@@ -2,8 +2,6 @@
 
 ##### Custom #####
 "github:niedch/comd" = "latest"
-"github:niedch/mux-session" = "latest"
-
 ##### Golang #####
 "github:goreleaser/goreleaser" = "latest"
 
