@@ -38,6 +38,12 @@
       url = "github:niedch/mux-session";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    omanix = {
+      url = "github:T00fy/omanix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
   };
 
   outputs = {
@@ -50,6 +56,7 @@
     wlctl,
     nixos-hardware,
     mux-session,
+    omanix,
     ...
   } @ inputs: let
     mkSystem = extraModules:
