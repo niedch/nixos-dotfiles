@@ -115,6 +115,7 @@
           ./modules/common
           ./modules/server/openssh.nix
           ./modules/server/immich.nix
+          ./modules/server/samba.nix
           sops-nix.nixosModules.sops
           home-manager.nixosModules.home-manager
           {

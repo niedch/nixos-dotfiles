@@ -38,10 +38,9 @@ in {
 
   systemd.services.samba-setup = {
     description = "Set Samba password for nic";
-    after = ["sops-nix.service"];
-    requires = ["sops-nix.service"];
-    before = ["smbd.service"];
-    wantedBy = ["smbd.service"];
+    before = ["samba-smbd.service"];
+    unitConfig.ConditionPathExists = config.sops.secrets.SAMBA_PASSWORD.path;
+    wantedBy = ["samba-smbd.service"];
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = "yes";

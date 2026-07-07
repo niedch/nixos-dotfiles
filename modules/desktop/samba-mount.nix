@@ -9,8 +9,8 @@
 
   systemd.services.samba-credentials = {
     description = "Create Samba credentials file";
-    after = ["sops-nix.service"];
-    requires = ["sops-nix.service"];
+    wantedBy = ["multi-user.target"];
+    unitConfig.ConditionPathExists = config.sops.secrets.SAMBA_PASSWORD.path;
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = "yes";
@@ -23,7 +23,7 @@
   };
 
   fileSystems."/media/Dobby-Share" = {
-    device = "//dobby.local/share";
+    device = "//dobby/share";
     fsType = "cifs";
     options = [
       "credentials=/etc/samba-credentials"
