@@ -1,34 +1,43 @@
 {
   pkgs,
   inputs,
+  lib,
+  osConfig,
   ...
-}: {
-  imports = [
-    ./chromium
-    ./ghostty
-    ./hyprland
-    ./kdenlive
-    ./music
-    ./waybar
-    ./themes
-    ./walker
-    ./tmux
-    ./mux-session
-    ./nvim
-    ./zsh
-    ./mise
-    ./opencode
-    ./git
-    ./ssh
-    ./obsidian
-    ./quickshell
-  ];
+}: let
+  omanixOn = osConfig.omanix.enable or false;
+in {
+  imports =
+    [
+      ./tmux
+      ./mux-session
+      ./mise
+      ./opencode
+      ./git
+      ./ssh
+    ]
+    ++ lib.optionals omanixOn [
+      ./laptop-omanix-hm.nix
+    ]
+    ++ lib.optionals (!omanixOn) [
+      ./chromium
+      ./ghostty
+      ./hyprland
+      ./kdenlive
+      ./music
+      ./waybar
+      ./themes
+      ./walker
+      ./nvim
+      ./zsh
+      ./obsidian
+      ./quickshell
+    ];
 
   home.username = "nic";
   home.homeDirectory = "/home/nic";
   home.stateVersion = "26.05";
 
-  home.nvim.lsp.enable = true;
   programs.home-manager.enable = true;
 
   xdg.mime.enable = true;
@@ -64,7 +73,7 @@
     };
   };
 
-  programs.btop = {
+  programs.btop = lib.mkIf (!omanixOn) {
     enable = true;
     package = pkgs.btop.override {cudaSupport = true;};
     settings = {
@@ -76,7 +85,13 @@
   sops.age.keyFile = "/home/nic/.config/sops/age/keys.txt";
 
   home.packages = with pkgs;
-    [
+    (lib.optionals omanixOn [
+      # omanix handles the desktop stack; only platform/utility packages here
+      docker-compose
+      lazydocker
+      sops
+    ])
+    ++ lib.optionals (!omanixOn) [
       docker-compose
       lazydocker
       localsend

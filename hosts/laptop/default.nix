@@ -6,6 +6,7 @@
   imports = [
     ./hardware-configuration.nix
     ./power.nix
+    ./omanix.nix
   ];
 
   # Bootloader.

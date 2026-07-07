@@ -74,7 +74,9 @@
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
       home-manager.backupFileExtension = "backup";
-      home-manager.extraSpecialArgs = {inherit inputs;};
+      home-manager.extraSpecialArgs = {
+        inputs = inputs // (inputs.omanix.inputs or {});
+      };
       home-manager.sharedModules = [sops-nix.homeManagerModules.sops];
       home-manager.users.nic = userConfig;
     };
@@ -90,7 +92,6 @@
       laptop = mkSystem [
         ./hosts/laptop
         ./modules/common
-        ./modules/desktop
         nixos-hardware.nixosModules.dell-precision-5530
         (mkHM (import ./home/desktop.nix))
       ];
