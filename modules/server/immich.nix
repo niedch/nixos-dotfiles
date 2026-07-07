@@ -16,7 +16,7 @@
     databases = ["immich"];
     compression = "zstd";
     compressionLevel = 6;
-    startAt = "*-*-* 02:15:00";
+    startAt = "*-*-* 12:30:00";
   };
 
   services.restic.backups.immich = {
@@ -28,7 +28,7 @@
     ];
     initialize = true;
     timerConfig = {
-      OnCalendar = "03:00";
+      OnCalendar = "13:00";
       Persistent = true;
       RandomizedDelaySec = "30m";
     };
