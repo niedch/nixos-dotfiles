@@ -135,6 +135,12 @@
       sha256 = "sha256-cZWpdxzW2KWyEzueE79Rj0MxAc/X9PVXDelYk8oi9H0=";
       faviconDomain = "homebridge.io";
     }
+    {
+      name = "LinkedIn";
+      url = "http://linkedin.com";
+      sha256 = "sha256-7ab+BahjjSjv5tJ92GfP8yWYVKAkA+I0xqdnfbWtVko=";
+      faviconDomain = "linkedin.com";
+    }
   ];
 in {
   xdg.desktopEntries = builtins.listToAttrs (map (app: {
