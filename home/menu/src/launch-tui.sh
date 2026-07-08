@@ -7,4 +7,4 @@ fi
 
 CMD_NAME=$(basename "$1")
 
-exec setsid ghostty --class="org.tui.$CMD_NAME" -- "$@"
+exec setsid ghostty --class="org.tui.$CMD_NAME" -e "$@"

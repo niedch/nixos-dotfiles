@@ -57,7 +57,7 @@
   "cpu": {
     "interval": 5,
     "format": "󰍛",
-    "on-click": "ghostty --class=org.omarchy.Btop -e btop",
+    "on-click": "ghostty --class=org.tui.Btop -e btop",
     "on-click-right": "xdg-terminal-exec"
   },
   "clock": {
@@ -80,7 +80,7 @@
     "return-type": "json",
     "interval": 60,
     "tooltip": false,
-    "on-click": "ghostty --class=org.omarchy.Weathr -e weathr"
+    "on-click": "ghostty --class=org.tui.Weathr -e weathr"
   },
   "network": {
     "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
@@ -93,7 +93,7 @@
     "tooltip-format-disconnected": "Disconnected",
     "interval": 3,
     "spacing": 1,
-    "on-click": "ghostty --class=org.omarchy.wlctl -e wlctl"
+    "on-click": "ghostty --class=org.tui.wlctl -e wlctl"
   },
   "battery": {
     "format": "{capacity}% {icon}",
@@ -122,7 +122,7 @@
     "format-connected": "󰂱",
     "format-no-controller": "",
     "tooltip-format": "Devices connected: {num_connections}",
-    "on-click": "ghostty --class=org.omarchy.Bluetui -e bluetui"
+    "on-click": "ghostty --class=org.tui.Bluetui -e bluetui"
   },
   "custom/separator": {
     "format": "|", 
@@ -130,7 +130,7 @@
   },
   "pulseaudio": {
     "format": "{icon}",
-    "on-click": "ghostty --class=org.omarchy.Wiremix -e wiremix",
+    "on-click": "ghostty --class=org.tui.Wiremix -e wiremix",
     "on-click-right": "pamixer -t",
     "tooltip-format": "Playing at {volume}%",
     "scroll-step": 5,

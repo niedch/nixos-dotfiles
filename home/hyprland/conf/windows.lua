@@ -30,40 +30,8 @@ hl.window_rule({
 })
 
 hl.window_rule({
-	name   = "wlctl",
-	match  = { class = "org\\.omarchy\\.wlctl" },
-	float  = true,
-	center = true,
-	size   = { 800, 600 },
-})
-
-hl.window_rule({
-	name   = "bluetui",
-	match  = { class = "org\\.omarchy\\.Bluetui" },
-	float  = true,
-	center = true,
-	size   = { 800, 600 },
-})
-
-hl.window_rule({
-	name   = "btop",
-	match  = { class = "org\\.omarchy\\.Btop" },
-	float  = true,
-	center = true,
-	size   = { 800, 600 },
-})
-
-hl.window_rule({
-	name   = "wiremix",
-	match  = { class = "org\\.omarchy\\.Wiremix" },
-	float  = true,
-	center = true,
-	size   = { 800, 600 },
-})
-
-hl.window_rule({
-	name   = "weathr",
-	match  = { class = "org\\.omarchy\\.Weathr" },
+	name   = "tui-apps",
+	match  = { class = "org\\.tui\\..*" },
 	float  = true,
 	center = true,
 	size   = { 800, 600 },
