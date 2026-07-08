@@ -16,7 +16,7 @@ in {
 
   omarchy-themes = {
     enable = true;
-    defaultTheme = "kanso";
+    defaultTheme = "koyanagi";
 
     themes = {
       catppuccin-latte = {
