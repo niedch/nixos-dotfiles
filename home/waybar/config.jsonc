@@ -5,7 +5,7 @@
   "spacing": 0,
   "height": 26,
   "modules-left": ["custom/omarchy", "hyprland/workspaces", "custom/separator", "mpris", "custom/cava"],
-  "modules-center": ["clock", "custom/weather", "custom/update", "custom/voxtype", "custom/screenrecording-indicator", "custom/idle-indicator", "custom/notification-silencing-indicator"],
+  "modules-center": ["clock", "custom/weather", "custom/update", "custom/voxtype", "custom/screenrecording-indicator", "custom/idle-indicator", "custom/notification-silencing-indicator", "custom/opencode"],
   "modules-right": [
     "group/tray-expander",
     "bluetooth",
@@ -190,6 +190,19 @@
     "exec": "~/.config/waybar/indicators/notification-silencing.sh",
     "signal": 10,
     "return-type": "json"
+  },
+  "custom/opencode": {
+    "exec": "~/.config/waybar/opencode-status.sh",
+    "interval": 2,
+    "return-type": "json",
+    "format": "{icon} {text}",
+    "format-icons": {
+      "working": "󰒋",
+      "idle": "󰄬",
+      "permission": "󰀪",
+      "error": "󰅙"
+    },
+    "tooltip": true
   },
   "custom/voxtype": {
     "exec": "omarchy-voxtype-status",

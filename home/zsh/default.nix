@@ -2,7 +2,13 @@
   config,
   pkgs,
   ...
-}: {
+}: let
+  javaRuntimeLibs = pkgs.buildEnv {
+    name = "java-runtime-libs";
+    paths = with pkgs; [libx11 libxext libxi libxrender libxtst];
+    pathsToLink = ["/lib"];
+  };
+in {
   home.packages = with pkgs; [
     fzf
   ];
@@ -26,11 +32,7 @@
           export EDITOR='nvim'
       fi
       export JDTLS_JVM_ARGS="-javaagent:$HOME/.config/nvim/lib/lombok.jar"
-      if [ -n "$LD_LIBRARY_PATH" ]; then
-          export LD_LIBRARY_PATH="/etc/profiles/per-user/nic/lib:$LD_LIBRARY_PATH"
-      else
-          export LD_LIBRARY_PATH="/etc/profiles/per-user/nic/lib"
-      fi
+      export LD_LIBRARY_PATH="${javaRuntimeLibs}/lib''${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
 
       export DISABLE_MAGIC_FUNCTIONS="true"
       export DISABLE_AUTO_TITLE="true"
@@ -39,6 +41,7 @@
       export GEMINI_API_KEY=$(cat /run/secrets/GEMINI_API_KEY)
       export GOOGLE_GENERATIVE_AI_API_KEY=$(cat /run/secrets/GOOGLE_GENERATIVE_AI_API_KEY)
       export OPENCODE_GO=$(cat /run/secrets/OPENCODE_GO)
+      export NPM_TOKEN=$(cat /run/secrets/NPM_TOKEN)
 
       source $HOME/.config/zsh/homes.sh
       for f in $HOME/.config/zsh/*.sh; do

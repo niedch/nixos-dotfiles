@@ -48,5 +48,10 @@
     executable = true;
   };
 
-  home.packages = with pkgs; [cava];
+  xdg.configFile."waybar/opencode-status.sh" = {
+    source = ./opencode-status.sh;
+    executable = true;
+  };
+
+  home.packages = with pkgs; [cava jq];
 }

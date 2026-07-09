@@ -45,5 +45,8 @@
         "todowrite": "deny"
       }
     }
-  }
+  },
+  "plugin": [
+    "@fiffy/opencode-waybar-status"
+  ]
 }

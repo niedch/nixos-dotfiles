@@ -29,6 +29,12 @@
       mode = "0440";
     };
 
+    NPM_TOKEN = {
+      owner = "nic";
+      group = "users";
+      mode = "0440";
+    };
+
     rclone-config = {
       owner = "root";
       group = "root";

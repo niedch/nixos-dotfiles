@@ -93,6 +93,7 @@
       signal-desktop
       mpv
       qimgv
+      devenv
     ]
     ++ [
       # AWT dependency for the eddi project
