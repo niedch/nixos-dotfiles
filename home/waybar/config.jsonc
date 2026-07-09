@@ -192,7 +192,7 @@
     "return-type": "json"
   },
   "custom/opencode": {
-    "exec": "~/.config/waybar/opencode-status.sh",
+    "exec": "~/.config/waybar/indicators/opencode/opencode-status.sh",
     "interval": 2,
     "return-type": "json",
     "format": "{icon} {text}",

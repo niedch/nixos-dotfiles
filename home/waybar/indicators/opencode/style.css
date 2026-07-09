@@ -1,0 +1,23 @@
+#custom-opencode {
+  min-width: 12px;
+  margin-left: 5px;
+  margin-right: 0;
+  font-size: 10px;
+  padding-bottom: 1px;
+}
+
+#custom-opencode.idle {
+  color: #a6e3a1;
+}
+
+#custom-opencode.working {
+  color: #89b4fa;
+}
+
+#custom-opencode.permission {
+  color: #f9e2af;
+}
+
+#custom-opencode.error {
+  color: #f38ba8;
+}

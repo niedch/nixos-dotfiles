@@ -48,9 +48,13 @@
     executable = true;
   };
 
-  xdg.configFile."waybar/opencode-status.sh" = {
-    source = ./opencode-status.sh;
+  xdg.configFile."waybar/indicators/opencode/opencode-status.sh" = {
+    source = ./indicators/opencode/opencode-status.sh;
     executable = true;
+  };
+
+  xdg.configFile."waybar/indicators/opencode/style.css" = {
+    source = ./indicators/opencode/style.css;
   };
 
   home.packages = with pkgs; [cava jq];
