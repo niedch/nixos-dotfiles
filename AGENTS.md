@@ -2,7 +2,7 @@
 
 ## Task runner (mise)
 
-Commands use `mise` (mise.toml). There is no Makefile.
+Tasks are defined in `files."mise.toml".toml` inside `devenv.nix` — the `mise.toml` is generated automatically on entering the shell. Inside the auto-activated devenv shell (zsh hook already in `home/zsh/default.nix:54`), run tasks via `mise run <task>`:
 
 ```bash
 mise run format                     # alejandra (no config file; default settings)
@@ -11,7 +11,7 @@ mise run switch <host>              # sudo nixos-rebuild switch
 mise run remote-switch <host> <target>  # SSH remote deploy (for rpi)
 mise run cleanup                    # sudo nix-collect-garbage -d
 mise run update-nix-omarchy-theme   # nix flake update nix-omarchy-theme
-mise run rebuild <host>             # git add + auto-commit message (Gemini) + switch + push
+mise run rebuild <host>             # git add + auto-commit message (Gemini) + switch
 ```
 
 ## Host naming mismatch
