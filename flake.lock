@@ -409,9 +409,27 @@
         "type": "github"
       }
     },
-    "mux-session": {
+    "lit-wc": {
       "inputs": {
         "flake-utils": "flake-utils",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1783704102,
+        "narHash": "sha256-iha/AfBtjHGzL8B+eJS/0oQLzGqM78FaL63uLgCdbhk=",
+        "path": "/home/nic/Projects/lit-wc",
+        "type": "path"
+      },
+      "original": {
+        "path": "/home/nic/Projects/lit-wc",
+        "type": "path"
+      }
+    },
+    "mux-session": {
+      "inputs": {
+        "flake-utils": "flake-utils_2",
         "nixpkgs": [
           "nixpkgs"
         ]
@@ -512,6 +530,7 @@
       "inputs": {
         "home-manager": "home-manager",
         "hyprland": "hyprland",
+        "lit-wc": "lit-wc",
         "mux-session": "mux-session",
         "nix-omarchy-theme": "nix-omarchy-theme",
         "nixos-hardware": "nixos-hardware",
@@ -556,6 +575,21 @@
       }
     },
     "systems_2": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    },
+    "systems_3": {
       "locked": {
         "lastModified": 1681028828,
         "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",

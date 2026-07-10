@@ -9,6 +9,11 @@ cmd = "vim ."
 
 [[default.window]]
 window_name = "Runner"
+cmd = """
+if [ -f devenv.nix ]; then
+  devenv shell
+fi
+"""
 
 [[default.window]]
 window_name = "OpenCode"

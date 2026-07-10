@@ -1,15 +1,22 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "autoupdate": false,
-  "default_agent": "build",
+  "default_agent": "plan",
   "agent": {
     "build": {
       "mode": "primary",
       "model": "opencode-go/deepseek-v4-flash"
     },
-    "plan": {
+    "hard-plan": {
       "mode": "primary",
       "model": "opencode-go/glm-5.1"
+    },
+    "plan": {
+      "mode": "primary",
+      "model": "opencode-go/deepseek-v4-pro",
+      "permission": {
+        "edit": "deny"
+      }
     },
     "explore": {
       "description": "Fast agent specialized for exploring codebases and answering search questions",

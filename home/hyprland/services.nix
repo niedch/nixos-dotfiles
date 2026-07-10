@@ -33,6 +33,23 @@
     };
   };
 
+  systemd.user.services.hyprsunset = {
+    Unit = {
+      Description = "Hyprsunset - Blue light filter";
+      ConditionEnvironment = "WAYLAND_DISPLAY";
+      After = ["hyprland-session.target"];
+      PartOf = ["hyprland-session.target"];
+    };
+    Service = {
+      ExecStart = "${pkgs.hyprsunset}/bin/hyprsunset";
+      Restart = "on-failure";
+      RestartSec = 2;
+    };
+    Install = {
+      WantedBy = ["hyprland-session.target"];
+    };
+  };
+
   systemd.user.services.polkit-gnome = {
     Unit = {
       Description = "PolicyKit Authentication Agent";

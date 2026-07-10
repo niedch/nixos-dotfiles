@@ -19,6 +19,10 @@
   xdg.configFile."hypr/hypridle.conf".source = ./hypridle.conf;
   xdg.configFile."hypr/hyprlock.conf".source = ./hyprlock.conf;
   xdg.configFile."hypr/hyprsunset.conf".source = ./hyprsunset.conf;
+  xdg.configFile."hypr/toggle-sunset.sh" = {
+    source = ./toggle-sunset.sh;
+    executable = true;
+  };
 
   xdg.portal = {
     extraPortals = with pkgs; [xdg-desktop-portal-gtk];
@@ -41,6 +45,7 @@
     hypridle
     hyprlock
     hyprpicker
+    hyprsunset
     playerctl
     brightnessctl
     nautilus

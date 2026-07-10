@@ -123,6 +123,9 @@ hl.bind(mainMod .. " + Print",         hl.dsp.exec_cmd("pkill hyprpicker; hyprpi
 -- Lock screen
 hl.bind(mainMod .. " + CTRL + L",     hl.dsp.exec_cmd("hyprlock"))
 
+-- Blue light filter toggle
+hl.bind(mainMod .. " + ALT + N",  hl.dsp.exec_cmd("~/.config/hypr/toggle-sunset.sh"))
+
 -- System monitor
 hl.bind(mainMod .. " + CTRL + T",     hl.dsp.exec_cmd(terminal .. " -e btop"))
 
