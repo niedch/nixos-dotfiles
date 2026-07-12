@@ -14,11 +14,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    hyprland = {
-      url = "github:hyprwm/Hyprland";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     wlctl = {
       url = "github:aashish-thapa/wlctl";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -44,7 +39,6 @@
     self,
     nixpkgs,
     home-manager,
-    hyprland,
     nix-omarchy-theme,
     sops-nix,
     wlctl,

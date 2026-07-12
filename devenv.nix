@@ -1,7 +1,4 @@
-{
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   packages = [pkgs.alejandra pkgs.jq pkgs.mise];
 
   files."mise.toml".toml = {
@@ -31,6 +28,15 @@
         description = "Switch to a NixOS configuration with sudo (e.g. laptop, desktop, dobby)";
         usage = ''arg "<host>" help="Host configuration name"'';
         run = "sudo nixos-rebuild switch --flake .#\${usage_host?}";
+      };
+
+      switch-all-hosts = {
+        description = "Switch to a NixOS configuration with sudo (e.g. laptop, desktop, dobby)";
+        run = ''
+        mise build laptop
+        mise remote-switch dobby nic@dobby
+        mise remote-switch raspberry-pi nic@rpi
+        '';
       };
 
       rebuild = {
