@@ -65,7 +65,7 @@ in {
       mechanoona = {
         url = "https://github.com/HANCORE-linux/omarchy-mechanoonna-theme.git";
         ref = "612e122cfc0e3475559e081ca41cd99d2356b4a3";
-        hash = "sha256-DtNu51RJRZOmEAdpy8e0PuCP+uVPGnvdDjhhnX/AFSE=";
+        hash = "sha256-IxzTwblsoGFPFsRQXcPE4VsM+S4mAOKhPMhUASUmVOU=";
         defaultBackground = "BG3.jpg";
       };
       the-greek = {

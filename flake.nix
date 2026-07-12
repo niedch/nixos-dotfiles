@@ -38,11 +38,6 @@
       url = "github:niedch/mux-session";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    lit-wc = {
-      url = "path:/home/nic/Projects/lit-wc";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs = {
@@ -55,7 +50,6 @@
     wlctl,
     nixos-hardware,
     mux-session,
-    lit-wc,
     ...
   } @ inputs: let
     mkSystem = extraModules:

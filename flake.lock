@@ -67,6 +67,24 @@
         "type": "github"
       }
     },
+    "flake-utils_2": {
+      "inputs": {
+        "systems": "systems_3"
+      },
+      "locked": {
+        "lastModified": 1731533236,
+        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -409,24 +427,6 @@
         "type": "github"
       }
     },
-    "lit-wc": {
-      "inputs": {
-        "flake-utils": "flake-utils",
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1783704102,
-        "narHash": "sha256-iha/AfBtjHGzL8B+eJS/0oQLzGqM78FaL63uLgCdbhk=",
-        "path": "/home/nic/Projects/lit-wc",
-        "type": "path"
-      },
-      "original": {
-        "path": "/home/nic/Projects/lit-wc",
-        "type": "path"
-      }
-    },
     "mux-session": {
       "inputs": {
         "flake-utils": "flake-utils_2",
@@ -530,7 +530,6 @@
       "inputs": {
         "home-manager": "home-manager",
         "hyprland": "hyprland",
-        "lit-wc": "lit-wc",
         "mux-session": "mux-session",
         "nix-omarchy-theme": "nix-omarchy-theme",
         "nixos-hardware": "nixos-hardware",
