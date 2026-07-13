@@ -1,4 +1,5 @@
 {
+  "include": ["~/.config/waybar/indicators/opencode/waybar-config.json"],
   "reload_style_on_change": true,
   "layer": "top",
   "position": "top",
@@ -190,19 +191,6 @@
     "exec": "~/.config/waybar/indicators/notification-silencing.sh",
     "signal": 10,
     "return-type": "json"
-  },
-  "custom/opencode": {
-    "exec": "~/.config/waybar/indicators/opencode/opencode-status.sh",
-    "interval": 2,
-    "return-type": "json",
-    "format": "{icon} {text}",
-    "format-icons": {
-      "working": "󰒋",
-      "idle": "󰄬",
-      "permission": "󰀪",
-      "error": "󰅙"
-    },
-    "tooltip": true
   },
   "custom/voxtype": {
     "exec": "omarchy-voxtype-status",

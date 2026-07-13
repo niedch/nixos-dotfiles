@@ -20,9 +20,9 @@
       RemainAfterExit = "yes";
     };
     script = ''
-      install -m 600 /dev/null /etc/samba-credentials
+      install -m 600 /dev/null /run/samba-credentials
       printf 'username=nic\npassword=%s\n' \
-        "$(cat ${config.sops.secrets.SAMBA_PASSWORD.path})" > /etc/samba-credentials
+        "$(cat ${config.sops.secrets.SAMBA_PASSWORD.path})" > /run/samba-credentials
     '';
   };
 
@@ -30,19 +30,18 @@
     device = "//dobby/share";
     fsType = "cifs";
     options = [
-      "credentials=/etc/samba-credentials"
+      "credentials=/run/samba-credentials"
       "uid=1000"
       "gid=100"
       "forceuid"
       "forcegid"
       "file_mode=0644"
       "dir_mode=0755"
-      "noauto"
-      "x-systemd.automount"
       "x-systemd.requires=samba-credentials.service"
       "x-systemd.after=samba-credentials.service"
-      "x-systemd.idle-timeout=60"
-      "x-systemd.device-timeout=5s"
+      "x-systemd.requires=network-online.target"
+      "x-systemd.after=network-online.target"
+      "x-systemd.device-timeout=15s"
       "x-systemd.mount-timeout=30s"
       "_netdev"
     ];

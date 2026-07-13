@@ -33,6 +33,11 @@
       url = "github:niedch/mux-session";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    opencode-waybar-status = {
+      url = "path:/home/nic/Projects/opencode-waybar-status";
+      flake = true;
+    };
   };
 
   outputs = {
@@ -44,6 +49,7 @@
     wlctl,
     nixos-hardware,
     mux-session,
+    opencode-waybar-status,
     ...
   } @ inputs: let
     mkSystem = extraModules:

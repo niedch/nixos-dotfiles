@@ -33,9 +33,9 @@
       switch-all-hosts = {
         description = "Switch to a NixOS configuration with sudo (e.g. laptop, desktop, dobby)";
         run = ''
-        mise build laptop
-        mise remote-switch dobby nic@dobby
-        mise remote-switch raspberry-pi nic@rpi
+          mise build laptop
+          mise remote-switch dobby nic@dobby
+          mise remote-switch raspberry-pi nic@rpi
         '';
       };
 

@@ -161,7 +161,7 @@ in {
     ];
 
     extensions = [
-      {id = "cjpalhdlnbpafiamejdnhcphjbkeiagm";}
+      {id = "ghmbeldphafepmbegfdlkpapadhbakde";}  # Proton Pass
     ];
   };
 }
