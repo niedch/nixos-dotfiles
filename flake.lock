@@ -185,37 +185,26 @@
         "type": "github"
       }
     },
-    "nixpkgs_3": {
-      "locked": {
-        "lastModified": 1783776592,
-        "narHash": "sha256-UgCQzxeWI75XM8G+hPrPh+MKzEPjG3SpAj7dtqSbksA=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "e7a3ca8092b61ff85b6a45bf863ea2b2d6a661b3",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "opencode-waybar-status": {
       "inputs": {
         "flake-utils": "flake-utils_2",
         "git-hooks": "git-hooks",
-        "nixpkgs": "nixpkgs_3"
+        "nixpkgs": [
+          "nixpkgs"
+        ]
       },
       "locked": {
-        "lastModified": 1783956530,
-        "narHash": "sha256-PaGe9DqEDxcpD6ZFbWCpe2h6I/nKFSF7kPHJ7+z8Z28=",
-        "path": "/home/nic/Projects/opencode-waybar-status",
-        "type": "path"
+        "lastModified": 1783957021,
+        "narHash": "sha256-z9w/jvtez0/q7FONM4AReWsfsZKIucv/AO75f6Xq8Ks=",
+        "owner": "niedch",
+        "repo": "opencode-waybar-status",
+        "rev": "dbada053346129c9591de6a9fda4a3e11b514ddd",
+        "type": "github"
       },
       "original": {
-        "path": "/home/nic/Projects/opencode-waybar-status",
-        "type": "path"
+        "owner": "niedch",
+        "repo": "opencode-waybar-status",
+        "type": "github"
       }
     },
     "root": {

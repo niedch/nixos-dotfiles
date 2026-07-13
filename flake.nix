@@ -35,8 +35,8 @@
     };
 
     opencode-waybar-status = {
-      url = "path:/home/nic/Projects/opencode-waybar-status";
-      flake = true;
+      url = "github:niedch/opencode-waybar-status";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
