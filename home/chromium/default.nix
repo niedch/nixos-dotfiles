@@ -141,6 +141,12 @@
       sha256 = "sha256-7ab+BahjjSjv5tJ92GfP8yWYVKAkA+I0xqdnfbWtVko=";
       faviconDomain = "linkedin.com";
     }
+
+    {
+      name = "Karriere";
+      url = "https://www.karriere.at";
+      sha256 = "sha256-djLQvpk2bDPeXUNmAHVfmNCJ8jbzxXHCTnCUv5zl+f0=";
+    }
   ];
 in {
   xdg.desktopEntries = builtins.listToAttrs (map (app: {
