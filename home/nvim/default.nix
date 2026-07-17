@@ -25,6 +25,7 @@ in {
         go
         cargo
         rustc
+        python3
       ];
 
     xdg.configFile."nvim".source = ./nvim-config;

@@ -26,11 +26,11 @@ return {
 
 		mason_lspconfig.setup({
 			automatic_installation = true,
-      automatic_enable = {
-        exclude = {
-          "jdtls"
-        }
-      },
+			automatic_enable = {
+				exclude = {
+					"jdtls",
+				},
+			},
 			ensure_installed = {
 				"html",
 				"cssls",
@@ -40,11 +40,12 @@ return {
 				"gopls",
 				"jdtls",
 				"vtsls",
-        "zls",
-        "buf_ls",
-        "rust_analyzer",
-        "yamlls",
-        "nil_ls"
+				"zls",
+				"buf_ls",
+				"rust_analyzer",
+				"yamlls",
+				"nil_ls",
+        "basedpyright"
 			},
 		})
 
