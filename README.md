@@ -2,6 +2,10 @@
 
 Multi-host NixOS + Hyprland configuration managed via flakes and home-manager.
 
+## Demo
+
+https://github.com/user-attachments/assets/e0bab9e3-ae21-42dc-b0bd-6bb02382538f
+
 ## Hosts
 
 | Host       | Type        | Hostname | Boot        | Key Features                              |
