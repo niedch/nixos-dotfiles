@@ -100,11 +100,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1783407356,
-        "narHash": "sha256-RKMVMlPwBUHpGGsrUq3vMnkA9IVuNCfIkjGo2xRlFaI=",
+        "lastModified": 1784366233,
+        "narHash": "sha256-2kgwsvuIBBvDHTiPw6fQU4uWSG9hOz8OPdom8VTKMdw=",
         "owner": "niedch",
         "repo": "mux-session",
-        "rev": "cd684e705f0f49f16828c23193b08e49ef513e1d",
+        "rev": "c980a170b64820be96cd8632be3ef1abbb8946db",
         "type": "github"
       },
       "original": {
