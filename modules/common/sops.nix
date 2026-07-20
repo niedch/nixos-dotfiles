@@ -52,5 +52,17 @@
       group = "users";
       mode = "0644";
     };
+
+    harmonia-secret = {
+      owner = "root";
+      group = "root";
+      mode = "0400";
+    };
+
+    harmonia-pub = {
+      owner = "root";
+      group = "root";
+      mode = "0444";
+    };
   };
 }

@@ -94,6 +94,7 @@
         ./modules/common/sops.nix
         ./modules/common/ssh.nix
         ./modules/common/users.nix
+        ./modules/common/cache-config.nix
         ./modules/server
         ./modules/server/homebridge
         (mkHM (import ./home/server.nix))
@@ -105,6 +106,7 @@
         nixos-hardware.nixosModules.common-pc-ssd
         ./modules/server/openssh.nix
         ./modules/server/immich.nix
+        ./modules/server/nix-cache.nix
         ./modules/server/samba.nix
         (mkHM (import ./home/server.nix))
       ];

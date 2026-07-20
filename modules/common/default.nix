@@ -1,6 +1,7 @@
 {...}: {
   imports = [
     ./binfmt.nix
+    ./cache-config.nix
     ./docker.nix
     ./users.nix
     ./ssh.nix
