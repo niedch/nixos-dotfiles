@@ -15,7 +15,6 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "nixos"; # Define your hostname.
-  nix.settings.experimental-features = ["nix-command" "flakes"];
 
   networking.networkmanager.enable = true;
   networking.wireless.enable = true;

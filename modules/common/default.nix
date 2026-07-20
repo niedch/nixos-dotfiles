@@ -8,7 +8,10 @@
     ./sops.nix
   ];
 
-  nix.settings.trusted-users = ["root" "nic"];
+  nix.settings = {
+    experimental-features = ["nix-command" "flakes"];
+    trusted-users = ["root" "nic"];
+  };
   nixpkgs.config.allowUnfree = true;
 
   programs.nix-ld.enable = true;

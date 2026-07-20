@@ -18,6 +18,9 @@
 
   time.timeZone = "Europe/Vienna";
 
-  nix.settings.require-sigs = false;
+  nix.settings = {
+    experimental-features = ["nix-command" "flakes"];
+    require-sigs = false;
+  };
   system.stateVersion = "26.05";
 }

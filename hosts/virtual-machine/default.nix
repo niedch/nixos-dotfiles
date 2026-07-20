@@ -18,8 +18,6 @@
   networking.networkmanager.enable = true;
   time.timeZone = "Europe/Vienna";
 
-  nix.settings.experimental-features = ["nix-command" "flakes"];
-
   services.qemuGuest.enable = true;
 
   boot.kernelParams = ["video=1920x1080@60"];
