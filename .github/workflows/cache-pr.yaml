@@ -1,0 +1,15 @@
+name: "Pre-build PR for cache"
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  build:
+    runs-on: [self-hosted, nix, harmonia]
+    strategy:
+      matrix:
+        host: [desktop, laptop, raspberry-pi, dobby]
+    steps:
+      - uses: actions/checkout@v7
+      - run: nix build ".#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel" --print-out-paths --no-link

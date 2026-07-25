@@ -108,6 +108,7 @@
         ./modules/server/immich.nix
         ./modules/server/nix-cache.nix
         ./modules/server/samba.nix
+        ./modules/server/github-runner.nix
         (mkHM (import ./home/server.nix))
       ];
     };
