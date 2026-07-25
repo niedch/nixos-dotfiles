@@ -42,6 +42,17 @@
         "todowrite": "deny"
       }
     },
+    "willhaben-agent": {
+      "description": "Searches willhaben.at for best deals based on user criteria",
+      "mode": "subagent",
+      "model": "opencode-go/deepseek-v4-flash",
+      "prompt": "{file:./prompts/willhaben-agent.md}",
+      "permission": {
+        "edit": "deny",
+        "bash": "deny",
+        "todowrite": "deny"
+      }
+    },
     "pr-summarizer": {
       "description": "Summarizes GitHub pull request comments using gh CLI and deepseek-v4-flash",
       "mode": "subagent",
