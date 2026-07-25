@@ -1,8 +1,8 @@
 # AGENTS.md
 
-## Task runner (mise)
+## Dev shell & task runner
 
-Tasks are defined in `files."mise.toml".toml` inside `devenv.nix` — the `mise.toml` is generated automatically on entering the shell. Inside the auto-activated devenv shell (zsh hook already in `home/zsh/default.nix:54`), run tasks via `mise run <task>`:
+Enter the development shell with `nix develop` (or just `nix develop .`). This provides `mise`, `alejandra`, and `jq`. Tasks are defined in `mise.toml` and run via `mise run <task>`:
 
 ```bash
 mise run format                     # alejandra (no config file; default settings)

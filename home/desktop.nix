@@ -73,6 +73,12 @@
     };
   };
 
+  programs.direnv = {
+    enable = true;
+    enableZshIntegration = true;
+    nix-direnv.enable = true;
+  };
+
   sops.defaultSopsFile = ../secrets/secrets.yaml;
   sops.age.keyFile = "/home/nic/.config/sops/age/keys.txt";
 
@@ -93,7 +99,6 @@
       signal-desktop
       mpv
       qimgv
-      devenv
     ]
     ++ [
       # AWT dependency for the eddi project
