@@ -10,13 +10,13 @@
 }: let
   omarchyRepo = "https://github.com/basecamp/omarchy.git";
   omarchyRef = "9cf1852525a5f7de26d3162db9d61e2f5c1d5523";
-  omarchyHash = "sha256-bRUtO5/JT2xdasoTnQC+HnPWOWsK9rTHgSd4aNNzWKA=";
+  omarchyHash = "sha256-PGZuWag+cf+SUg/bVI5Dz3wjEzhEZdgu1SfCKJUkQbU=";
 in {
   imports = [inputs.nix-omarchy-theme.homeManagerModules.default];
 
   omarchy-themes = {
     enable = true;
-    defaultTheme = "koyanagi";
+    defaultTheme = "mechanoona";
 
     themes = {
       catppuccin-latte = {
@@ -53,7 +53,7 @@ in {
         url = "https://github.com/HANCORE-linux/omarchy-kanso-theme.git";
         ref = "bc405d36b93e0abff39c22eda14d1f33121319f3";
         hash = "sha256-AfwCqhF7WMtavS+Z1YTO1YU3XsfGiwDyGhjhzYyvsfY=";
-        defaultBackground = "BG_Painting.jpg";
+        defaultBackground = "BG4.jpg";
         extraBackgrounds = [
           {
             url = "https://w.wallhaven.cc/full/3q/wallhaven-3qrdr6.jpg";

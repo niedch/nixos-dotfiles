@@ -121,6 +121,25 @@ in
       headerStyle = "boxed";
       statusStyle = "dot";
       target = "_blank";
+      background = {
+        image = "https://w.wallhaven.cc/full/je/wallhaven-jexkwm.jpg";
+        blur = "sm";
+        saturate = 50;
+        brightness = 50;
+        opacity = 50;
+      };
+      layout = {
+        Systems = {
+          style = "row";
+          columns = 2;
+          Dobby = {
+            style = "column";
+          };
+          "Raspberry Pi" = {
+            style = "column";
+          };
+        };
+      };
     };
 
     widgets = [
@@ -234,7 +253,7 @@ in
         ];
       }
       {
-        "Systems" = [
+        "Dobby" = [
           {
             Dobby = {
               icon = "glances.png";
@@ -259,6 +278,10 @@ in
               };
             };
           }
+        ];
+      }
+      {
+        "Raspberry Pi" = [
           {
             "Raspberry Pi" = {
               icon = "glances.png";
