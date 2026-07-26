@@ -16,7 +16,7 @@ in {
 
   omarchy-themes = {
     enable = true;
-    defaultTheme = "koyanagi";
+    defaultTheme = "mechanoona";
 
     themes = {
       catppuccin-latte = {
@@ -53,7 +53,7 @@ in {
         url = "https://github.com/HANCORE-linux/omarchy-kanso-theme.git";
         ref = "bc405d36b93e0abff39c22eda14d1f33121319f3";
         hash = "sha256-AfwCqhF7WMtavS+Z1YTO1YU3XsfGiwDyGhjhzYyvsfY=";
-        defaultBackground = "BG_Painting.jpg";
+        defaultBackground = "BG4.jpg";
         extraBackgrounds = [
           {
             url = "https://w.wallhaven.cc/full/3q/wallhaven-3qrdr6.jpg";
