@@ -2,8 +2,7 @@
   config,
   pkgs,
   ...
-}:
-let
+}: let
   uptimeKumaApi = pkgs.python3Packages.buildPythonPackage rec {
     pname = "uptime-kuma-api";
     version = "1.2.1";
@@ -27,9 +26,10 @@ let
   };
 
   provisionPython = pkgs.python3.withPackages (
-    pythonPackages: with pythonPackages; [
-      uptimeKumaApi
-    ]
+    pythonPackages:
+      with pythonPackages; [
+        uptimeKumaApi
+      ]
   );
 
   provisionScript = pkgs.writeText "uptime-kuma-provision.py" ''
@@ -103,8 +103,7 @@ let
 
     api.disconnect()
   '';
-in
-{
+in {
   services.homepage-dashboard = {
     enable = true;
     openFirewall = true;
@@ -189,6 +188,17 @@ in
               icon = "samba.png";
               href = "smb://dobby/share";
               description = "Network File Share";
+            };
+          }
+          {
+            Backrest = {
+              icon = "backrest.png";
+              href = "http://dobby:9898";
+              description = "Restic Backup Web UI";
+              widget = {
+                type = "backrest";
+                url = "http://127.0.0.1:9898";
+              };
             };
           }
           {
@@ -293,7 +303,7 @@ in
     settings.HOST = "0.0.0.0";
   };
 
-  networking.firewall.allowedTCPPorts = [ 3001 ];
+  networking.firewall.allowedTCPPorts = [3001];
 
   systemd.services.uptime-kuma-provision = {
     description = "Provision Uptime Kuma monitors";
@@ -301,8 +311,8 @@ in
       "network.target"
       "uptime-kuma.service"
     ];
-    wants = [ "uptime-kuma.service" ];
-    wantedBy = [ "multi-user.target" ];
+    wants = ["uptime-kuma.service"];
+    wantedBy = ["multi-user.target"];
     serviceConfig = {
       Type = "oneshot";
       Restart = "on-failure";
