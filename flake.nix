@@ -109,15 +109,18 @@
         ./modules/server/nix-cache.nix
         ./modules/server/samba.nix
         ./modules/server/github-runner.nix
+        ./modules/server/glances.nix
+        ./modules/server/homepage-dashboard.nix
         (mkHM (import ./home/server.nix))
       ];
     };
 
     devShells.x86_64-linux.default = let
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
-    in pkgs.mkShell {
-      packages = with pkgs; [ alejandra jq mise ];
-      shellHook = "mise tasks ls";
-    };
+    in
+      pkgs.mkShell {
+        packages = with pkgs; [alejandra jq mise sops];
+        shellHook = "mise tasks ls";
+      };
   };
 }
