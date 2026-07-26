@@ -141,11 +141,16 @@
       sha256 = "sha256-7ab+BahjjSjv5tJ92GfP8yWYVKAkA+I0xqdnfbWtVko=";
       faviconDomain = "linkedin.com";
     }
-
     {
       name = "Karriere";
       url = "https://www.karriere.at";
       sha256 = "sha256-djLQvpk2bDPeXUNmAHVfmNCJ8jbzxXHCTnCUv5zl+f0=";
+    }
+    {
+      name = "Homepage";
+      url = "http://dobby:8082";
+      sha256 = "sha256-3Xi5WD5lVLnYLVOlgNwETtzYT6wAf7DIEeIrzStB0iE=";
+      faviconDomain = "https://gethomepage.dev/";
     }
   ];
 in {

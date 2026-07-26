@@ -2,8 +2,7 @@
   config,
   pkgs,
   ...
-}:
-let
+}: let
   uptimeKumaApi = pkgs.python3Packages.buildPythonPackage rec {
     pname = "uptime-kuma-api";
     version = "1.2.1";
@@ -27,9 +26,10 @@ let
   };
 
   provisionPython = pkgs.python3.withPackages (
-    pythonPackages: with pythonPackages; [
-      uptimeKumaApi
-    ]
+    pythonPackages:
+      with pythonPackages; [
+        uptimeKumaApi
+      ]
   );
 
   provisionScript = pkgs.writeText "uptime-kuma-provision.py" ''
@@ -103,8 +103,7 @@ let
 
     api.disconnect()
   '';
-in
-{
+in {
   services.homepage-dashboard = {
     enable = true;
     openFirewall = true;
@@ -121,6 +120,18 @@ in
       headerStyle = "boxed";
       statusStyle = "dot";
       target = "_blank";
+      layout = {
+        Systems = {
+          style = "row";
+          columns = 2;
+          Dobby = {
+            style = "column";
+          };
+          "Raspberry Pi" = {
+            style = "column";
+          };
+        };
+      };
     };
 
     widgets = [
@@ -234,7 +245,7 @@ in
         ];
       }
       {
-        "Systems" = [
+        "Dobby" = [
           {
             Dobby = {
               icon = "glances.png";
@@ -259,6 +270,10 @@ in
               };
             };
           }
+        ];
+      }
+      {
+        "Raspberry Pi" = [
           {
             "Raspberry Pi" = {
               icon = "glances.png";
@@ -293,7 +308,7 @@ in
     settings.HOST = "0.0.0.0";
   };
 
-  networking.firewall.allowedTCPPorts = [ 3001 ];
+  networking.firewall.allowedTCPPorts = [3001];
 
   systemd.services.uptime-kuma-provision = {
     description = "Provision Uptime Kuma monitors";
@@ -301,8 +316,8 @@ in
       "network.target"
       "uptime-kuma.service"
     ];
-    wants = [ "uptime-kuma.service" ];
-    wantedBy = [ "multi-user.target" ];
+    wants = ["uptime-kuma.service"];
+    wantedBy = ["multi-user.target"];
     serviceConfig = {
       Type = "oneshot";
       Restart = "on-failure";
