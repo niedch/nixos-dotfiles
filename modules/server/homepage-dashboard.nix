@@ -3,28 +3,6 @@
   pkgs,
   ...
 }: let
-  uptimeKumaApi = pkgs.python3Packages.buildPythonPackage rec {
-    pname = "uptime-kuma-api";
-    version = "1.2.1";
-    format = "setuptools";
-    src = pkgs.fetchurl {
-      url = "https://files.pythonhosted.org/packages/40/01/da3e682364231077b05417ffa32e11ef84deee2b6f4dd6ee740cf097df28/uptime_kuma_api-1.2.1.tar.gz";
-      hash = "sha256-tZ5ln3sy6W5RLcwjzLbhobCNLbHXIhXIzrcOVCG+Z+E=";
-    };
-    propagatedBuildInputs = with pkgs.python3Packages; [
-      python-socketio
-      requests
-      packaging
-      websocket-client
-    ];
-    doCheck = false;
-    postPatch = ''
-      substituteInPlace uptime_kuma_api/api.py \
-        --replace-fail 'resendInterval: int = 0,' 'resendInterval: int = 0, conditions: str = "",' \
-        --replace-fail '"resendInterval": resendInterval,' '"resendInterval": resendInterval, "conditions": conditions,'
-    '';
-  };
-
   provisionPython = pkgs.python3.withPackages (
     pythonPackages:
       with pythonPackages; [
@@ -88,29 +66,6 @@
             maxretries=3,
         )
         print("Created Raspberry PI monitor")
-
-    # Get the monitor ID
-    monitor_id = None
-    for m in api.get_monitors():
-        if m["name"] == "A1 Router":
-            monitor_id = m["id"]
-            break
-
-    # Create a status page if needed
-    status_pages = api.get_status_pages()
-    if not any(sp["slug"] == "router" for sp in status_pages):
-        api._call("addStatusPage", ("Network", "router"))
-        print("Created status page 'router'")
-        status_pages = api.get_status_pages()
-
-    # Find the status page ID
-    page_id = None
-    for sp in status_pages:
-        if sp["slug"] == "router":
-            page_id = sp["id"]
-            break
-
-    print(f"status_page_id={page_id} monitor_id={monitor_id}")
 
     api.disconnect()
   '';
