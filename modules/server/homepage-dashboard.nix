@@ -78,6 +78,17 @@ let
         )
         print("Created Thermomix monitor")
 
+    if not any(m["name"] == "Raspberry PI" for m in monitors):
+        result = api.add_monitor(
+            type="ping",
+            name="Raspberry PI",
+            hostname="rpi",
+            interval=60,
+            retryInterval=60,
+            maxretries=3,
+        )
+        print("Created Raspberry PI monitor")
+
     # Get the monitor ID
     monitor_id = None
     for m in api.get_monitors():
@@ -136,6 +147,9 @@ in
             style = "column";
           };
           "Raspberry Pi" = {
+            style = "column";
+          };
+          Laptop = {
             style = "column";
           };
         };
@@ -205,8 +219,8 @@ in
         "Infrastructure" = [
           {
             "Samba Share" = {
-              icon = "samba.png";
-              href = "smb://dobby/share";
+              icon = "samba-server.png";
+              href = "//dobby/share";
               description = "Network File Share";
             };
           }
@@ -222,6 +236,13 @@ in
               icon = "github.png";
               href = "https://github.com/niedch/nixos-dotfiles/actions";
               description = "Self-hosted Actions Runner";
+            };
+          }
+          {
+            "Uptime Kuma" = {
+              icon = "uptime-kuma.png";
+              href = "http://dobby:3001";
+              description = "Uptime Kuma Instance";
             };
           }
         ];
@@ -242,11 +263,23 @@ in
           }
           {
             "Thermomix" = {
+              icon = "cloudpanel.png";
               description = "Thermomix";
               widget = {
                 type = "uptimekuma";
                 url = "http://127.0.0.1:3001";
                 slug = "thermo";
+              };
+            };
+          }
+          {
+            "Raspberry PI" = {
+              icon = "raspberry-pi.png";
+              description = "Raspberry PI";
+              widget = {
+                type = "uptimekuma";
+                url = "http://127.0.0.1:3001";
+                slug = "rpi";
               };
             };
           }
@@ -301,6 +334,34 @@ in
               widget = {
                 type = "glances";
                 url = "http://rpi:61208";
+                metric = "fs:/";
+                version = 4;
+              };
+            };
+          }
+        ];
+      }
+      {
+        "Laptop" = [
+          {
+            "Laptop" = {
+              icon = "glances.png";
+              href = "http://nixos:61208";
+              widget = {
+                type = "glances";
+                url = "http://nixos:61208";
+                metric = "info";
+                version = 4;
+              };
+            };
+          }
+          {
+            "Laptop Storage" = {
+              icon = "glances.png";
+              href = "http://nixos:61208";
+              widget = {
+                type = "glances";
+                url = "http://nixos:61208";
                 metric = "fs:/";
                 version = 4;
               };

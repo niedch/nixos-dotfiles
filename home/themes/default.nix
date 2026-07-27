@@ -10,7 +10,7 @@
 }: let
   omarchyRepo = "https://github.com/basecamp/omarchy.git";
   omarchyRef = "9cf1852525a5f7de26d3162db9d61e2f5c1d5523";
-  omarchyHash = "sha256-PGZuWag+cf+SUg/bVI5Dz3wjEzhEZdgu1SfCKJUkQbU=";
+  omarchyHash = "sha256-xtUwYBTO51ietiuiEnoXTKX5fXoYQhw49ssWxyqoXTM=";
 in {
   imports = [inputs.nix-omarchy-theme.homeManagerModules.default];
 
