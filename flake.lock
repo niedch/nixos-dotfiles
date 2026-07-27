@@ -120,11 +120,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1783491451,
-        "narHash": "sha256-FSPFt36OglTrLr8MbfArXFQOxID1cV/5jvBHgxGNpHc=",
+        "lastModified": 1785162917,
+        "narHash": "sha256-Xth/hp2CoA3yvD71cp85gkn/9zHv2ZLv/ycYFxrmXgA=",
         "owner": "niedch",
         "repo": "nix-omarchy-theme",
-        "rev": "9bd882eacb41b3db79a14b538acf4fd9a9f27cbc",
+        "rev": "c72ac41209ebf9f0922d0322908a0274b58d27fa",
         "type": "github"
       },
       "original": {

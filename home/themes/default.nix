@@ -9,8 +9,7 @@
   ...
 }: let
   omarchyRepo = "https://github.com/basecamp/omarchy.git";
-  omarchyRef = "9cf1852525a5f7de26d3162db9d61e2f5c1d5523";
-  omarchyHash = "sha256-xtUwYBTO51ietiuiEnoXTKX5fXoYQhw49ssWxyqoXTM=";
+  omarchyRef = "88ef6ca597929aa7ea6ca198a404821ad64f9714";
 in {
   imports = [inputs.nix-omarchy-theme.homeManagerModules.default];
 
@@ -21,38 +20,32 @@ in {
     themes = {
       catppuccin-latte = {
         url = omarchyRepo;
-        ref = omarchyRef;
-        hash = omarchyHash;
+        rev = omarchyRef;
         subpath = "themes/catppuccin-latte";
       };
       catppuccin = {
         url = omarchyRepo;
-        ref = omarchyRef;
-        hash = omarchyHash;
+        rev = omarchyRef;
         subpath = "themes/catppuccin";
       };
       ethereal = {
         url = omarchyRepo;
-        ref = omarchyRef;
-        hash = omarchyHash;
+        rev = omarchyRef;
         subpath = "themes/ethereal";
       };
       everforest = {
         url = omarchyRepo;
-        ref = omarchyRef;
-        hash = omarchyHash;
+        rev = omarchyRef;
         subpath = "themes/everforest";
       };
       gruvbox = {
         url = omarchyRepo;
-        ref = omarchyRef;
-        hash = omarchyHash;
+        rev = omarchyRef;
         subpath = "themes/gruvbox";
       };
       kanso = {
         url = "https://github.com/HANCORE-linux/omarchy-kanso-theme.git";
-        ref = "bc405d36b93e0abff39c22eda14d1f33121319f3";
-        hash = "sha256-AfwCqhF7WMtavS+Z1YTO1YU3XsfGiwDyGhjhzYyvsfY=";
+        rev = "bc405d36b93e0abff39c22eda14d1f33121319f3";
         defaultBackground = "BG4.jpg";
         extraBackgrounds = [
           {
@@ -64,37 +57,31 @@ in {
       };
       mechanoona = {
         url = "https://github.com/HANCORE-linux/omarchy-mechanoonna-theme.git";
-        ref = "612e122cfc0e3475559e081ca41cd99d2356b4a3";
-        hash = "sha256-IxzTwblsoGFPFsRQXcPE4VsM+S4mAOKhPMhUASUmVOU=";
+        rev = "612e122cfc0e3475559e081ca41cd99d2356b4a3";
         defaultBackground = "BG3.jpg";
       };
       the-greek = {
         url = "https://github.com/HANCORE-linux/omarchy-thegreek-theme.git";
-        ref = "c2129dd8b17ae64e54a43d6e714eb9d66876edae";
-        hash = "sha256-njw+hvqZUZXxzuu7kMxWV/ez6gKWEyy3nFr6TxsAlyk=";
+        rev = "c2129dd8b17ae64e54a43d6e714eb9d66876edae";
       };
       koyanagi = {
         url = "https://github.com/YutaKoyanagi10/omarchy-koyanagi-theme.git";
-        ref = "a09f41ab0a4d2d2e5a5647c0c40ca092cf67b816";
-        hash = "sha256-95XZzgiDxkxD3nCJneaNL27iJR5bdwtIKtPWbokSpcI=";
+        rev = "a09f41ab0a4d2d2e5a5647c0c40ca092cf67b816";
         defaultBackground = "background_3.jpg";
       };
       last-horizon = {
         url = omarchyRepo;
-        ref = omarchyRef;
-        hash = omarchyHash;
+        rev = omarchyRef;
         subpath = "themes/last-horizon";
       };
       matte-black = {
         url = omarchyRepo;
-        ref = omarchyRef;
-        hash = omarchyHash;
+        rev = omarchyRef;
         subpath = "themes/matte-black";
       };
       miasma = {
         url = omarchyRepo;
-        ref = omarchyRef;
-        hash = omarchyHash;
+        rev = omarchyRef;
         subpath = "themes/miasma";
         defaultBackground = "03-house.jpg";
         extraBackgrounds = [
@@ -107,8 +94,7 @@ in {
       };
       nord = {
         url = omarchyRepo;
-        ref = omarchyRef;
-        hash = omarchyHash;
+        rev = omarchyRef;
         subpath = "themes/nord";
         defaultBackground = "wallhaven-5yr1p8.png";
         extraBackgrounds = [
@@ -121,38 +107,32 @@ in {
       };
       ristretto = {
         url = omarchyRepo;
-        ref = omarchyRef;
-        hash = omarchyHash;
+        rev = omarchyRef;
         subpath = "themes/ristretto";
       };
       rose-pine = {
         url = omarchyRepo;
-        ref = omarchyRef;
-        hash = omarchyHash;
+        rev = omarchyRef;
         subpath = "themes/rose-pine";
       };
       solitude = {
         url = omarchyRepo;
-        ref = omarchyRef;
-        hash = omarchyHash;
+        rev = omarchyRef;
         subpath = "themes/solitude";
       };
       tokyo-night = {
         url = omarchyRepo;
-        ref = omarchyRef;
-        hash = omarchyHash;
+        rev = omarchyRef;
         subpath = "themes/tokyo-night";
       };
       vantablack = {
         url = omarchyRepo;
-        ref = omarchyRef;
-        hash = omarchyHash;
+        rev = omarchyRef;
         subpath = "themes/vantablack";
       };
       white = {
         url = omarchyRepo;
-        ref = omarchyRef;
-        hash = omarchyHash;
+        rev = omarchyRef;
         subpath = "themes/white";
       };
     };
