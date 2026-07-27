@@ -3,12 +3,7 @@
   pkgs,
   ...
 }: let
-  provisionPython = pkgs.python3.withPackages (
-    pythonPackages:
-      with pythonPackages; [
-        uptimeKumaApi
-      ]
-  );
+  provisionPython = pkgs.python3.withPackages (ps: [ps.uptime-kuma-api]);
 
   provisionScript = pkgs.writeText "uptime-kuma-provision.py" ''
     import time, sys
