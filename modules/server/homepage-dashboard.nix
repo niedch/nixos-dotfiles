@@ -228,6 +228,28 @@ in {
               icon = "nixos.png";
               href = "http://dobby:5000";
               description = "Harmonia Binary Cache";
+              widget = {
+                type = "prometheusmetric";
+                url = "http://127.0.0.1:9090";
+                metrics = [
+                  {
+                    label = "Narinfo Hits";
+                    query = "harmonia_http_requests_total{path='/{hash}.narinfo',status='200'}";
+                  }
+                  {
+                    label = "Narinfo Misses";
+                    query = "harmonia_http_requests_total{path='/{hash}.narinfo',status='404'}";
+                  }
+                  {
+                    label = "Nar Downloads";
+                    query = "harmonia_http_requests_total{path=~'/nar/.*',status='200'}";
+                  }
+                  {
+                    label = "Nar 404s";
+                    query = "harmonia_http_requests_total{path=~'/nar/.*',status='404'}";
+                  }
+                ];
+              };
             };
           }
           {
@@ -257,17 +279,6 @@ in {
                 type = "uptimekuma";
                 url = "http://127.0.0.1:3001";
                 slug = "router";
-              };
-            };
-          }
-          {
-            "Thermomix" = {
-              icon = "cloudpanel.png";
-              description = "Thermomix";
-              widget = {
-                type = "uptimekuma";
-                url = "http://127.0.0.1:3001";
-                slug = "thermo";
               };
             };
           }
@@ -406,5 +417,19 @@ in {
     owner = "root";
     group = "root";
     mode = "0400";
+  };
+
+  services.prometheus = {
+    enable = true;
+    port = 9090;
+    listenAddress = "127.0.0.1";
+    scrapeConfigs = [
+      {
+        job_name = "harmonia";
+        static_configs = [
+          {targets = ["127.0.0.1:5000"];}
+        ];
+      }
+    ];
   };
 }
