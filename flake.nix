@@ -111,7 +111,7 @@
         ./modules/server/samba.nix
         ./modules/server/github-runner.nix
         ./modules/server/glances.nix
-        ./modules/server/homepage-dashboard.nix
+        ./modules/server/homepage
         (mkHM (import ./home/server.nix))
       ];
     };

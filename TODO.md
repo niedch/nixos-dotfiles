@@ -5,8 +5,8 @@
 - [x] Rclone Setup
 - [ ] Quickshell maybe
 
-- [ ] Setup icloud sync on dobby 
-- [ ] Setup photo viewer/media server
+- [x] Setup icloud sync on dobby 
+- [x] Setup photo viewer/media server
 
-- [ ] try spiceity on desktop
+- [x] try spiceity on desktop
 
