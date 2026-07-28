@@ -38,6 +38,10 @@
       url = "github:niedch/opencode-waybar-status";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    speedtest-tracker = {
+      url = "github:niedch/speedtest-tracker";
+    };
   };
 
   outputs = {
@@ -50,6 +54,7 @@
     nixos-hardware,
     mux-session,
     opencode-waybar-status,
+    speedtest-tracker,
     ...
   } @ inputs: let
     mkSystem = extraModules:
@@ -111,6 +116,7 @@
         ./modules/server/samba.nix
         ./modules/server/github-runner.nix
         ./modules/server/glances.nix
+        speedtest-tracker.nixosModules.default
         ./modules/server/homepage
         (mkHM (import ./home/server.nix))
       ];
