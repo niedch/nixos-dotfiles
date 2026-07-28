@@ -6,6 +6,7 @@
   imports = [
     ./prometheus.nix
     ./kuma.nix
+    ./speedtest-tracker.nix
   ];
 
   sops.secrets.HOMEPAGE_ENV = {
@@ -189,6 +190,18 @@
                 type = "uptimekuma";
                 url = "http://127.0.0.1:3001";
                 slug = "rpi";
+              };
+            };
+          }
+          {
+            "Speedtest Tracker" = {
+              icon = "speedtest-tracker.png";
+              href = "http://dobby:8080/dashboard/";
+              description = "Internet Speed Monitoring";
+              widget = {
+                type = "speedtest";
+                url = "http://dobby:8080";
+                version = 2;
               };
             };
           }

@@ -185,6 +185,22 @@
         "type": "github"
       }
     },
+    "nixpkgs_3": {
+      "locked": {
+        "lastModified": 1785090369,
+        "narHash": "sha256-m0pDuRJG7EDo9ri+4Ksu83VsI+PlxNC9lNBfydejce4=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "624af665418d3c65d544145b4d34ad696439570e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "opencode-waybar-status": {
       "inputs": {
         "flake-utils": "flake-utils_2",
@@ -216,6 +232,7 @@
         "nixpkgs": "nixpkgs",
         "opencode-waybar-status": "opencode-waybar-status",
         "sops-nix": "sops-nix",
+        "speedtest-tracker": "speedtest-tracker",
         "wlctl": "wlctl"
       }
     },
@@ -236,6 +253,24 @@
       "original": {
         "owner": "Mic92",
         "repo": "sops-nix",
+        "type": "github"
+      }
+    },
+    "speedtest-tracker": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_3"
+      },
+      "locked": {
+        "lastModified": 1785224031,
+        "narHash": "sha256-SBAWcEs00Ks1zE9po5mJIVNegwW4zzUR7o+ow3+NF8A=",
+        "owner": "niedch",
+        "repo": "speedtest-tracker",
+        "rev": "09514170231fb8aa278e113c837b4bf414ff7c7b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "niedch",
+        "repo": "speedtest-tracker",
         "type": "github"
       }
     },
