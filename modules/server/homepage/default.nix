@@ -196,7 +196,7 @@
           {
             "Speedtest Tracker" = {
               icon = "speedtest-tracker.png";
-              href = "http://dobby:8080/docs/";
+              href = "http://dobby:8080/dashboard/";
               description = "Internet Speed Monitoring";
               widget = {
                 type = "speedtest";

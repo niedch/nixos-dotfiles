@@ -261,11 +261,11 @@
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1785221600,
-        "narHash": "sha256-4y2Tt1vyRg9kdr5MTyJm3cVMXrYvPTH/AOqg3H5BclA=",
+        "lastModified": 1785224031,
+        "narHash": "sha256-SBAWcEs00Ks1zE9po5mJIVNegwW4zzUR7o+ow3+NF8A=",
         "owner": "niedch",
         "repo": "speedtest-tracker",
-        "rev": "d0a799d9ef033a871fe53de008fbb662603d49a4",
+        "rev": "09514170231fb8aa278e113c837b4bf414ff7c7b",
         "type": "github"
       },
       "original": {

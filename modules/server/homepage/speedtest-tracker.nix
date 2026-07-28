@@ -5,6 +5,7 @@
   services.speedtest-tracker = {
     enable = true;
     port = 8080;
-    speedtest.schedule = "0 * * * *";
+    openFirewall = true;
+    speedtest.schedule = "*/10 * * * *";
   };
 }
