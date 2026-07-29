@@ -6,6 +6,6 @@
     enable = true;
     port = 8080;
     openFirewall = true;
-    speedtest.schedule = "*/30 * * * *";
+    speedtest.schedule = "0 */2 * * *";
   };
 }
