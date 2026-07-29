@@ -1,10 +1,18 @@
-{pkgs, ...}: {
+{ inputs, pkgs, ... }: {
   programs.waybar = {
     enable = true;
     systemd = {
       enable = true;
     };
   };
+
+  home.packages = with pkgs; [
+    bluetui
+    wiremix
+    inputs.wlctl.packages.${pkgs.stdenv.hostPlatform.system}.default
+    cava
+    jq
+  ];
 
   xdg.configFile."waybar/config.jsonc".source = ./config.jsonc;
   xdg.configFile."waybar/style.css".source = ./style.css;
@@ -48,5 +56,4 @@
     executable = true;
   };
 
-  home.packages = with pkgs; [cava jq];
 }

@@ -2,6 +2,8 @@
   imports = [
     ./kdenlive
     ./music
-    ./mpv
+    ./video
+    ./image
+    ./docs
   ];
 }

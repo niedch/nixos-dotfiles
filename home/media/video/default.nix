@@ -1,7 +1,6 @@
 { pkgs, ... }: {
   home.packages = with pkgs; [
     mpv
-    qimgv
   ];
 
   xdg.configFile = {
@@ -10,16 +9,10 @@
     "mpv/script-opts/osc.conf".source = ./config/script-opts/osc.conf;
   };
 
+  xdg.mime.enable = true;
   xdg.mimeApps = {
     enable = true;
     defaultApplications = {
-      # images
-      "image/jpeg" = "qimgv.desktop";
-      "image/png" = "qimgv.desktop";
-      "image/gif" = "qimgv.desktop";
-      "image/bmp" = "qimgv.desktop";
-      "image/webp" = "qimgv.desktop";
-
       # videos
       "video/mp4" = "mpv.desktop";
       "video/mpeg" = "mpv.desktop";
