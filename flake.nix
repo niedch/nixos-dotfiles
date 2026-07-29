@@ -41,6 +41,12 @@
 
     speedtest-tracker = {
       url = "github:niedch/speedtest-tracker";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    comd = {
+      url = "github:niedch/comd";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
@@ -55,6 +61,7 @@
     mux-session,
     opencode-waybar-status,
     speedtest-tracker,
+    comd,
     ...
   } @ inputs: let
     mkSystem = extraModules:

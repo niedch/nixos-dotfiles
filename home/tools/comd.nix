@@ -1,4 +1,8 @@
-{ ... }: {
+{ inputs, pkgs, ... }: {
+  home.packages = [
+    inputs.comd.packages.${pkgs.stdenv.hostPlatform.system}.default
+  ];
+
   xdg.configFile."comd/config.toml".text = ''
     [global]
     system_prompt = """

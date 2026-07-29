@@ -1,7 +1,5 @@
 [tools]
 
-##### Custom #####
-"github:niedch/comd" = "latest"
 ##### Golang #####
 "github:goreleaser/goreleaser" = "latest"
 
