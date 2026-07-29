@@ -7,9 +7,8 @@
     ./chromium
     ./ghostty
     ./hyprland
+    ./media
     ./menu
-    ./kdenlive
-    ./music
     ./waybar
     ./themes
     ./walker
@@ -22,7 +21,6 @@
     ./git
     ./ssh
     ./obsidian
-    ./quickshell
   ];
 
   home.username = "nic";
@@ -43,25 +41,6 @@
       "image/tiff" = "org.pwmt.zathura-pdf-mupdf.desktop";
       "application/vnd.comicbook+zip" = "org.pwmt.zathura-cb.desktop";
       "image/vnd.djvu" = "org.pwmt.zathura-djvu.desktop";
-
-      # images
-      "image/jpeg" = "qimgv.desktop";
-      "image/png" = "qimgv.desktop";
-      "image/gif" = "qimgv.desktop";
-      "image/bmp" = "qimgv.desktop";
-      "image/webp" = "qimgv.desktop";
-
-      # videos
-      "video/mp4" = "mpv.desktop";
-      "video/mpeg" = "mpv.desktop";
-      "video/x-matroska" = "mpv.desktop";
-      "video/webm" = "mpv.desktop";
-      "video/x-msvideo" = "mpv.desktop";
-      "video/quicktime" = "mpv.desktop";
-      "video/x-flv" = "mpv.desktop";
-      "video/ogg" = "mpv.desktop";
-      "video/3gpp" = "mpv.desktop";
-      "video/avi" = "mpv.desktop";
     };
   };
 
@@ -97,8 +76,6 @@
       zathura
       weathr
       signal-desktop
-      mpv
-      qimgv
     ]
     ++ [
       # AWT dependency for the eddi project

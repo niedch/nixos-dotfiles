@@ -1,0 +1,7 @@
+{ ... }: {
+  imports = [
+    ./kdenlive
+    ./music
+    ./mpv
+  ];
+}
