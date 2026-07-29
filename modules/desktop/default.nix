@@ -12,6 +12,7 @@
     ./gnome-calendar.nix
     ./samba-mount.nix
     ./password-manager.nix
+    ./noctalia.nix
   ];
 
   # dconf D-Bus service is required for gsettings changes to propagate through

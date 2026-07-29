@@ -48,6 +48,16 @@
       url = "github:niedch/comd";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    niri = {
+      url = "github:sodiboo/niri-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    noctalia = {
+      url = "github:noctalia-dev/noctalia";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -62,6 +72,8 @@
     opencode-waybar-status,
     speedtest-tracker,
     comd,
+    niri,
+    noctalia,
     ...
   } @ inputs: let
     mkSystem = extraModules:
@@ -89,7 +101,14 @@
         ./hosts/virtual-machine
         ./modules/common
         ./modules/desktop
-        (mkHM (import ./home/desktop.nix))
+        {nixosDotfiles.noctalia.enable = true;}
+        (mkHM {
+          imports = [
+            (import ./home/desktop.nix)
+            ./home/noctalia/default.nix
+            {nixosDotfiles.noctalia.enable = true;}
+          ];
+        })
       ];
 
       laptop = mkSystem [
@@ -98,7 +117,14 @@
         ./modules/desktop
         ./modules/server/glances.nix
         nixos-hardware.nixosModules.dell-precision-5530
-        (mkHM (import ./home/desktop.nix))
+        {nixosDotfiles.noctalia.enable = true;}
+        (mkHM {
+          imports = [
+            (import ./home/desktop.nix)
+            ./home/noctalia/default.nix
+            {nixosDotfiles.noctalia.enable = true;}
+          ];
+        })
       ];
 
       raspberry-pi = mkSystem [

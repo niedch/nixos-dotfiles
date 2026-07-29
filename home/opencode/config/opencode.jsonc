@@ -2,6 +2,9 @@
   "$schema": "https://opencode.ai/config.json",
   "autoupdate": false,
   "default_agent": "plan",
+  // ############################################################################
+  // ############################## Primary Agents ##############################
+  // ############################################################################
   "agent": {
     "build": {
       "mode": "primary",
@@ -10,6 +13,9 @@
     "hard-plan": {
       "mode": "primary",
       "model": "opencode-go/glm-5.1"
+      "permission": {
+        "edit": "deny"
+      }
     },
     "plan": {
       "mode": "primary",
@@ -18,6 +24,9 @@
         "edit": "deny"
       }
     },
+  // ############################################################################
+  // ############################## Tasks Agents ##############################
+  // ############################################################################
     "explore": {
       "description": "Fast agent specialized for exploring codebases and answering search questions",
       "model": "opencode-go/deepseek-v4-flash",
