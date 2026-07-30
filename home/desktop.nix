@@ -20,6 +20,7 @@
     ./git
     ./ssh
     ./obsidian
+    ./quickshell
   ];
 
   home.username = "nic";

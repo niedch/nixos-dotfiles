@@ -133,8 +133,8 @@
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
     in
       pkgs.mkShell {
-        packages = with pkgs; [alejandra jq mise sops];
         shellHook = "mise tasks ls";
+        packages = with pkgs; [alejandra jq mise sops home-manager.packages.x86_64-linux.default];
       };
   };
 }
