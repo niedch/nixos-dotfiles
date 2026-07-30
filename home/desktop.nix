@@ -1,7 +1,4 @@
-{
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   imports = [
     ./chromium
     ./ghostty
@@ -57,5 +54,4 @@
       python3
       gnumake
     ];
-
 }

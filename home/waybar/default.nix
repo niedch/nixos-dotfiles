@@ -1,4 +1,8 @@
-{ inputs, pkgs, ... }: {
+{
+  inputs,
+  pkgs,
+  ...
+}: {
   programs.waybar = {
     enable = true;
     systemd = {
@@ -55,5 +59,4 @@
     source = ./bin/omarchy-toggle-notification-silencing;
     executable = true;
   };
-
 }
