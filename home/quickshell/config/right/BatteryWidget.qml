@@ -8,19 +8,25 @@ Widget {
 
   property int capacity: -1
   property string status: ""
+  property real powerRate: 0
+  property bool acOnline: false
 
   text: {
     if (widget.capacity < 0) return ""
     var pct = widget.capacity
     var idx = Math.min(Math.floor(pct / 10), 9)
 
-    if (widget.status === "Full" || widget.status === "Not charging") {
-      return pct + "% "
-    }
-
     if (widget.status === "Charging") {
       var chargingIcons = ["󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅"]
       return pct + "% " + chargingIcons[idx]
+    }
+
+    if (widget.status === "Not charging") {
+      return pct + "% "
+    }
+
+    if (widget.status === "Full") {
+      return pct + "% 󰂅"
     }
 
     var dischargingIcons = ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
@@ -29,7 +35,7 @@ Widget {
 
   Timer {
     id: batteryTimer
-    interval: Constants.pollSlow
+    interval: Constants.pollNormal
     running: true
     repeat: true
     onTriggered: pollProc.running = true
@@ -37,21 +43,25 @@ Widget {
 
   Process {
     id: pollProc
-    command: ["bash", "-c", "BAT=$(ls /sys/class/power_supply/ | grep -E '^BAT[0-9]+$' | head -1); if [ -n \"$BAT\" ]; then echo \"$(cat /sys/class/power_supply/$BAT/capacity) $(cat /sys/class/power_supply/$BAT/status)\"; fi"]
+    command: ["bash", "-c", "BAT=$(ls /sys/class/power_supply/ | grep -E '^BAT[0-9]+$' | head -1); if [ -n \"$BAT\" ]; then cap=$(cat /sys/class/power_supply/$BAT/capacity); status=$(cat /sys/class/power_supply/$BAT/status); power=$(cat /sys/class/power_supply/$BAT/power_now 2>/dev/null || echo 0); ac=0; for psu in /sys/class/power_supply/*/online; do if [ \"$(cat $(dirname $psu)/type 2>/dev/null)\" = \"Mains\" ] && [ \"$(cat $psu)\" = \"1\" ]; then ac=1; break; fi; done; echo \"$cap|$status|$ac|$power\"; fi"]
     stdout: StdioCollector { id: batteryCollector }
     onExited: {
-      var parts = batteryCollector.text.trim().split(/\s+/)
-      if (parts.length >= 2) {
+      var parts = batteryCollector.text.trim().split("|")
+      if (parts.length >= 4) {
         widget.capacity = parseInt(parts[0])
         widget.status = parts[1]
+        widget.acOnline = parseInt(parts[2]) === 1
+        widget.powerRate = parseFloat(parts[3]) / 1000000.0
       }
     }
   }
 
   MouseArea {
+    id: batteryMouse
     anchors.fill: parent
     acceptedButtons: Qt.LeftButton | Qt.RightButton
     cursorShape: Qt.PointingHandCursor
+    hoverEnabled: true
     onClicked: function(mouse) {
       if (mouse.button === Qt.RightButton) {
         infoProc.command = ["bash", "-c", "notify-send -u low \"$(omarchy-battery-status)\""]
@@ -60,6 +70,18 @@ Widget {
         menuProc.command = ["omarchy-menu", "power"]
         menuProc.running = true
       }
+    }
+  }
+
+  StyledTooltip {
+    target: widget
+    hovered: batteryMouse.containsMouse
+    tooltipText: {
+      if (widget.status === "Charging" && widget.powerRate > 0) return "Charging ⚡ " + widget.powerRate.toFixed(1) + "W"
+      if (widget.status === "Discharging" && widget.powerRate > 0) return "Discharging 🔋 " + widget.powerRate.toFixed(1) + "W"
+      if (widget.status === "Not charging") return "Plugged in 🔌"
+      if (widget.status === "Full") return "Fully charged 🔌"
+      return ""
     }
   }
 
