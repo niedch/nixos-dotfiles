@@ -1,23 +1,17 @@
 import Quickshell
 import Quickshell.Io
 import QtQuick
+import qs
 
-Item {
-  implicitHeight: 26
-  width: voxtypeText.implicitWidth + 15
-
-  Text {
-    id: voxtypeText
-    anchors.centerIn: parent
-    color: stateClass === "recording" || stateClass === "transcribing" ? "#a55555" : "#C5C9C7"
-    font.family: "JetBrainsMono Nerd Font"
-    font.pixelSize: 12
-    text: voxtypeIcon
-    visible: voxtypeIcon !== ""
-  }
+Widget {
+  widthPadding: 15
 
   property string voxtypeIcon: ""
   property string stateClass: ""
+
+  text: voxtypeIcon
+  textColor: stateClass === "recording" || stateClass === "transcribing" ? Colors.color1 : Colors.foreground
+  textVisible: voxtypeIcon !== ""
 
   Process {
     id: voxtypeProc

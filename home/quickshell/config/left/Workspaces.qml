@@ -2,11 +2,19 @@ import Quickshell
 import Quickshell.Hyprland
 import Quickshell.Io
 import QtQuick
+import qs
 
 Row {
   id: root
   spacing: 0
-  height: 26
+  height: Constants.barHeight
+
+  readonly property var workspaceLabels: ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十"]
+  readonly property string activeIcon: "󱓻"
+
+  function labelFor(wsId) {
+    return wsId >= 1 && wsId <= workspaceLabels.length ? workspaceLabels[wsId - 1] : String(wsId)
+  }
 
   Repeater {
     model: 5
@@ -30,14 +38,11 @@ Row {
       Text {
         id: textItem
         anchors.centerIn: parent
-        color: isActive || isOccupied ? "#C5C9C7" : "#676C6D"
-        font.family: "JetBrainsMono Nerd Font"
-        font.pixelSize: 12
-        text: {
-          var labels = ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十"]
-          if (isActive) return "󱓻"
-          return labels[wsId - 1]
-        }
+        color: Colors.foreground
+        opacity: isActive || isOccupied ? 1.0 : 0.5
+        font.family: Constants.fontFamily
+        font.pixelSize: Constants.fontSize
+        text: isActive ? root.activeIcon : root.labelFor(wsId)
       }
 
       MouseArea {
@@ -55,25 +60,20 @@ Row {
       readonly property var workspace: modelData
       readonly property int wsId: workspace.id
 
-      visible: wsId > 5
-
       readonly property bool isActive: workspace.active
 
+      visible: wsId > 5
       width: visible ? textItem.implicitWidth + 12 : 0
       height: root.height
 
       Text {
         id: textItem
         anchors.centerIn: parent
-        color: isActive ? "#C5C9C7" : "#9FA4A3"
-        font.family: "JetBrainsMono Nerd Font"
-        font.pixelSize: 12
-        text: {
-          var labels = ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十"]
-          if (isActive) return "󱓻"
-          var label = wsId >= 1 && wsId <= 10 ? labels[wsId - 1] : String(wsId)
-          return label
-        }
+        color: Colors.foreground
+        opacity: isActive ? 1.0 : 0.5
+        font.family: Constants.fontFamily
+        font.pixelSize: Constants.fontSize
+        text: isActive ? root.activeIcon : root.labelFor(wsId)
       }
 
       MouseArea {

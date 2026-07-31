@@ -1,25 +1,19 @@
 import Quickshell
 import Quickshell.Io
 import QtQuick
+import qs
 
-Item {
-  implicitHeight: 26
-  width: cavaText.implicitWidth + 8
-
-  Text {
-    id: cavaText
-    anchors.centerIn: parent
-    color: "#C5C9C7"
-    font.family: "JetBrainsMono Nerd Font"
-    font.pixelSize: 12
-    text: cavaOutput
-  }
+Widget {
+  id: widget
+  widthPadding: 8
 
   property string cavaOutput: ""
 
+  text: cavaOutput
+
   Process {
     id: proc
-    command: ["bash", "-c", "./cava.sh"]
+    command: ["bash", "-c", (Quickshell.env("QS_CONFIG_PATH") ?? "") + "/scripts/cava.sh"]
     running: true
     stdout: SplitParser {
       splitMarker: "\n"

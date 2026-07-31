@@ -1,25 +1,18 @@
 import Quickshell
 import Quickshell.Io
 import QtQuick
+import qs
 
-Item {
-  implicitHeight: 26
-  width: weatherText.implicitWidth + 15
+Widget {
+  widthPadding: 15
 
-  Text {
-    id: weatherText
-    anchors.centerIn: parent
-    color: "#C5C9C7"
-    font.family: "JetBrainsMono Nerd Font"
-    font.pixelSize: 12
-    text: _icon
-  }
+  property string weatherIcon: ""
 
-  property string _icon: ""
+  text: weatherIcon
 
   Timer {
     id: weatherTimer
-    interval: 60000
+    interval: Constants.pollWeather
     running: true
     repeat: true
     onTriggered: fetchWeather.running = true
@@ -34,12 +27,12 @@ Item {
       try {
         var obj = JSON.parse(data)
         if (obj.class === "unavailable") {
-          _icon = ""
+          weatherIcon = ""
         } else {
-          _icon = obj.text
+          weatherIcon = obj.text
         }
       } catch (e) {
-        _icon = ""
+        weatherIcon = ""
       }
     }
   }
@@ -48,12 +41,12 @@ Item {
     anchors.fill: parent
     cursorShape: Qt.PointingHandCursor
     onClicked: {
-      weathrProc.command = ["ghostty", "--class=org.omarchy.Weathr", "-e", "weathr"]
-      weathrProc.running = true
+      weatherProc.command = ["ghostty", "--class=org.omarchy.Weathr", "-e", "weathr"]
+      weatherProc.running = true
     }
   }
 
-  Process { id: weathrProc }
+  Process { id: weatherProc }
 
   Component.onCompleted: fetchWeather.running = true
 }

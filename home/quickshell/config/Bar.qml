@@ -2,6 +2,10 @@ import Quickshell
 import Quickshell.Io
 import QtQuick
 
+import qs.center
+import qs.left
+import qs.right
+
 PanelWindow {
   id: bar
 
@@ -14,8 +18,8 @@ PanelWindow {
     right: true
   }
 
-  implicitHeight: 26
-  color: "#090E13"
+  implicitHeight: Constants.barHeight
+  color: Colors.background
 
   Row {
     id: leftSection

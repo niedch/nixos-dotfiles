@@ -139,8 +139,36 @@ in {
 
     selectorCommand = "walker --dmenu";
 
+    templates."quickshell.colors.json.tpl" = ''
+      {
+        "background": "{{ background }}",
+        "foreground": "{{ foreground }}",
+        "cursor": "{{ cursor }}",
+        "accent": "{{ accent }}",
+        "selectionBackground": "{{ selection_background }}",
+        "selectionForeground": "{{ selection_foreground }}",
+        "color0": "{{ color0 }}",
+        "color1": "{{ color1 }}",
+        "color2": "{{ color2 }}",
+        "color3": "{{ color3 }}",
+        "color4": "{{ color4 }}",
+        "color5": "{{ color5 }}",
+        "color6": "{{ color6 }}",
+        "color7": "{{ color7 }}",
+        "color8": "{{ color8 }}",
+        "color9": "{{ color9 }}",
+        "color10": "{{ color10 }}",
+        "color11": "{{ color11 }}",
+        "color12": "{{ color12 }}",
+        "color13": "{{ color13 }}",
+        "color14": "{{ color14 }}",
+        "color15": "{{ color15 }}"
+      }
+    '';
+
     symlinks = {
       "hypr/theme.lua".source = "hyprland.lua";
+      "quickshell/colors.json".source = "quickshell.colors.json";
       "hypr/hyprlock-theme.conf".source = "hyprlock.conf";
       "waybar/colors.css".source = "waybar.css";
       "walker/themes/default/walker.css".source = "walker.css";
@@ -171,6 +199,9 @@ in {
           echo '{"id":0,"method":"Runtime.evaluate","params":{"expression":"window.location.reload()"}}' | \
             ${pkgs.websocat}/bin/websocat "$WS_URL" 2>/dev/null || true
         fi
+      '';
+      "05_quickshell_reload" = ''
+        quickshell-reload-theme 2>/dev/null || true
       '';
     };
   };

@@ -1,19 +1,12 @@
 import Quickshell
 import Quickshell.Io
 import QtQuick
+import qs
 
-Item {
-  implicitHeight: 26
-  width: clockText.implicitWidth + 17
+Widget {
+  widthPadding: 17
 
-  Text {
-    id: clockText
-    anchors.centerIn: parent
-    color: "#C5C9C7"
-    font.family: "JetBrainsMono Nerd Font"
-    font.pixelSize: 12
-    text: Qt.formatDateTime(clockSource.date, "dddd HH:mm")
-  }
+  text: Qt.formatDateTime(clockSource.date, "dddd HH:mm")
 
   SystemClock {
     id: clockSource

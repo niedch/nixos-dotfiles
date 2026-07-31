@@ -2,9 +2,10 @@ import Quickshell
 import Quickshell.Services.SystemTray
 import Quickshell.Widgets
 import QtQuick
+import qs
 
 Item {
-  implicitHeight: 26
+  implicitHeight: Constants.barHeight
 
   property bool drawerOpen: false
 
@@ -15,9 +16,9 @@ Item {
     Text {
       id: expandIcon
       anchors.verticalCenter: parent.verticalCenter
-      color: "#C5C9C7"
-      font.family: "JetBrainsMono Nerd Font"
-      font.pixelSize: 12
+      color: Colors.foreground
+      font.family: Constants.fontFamily
+      font.pixelSize: Constants.fontSize
       text: drawerOpen ? "" : ""
 
       MouseArea {
@@ -42,7 +43,7 @@ Item {
           required property var modelData
 
           width: 12
-          height: 26
+          height: Constants.barHeight
 
           IconImage {
             anchors.centerIn: parent

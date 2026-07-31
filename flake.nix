@@ -129,12 +129,22 @@
       ];
     };
 
+    packages.x86_64-linux.quickshell = import ./home/quickshell/package.nix {
+      pkgs = nixpkgs.legacyPackages.x86_64-linux;
+    };
+
     devShells.x86_64-linux.default = let
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
     in
       pkgs.mkShell {
         shellHook = "mise tasks ls";
-        packages = with pkgs; [alejandra jq mise sops home-manager.packages.x86_64-linux.default];
+        packages = with pkgs; [
+          alejandra
+          jq
+          mise
+          watchexec
+          sops
+        ];
       };
   };
 }
