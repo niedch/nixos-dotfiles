@@ -19,7 +19,7 @@ Item {
 
   Process {
     id: proc
-    command: ["bash", "-c", "$HOME/.config/quickshell/cava.sh"]
+    command: ["bash", "-c", "./cava.sh"]
     running: true
     stdout: SplitParser {
       splitMarker: "\n"
