@@ -28,7 +28,7 @@ Widget {
         toggleProc.command = ["pamixer", "-t"]
         toggleProc.running = true
       } else {
-        audioProc.command = ["ghostty", "--class=org.omarchy.Wiremix", "-e", "wiremix"]
+        audioProc.command = ["ghostty", "--class=org.tui.Wiremix", "-e", "wiremix"]
         audioProc.running = true
       }
     }

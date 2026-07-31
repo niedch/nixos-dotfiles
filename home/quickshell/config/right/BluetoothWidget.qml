@@ -15,7 +15,7 @@ Widget {
     anchors.fill: parent
     cursorShape: Qt.PointingHandCursor
     onClicked: {
-      btProc.command = ["ghostty", "--class=org.omarchy.Bluetui", "-e", "bluetui"]
+      btProc.command = ["ghostty", "--class=org.tui.Bluetui", "-e", "bluetui"]
       btProc.running = true
     }
   }
