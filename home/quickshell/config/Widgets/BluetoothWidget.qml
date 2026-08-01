@@ -1,26 +1,30 @@
 import Quickshell
 import Quickshell.Bluetooth
-import Quickshell.Io
 import QtQuick
 import qs
+import qs.Components.Bluetooth
 
 Widget {
+  id: widget
+
   text: {
     if (!Bluetooth.defaultAdapter || !Bluetooth.defaultAdapter.enabled) return "󰂲"
-    if (Bluetooth.devices.values.length > 0) return "󰂱"
+    if (Bluetooth.defaultAdapter.discovering) return "󰂯"
+    var vals = Bluetooth.devices.values
+    for (var i = 0; i < vals.length; i++) {
+      if (vals[i].connected) return "󰂱"
+    }
     return ""
   }
 
   MouseArea {
     anchors.fill: parent
     cursorShape: Qt.PointingHandCursor
-    onClicked: {
-      btProc.command = ["ghostty", "--class=org.tui.Bluetui", "-e", "bluetui"]
-      btProc.running = true
-    }
+    onClicked: btPopup.toggle()
   }
 
-  Process {
-    id: btProc
+  BluetoothPopup {
+    id: btPopup
+    target: widget
   }
 }

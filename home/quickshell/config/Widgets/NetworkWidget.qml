@@ -1,10 +1,12 @@
 import Quickshell
 import Quickshell.Networking
-import Quickshell.Io
 import QtQuick
 import qs
+import qs.Components.Network
 
 Widget {
+  id: widget
+
   text: {
     if (Networking.connectivity !== NetworkConnectivity.Full) return "󰤮"
 
@@ -38,13 +40,11 @@ Widget {
   MouseArea {
     anchors.fill: parent
     cursorShape: Qt.PointingHandCursor
-    onClicked: {
-      netProc.command = ["ghostty", "--class=org.tui.wlctl", "-e", "wlctl"]
-      netProc.running = true
-    }
+    onClicked: netPopup.toggle()
   }
 
-  Process {
-    id: netProc
+  NetworkPopup {
+    id: netPopup
+    target: widget
   }
 }
