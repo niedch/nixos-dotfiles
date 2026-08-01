@@ -18,8 +18,10 @@ PanelWindow {
     right: true
   }
 
+  property color themeBackground: Colors.background
+
   implicitHeight: Constants.barHeight
-  color: Colors.background
+  color: Qt.rgba(themeBackground.r, themeBackground.g, themeBackground.b, 0.3)
 
   Row {
     id: leftSection

@@ -77,8 +77,8 @@ Widget {
     target: widget
     hovered: batteryMouse.containsMouse
     tooltipText: {
-      if (widget.status === "Charging" && widget.powerRate > 0) return "Charging ⚡ " + widget.powerRate.toFixed(1) + "W"
-      if (widget.status === "Discharging" && widget.powerRate > 0) return "Discharging 🔋 " + widget.powerRate.toFixed(1) + "W"
+      if (widget.status === "Charging") return widget.powerRate > 0 ? "Charging ⚡ " + widget.powerRate.toFixed(1) + "W" : "Charging ⚡"
+      if (widget.status === "Discharging") return widget.powerRate > 0 ? "Discharging 🔋 " + widget.powerRate.toFixed(1) + "W" : "Discharging 🔋"
       if (widget.status === "Not charging") return "Plugged in 🔌"
       if (widget.status === "Full") return "Fully charged 🔌"
       return ""
