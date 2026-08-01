@@ -20,7 +20,7 @@ Widget {
 
   Process {
     id: fetchWeather
-    command: ["bash", "-c", "$HOME/.config/waybar/weather.sh"]
+    command: ["bash", "-c", (Quickshell.env("QS_CONFIG_PATH") ?? "") + "/scripts/weather.sh"]
     stdout: StdioCollector { id: weatherCollector }
     onExited: {
       var data = weatherCollector.text.trim()

@@ -170,7 +170,6 @@ in {
       "hypr/theme.lua".source = "hyprland.lua";
       "quickshell/colors.json".source = "quickshell.colors.json";
       "hypr/hyprlock-theme.conf".source = "hyprlock.conf";
-      "waybar/colors.css".source = "waybar.css";
       "walker/themes/default/walker.css".source = "walker.css";
       "mako/config".source = "mako.ini";
       "btop/themes/btop.theme".source = "btop.theme";

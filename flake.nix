@@ -34,11 +34,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    opencode-waybar-status = {
-      url = "github:niedch/opencode-waybar-status";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     speedtest-tracker = {
       url = "github:niedch/speedtest-tracker";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -59,7 +54,6 @@
     wlctl,
     nixos-hardware,
     mux-session,
-    opencode-waybar-status,
     speedtest-tracker,
     comd,
     ...

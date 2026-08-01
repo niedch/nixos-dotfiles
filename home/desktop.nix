@@ -5,7 +5,6 @@
     ./hyprland
     ./media
     ./menu
-    ./waybar
     ./themes
     ./walker
     ./tmux

@@ -1,16 +1,23 @@
 {
   config,
   pkgs,
+  inputs,
   ...
-}: {
+}: let
+  quickshell = import ./package.nix {inherit pkgs;};
+in {
   sops.secrets.CALENDAR_CONFIG = {
     path = "${config.home.homeDirectory}/.config/quickshell/calendars.txt";
     mode = "0600";
   };
 
-  home.packages = [
-    pkgs.cava
-    (import ./package.nix {inherit pkgs;})
+  home.packages = with pkgs; [
+    bluetui
+    wiremix
+    inputs.wlctl.packages.${pkgs.stdenv.hostPlatform.system}.default
+    jq
+    cava
+    quickshell
     (pkgs.writeShellScriptBin "quickshell-reload-theme" ''
       QSID=$(${pkgs.quickshell}/bin/quickshell list --all 2>/dev/null | awk '/^Instance / {gsub(":", "", $2); print $2; exit}')
       if [ -n "$QSID" ]; then
@@ -21,4 +28,21 @@
       exec ${pkgs.python3.withPackages (ps: [ps.python-dateutil])}/bin/python3 ${./config}/scripts/calendar-sync.py "$@"
     '')
   ];
+
+  systemd.user.services.quickshell = {
+    Unit = {
+      Description = "Quickshell status bar";
+      ConditionEnvironment = "WAYLAND_DISPLAY";
+      After = ["hyprland-session.target"];
+      PartOf = ["hyprland-session.target"];
+    };
+    Service = {
+      ExecStart = "${quickshell}/bin/quickshell";
+      Restart = "always";
+      RestartSec = 2;
+    };
+    Install = {
+      WantedBy = ["hyprland-session.target"];
+    };
+  };
 }
