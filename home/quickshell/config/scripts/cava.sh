@@ -1,7 +1,12 @@
 #!/usr/bin/env bash
 set -u
 
-bars=(⠀ ⠁ ⠃ ⠇ ⠏ ⠟ ⠿ ⣿)
+# Kill leftover cava processes from previous quickshell sessions
+for pid in $(pgrep -f "cava.*quickshell_cava_config"); do
+    [ "$pid" != "$$" ] && kill "$pid" 2>/dev/null
+done
+
+bars=(▁ ▂ ▃ ▄ ▅ ▆ ▇ █)
 config_file="/tmp/quickshell_cava_config"
 fifo="/tmp/quickshell_cava_fifo"
 

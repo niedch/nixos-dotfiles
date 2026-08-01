@@ -18,10 +18,7 @@ Widget {
     stdout: SplitParser {
       splitMarker: "\n"
       onRead: function(data) {
-        var line = data.trim()
-        if (line !== "") {
-          cavaOutput = line
-        }
+        cavaOutput = data.trim()
       }
     }
   }

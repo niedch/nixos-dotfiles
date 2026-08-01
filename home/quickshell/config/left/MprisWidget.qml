@@ -4,23 +4,35 @@ import QtQuick
 import qs
 
 Widget {
+  id: widget
+
   textItem.elide: Text.ElideRight
   textItem.maximumLineCount: 1
-  textVisible: Mpris.players.values.length > 0
+  textVisible: mediaPopup.player !== null
 
   text: {
-    var players = Mpris.players.values
-    var player = players.length > 0 ? players[0] : null
-    if (!player) return ""
-    var info = player.artist + " - " + player.title
+    var p = mediaPopup.player
+    if (!p) return ""
+    var info = p.trackArtist + " - " + p.trackTitle
     if (info.length > 30) info = info.substring(0, 27) + "..."
 
-    if (player.playbackState === MprisPlaybackState.Playing) {
-      return " " + info
+    if (p.isPlaying) {
+      return "󰛚 " + info
     }
-    if (player.playbackState === MprisPlaybackState.Paused) {
+    if (p.playbackState === MprisPlaybackState.Paused) {
       return "󰝛 " + info
     }
     return ""
+  }
+
+  MouseArea {
+    anchors.fill: parent
+    cursorShape: Qt.PointingHandCursor
+    onClicked: mediaPopup.toggle()
+  }
+
+  MediaPopup {
+    id: mediaPopup
+    target: widget
   }
 }
