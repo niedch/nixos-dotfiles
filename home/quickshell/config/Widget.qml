@@ -14,7 +14,7 @@ Item {
   property alias textItem: contentText
 
   implicitHeight: Constants.barHeight
-  width: contentText.implicitWidth + widthPadding
+  width: textVisible && text !== "" ? contentText.implicitWidth + widthPadding : 0
 
   Text {
     id: contentText
