@@ -1,9 +1,10 @@
 import Quickshell
-import Quickshell.Io
 import QtQuick
 import qs
+import qs.Components.Calendar
 
 Widget {
+  id: clock
   widthPadding: 17
 
   text: Qt.formatDateTime(clockSource.date, "dddd HH:mm")
@@ -16,13 +17,11 @@ Widget {
   MouseArea {
     anchors.fill: parent
     cursorShape: Qt.PointingHandCursor
-    onClicked: {
-      calendarProc.command = ["chromium", "--app=https://calendar.google.com/calendar/u/0/r/month"]
-      calendarProc.running = true
-    }
+    onClicked: calendarPopup.toggle()
   }
 
-  Process {
-    id: calendarProc
+  CalendarPopup {
+    id: calendarPopup
+    target: clock
   }
 }

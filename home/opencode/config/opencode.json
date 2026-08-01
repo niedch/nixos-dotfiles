@@ -63,10 +63,5 @@
         "todowrite": "deny"
       }
     }
-  },
-  "permissions": {
-    "allowed_paths": [
-      "/nix/store"
-    ]
   }
 }
