@@ -2,9 +2,7 @@ import Quickshell
 import Quickshell.Io
 import QtQuick
 
-import qs.center
-import qs.left
-import qs.right
+import qs.Widgets
 
 PanelWindow {
   id: bar
@@ -32,9 +30,15 @@ PanelWindow {
 
     OmarchyMenuWidget {}
     Workspaces {}
-    SeparatorWidget {}
-    MprisWidget {}
-    CavaWidget {}
+    SeparatorWidget {
+      visible: mpris.active
+    }
+    MprisWidget {
+      id: mpris
+    }
+    CavaWidget {
+      visible: mpris.active
+    }
   }
 
   Row {

@@ -2,9 +2,12 @@ import Quickshell
 import Quickshell.Services.Mpris
 import QtQuick
 import qs
+import qs.Components.MediaPopup
 
 Widget {
   id: widget
+
+  property bool active: mediaPopup.player !== null
 
   textItem.elide: Text.ElideRight
   textItem.maximumLineCount: 1
