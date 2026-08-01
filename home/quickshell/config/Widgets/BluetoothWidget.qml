@@ -10,10 +10,7 @@ Widget {
   text: {
     if (!Bluetooth.defaultAdapter || !Bluetooth.defaultAdapter.enabled) return "󰂲"
     if (Bluetooth.defaultAdapter.discovering) return "󰂯"
-    var vals = Bluetooth.devices.values
-    for (var i = 0; i < vals.length; i++) {
-      if (vals[i].connected) return "󰂱"
-    }
+    if (Bluetooth.devices.values.some(d => d.connected)) return "󰂱"
     return ""
   }
 

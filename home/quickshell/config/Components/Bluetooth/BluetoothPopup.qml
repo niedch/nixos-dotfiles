@@ -4,6 +4,8 @@ import Quickshell.Hyprland
 import Quickshell.Io
 import QtQuick
 import qs
+import qs.Components
+import qs.Components.Bluetooth
 
 PopupWindow {
   id: root
@@ -73,54 +75,6 @@ PopupWindow {
       case BluetoothAdapterState.Blocked: return "Blocked"
     }
     return "Unknown"
-  }
-
-  function deviceGlyph(d) {
-    var map = {
-      "audio-headset": "󰋋",
-      "audio-card": "󰋋",
-      "audio-input-microphone": "󰍬",
-      "input-keyboard": "󰌌",
-      "input-mouse": "󰍽",
-      "input-gaming": "󰊕",
-      "input-tablet": "󰓡",
-      "phone": "󰏲",
-      "computer": "󰖩",
-      "camera-video": "󰄀"
-    }
-    return map[d.icon] || "󰂯"
-  }
-
-  function deviceStateLabel(d) {
-    if (d.pairing) return "Pairing…"
-    switch (d.state) {
-      case BluetoothDeviceState.Connected: return "Connected"
-      case BluetoothDeviceState.Connecting: return "Connecting…"
-      case BluetoothDeviceState.Disconnecting: return "Disconnecting…"
-      default: return d.paired ? "Paired" : (d.trusted ? "Trusted" : "Discovered")
-    }
-  }
-
-  function deviceBattery(d) {
-    if (!d.batteryAvailable) return ""
-    return "󰁹 " + Math.round(d.battery * 100) + "%"
-  }
-
-  function deviceActionLabel(d) {
-    if (d.pairing) return "Cancel"
-    if (d.connected) return "Disconnect"
-    if (d.paired || d.trusted) return "Connect"
-    return "Pair"
-  }
-
-  function deviceAction(d) {
-    if (d.pairing) {
-      d.cancelPair()
-    } else if (d.paired || d.trusted) {
-      d.connected = !d.connected
-    } else {
-      d.pair()
-    }
   }
 
   function openBluetui() {
@@ -349,141 +303,5 @@ PopupWindow {
       }
     }
   }
-
-  component ControlButton: Rectangle {
-  id: cb
-  required property string label
-  property bool active: false
-  property bool enabled: true
-  signal clickedBtn
-
-  height: 22
-  radius: 4
-  color: cbHover.containsMouse ? Colors.color1 : (cb.active ? Colors.accent : "transparent")
-  border.color: cb.active ? "transparent" : Colors.color0
-  border.width: 1
-  opacity: cb.enabled ? 1 : 0.4
-  width: cbLabel.implicitWidth + 14
-
-  Text {
-    id: cbLabel
-    anchors.centerIn: parent
-    text: cb.label
-    color: cb.active ? Colors.background : Colors.foreground
-    font.family: Constants.fontFamily
-    font.pixelSize: Constants.fontSizeSmall
-  }
-
-  MouseArea {
-    id: cbHover
-    anchors.fill: parent
-    enabled: cb.enabled
-    hoverEnabled: true
-    cursorShape: Qt.PointingHandCursor
-    onClicked: cb.clickedBtn()
-  }
 }
 
-component DeviceRow: Item {
-  id: dr
-  required property var modelData
-  property int rowWidth: 0
-  readonly property var dev: dr.modelData
-
-  width: dr.rowWidth
-  height: 44
-
-  Rectangle {
-    anchors.fill: parent
-    radius: 6
-    color: drHover.hovered ? Colors.color1 : "transparent"
-  }
-
-  Text {
-    id: drIcon
-    anchors.left: parent.left
-    anchors.leftMargin: 8
-    anchors.verticalCenter: parent.verticalCenter
-    text: root.deviceGlyph(dr.dev)
-    color: Colors.foreground
-    font.family: Constants.fontFamily
-    font.pixelSize: 16
-  }
-
-  Column {
-    id: drInfo
-    anchors.left: drIcon.right
-    anchors.right: drActions.left
-    anchors.leftMargin: 8
-    anchors.rightMargin: 8
-    anchors.verticalCenter: parent.verticalCenter
-    spacing: 1
-
-    Row {
-      width: parent.width
-      spacing: 6
-
-      Text {
-        width: parent.width - batteryText.implicitWidth - parent.spacing
-        text: dr.dev.name
-        color: Colors.foreground
-        font.family: Constants.fontFamily
-        font.pixelSize: Constants.fontSize
-        elide: Text.ElideRight
-      }
-
-      Text {
-        id: batteryText
-        text: root.deviceBattery(dr.dev)
-        color: Colors.color8
-        font.family: Constants.fontFamily
-        font.pixelSize: Constants.fontSizeSmall
-      }
-    }
-
-    Row {
-      width: parent.width
-      spacing: 6
-
-      Text {
-        text: dr.dev.address
-        color: Colors.color8
-        font.family: Constants.fontFamily
-        font.pixelSize: Constants.fontSizeSmall
-      }
-
-      Text {
-        text: root.deviceStateLabel(dr.dev)
-        color: dr.dev.connected ? Colors.accent : Colors.color8
-        font.family: Constants.fontFamily
-        font.pixelSize: Constants.fontSizeSmall
-      }
-    }
-  }
-
-  Row {
-    id: drActions
-    anchors.right: parent.right
-    anchors.rightMargin: 8
-    anchors.verticalCenter: parent.verticalCenter
-    spacing: 4
-
-    ControlButton {
-      label: root.deviceActionLabel(dr.dev)
-      active: dr.dev.connected
-      onClickedBtn: root.deviceAction(dr.dev)
-    }
-
-    ControlButton {
-      label: "Forget"
-      visible: (dr.dev.paired || dr.dev.trusted) && !dr.dev.pairing
-      onClickedBtn: dr.dev.forget()
-    }
-  }
-
-  HoverHandler {
-    id: drHover
-    cursorShape: Qt.PointingHandCursor
-  }
-}
-}

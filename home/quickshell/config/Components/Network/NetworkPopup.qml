@@ -4,6 +4,8 @@ import Quickshell.Hyprland
 import Quickshell.Io
 import QtQuick
 import qs
+import qs.Components
+import qs.Components.Network
 
 PopupWindow {
   id: root
@@ -28,7 +30,7 @@ PopupWindow {
   readonly property int baseHeight: root.headerHeight + root.footerHeight + 48
   implicitHeight: root.baseHeight + root.sortedNetworks.length * root.rowHeight
 
-  // ---- helpers ----
+  // ---- data ----
 
   function wifiDevices() {
     var out = []
@@ -56,6 +58,8 @@ PopupWindow {
     })
     root.sortedNetworks = out
   }
+
+  // ---- actions ----
 
   function toggle() {
     root.shown = !root.shown
@@ -85,37 +89,7 @@ PopupWindow {
     for (var i = 0; i < devs.length; i++) devs[i].scannerEnabled = enabled
   }
 
-  function signalGlyph(strength) {
-    var s = strength * 100
-    if (s > 75) return "󰤨"
-    if (s > 50) return "󰤥"
-    if (s > 25) return "󰤢"
-    if (s > 10) return "󰤟"
-    return "󰤯"
-  }
-
-  function securityLabel(net) {
-    switch (net.security) {
-      case WifiSecurityType.Sae: return "WPA3"
-      case WifiSecurityType.Wpa3SuiteB192: return "WPA3-192"
-      case WifiSecurityType.Wpa2Psk: return "WPA2"
-      case WifiSecurityType.Wpa2Eap: return "WPA2-EAP"
-      case WifiSecurityType.WpaPsk: return "WPA"
-      case WifiSecurityType.WpaEap: return "WPA-EAP"
-      case WifiSecurityType.Owe: return "OWE"
-      case WifiSecurityType.Open: return "Open"
-      default: return "Secured"
-    }
-  }
-
-  function stateLabel(net) {
-    switch (net.state) {
-      case ConnectionState.Connecting: return "Connecting…"
-      case ConnectionState.Connected: return "Connected"
-      case ConnectionState.Disconnecting: return "Disconnecting…"
-      default: return ""
-    }
-  }
+  // ---- display ----
 
   function connectivityLabel() {
     switch (Networking.connectivity) {
@@ -130,17 +104,6 @@ PopupWindow {
   function openWlctl() {
     netProc.command = ["ghostty", "--class=org.tui.wlctl", "-e", "wlctl"]
     netProc.running = true
-  }
-
-  function networkAction(row) {
-    if (row.net.connected) {
-      row.net.disconnect()
-    } else if (row.net.known || row.net.security === WifiSecurityType.Open) {
-      row.net.connect()
-    } else {
-      row.pskEntry = true
-      row.pskFocus()
-    }
   }
 
   onShownChanged: {
@@ -304,161 +267,8 @@ PopupWindow {
         width: parent.width
         height: root.sortedNetworks.length * 44
         implicitHeight: root.sortedNetworks.length * 44
-        delegate: Item {
-          id: nr
-          required property var modelData
-          readonly property var net: nr.modelData
-
-          property bool pskEntry: false
-
-          width: parent.width
-          height: nr.pskEntry ? 76 : 44
-
-          function connectWithPsk() {
-            if (pskField.text.length === 0) return
-            nr.net.connectWithPsk(pskField.text)
-            nr.pskEntry = false
-          }
-
-          function pskFocus() {
-            pskField.forceActiveFocus()
-          }
-
-          Rectangle {
-            anchors.fill: parent
-            radius: 6
-            color: nr.net.connected ? Qt.alpha(Colors.accent, 0.15) : (nrHover.hovered ? Colors.color1 : "transparent")
-            border.color: nr.net.connected ? Colors.accent : "transparent"
-            border.width: nr.net.connected ? 1 : 0
-          }
-
-          Item {
-            id: mainRow
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.top: parent.top
-            height: 44
-
-            Text {
-              id: nrIcon
-              anchors.left: parent.left
-              anchors.leftMargin: 8
-              anchors.verticalCenter: parent.verticalCenter
-              text: root.signalGlyph(nr.net.signalStrength)
-              color: nr.net.connected ? Colors.accent : Colors.foreground
-              font.family: Constants.fontFamily
-              font.pixelSize: 16
-            }
-
-            Column {
-              id: nrInfo
-              anchors.left: nrIcon.right
-              anchors.right: nrActions.left
-              anchors.leftMargin: 8
-              anchors.rightMargin: 8
-              anchors.verticalCenter: parent.verticalCenter
-              spacing: 1
-
-              Text {
-                width: parent.width - secLabel.implicitWidth - parent.spacing
-                text: nr.net.name
-                color: Colors.foreground
-                font.family: Constants.fontFamily
-                font.pixelSize: Constants.fontSize
-                elide: Text.ElideRight
-              }
-
-              Text {
-                id: secLabel
-                text: root.securityLabel(nr.net)
-                color: nr.net.security === WifiSecurityType.Open ? Colors.color8 : Colors.color3
-                font.family: Constants.fontFamily
-                font.pixelSize: Constants.fontSizeSmall
-              }
-
-              Text {
-                text: root.stateLabel(nr.net)
-                color: nr.net.connected ? Colors.accent : Colors.color8
-                font.family: Constants.fontFamily
-                font.pixelSize: Constants.fontSizeSmall
-              }
-            }
-
-            Row {
-              id: nrActions
-              anchors.right: parent.right
-              anchors.rightMargin: 8
-              anchors.verticalCenter: parent.verticalCenter
-              spacing: 4
-
-              ControlButton {
-                label: nr.net.connected ? "Disconnect" : "Connect"
-                active: nr.net.connected
-                onClickedBtn: root.networkAction(nr)
-              }
-
-              ControlButton {
-                label: "Forget"
-                visible: nr.net.known && !nr.net.connected
-                onClickedBtn: nr.net.forget()
-              }
-            }
-          }
-
-          Row {
-            id: nrPsk
-            visible: nr.pskEntry
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: 6
-            spacing: 6
-
-            Rectangle {
-              height: 24
-              width: parent.width - pskBtn.width - parent.spacing
-              radius: 4
-              color: Colors.background
-              border.color: Colors.color0
-              border.width: 1
-
-              TextInput {
-                id: pskField
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.leftMargin: 6
-                anchors.rightMargin: 6
-                color: Colors.foreground
-                font.family: Constants.fontFamily
-                font.pixelSize: Constants.fontSizeSmall
-                clip: true
-                echoMode: TextInput.Password
-                onAccepted: nr.connectWithPsk()
-              }
-            }
-
-            ControlButton {
-              id: pskBtn
-              label: "Connect"
-              onClickedBtn: nr.connectWithPsk()
-            }
-          }
-
-          Connections {
-            target: nr.net
-            function onConnectionFailed(reason) {
-              if (reason === ConnectionFailReason.NoSecrets) {
-                nr.pskEntry = true
-                nr.pskFocus()
-              }
-            }
-          }
-
-          HoverHandler {
-            id: nrHover
-            cursorShape: Qt.PointingHandCursor
-          }
+        delegate: NetworkRow {
+          rowWidth: column.width
         }
       }
 
@@ -490,38 +300,5 @@ PopupWindow {
       }
     }
   }
-
-  component ControlButton: Rectangle {
-  id: cb
-  required property string label
-  property bool active: false
-  property bool enabled: true
-  signal clickedBtn
-
-  height: 22
-  radius: 4
-  color: cbHover.containsMouse ? Colors.color1 : (cb.active ? Colors.accent : "transparent")
-  border.color: cb.active ? "transparent" : Colors.color0
-  border.width: 1
-  opacity: cb.enabled ? 1 : 0.4
-  width: cbLabel.implicitWidth + 14
-
-  Text {
-    id: cbLabel
-    anchors.centerIn: parent
-    text: cb.label
-    color: cb.active ? Colors.background : Colors.foreground
-    font.family: Constants.fontFamily
-    font.pixelSize: Constants.fontSizeSmall
-  }
-
-  MouseArea {
-    id: cbHover
-    anchors.fill: parent
-    enabled: cb.enabled
-    hoverEnabled: true
-    cursorShape: Qt.PointingHandCursor
-    onClicked: cb.clickedBtn()
-  }
 }
-}
+
