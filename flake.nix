@@ -127,6 +127,10 @@
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
     };
 
+    packages.x86_64-linux.nvim = import ./home/nvim/package.nix {
+      pkgs = nixpkgs.legacyPackages.x86_64-linux;
+    };
+
     devShells.x86_64-linux.default = let
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
     in

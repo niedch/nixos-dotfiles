@@ -5,6 +5,7 @@
   ...
 }: let
   cfg = config.home.nvim;
+  nvim = import ./package.nix {inherit pkgs;};
 in {
   options.home.nvim = {
     lsp = {
@@ -15,7 +16,7 @@ in {
   config = {
     home.packages = with pkgs;
       [
-        neovim
+        nvim
         ripgrep
         gcc
         tree-sitter
