@@ -60,16 +60,6 @@ Singleton {
     }
   }
 
-  function tempColor(v) {
-    if (isNaN(v)) return Colors.foreground
-    if (v < 0) return Colors.color4
-    if (v < 10) return Colors.color6
-    if (v < 18) return Colors.color2
-    if (v < 26) return Colors.color3
-    if (v < 32) return Colors.color11
-    return Colors.color1
-  }
-
   function nightTime(obj) {
     if (!obj.weather || !obj.weather[0] || !obj.weather[0].astronomy || !obj.weather[0].astronomy[0]) return false
     var astro = obj.weather[0].astronomy[0]

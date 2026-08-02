@@ -113,7 +113,6 @@ Item {
     isNight = WeatherCodes.nightTime(obj)
 
     weatherIcon = WeatherCodes.mapIcon(weatherCode, isNight)
-    weatherColor = WeatherCodes.tempColor(parseInt(tempC))
 
     var days = []
     var weather = obj.weather || []
