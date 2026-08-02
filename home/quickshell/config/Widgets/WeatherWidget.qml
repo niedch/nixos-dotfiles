@@ -17,6 +17,8 @@ Item {
   property string windSpeed: ""
   property string weatherCode: ""
   property bool isNight: false
+  property string moonPhase: ""
+  property string moonIllumination: ""
   property var forecast: []
 
   implicitHeight: Constants.barHeight
@@ -113,6 +115,11 @@ Item {
     isNight = WeatherCodes.nightTime(obj)
 
     weatherIcon = WeatherCodes.mapIcon(weatherCode, isNight)
+
+    var astro = obj.weather && obj.weather[0] && obj.weather[0].astronomy
+      ? obj.weather[0].astronomy[0] : null
+    moonPhase = astro ? String(astro.moon_phase || "") : ""
+    moonIllumination = astro ? String(astro.moon_illumination || "") : ""
 
     var days = []
     var weather = obj.weather || []

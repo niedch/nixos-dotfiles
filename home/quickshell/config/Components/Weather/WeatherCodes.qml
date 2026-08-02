@@ -60,6 +60,20 @@ Singleton {
     }
   }
 
+  function moonIcon(phase) {
+    switch (String(phase).toLowerCase()) {
+      case "new moon": return ""
+      case "waxing crescent": return ""
+      case "first quarter": return ""
+      case "waxing gibbous": return ""
+      case "full moon": return ""
+      case "waning gibbous": return ""
+      case "last quarter": return ""
+      case "waning crescent": return ""
+      default: return ""
+    }
+  }
+
   function nightTime(obj) {
     if (!obj.weather || !obj.weather[0] || !obj.weather[0].astronomy || !obj.weather[0].astronomy[0]) return false
     var astro = obj.weather[0].astronomy[0]

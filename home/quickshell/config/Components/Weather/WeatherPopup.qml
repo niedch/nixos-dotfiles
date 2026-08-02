@@ -169,14 +169,41 @@ PopupWindow {
         color: Colors.color0
       }
 
-      Text {
+      Row {
         width: parent.width
+        spacing: 8
         visible: root.target && root.target.weatherIcon !== ""
-        text: "Forecast"
-        color: Colors.color8
-        font.family: Constants.fontFamily
-        font.pixelSize: Constants.fontSizeSmall
-        font.bold: true
+
+        Text {
+          id: forecastLabel
+          text: "Forecast"
+          color: Colors.color8
+          font.family: Constants.fontFamily
+          font.pixelSize: Constants.fontSizeSmall
+          font.bold: true
+        }
+
+        Item {
+          height: 1
+          width: parent.width - forecastLabel.implicitWidth - moonIcon.implicitWidth - moonText.implicitWidth - parent.spacing * 3
+        }
+
+        Text {
+          id: moonIcon
+          text: root.target ? WeatherCodes.moonIcon(root.target.moonPhase) : ""
+          color: Colors.foreground
+          font.family: Constants.fontFamily
+          font.pixelSize: Constants.fontSize
+        }
+
+        Text {
+          id: moonText
+          text: (root.target ? root.target.moonPhase : "")
+            + (root.target && root.target.moonIllumination !== "" ? " (" + root.target.moonIllumination + "%)" : "")
+          color: Colors.color8
+          font.family: Constants.fontFamily
+          font.pixelSize: Constants.fontSizeSmall
+        }
       }
 
       Repeater {
