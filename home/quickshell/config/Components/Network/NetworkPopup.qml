@@ -24,7 +24,7 @@ PopupWindow {
   color: "transparent"
   implicitWidth: 360
 
-  property int rowHeight: 44
+  property int rowHeight: 48
   readonly property int headerHeight: 90
   readonly property int footerHeight: 40
   readonly property int baseHeight: root.headerHeight + root.footerHeight + 48
@@ -265,10 +265,11 @@ PopupWindow {
       Repeater {
         model: Networking.wifiEnabled ? root.sortedNetworks : []
         width: parent.width
-        height: root.sortedNetworks.length * 44
-        implicitHeight: root.sortedNetworks.length * 44
+        height: root.sortedNetworks.length * root.rowHeight
+        implicitHeight: root.sortedNetworks.length * root.rowHeight
         delegate: NetworkRow {
           rowWidth: column.width
+          rowHeight: root.rowHeight
         }
       }
 

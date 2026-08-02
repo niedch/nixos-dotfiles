@@ -113,8 +113,8 @@ for i = 1, 5 do
 end
 
 -- Notifications
-hl.bind(mainMod .. " + COMMA",         hl.dsp.exec_cmd("makoctl dismiss"))
-hl.bind(mainMod .. " + SHIFT + COMMA", hl.dsp.exec_cmd("makoctl dismiss --all"))
+hl.bind(mainMod .. " + COMMA",         hl.dsp.exec_cmd("quickshell-notif toggle"))
+hl.bind(mainMod .. " + SHIFT + COMMA", hl.dsp.exec_cmd("quickshell-notif clear"))
 
 -- Capture menu and color picker
 hl.bind("Print",                       hl.dsp.exec_cmd("menu Capture"))

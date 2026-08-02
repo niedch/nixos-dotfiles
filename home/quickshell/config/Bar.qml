@@ -52,7 +52,7 @@ PanelWindow {
     VoxtypeWidget {}
     ScreenRecordingWidget {}
     IdleWidget {}
-    NotificationSilencingWidget {}
+    NotificationCenterWidget {}
   }
 
   Row {

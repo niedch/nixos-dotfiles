@@ -7,11 +7,12 @@ Item {
   id: nr
   required property var modelData
   property int rowWidth: 0
+  property int rowHeight: 44
   readonly property var net: nr.modelData
   property bool pskEntry: false
 
   width: nr.rowWidth
-  height: nr.pskEntry ? 76 : 44
+  height: nr.pskEntry ? nr.rowHeight + 32 : nr.rowHeight
 
   function signalGlyph() {
     var s = nr.net.signalStrength * 100
@@ -39,7 +40,7 @@ Item {
   function stateLabel() {
     switch (nr.net.state) {
       case ConnectionState.Connecting: return "Connecting…"
-      case ConnectionState.Connected: return "Connected"
+      case ConnectionState.Connected: return ""
       case ConnectionState.Disconnecting: return "Disconnecting…"
       default: return ""
     }
@@ -79,7 +80,7 @@ Item {
     anchors.left: parent.left
     anchors.right: parent.right
     anchors.top: parent.top
-    height: 44
+    height: nr.rowHeight
 
     Text {
       id: nrIcon
@@ -99,7 +100,7 @@ Item {
       anchors.leftMargin: 8
       anchors.rightMargin: 8
       anchors.verticalCenter: parent.verticalCenter
-      spacing: 1
+      spacing: 2
 
       Text {
         width: parent.width - secLabel.implicitWidth - parent.spacing
