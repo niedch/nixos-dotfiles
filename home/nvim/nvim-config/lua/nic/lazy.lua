@@ -24,7 +24,7 @@ if vim.loop.fs_stat(theme_file) then
 end
 
 require("lazy").setup(plugins, {
-	lockfile = vim.fn.expand("~/Projects/nixos-dotfiles/home/nvim/nvim-config/lazy-lock.json"),
+	lockfile = (vim.env.NVIM_CONFIG or vim.fn.stdpath("config")) .. "/lazy-lock.json",
 	change_detection = {
 		notify = false,
 	},

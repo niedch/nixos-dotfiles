@@ -17,6 +17,10 @@ description = "Watch quickshell"
 run = "nix run .#quickshell"
 sources = ["home/quickshell/config/**/*.{qml,sh}"]
 
+[tasks.nvim]
+description = "Run neovim with bundled config"
+run = "nix run .#nvim"
+
 [tasks.remote-switch]
 description = "Remote switch to a NixOS configuration via SSH (e.g. raspberry-pi)"
 usage = '''
