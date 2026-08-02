@@ -1,0 +1,311 @@
+→ right arrow
+← left arrow
+↑ up arrow
+↓ down arrow
+↔ left right arrow
+↕ up down arrow
+↗ north east arrow
+↘ south east arrow
+↖ north west arrow
+↙ south west arrow
+⇒ double right arrow
+⇐ double left arrow
+⇑ double up arrow
+⇓ double down arrow
+⇔ double left right arrow
+➜ curved right arrow
+➔ heavy right arrow
+↵ enter arrow
+⇥ tab arrow
+✓ check mark
+✔ heavy check mark
+✗ cross mark
+✘ heavy cross mark
+✕ multiplication x
+☑ ballot box with check
+☒ ballot box with x
+★ black star
+☆ white star
+⭐ glowing star
+✪ circled star
+✶ six pointed star
+✷ eight pointed star
+✻ eight pointed pinwheel star
+❤ red heart
+🧡 orange heart
+💛 yellow heart
+💚 green heart
+💙 blue heart
+💜 purple heart
+🤍 white heart
+💔 broken heart
+💖 sparkling heart
+♥ black heart suit
+♦ black diamond suit
+♣ black club suit
+♠ black spade suit
+☺ smiling face
+☹ frowning face
+😀 grinning face
+😁 beaming face
+😂 face with tears of joy
+🤣 rolling on the floor laughing
+😊 smiling face with smiling eyes
+😉 winking face
+😍 heart eyes
+😎 smiling face with sunglasses
+🤔 thinking face
+😴 sleeping face
+😮 surprised face
+😢 crying face
+😭 loudly crying face
+😡 pouting face
+🔥 fire
+💧 water droplet
+✨ sparkles
+⚡ high voltage
+💡 light bulb
+☀ sun
+🌙 crescent moon
+⭐ star
+🌈 rainbow
+☁ cloud
+⛈ cloud with rain
+☔ umbrella with rain
+❄ snowflake
+⛄ snowman
+🌧 rain cloud
+⚡ lightning bolt
+🌵 cactus
+🌸 cherry blossom
+🌹 rose
+🌻 sunflower
+🍀 four leaf clover
+🍁 maple leaf
+🍎 red apple
+🍌 banana
+🍇 grapes
+🍓 strawberry
+🍕 pizza slice
+🍔 hamburger
+🍟 french fries
+☕ hot beverage
+🍵 teacup without handle
+🍺 beer mug
+🎵 musical note
+🎶 multiple musical notes
+🎧 headphones
+🎤 microphone
+🎬 clapper board
+🎮 video game
+🎲 die face
+🎯 direct hit
+🏆 trophy
+🥇 gold medal
+🥈 silver medal
+🥉 bronze medal
+🎁 wrapped gift
+🎈 balloon
+🎉 party popper
+🎊 confetti ball
+🎄 christmas tree
+🎃 jack-o-lantern
+👀 eyes
+👍 thumbs up
+👎 thumbs down
+👏 clapping hands
+🙏 folded hands
+💪 flexed biceps
+👋 waving hand
+🤝 handshake
+✌ victory hand
+☝ index pointing up
+👈 index pointing left
+👉 index pointing right
+👆 index pointing up
+👇 index pointing down
+✋ raised hand
+🖐 hand with fingers splayed
+🖖 vulcan salute
+💯 hundred points
+⚠ warning sign
+🚫 prohibited
+❌ cross mark button
+✅ check mark button
+❗ red exclamation mark
+❕ white exclamation mark
+❓ red question mark
+❔ white question mark
+☢ radioactive sign
+☣ biohazard sign
+⚕ medical symbol
+☠ skull and crossbones
+💀 skull
+☎ telephone
+✆ telephone sign
+✉ envelope
+📧 e-mail
+📱 mobile phone
+💻 laptop computer
+🖥 desktop computer
+⌨ keyboard
+🖱 computer mouse
+🖨 printer
+📷 camera
+📸 camera with flash
+🎥 movie camera
+📺 television
+📻 radio
+⏰ alarm clock
+⏳ hourglass not done
+⌛ hourglass done
+🕐 one o'clock
+📅 calendar
+📆 tear-off calendar
+📁 file folder
+📂 open file folder
+📝 memo
+✏ pencil
+✒ black nib
+📎 paperclip
+🔒 locked
+🔓 unlocked
+🔑 key
+🔨 hammer
+🔧 wrench
+⚙ gear
+⚖ balance scale
+♻ recycling symbol
+🛒 shopping cart
+🛑 stop sign
+🚦 vertical traffic light
+🚗 automobile
+🚕 taxi
+🚌 bus
+🚲 bicycle
+✈ airplane
+🚀 rocket
+🛰 satellite
+🌍 globe showing Europe-Africa
+🌎 globe showing Americas
+🌏 globe showing Asia-Australia
+⛽ fuel pump
+€ euro sign
+£ pound sign
+¥ yen sign
+$ dollar sign
+¢ cent sign
+₹ rupee sign
+¥ fullwidth yen sign
+© copyright sign
+® registered sign
+™ trade mark sign
+™ trademark sign
+§ section sign
+¶ pilcrow sign
+† dagger
+‡ double dagger
+… horizontal ellipsis
+‰ per mille sign
+¼ vulgar fraction one quarter
+½ vulgar fraction one half
+¾ vulgar fraction three quarters
+≥ greater than or equal to
+≤ less than or equal to
+≠ not equal to
+≈ almost equal to
+± plus minus sign
+× multiplication sign
+÷ division sign
+√ square root
+∞ infinity
+∑ n-ary summation
+∏ n-ary product
+∫ integral
+∂ partial differential
+∆ increment
+∇ nabla
+∈ element of
+∉ not an element of
+∋ contains as member
+∅ empty set
+∩ intersection
+∪ union
+⊂ subset of
+⊃ superset of
+⊆ subset of or equal to
+⊇ superset of or equal to
+⊕ circled plus
+⊗ circled times
+⊙ circled dot operator
+∠ angle
+∥ parallel to
+⊥ up tack
+◊ lozenge
+□ white square
+■ black square
+● black circle
+○ white circle
+◐ circle with left half black
+◑ circle with right half black
+▲ black up pointing triangle
+△ white up pointing triangle
+▼ black down pointing triangle
+▽ white down pointing triangle
+◄ black left pointing triangle
+► black right pointing triangle
+◆ black diamond
+◇ white diamond
+■ black small square
+□ white small square
+⭐ medium star
+📍 round pushpin
+📌 pushpin
+🔍 magnifying glass tilted left
+🔎 magnifying glass tilted right
+🔧 wrench
+🧰 toolbox
+🪛 screwdriver
+🔫 water pistol
+🛠 hammer and wrench
+⚒ hammer and pick
+🪓 axe
+🔩 nut and bolt
+📏 straight ruler
+📐 triangular ruler
+⚗ alembic
+🧪 test tube
+🧫 petri dish
+🔬 microscope
+🔭 telescope
+📡 satellite antenna
+⚡ high voltage sign
+🔥 flame
+✨ shin
+💫 dizzy
+💥 collision
+💦 sweat droplets
+💨 dashing away
+🫧 bubbles
+💤 zzz
+🎊 confetti
+🎈 balloon
+🎠 carousel horse
+🎡 ferris wheel
+🎢 roller coaster
+⛲ fountain
+🌋 volcano
+🏖 beach with umbrella
+🏝 desert island
+🏜 desert
+🏔 snow capped mountain
+⛰ mountain
+🌄 sunrise over mountains
+🌅 sunrise
+🌇 sunset
+🌆 cityscape at dusk
+🏙 cityscape
+🌃 night with stars
+🌌 milky way
+🌠 shooting star
+💫 dizzy symbol

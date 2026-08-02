@@ -1,7 +1,11 @@
 import Quickshell
 import QtQuick
 
+import qs.Launcher
+
 Scope {
+  AppLauncher {}
+
   Variants {
     model: Quickshell.screens
 

@@ -52,5 +52,6 @@ hl.window_rule({
 })
 
 hl.layer_rule({ no_anim = true, match = { namespace = "walker" } })
+hl.layer_rule({ no_anim = true, match = { namespace = "quickshell-launcher" } })
 hl.workspace_rule({ workspace = "w[tv1]", gaps_in = 0, gaps_out = 0, border_size = 0 })
 hl.workspace_rule({ workspace = "f[1]",   gaps_in = 0, gaps_out = 0, border_size = 0 })

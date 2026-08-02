@@ -18,10 +18,18 @@ in {
     jq
     cava
     quickshell
+    libqalculate
+    cliphist
     (pkgs.writeShellScriptBin "quickshell-reload-theme" ''
       QSID=$(${pkgs.quickshell}/bin/quickshell list --all 2>/dev/null | awk '/^Instance / {gsub(":", "", $2); print $2; exit}')
       if [ -n "$QSID" ]; then
         ${pkgs.quickshell}/bin/quickshell ipc -i "$QSID" call theme-reload reload >/dev/null 2>&1 || true
+      fi
+    '')
+    (pkgs.writeShellScriptBin "quickshell-launcher" ''
+      QSID=$(${pkgs.quickshell}/bin/quickshell list --all 2>/dev/null | awk '/^Instance / {gsub(":", "", $2); print $2; exit}')
+      if [ -n "$QSID" ]; then
+        ${pkgs.quickshell}/bin/quickshell ipc -i "$QSID" call launcher "$1" >/dev/null 2>&1 || true
       fi
     '')
     (pkgs.writeShellScriptBin "quickshell-notif" ''
@@ -34,6 +42,8 @@ in {
       exec ${pkgs.python3.withPackages (ps: [ps.python-dateutil])}/bin/python3 ${./config}/scripts/calendar-sync.py "$@"
     '')
   ];
+
+  xdg.configFile."quickshell/data/symbols.txt".source = ./config/data/symbols.txt;
 
   systemd.user.services.quickshell = {
     Unit = {

@@ -8,6 +8,7 @@ end
 mainMod = "SUPER"
 terminal = "ghostty"
 fileManager = "nautilus"
+launcher = "quickshell-launcher"
 menu = "launch-walker"
 
 local conf_dir = os.getenv("HOME") .. "/.config/hypr/conf"

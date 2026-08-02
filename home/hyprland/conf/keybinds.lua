@@ -5,10 +5,10 @@ hl.bind(mainMod .. " + SHIFT + F",     hl.dsp.window.float({ action = "toggle" }
 hl.bind(mainMod .. " + SHIFT + N",     hl.dsp.exec_cmd(terminal .. " -e nvim"))
 hl.bind(mainMod .. " + SHIFT + T",     hl.dsp.exec_cmd("theme-switcher"))
 hl.bind(mainMod .. " + SHIFT + B",     hl.dsp.exec_cmd("theme-wallpaper"))
-hl.bind(mainMod .. " + Space",         hl.dsp.exec_cmd(menu))
+hl.bind(mainMod .. " + Space",         hl.dsp.exec_cmd(launcher .. " toggle"))
 hl.bind(mainMod .. " + ALT + Space",   hl.dsp.exec_cmd("menu"))
-hl.bind(mainMod .. " + CTRL + E",      hl.dsp.exec_cmd(menu .. " -m symbols"))
-hl.bind(mainMod .. " + CTRL + V",      hl.dsp.exec_cmd(menu .. " -m clipboard"))
+hl.bind(mainMod .. " + CTRL + E",      hl.dsp.exec_cmd(launcher .. " symbols"))
+hl.bind(mainMod .. " + CTRL + V",      hl.dsp.exec_cmd(launcher .. " clipboard"))
 
 -- Universal copy/paste/cut
 hl.bind(mainMod .. " + C", hl.dsp.send_shortcut({ mods = "CTRL", key = "Insert" }))
