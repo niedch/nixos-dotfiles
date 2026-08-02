@@ -70,7 +70,7 @@ flake.nix                     # Entry point, defines hosts + flake inputs
     ├── desktop.nix            # Desktop home-manager entry point
     ├── server.nix             # Server home-manager entry point
     ├── hyprland/              # Hyprland WM (Lua config, vim keybinds)
-    ├── waybar/                # Waybar status bar (JSONC + CSS)
+    ├── quickshell/            # Quickshell status bar (QML config)
     ├── walker/                # Walker launcher + Elephant backend
     ├── ghostty/               # Ghostty terminal emulator
     ├── kdenlive/              # Kdenlive video editor config
@@ -112,12 +112,12 @@ flake.nix                     # Entry point, defines hosts + flake inputs
 | `home/desktop.nix` | Full desktop home-manager entry point |
 | `home/server.nix` | Minimal server home-manager entry point |
 | `home/hyprland/` | Hyprland WM with Lua config, vim-style keybinds, window rules |
-| `home/waybar/` | Waybar status bar with custom CSS and cava audio viz |
+| `home/quickshell/` | Quickshell status bar with QML widgets, cava audio viz, and popups |
 | `home/walker/` | Walker app launcher + Elephant backend as systemd services |
 | `home/ghostty/` | Ghostty terminal with JetBrains Mono, tmux auto-start |
 | `home/kdenlive/` | Kdenlive video editor config |
 | `home/obsidian/` | Obsidian note-taking app config |
-| `home/themes/` | Omarchy theme system — 20+ themes symlinked to hypr/waybar/walker configs |
+| `home/themes/` | Omarchy theme system — 20+ themes symlinked to hypr/quickshell/walker configs |
 | `home/tmux/` | Tmux with custom sessionizer, popup, and opener scripts |
 | `home/mux-session/` | Tmux session manager with per-project configs |
 | `home/nvim/` | LazyVim-based Neovim config with Go, Rust, Java, TypeScript tooling |

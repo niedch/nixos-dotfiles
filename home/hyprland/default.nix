@@ -34,7 +34,6 @@
   };
 
   home.packages = with pkgs; [
-    mako
     wl-clipboard
     bibata-cursors
     hypridle

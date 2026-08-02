@@ -1,18 +1,4 @@
-{
-  config,
-  pkgs,
-  inputs,
-  ...
-}: {
-  imports = [
-    inputs.opencode-waybar-status.homeModules.default
-  ];
-
-  programs.opencode-waybar-status = {
-    enable = true;
-    package = inputs.opencode-waybar-status.packages.${pkgs.system}.default;
-  };
-
+{pkgs, ...}: {
   home.packages = with pkgs; [
     opencode
   ];

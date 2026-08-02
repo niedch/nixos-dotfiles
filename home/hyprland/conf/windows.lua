@@ -45,7 +45,7 @@ hl.window_rule({
 
 hl.window_rule({
     name   = "calendar",
-    match  = { class = "chrome-calendar\\.google\\.com__calendar_u_0_r_month-Default" },
+    match  = { class = "chrome-calendar\\.google\\.com__calendar_u_0_r_day_.*" },
     float  = true,
     center = true,
     size   = { 1000, 750 },

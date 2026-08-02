@@ -1,8 +1,8 @@
 {...}: {
-    imports = [
-      ./mux-session
-      ./comd.nix
-      ./btop.nix
-      ./direnv.nix
-    ];
-  }
+  imports = [
+    ./mux-session
+    ./comd.nix
+    ./btop.nix
+    ./direnv.nix
+  ];
+}

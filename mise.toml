@@ -12,6 +12,11 @@ description = "Switch to a NixOS configuration with sudo (e.g. laptop, desktop, 
 usage = '''arg "<host>" help="Host configuration name"'''
 run = "sudo nixos-rebuild switch --flake .#${usage_host?}"
 
+[tasks.quickshell]
+description = "Watch quickshell"
+run = "nix run .#quickshell"
+sources = ["home/quickshell/config/**/*.{qml,sh}"]
+
 [tasks.remote-switch]
 description = "Remote switch to a NixOS configuration via SSH (e.g. raspberry-pi)"
 usage = '''

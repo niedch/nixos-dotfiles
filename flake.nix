@@ -34,11 +34,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    opencode-waybar-status = {
-      url = "github:niedch/opencode-waybar-status";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     speedtest-tracker = {
       url = "github:niedch/speedtest-tracker";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -59,7 +54,6 @@
     wlctl,
     nixos-hardware,
     mux-session,
-    opencode-waybar-status,
     speedtest-tracker,
     comd,
     ...
@@ -129,12 +123,22 @@
       ];
     };
 
+    packages.x86_64-linux.quickshell = import ./home/quickshell/package.nix {
+      pkgs = nixpkgs.legacyPackages.x86_64-linux;
+    };
+
     devShells.x86_64-linux.default = let
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
     in
       pkgs.mkShell {
-        packages = with pkgs; [alejandra jq mise sops];
         shellHook = "mise tasks ls";
+        packages = with pkgs; [
+          alejandra
+          jq
+          mise
+          watchexec
+          sops
+        ];
       };
   };
 }

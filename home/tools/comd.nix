@@ -1,4 +1,8 @@
-{ inputs, pkgs, ... }: {
+{
+  inputs,
+  pkgs,
+  ...
+}: {
   home.packages = [
     inputs.comd.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];

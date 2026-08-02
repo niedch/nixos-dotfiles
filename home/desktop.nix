@@ -1,14 +1,10 @@
-{
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   imports = [
     ./chromium
     ./ghostty
     ./hyprland
     ./media
     ./menu
-    ./waybar
     ./themes
     ./walker
     ./tmux
@@ -20,6 +16,7 @@
     ./git
     ./ssh
     ./obsidian
+    ./quickshell
   ];
 
   home.username = "nic";
@@ -56,5 +53,4 @@
       python3
       gnumake
     ];
-
 }

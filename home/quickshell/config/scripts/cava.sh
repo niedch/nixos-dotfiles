@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 set -u
 
-# Kill leftover processes from previous waybar sessions
-for pid in $(pgrep -f "cava.*waybar_cava_config"); do
+# Kill leftover cava processes from previous quickshell sessions
+for pid in $(pgrep -f "cava.*quickshell_cava_config"); do
     [ "$pid" != "$$" ] && kill "$pid" 2>/dev/null
 done
 
-bars=(⠀ ⠁ ⠃ ⠇ ⠏ ⠟ ⠿ ⣿)
-config_file="/tmp/waybar_cava_config"
-fifo="/tmp/waybar_cava_fifo"
+bars=(▁ ▂ ▃ ▄ ▅ ▆ ▇ █)
+config_file="/tmp/quickshell_cava_config"
+fifo="/tmp/quickshell_cava_fifo"
 
 cat > "$config_file" <<EOF
 [general]
@@ -27,8 +27,8 @@ mono_option = average
 EOF
 
 cleanup() {
-    pkill -P $$ 2>/dev/null        # kill children
-    kill "$CAVA_PID" 2>/dev/null   # kill cava explicitly
+    pkill -P $$ 2>/dev/null
+    kill "$CAVA_PID" 2>/dev/null
     rm -f "$fifo"
     exit 0
 }

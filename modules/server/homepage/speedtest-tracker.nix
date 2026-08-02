@@ -1,6 +1,5 @@
-{ ... }:
-{
-  disabledModules = [ "services/web-apps/speedtest-tracker.nix" ];
+{...}: {
+  disabledModules = ["services/web-apps/speedtest-tracker.nix"];
 
   services.speedtest-tracker = {
     enable = true;

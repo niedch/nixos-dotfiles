@@ -21,10 +21,6 @@ for arg in "$@"; do
   esac
 done
 
-toggle_indicator() {
-  pkill -RTMIN+8 waybar 2>/dev/null || true
-}
-
 screenrecording_active() {
   [[ -f "$STATE_FILE" ]] && kill -0 "$(cat "$STATE_FILE")" 2>/dev/null
 }
@@ -52,7 +48,6 @@ start_screenrecording() {
   wl-screenrec --output "$monitor" "${audio_args[@]}" --filename "$filename" &
   echo "$!" > "$STATE_FILE"
   notify-send "Screen Recording" "Recording $monitor" -t 3000
-  toggle_indicator
 }
 
 stop_screenrecording() {
@@ -80,14 +75,12 @@ stop_screenrecording() {
   fi
 
   rm -f "$STATE_FILE"
-  toggle_indicator
 }
 
 if screenrecording_active; then
   stop_screenrecording
 elif [[ "$STOP_RECORDING" == "true" ]]; then
   rm -f "$STATE_FILE"
-  toggle_indicator
 else
   start_screenrecording
 fi

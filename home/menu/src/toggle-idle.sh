@@ -2,21 +2,15 @@
 
 STATE_FILE="${XDG_RUNTIME_DIR:-/tmp}/idle-inhibited"
 
-refresh_waybar() {
-  pkill -RTMIN+9 waybar 2>/dev/null
-}
-
 idle_on() {
   systemctl --user start hypridle.service 2>/dev/null
   rm -f "$STATE_FILE"
-  refresh_waybar
   [[ -t 0 ]] || notify-send "Idle" "Idle rules enabled"
 }
 
 idle_off() {
   systemctl --user stop hypridle.service 2>/dev/null
   touch "$STATE_FILE"
-  refresh_waybar
   [[ -t 0 ]] || notify-send "Idle" "Idle rules disabled"
 }
 
