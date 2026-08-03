@@ -28,7 +28,7 @@ PanelWindow {
     anchors.verticalCenter: parent.verticalCenter
     spacing: 0
 
-    OmarchyMenuWidget {}
+    MenuButton {}
     Workspaces {}
     SeparatorWidget {
       visible: mpris.active

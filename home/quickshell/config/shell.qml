@@ -1,10 +1,12 @@
 import Quickshell
 import QtQuick
 
+import qs.Components.MenuPanel
 import qs.Launcher
 
 Scope {
   AppLauncher {}
+  MenuPanel {}
 
   Variants {
     model: Quickshell.screens

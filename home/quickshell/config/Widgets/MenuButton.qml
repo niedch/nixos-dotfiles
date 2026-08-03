@@ -17,12 +17,12 @@ Widget {
         termProc.command = ["xdg-terminal-exec"]
         termProc.running = true
       } else {
-        menuProc.command = ["omarchy-menu"]
+        menuProc.command = ["quickshell-menu", "toggle"]
         menuProc.running = true
       }
     }
   }
 
-  Process { id: menuProc }
   Process { id: termProc }
+  Process { id: menuProc }
 }

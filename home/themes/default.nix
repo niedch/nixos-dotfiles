@@ -137,7 +137,7 @@ in {
       };
     };
 
-    selectorCommand = "walker --dmenu";
+    selectorCommand = "false";
 
     templates."quickshell.colors.json.tpl" = ''
       {
@@ -170,7 +170,6 @@ in {
       "hypr/theme.lua".source = "hyprland.lua";
       "quickshell/colors.json".source = "quickshell.colors.json";
       "hypr/hyprlock-theme.conf".source = "hyprlock.conf";
-      "walker/themes/default/walker.css".source = "walker.css";
       "btop/themes/btop.theme".source = "btop.theme";
       "gtk-3.0/settings.ini" = {
         source = "settings-3.0.ini";

@@ -4,9 +4,7 @@
     ./ghostty
     ./hyprland
     ./media
-    ./menu
     ./themes
-    ./walker
     ./tmux
     ./tools
     ./nvim

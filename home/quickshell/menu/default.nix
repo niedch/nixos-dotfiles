@@ -3,9 +3,6 @@
   lib,
   ...
 }: let
-  menuWidth = "295";
-  menuMaxHeight = "630";
-
   scripts = [
     {
       name = "launch-or-focus";
@@ -81,38 +78,6 @@
     {
       name = "lock-screen";
       deps = with pkgs; [bash hyprland hyprlock libnotify procps];
-    }
-    {
-      name = "menu-keybindings";
-      deps = with pkgs; [
-        bash
-        gawk
-        libxkbcommon
-        hyprland
-        jq
-        gnused
-        coreutils
-      ];
-      selfPath = true;
-    }
-    {
-      name = "menu";
-      deps = with pkgs; [
-        bash
-        coreutils
-        hyprpicker
-        libnotify
-        systemd
-        xdg-utils
-        pavucontrol
-        ghostty
-      ];
-      envs = {
-        WALKER_BIN = "${pkgs.walker}/bin/walker";
-        MENU_WIDTH = menuWidth;
-        MENU_MAX_HEIGHT = menuMaxHeight;
-      };
-      selfPath = true;
     }
   ];
 
