@@ -67,7 +67,7 @@ Widget {
         infoProc.command = ["bash", "-c", "notify-send -u low \"$(omarchy-battery-status)\""]
         infoProc.running = true
       } else {
-        menuProc.command = ["omarchy-menu", "power"]
+        menuProc.command = ["quickshell-menu", "system"]
         menuProc.running = true
       }
     }

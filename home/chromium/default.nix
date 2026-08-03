@@ -62,7 +62,7 @@
     }
     {
       name = "Youtube";
-      url = "https://www.youtube.com/ ";
+      url = "https://www.youtube.com/";
       sha256 = "sha256-y2rbGYQ7ZFvCJxgfUnRvAemo/abBEzjKwjxZd8fSOGw=";
     }
     {

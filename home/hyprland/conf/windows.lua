@@ -18,18 +18,6 @@ hl.window_rule({
 })
 
 hl.window_rule({
-	name  = "zen-opacity",
-	match = { class = "zen-beta" },
-	opacity = 0.95,
-})
-
-hl.window_rule({
-	name  = "youtube-opacity",
-	match = { class = "chrome-www.youtube.com__-Default" },
-	opacity = 0.9,
-})
-
-hl.window_rule({
 	name   = "tui-apps",
 	match  = { class = "org\\.tui\\..*" },
 	float  = true,
@@ -51,6 +39,7 @@ hl.window_rule({
     size   = { 1000, 750 },
 })
 
-hl.layer_rule({ no_anim = true, match = { namespace = "walker" } })
+hl.layer_rule({ no_anim = true, match = { namespace = "quickshell-menu" } })
+hl.layer_rule({ no_anim = true, match = { namespace = "quickshell-launcher" } })
 hl.workspace_rule({ workspace = "w[tv1]", gaps_in = 0, gaps_out = 0, border_size = 0 })
 hl.workspace_rule({ workspace = "f[1]",   gaps_in = 0, gaps_out = 0, border_size = 0 })

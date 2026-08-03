@@ -13,7 +13,6 @@ Most GUI apps, CLI tools, and dev tools go here. Edit `home/common/default.nix`:
   home.packages = with pkgs; [
     git
     quickshell
-    walker
     dunst
     wl-clipboard
     ghostty

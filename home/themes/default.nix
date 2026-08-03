@@ -46,7 +46,7 @@ in {
       kanso = {
         url = "https://github.com/HANCORE-linux/omarchy-kanso-theme.git";
         rev = "bc405d36b93e0abff39c22eda14d1f33121319f3";
-        defaultBackground = "BG4.jpg";
+        defaultBackground = "BG4b.jpg";
         extraBackgrounds = [
           {
             url = "https://w.wallhaven.cc/full/3q/wallhaven-3qrdr6.jpg";
@@ -137,7 +137,7 @@ in {
       };
     };
 
-    selectorCommand = "walker --dmenu";
+    selectorCommand = "false";
 
     templates."quickshell.colors.json.tpl" = ''
       {
@@ -170,7 +170,6 @@ in {
       "hypr/theme.lua".source = "hyprland.lua";
       "quickshell/colors.json".source = "quickshell.colors.json";
       "hypr/hyprlock-theme.conf".source = "hyprlock.conf";
-      "walker/themes/default/walker.css".source = "walker.css";
       "btop/themes/btop.theme".source = "btop.theme";
       "gtk-3.0/settings.ini" = {
         source = "settings-3.0.ini";
