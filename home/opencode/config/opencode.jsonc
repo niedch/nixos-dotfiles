@@ -2,14 +2,23 @@
   "$schema": "https://opencode.ai/config.json",
   "autoupdate": false,
   "default_agent": "plan",
+  // ------------------------------- Modes -------------------------------
   "agent": {
     "build": {
       "mode": "primary",
       "model": "opencode-go/deepseek-v4-flash"
     },
-    "hard-plan": {
+    "orchestrator": {
       "mode": "primary",
-      "model": "opencode-go/glm-5.1"
+      "model": "opencode-go/deepseek-v4-pro",
+      "prompt": "{file:./prompts/orchestrator.md}",
+      "permission": {
+        "edit": "deny",
+        "bash": "deny",
+        "task": "allow",
+        "todowrite": "allow",
+        "question": "allow"
+      }
     },
     "plan": {
       "mode": "primary",
@@ -18,6 +27,7 @@
         "edit": "deny"
       }
     },
+  // ------------------------------- Agents -------------------------------
     "explore": {
       "description": "Fast agent specialized for exploring codebases and answering search questions",
       "model": "opencode-go/deepseek-v4-flash",
@@ -39,6 +49,16 @@
       "permission": {
         "edit": "deny",
         "bash": "deny",
+        "todowrite": "deny"
+      }
+    },
+    "builder": {
+      "description": "Implements code changes based on research findings",
+      "mode": "subagent",
+      "model": "opencode-go/deepseek-v4-flash",
+      "permission": {
+        "edit": "allow",
+        "bash": "allow",
         "todowrite": "deny"
       }
     },

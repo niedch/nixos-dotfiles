@@ -92,20 +92,20 @@ in {
 
   xdg.configFile."quickshell/data/symbols.txt".source = ./config/data/symbols.txt;
 
-  # systemd.user.services.quickshell = {
-  #   Unit = {
-  #     Description = "Quickshell status bar";
-  #     ConditionEnvironment = "WAYLAND_DISPLAY";
-  #     After = ["hyprland-session.target"];
-  #     PartOf = ["hyprland-session.target"];
-  #   };
-  #   Service = {
-  #     ExecStart = "${quickshell}/bin/quickshell";
-  #     Restart = "always";
-  #     RestartSec = 2;
-  #   };
-  #   Install = {
-  #     WantedBy = ["hyprland-session.target"];
-  #   };
-  # };
+  systemd.user.services.quickshell = {
+    Unit = {
+      Description = "Quickshell status bar";
+      ConditionEnvironment = "WAYLAND_DISPLAY";
+      After = ["hyprland-session.target"];
+      PartOf = ["hyprland-session.target"];
+    };
+    Service = {
+      ExecStart = "${quickshell}/bin/quickshell";
+      Restart = "always";
+      RestartSec = 2;
+    };
+    Install = {
+      WantedBy = ["hyprland-session.target"];
+    };
+  };
 }
