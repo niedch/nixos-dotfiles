@@ -24,27 +24,27 @@ in {
     cliphist
     libxkbcommon
     (pkgs.writeShellScriptBin "quickshell-reload-theme" ''
-      QSID=$(env -u QS_CONFIG_PATH -u QS_CONFIG_NAME ${pkgs.quickshell}/bin/quickshell list --all 2>/dev/null | awk '/^Instance / {gsub(":", "", $2); print $2; exit}')
+      QSID=$(env -u QS_CONFIG_PATH -u QS_CONFIG_NAME -u __QUICKSHELL_CRASH_INFO_FD -u __QUICKSHELL_CRASH_DUMP_PID -u __QUICKSHELL_CRASH_SIGNAL ${pkgs.quickshell}/bin/quickshell list --all 2>/dev/null | awk '/^Instance / {gsub(":", "", $2); print $2; exit}')
       if [ -n "$QSID" ]; then
-        env -u QS_CONFIG_PATH -u QS_CONFIG_NAME ${pkgs.quickshell}/bin/quickshell ipc -i "$QSID" call theme-reload reload >/dev/null 2>&1 || true
+        env -u QS_CONFIG_PATH -u QS_CONFIG_NAME -u __QUICKSHELL_CRASH_INFO_FD -u __QUICKSHELL_CRASH_DUMP_PID -u __QUICKSHELL_CRASH_SIGNAL ${pkgs.quickshell}/bin/quickshell ipc -i "$QSID" call theme-reload reload >/dev/null 2>&1 || true
       fi
     '')
     (pkgs.writeShellScriptBin "quickshell-launcher" ''
-      QSID=$(env -u QS_CONFIG_PATH -u QS_CONFIG_NAME ${pkgs.quickshell}/bin/quickshell list --all 2>/dev/null | awk '/^Instance / {gsub(":", "", $2); print $2; exit}')
+      QSID=$(env -u QS_CONFIG_PATH -u QS_CONFIG_NAME -u __QUICKSHELL_CRASH_INFO_FD -u __QUICKSHELL_CRASH_DUMP_PID -u __QUICKSHELL_CRASH_SIGNAL ${pkgs.quickshell}/bin/quickshell list --all 2>/dev/null | awk '/^Instance / {gsub(":", "", $2); print $2; exit}')
       if [ -n "$QSID" ]; then
-        env -u QS_CONFIG_PATH -u QS_CONFIG_NAME ${pkgs.quickshell}/bin/quickshell ipc -i "$QSID" call launcher "$1" >/dev/null 2>&1 || true
+        env -u QS_CONFIG_PATH -u QS_CONFIG_NAME -u __QUICKSHELL_CRASH_INFO_FD -u __QUICKSHELL_CRASH_DUMP_PID -u __QUICKSHELL_CRASH_SIGNAL ${pkgs.quickshell}/bin/quickshell ipc -i "$QSID" call launcher "$1" >/dev/null 2>&1 || true
       fi
     '')
     (pkgs.writeShellScriptBin "quickshell-notif" ''
-      QSID=$(env -u QS_CONFIG_PATH -u QS_CONFIG_NAME ${pkgs.quickshell}/bin/quickshell list --all 2>/dev/null | awk '/^Instance / {gsub(":", "", $2); print $2; exit}')
+      QSID=$(env -u QS_CONFIG_PATH -u QS_CONFIG_NAME -u __QUICKSHELL_CRASH_INFO_FD -u __QUICKSHELL_CRASH_DUMP_PID -u __QUICKSHELL_CRASH_SIGNAL ${pkgs.quickshell}/bin/quickshell list --all 2>/dev/null | awk '/^Instance / {gsub(":", "", $2); print $2; exit}')
       if [ -n "$QSID" ]; then
-        env -u QS_CONFIG_PATH -u QS_CONFIG_NAME ${pkgs.quickshell}/bin/quickshell ipc -i "$QSID" call notifications "$1" >/dev/null 2>&1 || true
+        env -u QS_CONFIG_PATH -u QS_CONFIG_NAME -u __QUICKSHELL_CRASH_INFO_FD -u __QUICKSHELL_CRASH_DUMP_PID -u __QUICKSHELL_CRASH_SIGNAL ${pkgs.quickshell}/bin/quickshell ipc -i "$QSID" call notifications "$1" >/dev/null 2>&1 || true
       fi
     '')
     (pkgs.writeShellScriptBin "quickshell-menu" ''
-      QSID=$(env -u QS_CONFIG_PATH -u QS_CONFIG_NAME ${pkgs.quickshell}/bin/quickshell list --all 2>/dev/null | awk '/^Instance / {gsub(":", "", $2); print $2; exit}')
+      QSID=$(env -u QS_CONFIG_PATH -u QS_CONFIG_NAME -u __QUICKSHELL_CRASH_INFO_FD -u __QUICKSHELL_CRASH_DUMP_PID -u __QUICKSHELL_CRASH_SIGNAL ${pkgs.quickshell}/bin/quickshell list --all 2>/dev/null | awk '/^Instance / {gsub(":", "", $2); print $2; exit}')
       if [ -n "$QSID" ]; then
-        env -u QS_CONFIG_PATH -u QS_CONFIG_NAME ${pkgs.quickshell}/bin/quickshell ipc -i "$QSID" call menu "$1" >/dev/null 2>&1 || true
+        env -u QS_CONFIG_PATH -u QS_CONFIG_NAME -u __QUICKSHELL_CRASH_INFO_FD -u __QUICKSHELL_CRASH_DUMP_PID -u __QUICKSHELL_CRASH_SIGNAL ${pkgs.quickshell}/bin/quickshell ipc -i "$QSID" call menu "$1" >/dev/null 2>&1 || true
       fi
     '')
     (pkgs.writeShellScriptBin "theme-switcher-set" ''

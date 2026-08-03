@@ -107,6 +107,7 @@ Item {
     }
     if (node.action === "theme") {
       Quickshell.execDetached(["theme-switcher-set", node.theme])
+      root.actionActivated()
       return
     }
     if (node.dynamic) {

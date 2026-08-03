@@ -8,6 +8,7 @@ Item {
   id: root
 
   signal themeChanged()
+  signal themeSelected()
 
   property var themes: []
   property string currentTheme: ""
@@ -22,6 +23,7 @@ Item {
 
   function activate(name) {
     if (name === root.currentTheme) return
+    root.themeSelected()
     switchProc.command = ["theme-switcher-set", name]
     switchProc.running = true
   }

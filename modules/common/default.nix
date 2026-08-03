@@ -1,4 +1,8 @@
-{...}: {
+{
+  lib,
+  config,
+  ...
+}: {
   imports = [
     ./binfmt.nix
     ./cache-config.nix
@@ -8,11 +12,15 @@
     ./sops.nix
   ];
 
-  nix.settings = {
-    experimental-features = ["nix-command" "flakes"];
-    trusted-users = ["root" "nic"];
-  };
-  nixpkgs.config.allowUnfree = true;
+  config = {
+    sops.enable = lib.mkDefault true;
 
-  programs.nix-ld.enable = true;
+    nix.settings = {
+      experimental-features = ["nix-command" "flakes"];
+      trusted-users = ["root" "nic"];
+    };
+    nixpkgs.config.allowUnfree = true;
+
+    programs.nix-ld.enable = true;
+  };
 }

@@ -1,8 +1,10 @@
 {
   config,
   pkgs,
+  lib,
   ...
-}: {
+}:
+lib.mkIf config.sops.enable {
   environment.systemPackages = [pkgs.cifs-utils];
 
   sops.secrets.SAMBA_PASSWORD = {

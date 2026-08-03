@@ -96,6 +96,7 @@ Scope {
           width: 280
           height: parent.height
           onThemeChanged: backgroundColumn.load()
+          onThemeSelected: root.close()
         }
 
         Rectangle {
