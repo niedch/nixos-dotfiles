@@ -49,7 +49,7 @@ Scope {
       return a.name.localeCompare(b.name)
     })
 
-    if (rawQuery !== "") {
+    if (rawQuery !== "" && filtered.length === 0) {
       filtered.push({
         key: "websearch",
         kind: "web",

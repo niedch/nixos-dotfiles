@@ -18,18 +18,6 @@ hl.window_rule({
 })
 
 hl.window_rule({
-	name  = "zen-opacity",
-	match = { class = "zen-beta" },
-	opacity = 0.95,
-})
-
-hl.window_rule({
-	name  = "youtube-opacity",
-	match = { class = "chrome-www.youtube.com__-Default" },
-	opacity = 0.9,
-})
-
-hl.window_rule({
 	name   = "tui-apps",
 	match  = { class = "org\\.tui\\..*" },
 	float  = true,

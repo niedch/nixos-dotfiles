@@ -14,12 +14,22 @@ Widget {
   Process {
     id: proc
     command: ["bash", "-c", (Quickshell.env("QS_CONFIG_PATH") ?? "") + "/scripts/cava.sh"]
-    running: true
     stdout: SplitParser {
       splitMarker: "\n"
       onRead: function(data) {
         cavaOutput = data.trim()
       }
     }
+    onRunningChanged: {
+      if (!running) restartTimer.start()
+    }
   }
+
+  Timer {
+    id: restartTimer
+    interval: 1000
+    onTriggered: proc.running = true
+  }
+
+  Component.onCompleted: proc.running = true
 }

@@ -9,6 +9,14 @@ done
 bars=(▁ ▂ ▃ ▄ ▅ ▆ ▇ █)
 config_file="/tmp/quickshell_cava_config"
 fifo="/tmp/quickshell_cava_fifo"
+err_log="/tmp/quickshell_cava_err.log"
+
+# Prefer pipewire input, fall back to pulse (pipewire-pulse compat)
+if [ -S "${XDG_RUNTIME_DIR:-/run/user/$(id -u)}/pipewire-0" ] || [ -n "${PIPEWIRE_REMOTE:-}" ]; then
+    input_method="pipewire"
+else
+    input_method="pulse"
+fi
 
 cat > "$config_file" <<EOF
 [general]
@@ -16,6 +24,9 @@ bars = 8
 framerate = 30
 autosens = 1
 reverse = 1
+
+[input]
+method = $input_method
 
 [output]
 method = raw
@@ -37,7 +48,7 @@ trap cleanup EXIT SIGTERM SIGINT
 rm -f "$fifo"
 mkfifo "$fifo"
 
-cava -p "$config_file" 2>/dev/null > "$fifo" &
+cava -p "$config_file" 2>"$err_log" > "$fifo" &
 CAVA_PID=$!
 
 pause_start=0

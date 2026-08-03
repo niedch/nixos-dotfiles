@@ -77,7 +77,7 @@ Scope {
 
   function setResults(arr) {
     root.results = arr
-    if (listView.currentIndex >= root.results.length) listView.currentIndex = 0
+    listView.currentIndex = 0
   }
 
   function updateResults() {
