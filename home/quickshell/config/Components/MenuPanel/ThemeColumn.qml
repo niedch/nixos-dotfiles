@@ -13,6 +13,8 @@ Item {
   property string currentTheme: ""
   property int currentIndex: -1
 
+  readonly property string themesDir: (Quickshell.env("HOME") ?? "") + "/.local/share/themes"
+
   function load() {
     listProc.running = true
     currentProc.running = true
@@ -97,10 +99,13 @@ Item {
         property bool isCurrent: modelData === root.currentTheme
 
         width: themeList.width
-        height: 32
+        height: 84
 
         Rectangle {
           anchors.fill: parent
+          anchors.leftMargin: 8
+          anchors.rightMargin: 8
+          radius: 6
           color: isCurrent ? Colors.selectionBackground : (themeMouse.containsMouse ? Colors.selectionBackground : "transparent")
           opacity: isCurrent || themeMouse.containsMouse ? 0.7 : 1.0
 
@@ -111,19 +116,41 @@ Item {
             cursorShape: Qt.PointingHandCursor
             onClicked: root.activate(modelData)
           }
-        }
 
-        Text {
-          anchors.left: parent.left
-          anchors.right: parent.right
-          anchors.verticalCenter: parent.verticalCenter
-          anchors.leftMargin: 12
-          anchors.rightMargin: 12
-          text: modelData
-          color: isCurrent ? Colors.accent : Colors.foreground
-          font.family: Constants.fontFamily
-          font.pixelSize: Constants.fontSize
-          elide: Text.ElideRight
+          RowLayout {
+            anchors.fill: parent
+            anchors.margins: 4
+            spacing: 8
+
+            Rectangle {
+              Layout.preferredWidth: 96
+              Layout.preferredHeight: 60
+              radius: 4
+              clip: true
+              color: Colors.color0
+
+              Image {
+                anchors.fill: parent
+                source: "file://" + root.themesDir + "/" + modelData + "/preview.png"
+                sourceSize.width: 192
+                sourceSize.height: 120
+                asynchronous: true
+                fillMode: Image.PreserveAspectCrop
+              }
+            }
+
+            Text {
+              Layout.fillWidth: true
+              text: modelData
+              color: isCurrent ? Colors.accent : Colors.foreground
+              font.family: Constants.fontFamily
+              font.pixelSize: Constants.fontSize
+              elide: Text.ElideRight
+              wrapMode: Text.Wrap
+              maximumLineCount: 2
+              verticalAlignment: Text.AlignVCenter
+            }
+          }
         }
       }
     }

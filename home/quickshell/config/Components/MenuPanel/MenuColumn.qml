@@ -19,6 +19,7 @@ Item {
   property string rawBinds: ""
   property bool keybindingsLoaded: false
   property var displayItems: []
+  property var themes: []
 
   // ── menu tree ──
   readonly property var menuTree: [
@@ -59,6 +60,9 @@ Item {
     // ─────────────── Tools ───────────────
     { label: "Color Picker", icon: "󰋞", kind: "action", action: "exec", cmd: ["hyprpicker", "-a"] },
 
+    // ─────────────── Themes ───────────────
+    { label: "Themes", icon: "󰉼", kind: "themes" },
+
     // ─────────────── Setup ───────────────
     { label: "Setup", icon: "󰒓", kind: "group", children: [
       { label: "Audio",     icon: "󰕾", kind: "action", action: "exec", cmd: ["pavucontrol"] },
@@ -87,6 +91,7 @@ Item {
     root.rawBinds = ""
     root.idleOn = false
     idleCheck.running = true
+    themesProc.running = true
     keymapProc.running = true
     bindsProc.running = true
     root.rebuild()
@@ -129,16 +134,32 @@ Item {
       root.displayItems = root.searchTree()
     } else {
       // browse current level
-      var level = root.browseStack.length === 0 ? root.menuTree : root.browseStack[root.browseStack.length - 1].children
       var prefix = []
       for (var i = 0; i < root.browseStack.length; i++) {
         prefix.push(root.browseStack[i].label)
       }
-      var out = []
-      for (var j = 0; j < level.length; j++) {
-        out.push({ node: level[j], path: prefix.concat([level[j].label]) })
+
+      // when we've navigated into the themes group, list the loaded themes
+      if (root.browseStack.length > 0 && root.browseStack[root.browseStack.length - 1].kind === "themes") {
+        var out = []
+        for (var t = 0; t < root.themes.length; t++) {
+          out.push({
+            node: { label: root.themes[t], icon: "󰉼", kind: "action", action: "theme", theme: root.themes[t] },
+            path: prefix.concat([root.themes[t]])
+          })
+        }
+        root.displayItems = out
+        listView.currentIndex = root.displayItems.length > 0 ? 0 : -1
+        return
       }
-      root.displayItems = out
+
+      // browse current level (menuTree top level or group children)
+      var level = root.browseStack.length === 0 ? root.menuTree : root.browseStack[root.browseStack.length - 1].children
+      var out2 = []
+      for (var j = 0; j < level.length; j++) {
+        out2.push({ node: level[j], path: prefix.concat([level[j].label]) })
+      }
+      root.displayItems = out2
     }
     listView.currentIndex = root.displayItems.length > 0 ? 0 : -1
   }
@@ -161,7 +182,15 @@ Item {
   function collectLeaves(nodes, trail, out) {
     for (var i = 0; i < nodes.length; i++) {
       var n = nodes[i]
-      if (n.kind === "group") {
+      if (n.kind === "themes") {
+        var themePath = trail.concat([n.label])
+        for (var t = 0; t < root.themes.length; t++) {
+          out.push({
+            node: { label: root.themes[t], icon: "󰉼", kind: "action", action: "theme", theme: root.themes[t] },
+            path: themePath.concat([root.themes[t]])
+          })
+        }
+      } else if (n.kind === "group") {
         root.collectLeaves(n.children, trail.concat([n.label]), out)
       } else {
         out.push({ node: n, path: trail.concat([n.label]) })
@@ -186,7 +215,7 @@ Item {
     if (!item) return
     var node = item.node
     if (!node) return // keybinding rows are display-only
-    if (node.kind === "group") {
+    if (node.kind === "group" || node.kind === "themes") {
       root.browseStack.push(node)
       root.searchText = ""
       root.rebuild()
@@ -211,6 +240,10 @@ Item {
     if (node.action === "exec") {
       Quickshell.execDetached(node.cmd)
       root.actionActivated()
+      return
+    }
+    if (node.action === "theme") {
+      Quickshell.execDetached(["theme-switcher-set", node.theme])
       return
     }
     if (node.dynamic) {
@@ -245,6 +278,18 @@ Item {
     running: false
     onExited: function(exitCode) {
       root.idleOn = exitCode === 0
+      root.rebuild()
+    }
+  }
+
+  // ── theme loading ──
+  Process {
+    id: themesProc
+    command: ["bash", "-c", "ls -1 \"$HOME/.local/share/themes\" | grep -v -E '^(current|current-background)$' | sort"]
+    stdout: StdioCollector { id: themesOut }
+    onExited: {
+      var names = themesOut.text.trim().split("\n").filter(function (x) { return x !== "" })
+      root.themes = names
       root.rebuild()
     }
   }
@@ -523,7 +568,7 @@ Item {
         required property int index
         property bool isCurrent: listView.currentIndex === index
         readonly property bool isDanger: modelData.node && modelData.node.danger === true
-        readonly property bool isGroup: modelData.node && modelData.node.kind === "group"
+        readonly property bool isGroup: modelData.node && (modelData.node.kind === "group" || modelData.node.kind === "themes")
 
         width: listView.width
         height: 38

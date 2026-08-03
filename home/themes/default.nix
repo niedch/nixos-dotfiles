@@ -46,7 +46,7 @@ in {
       kanso = {
         url = "https://github.com/HANCORE-linux/omarchy-kanso-theme.git";
         rev = "bc405d36b93e0abff39c22eda14d1f33121319f3";
-        defaultBackground = "BG4.jpg";
+        defaultBackground = "BG4b.jpg";
         extraBackgrounds = [
           {
             url = "https://w.wallhaven.cc/full/3q/wallhaven-3qrdr6.jpg";
