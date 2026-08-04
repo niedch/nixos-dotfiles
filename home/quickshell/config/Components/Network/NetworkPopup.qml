@@ -13,7 +13,7 @@ PopupWindow {
   required property Item target
   property bool shown: false
   property int gap: 6
-  property int scanDuration: 15
+  property int scanDuration: 5
 
   readonly property var anchorWindow: root.target && root.target.QsWindow ? root.target.QsWindow.window : null
 
@@ -76,12 +76,15 @@ PopupWindow {
     } else {
       root.scanning = true
       scanTimer.start()
+      refreshTimer.start()
     }
   }
 
   function stopScan() {
     scanTimer.stop()
+    refreshTimer.stop()
     root.scanning = false
+    root.setScanner(false)
   }
 
   function setScanner(enabled) {
@@ -130,7 +133,7 @@ PopupWindow {
 
   Timer {
     id: refreshTimer
-    interval: 2000
+    interval: 5000
     repeat: true
     onTriggered: root.refreshNetworks()
   }
@@ -270,6 +273,7 @@ PopupWindow {
         delegate: NetworkRow {
           rowWidth: column.width
           rowHeight: root.rowHeight
+          isScanning: root.scanning
         }
       }
 

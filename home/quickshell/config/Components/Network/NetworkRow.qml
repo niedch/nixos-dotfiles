@@ -10,6 +10,7 @@ Item {
   property int rowHeight: 44
   readonly property var net: nr.modelData
   property bool pskEntry: false
+  property bool isScanning: false
 
   width: nr.rowWidth
   height: nr.pskEntry ? nr.rowHeight + 32 : nr.rowHeight
@@ -137,12 +138,14 @@ Item {
       ControlButton {
         label: nr.net.connected ? "Disconnect" : "Connect"
         active: nr.net.connected
+        enabled: !nr.isScanning || nr.net.connected
         onClickedBtn: nr.action()
       }
 
       ControlButton {
         label: "Forget"
         visible: nr.net.known && !nr.net.connected
+        enabled: !nr.isScanning
         onClickedBtn: nr.net.forget()
       }
     }
@@ -184,6 +187,7 @@ Item {
     ControlButton {
       id: pskBtn
       label: "Connect"
+      enabled: !nr.isScanning
       onClickedBtn: nr.connectWithPsk()
     }
   }
