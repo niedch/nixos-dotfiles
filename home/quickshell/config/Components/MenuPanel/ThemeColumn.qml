@@ -24,7 +24,7 @@ Item {
   function activate(name) {
     if (name === root.currentTheme) return
     root.themeSelected()
-    switchProc.command = ["theme-switcher-set", name]
+    switchProc.command = ["theme-switcher", name]
     switchProc.running = true
   }
 

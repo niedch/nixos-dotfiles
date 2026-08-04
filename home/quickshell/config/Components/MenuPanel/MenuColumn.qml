@@ -106,7 +106,7 @@ Item {
       return
     }
     if (node.action === "theme") {
-      Quickshell.execDetached(["theme-switcher-set", node.theme])
+      Quickshell.execDetached(["theme-switcher", node.theme])
       root.actionActivated()
       return
     }

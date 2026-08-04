@@ -22,7 +22,7 @@ Item {
 
   function activate(name) {
     if (name === root.currentBackground) return
-    switchProc.command = ["background-set", name]
+    switchProc.command = ["theme-wallpaper", name]
     switchProc.running = true
   }
 
