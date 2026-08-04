@@ -5,6 +5,7 @@ hl.env("HYPRCURSOR_SIZE", "24")
 
 hl.env("QT_QPA_PLATFORM", "wayland;xcb")
 hl.env("GDK_BACKEND", "wayland,x11,*")
+hl.env("ADW_DISABLE_PORTAL", "1")
 hl.env("MOZ_ENABLE_WAYLAND", "1")
 hl.env("ELECTRON_OZONE_PLATFORM_HINT", "wayland")
 hl.env("XDG_CURRENT_DESKTOP", "Hyprland")

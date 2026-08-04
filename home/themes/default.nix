@@ -63,10 +63,11 @@ in {
       the-greek = {
         url = "https://github.com/HANCORE-linux/omarchy-thegreek-theme.git";
         rev = "c2129dd8b17ae64e54a43d6e714eb9d66876edae";
+        mode = "light";
       };
       koyanagi = {
-        url = "https://github.com/YutaKoyanagi10/omarchy-koyanagi-theme.git";
-        rev = "a09f41ab0a4d2d2e5a5647c0c40ca092cf67b816";
+        url = "https://github.com/niedch/omarchy-koyanagi-theme";
+        rev = "25ac74465c99bf7295816d7921da474f29b6b935";
         defaultBackground = "background_3.jpg";
       };
       last-horizon = {
