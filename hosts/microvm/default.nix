@@ -50,11 +50,6 @@
   networking.hostName = "microvm";
   networking.networkmanager.enable = true;
 
-  services.displayManager.autoLogin = {
-    enable = true;
-    user = "nic";
-  };
-
   users.users.nic.initialPassword = "nic";
 
   time.timeZone = "Europe/Vienna";

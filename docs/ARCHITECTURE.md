@@ -8,8 +8,8 @@ This flake defines two NixOS configurations (`desktop` and `server`) with home-m
 flake.nix
   │
   ├── inputs
-  │   ├── nixpkgs (nixos-25.11)
-  │   ├── home-manager (release-25.11, follows nixpkgs)
+  │   ├── nixpkgs (nixpkgs-unstable)
+  │   ├── home-manager (master, follows nixpkgs)
   │   └── hyprland (github:hyprwm/Hyprland)
   │
   ├── outputs.nixosConfigurations.desktop

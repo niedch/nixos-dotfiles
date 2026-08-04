@@ -8,8 +8,10 @@ Item {
   id: row
   required property var modelData
   required property int index
+  required property bool isCurrent
 
   signal activated(int index)
+  signal hovered(int index)
 
   width: ListView.view.width
   height: 44
@@ -48,13 +50,13 @@ Item {
 
   Rectangle {
     anchors.fill: parent
-    color: ListView.isCurrentItem ? Colors.color0 : "transparent"
-    opacity: ListView.isCurrentItem ? 0.6 : 1.0
+    color: row.isCurrent ? Colors.selectionBackground : "transparent"
+    opacity: row.isCurrent ? 0.7 : 1.0
 
     MouseArea {
       anchors.fill: parent
       hoverEnabled: true
-      onPositionChanged: ListView.view.currentIndex = row.index
+      onPositionChanged: row.hovered(row.index)
       onClicked: row.activated(row.index)
     }
 

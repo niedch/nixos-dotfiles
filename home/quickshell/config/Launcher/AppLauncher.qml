@@ -254,6 +254,8 @@ Scope {
           }
 
           delegate: ResultRow {
+            isCurrent: listView.currentIndex === index
+            onHovered: listView.currentIndex = index
             onActivated: root.activate(index)
           }
         }

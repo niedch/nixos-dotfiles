@@ -90,8 +90,8 @@ flake.nix                     # Entry point, defines hosts + flake inputs
 
 | Input | Source | Purpose |
 |-------|--------|---------|
-| `nixpkgs` | nixos-26.05 | Main package repository |
-| `home-manager` | release-26.05 | User-level config management |
+| `nixpkgs` | nixpkgs-unstable | Main package repository |
+| `home-manager` | master | User-level config management |
 | `hyprland` | Hyprwm/Hyprland | Wayland compositor |
 | `nix-omarchy-theme` | niedch/nix-omarchy-theme | Theme framework |
 | `sops-nix` | Mic92/sops-nix | Secrets management |
