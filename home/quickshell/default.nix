@@ -49,6 +49,9 @@ in {
     '')
     (pkgs.writeShellScriptBin "theme-switcher-set" ''
       set -euo pipefail
+      export DBUS_SESSION_BUS_ADDRESS="''${DBUS_SESSION_BUS_ADDRESS:-unix:path=/run/user/$(id -u)/bus}"
+      export PATH="''${PATH:+$PATH:}$HOME/.nix-profile/bin:/etc/profiles/per-user/$USER/bin:/run/current-system/sw/bin"
+      export GSETTINGS_SCHEMA_DIR="${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}/glib-2.0/schemas"
       THEME="$1"
       THEMES_DIR="$HOME/.local/share/themes"
       CURRENT="$THEMES_DIR/current"
