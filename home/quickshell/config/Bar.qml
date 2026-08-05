@@ -54,6 +54,7 @@ PanelWindow {
     IdleWidget {}
     SunsetWidget {}
     NotificationCenterWidget {}
+    OpenCodeWidget {}
   }
 
   Row {

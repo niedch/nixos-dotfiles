@@ -47,6 +47,12 @@ in {
         env -u QS_CONFIG_PATH -u QS_CONFIG_NAME -u __QUICKSHELL_CRASH_INFO_FD -u __QUICKSHELL_CRASH_DUMP_PID -u __QUICKSHELL_CRASH_SIGNAL ${pkgs.quickshell}/bin/quickshell ipc -i "$QSID" call menu "$1" >/dev/null 2>&1 || true
       fi
     '')
+    (pkgs.writeShellScriptBin "quickshell-opencode-refresh" ''
+      QSID=$(env -u QS_CONFIG_PATH -u QS_CONFIG_NAME -u __QUICKSHELL_CRASH_INFO_FD -u __QUICKSHELL_CRASH_DUMP_PID -u __QUICKSHELL_CRASH_SIGNAL ${pkgs.quickshell}/bin/quickshell list --all 2>/dev/null | awk '/^Instance / {gsub(":", "", $2); print $2; exit}')
+      if [ -n "$QSID" ]; then
+        env -u QS_CONFIG_PATH -u QS_CONFIG_NAME -u __QUICKSHELL_CRASH_INFO_FD -u __QUICKSHELL_CRASH_DUMP_PID -u __QUICKSHELL_CRASH_SIGNAL ${pkgs.quickshell}/bin/quickshell ipc -i "$QSID" call opencode-refresh refresh >/dev/null 2>&1 || true
+      fi
+    '')
     (pkgs.writeShellScriptBin "calendar-sync" ''
       exec ${pkgs.python3.withPackages (ps: [ps.python-dateutil])}/bin/python3 ${./config}/scripts/calendar-sync.py "$@"
     '')
