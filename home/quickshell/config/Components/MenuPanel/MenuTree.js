@@ -52,7 +52,8 @@ var menuTree = [
   // ─────────────── System ───────────────
   { label: "System", icon: "󰔟", kind: "group", children: [
     { label: "Lock",        icon: "󰌾", kind: "action", action: "exec", cmd: ["lock-screen"] },
-    { label: "Toggle Idle", icon: "󱫖", kind: "action", dynamic: true },
+    { label: "Toggle Idle", icon: "󱫖", kind: "action", dynamic: "toggle-idle" },
+    { label: "Toggle Sunset", icon: "󰛨", kind: "action", dynamic: "toggle-sunset" },
     { label: "Logout",      icon: "󰍃", kind: "action", danger: true, action: "exec", cmd: ["cmd-logout"] },
     { label: "Suspend",     icon: "󰤄", kind: "action", danger: true, action: "exec", cmd: ["systemctl", "suspend"] },
     { label: "Restart",     icon: "󰜉", kind: "action", danger: true, action: "exec", cmd: ["cmd-reboot"] },

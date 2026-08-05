@@ -71,6 +71,10 @@
     deps = with pkgs; [bash procps coreutils systemd libnotify];
   }
   {
+    name = "toggle-sunset";
+    deps = with pkgs; [bash procps coreutils hyprsunset libnotify];
+  }
+  {
     name = "lock-screen";
     deps = with pkgs; [bash hyprland hyprlock libnotify procps];
   }

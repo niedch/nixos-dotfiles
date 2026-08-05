@@ -76,7 +76,10 @@ function searchTree(root) {
 }
 
 function itemLabel(root, item) {
-  if (item.node.dynamic) return root.idleOn ? "Inhibit Idle" : "Enable Idle"
+  if (item.node.dynamic) {
+    var isOn = root.dynamicStates[item.node.dynamic] || false
+    return (isOn ? "✓ " : "") + item.node.label
+  }
   return item.node.label
 }
 

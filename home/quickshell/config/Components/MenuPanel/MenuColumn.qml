@@ -18,7 +18,7 @@ Item {
   property string searchText: ""
   property var browseStack: []
   property bool showKeybindings: false
-  property bool idleOn: false
+  property var dynamicStates: ({})
   property var keybindings: []
   property var keymap: ({})
   property string rawBinds: ""
@@ -46,8 +46,8 @@ Item {
     root.keymapDone = false
     root.bindsDone = false
     root.rawBinds = ""
-    root.idleOn = false
-    idleCheck.running = true
+    root.dynamicStates = {}
+    dynamicCheck.running = true
     themesProc.running = true
     keymapProc.running = true
     bindsProc.running = true
@@ -122,8 +122,9 @@ Item {
       return
     }
     if (node.dynamic) {
-      var idleCmd = root.idleOn ? ["toggle-idle", "--off"] : ["toggle-idle", "--on"]
-      Quickshell.execDetached(idleCmd)
+      var isOn = root.dynamicStates[node.dynamic] || false
+      var cmd = [node.dynamic, isOn ? "--off" : "--on"]
+      Quickshell.execDetached(cmd)
       root.actionActivated()
       return
     }
@@ -146,13 +147,18 @@ Item {
     }
   }
 
-  // ── idle status polling ──
+  // ── dynamic status polling ──
   Process {
-    id: idleCheck
-    command: ["toggle-idle", "--status"]
+    id: dynamicCheck
+    command: ["bash", "-c", "IDLE=$(toggle-idle --status >/dev/null && echo true || echo false); SUNSET=$(toggle-sunset --status >/dev/null && echo true || echo false); echo '{\"toggle-idle\":'$IDLE',\"toggle-sunset\":'$SUNSET'}'"]
+    stdout: StdioCollector { id: dynamicOut }
     running: false
-    onExited: function(exitCode) {
-      root.idleOn = exitCode === 0
+    onExited: {
+      try {
+        root.dynamicStates = JSON.parse(dynamicOut.text.trim())
+      } catch(e) {
+        root.dynamicStates = {}
+      }
       root.rebuild()
     }
   }
@@ -170,11 +176,11 @@ Item {
   }
 
   Timer {
-    id: idleTimer
+    id: dynamicTimer
     interval: Constants.pollNormal
     running: true
     repeat: true
-    onTriggered: idleCheck.running = true
+    onTriggered: dynamicCheck.running = true
   }
 
   // ── keybinding loading ──

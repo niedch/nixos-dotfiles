@@ -52,6 +52,7 @@ PanelWindow {
     VoxtypeWidget {}
     ScreenRecordingWidget {}
     IdleWidget {}
+    SunsetWidget {}
     NotificationCenterWidget {}
   }
 
