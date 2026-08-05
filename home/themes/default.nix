@@ -15,7 +15,7 @@ in {
 
   omarchy-themes = {
     enable = true;
-    defaultTheme = "mechanoona";
+    defaultTheme = "koyanagi";
 
     themes = {
       catppuccin-latte = {
@@ -67,7 +67,7 @@ in {
       };
       koyanagi = {
         url = "https://github.com/niedch/omarchy-koyanagi-theme";
-        rev = "25ac74465c99bf7295816d7921da474f29b6b935";
+        rev = "b40d7875b661f42525e9c916406f86de7449b2fa";
         defaultBackground = "background_3.jpg";
       };
       last-horizon = {

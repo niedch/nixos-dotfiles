@@ -13,7 +13,7 @@ Item {
   readonly property var notif: card.model
 
   width: card.cardWidth
-  height: 78
+  height: 78 + (card.notif.image !== "" ? 32 : 0)
 
   function urgencyColor() {
     if (card.notif.urgency === NotificationUrgency.Critical) return Colors.color1
@@ -46,16 +46,31 @@ Item {
     spacing: 2
 
     Row {
+      visible: card.notif.image !== ""
+      width: parent.width
+      height: 28
+      Image {
+        anchors.verticalCenter: parent.verticalCenter
+        source: card.notif.image
+        width: 28
+        height: 28
+        fillMode: Image.PreserveAspectFit
+      }
+    }
+
+    Row {
       width: parent.width
       spacing: 6
 
-      IconImage {
+      Image {
         id: cardIcon
         anchors.verticalCenter: parent.verticalCenter
         width: 14
         height: 14
         source: card.notif.appIcon
         visible: card.notif.appIcon !== ""
+        sourceSize.width: 14
+        sourceSize.height: 14
       }
 
       Text {
@@ -101,7 +116,7 @@ Item {
     }
   }
 
-  Row {
+  RowLayout {
     anchors.left: parent.left
     anchors.right: parent.right
     anchors.bottom: parent.bottom
@@ -122,6 +137,7 @@ Item {
     Item {
       height: 1
       Layout.fillWidth: true
+      Layout.fillHeight: true
     }
 
     Text {

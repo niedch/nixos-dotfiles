@@ -1,7 +1,9 @@
 import Quickshell.Services.Notifications
 import Quickshell.Widgets
 import QtQuick
+import QtQuick.Layouts
 import qs
+import qs.Components
 
 Item {
   id: toast
@@ -11,7 +13,7 @@ Item {
   readonly property var notif: toast.model
 
   width: toast.toastWidth
-  height: 56
+  height: 56 + (toast.notif.image !== "" ? 36 : 0) + (toast.notif.actions && toast.notif.actions.length > 0 ? 28 : 0)
 
   function urgencyColor() {
     if (toast.notif.urgency === NotificationUrgency.Critical) return Colors.color1
@@ -41,26 +43,41 @@ Item {
     anchors.left: accentBar.right
     anchors.right: parent.right
     anchors.top: parent.top
-    anchors.bottom: parent.bottom
+    anchors.bottom: actionsRow.visible ? actionsRow.top : parent.bottom
     anchors.leftMargin: 8
     anchors.rightMargin: 8
     anchors.topMargin: 6
-    anchors.bottomMargin: 6
     spacing: 6
 
-    IconImage {
+    Image {
       id: toastIcon
       anchors.verticalCenter: parent.verticalCenter
       width: 14
       height: 14
       source: toast.notif.appIcon
       visible: toast.notif.appIcon !== ""
+      sourceSize.width: 14
+      sourceSize.height: 14
     }
 
     Column {
       anchors.verticalCenter: parent.verticalCenter
       width: parent.width - (toastIcon.visible ? toastIcon.width + parent.spacing : 0)
       spacing: 2
+
+      Row {
+        id: imageRow
+        visible: toast.notif.image !== ""
+        width: parent.width
+        height: 32
+        Image {
+          anchors.verticalCenter: parent.verticalCenter
+          source: toast.notif.image
+          width: 32
+          height: 32
+          fillMode: Image.PreserveAspectFit
+        }
+      }
 
       Text {
         width: parent.width
@@ -95,6 +112,18 @@ Item {
     }
   }
 
+  MouseArea {
+    anchors.fill: parent
+    cursorShape: Qt.PointingHandCursor
+    onClicked: {
+      if (toast.notif.actions && toast.notif.actions.length > 0) {
+        Notifications.defaultAction(toast.notif.id)
+      } else {
+        Notifications.dismiss(toast.notif.id)
+      }
+    }
+  }
+
   Text {
     anchors.right: parent.right
     anchors.top: parent.top
@@ -108,13 +137,30 @@ Item {
     MouseArea {
       anchors.fill: parent
       cursorShape: Qt.PointingHandCursor
-      onClicked: Notifications.dismissToast(toast.notif.id)
+      onClicked: Notifications.dismiss(toast.notif.id)
     }
   }
 
-  MouseArea {
-    anchors.fill: parent
-    cursorShape: Qt.PointingHandCursor
-    onClicked: Notifications.dismiss(toast.notif.id)
+  Row {
+    id: actionsRow
+    anchors.left: accentBar.right
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    anchors.leftMargin: 8
+    anchors.rightMargin: 8
+    anchors.bottomMargin: 4
+    visible: toast.notif.actions && toast.notif.actions.length > 0
+    spacing: 4
+    height: 24
+
+    Repeater {
+      model: toast.notif.actions
+
+      delegate: ControlButton {
+        required property var model
+        label: model.label
+        onClickedBtn: Notifications.invokeAction(toast.notif.id, model.id)
+      }
+    }
   }
 }

@@ -48,6 +48,11 @@
       url = "github:niedch/comd";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    opencode-waybar-status = {
+      url = "github:niedch/opencode-waybar-status";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -62,6 +67,7 @@
     mux-session,
     speedtest-tracker,
     comd,
+    opencode-waybar-status,
     ...
   } @ inputs: let
     mkSystem = extraModules:
@@ -143,6 +149,9 @@
     packages.x86_64-linux.opencode = import ./home/opencode/package.nix {
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
     };
+
+    packages.x86_64-linux.opencode-waybar-status =
+      opencode-waybar-status.packages.x86_64-linux.default;
 
     packages.x86_64-linux.nvim = import ./home/nvim/package.nix {
       pkgs = nixpkgs.legacyPackages.x86_64-linux;

@@ -23,7 +23,7 @@ Singleton {
     bodyMarkupSupported: false
     bodyImagesSupported: false
     bodyHyperlinksSupported: false
-    imageSupported: false
+    imageSupported: true
     actionsSupported: true
     actionIconsSupported: false
     inlineReplySupported: false
@@ -53,13 +53,20 @@ Singleton {
       actions.push({id: acts[a].identifier, label: acts[a].text})
     }
 
+    var resolvedIcon = n.appIcon || ""
+    if (resolvedIcon !== "" && resolvedIcon.indexOf("://") === -1 && resolvedIcon[0] !== "/" && resolvedIcon[0] !== ".") {
+      var path = Quickshell.iconPath(resolvedIcon, true)
+      if (path !== "") resolvedIcon = path
+    }
+
     var snap = {
       id: n.id,
       appName: n.appName,
-      appIcon: n.appIcon,
+      appIcon: resolvedIcon,
       summary: n.summary,
       body: n.body,
       urgency: n.urgency,
+      expireTimeout: n.expireTimeout,
       image: n.image,
       time: Date.now(),
       actions: actions,
@@ -119,9 +126,39 @@ Singleton {
         for (var a = 0; a < acts.length; a++) {
           if (acts[a].identifier === actionId) {
             acts[a].invoke()
+            var url = actionId
+            if (url.indexOf("http://") !== 0 && url.indexOf("https://") !== 0) {
+              url = acts[a].text
+            }
+            notifs.maybeOpenUrl(url)
             return
           }
         }
+      }
+    }
+  }
+
+  function maybeOpenUrl(actionId) {
+    if (actionId.indexOf("http://") === 0 || actionId.indexOf("https://") === 0) {
+      Quickshell.execDetached(["xdg-open", actionId])
+    }
+  }
+
+  function defaultAction(id) {
+    var values = server.trackedNotifications.values
+    for (var i = 0; i < values.length; i++) {
+      if (values[i].id === id) {
+        var acts = values[i].actions
+        if (acts.length > 0) {
+          var actionId = acts[0].identifier
+          acts[0].invoke()
+          var url = actionId
+          if (url.indexOf("http://") !== 0 && url.indexOf("https://") !== 0) {
+            url = acts[0].text
+          }
+          notifs.maybeOpenUrl(url)
+        }
+        return
       }
     }
   }
@@ -172,10 +209,20 @@ Singleton {
     repeat: true
     running: notifs.toasts.length > 0
     onTriggered: {
-      var cutoff = Date.now() - notifs.toastTimeout
       var fresh = []
       for (var i = 0; i < notifs.toasts.length; i++) {
-        if (notifs.toasts[i].time >= cutoff) fresh.push(notifs.toasts[i])
+        var toast = notifs.toasts[i]
+        var expiry = toast.time + (toast.expireTimeout > 0 ? toast.expireTimeout : notifs.toastTimeout)
+        if (Date.now() >= expiry) {
+          var values = server.trackedNotifications.values
+          for (var j = 0; j < values.length; j++) {
+            if (values[j].id === notifs.toasts[i].id) {
+              values[j].dismiss()
+            }
+          }
+        } else {
+          fresh.push(toast)
+        }
       }
       notifs.toasts = fresh
     }

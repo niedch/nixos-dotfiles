@@ -26,9 +26,8 @@ PanelWindow {
 
   implicitWidth: 360
 
-  property int toastHeight: 56
   property int gap: 6
-  implicitHeight: Notifications.toasts.length * (root.toastHeight + root.gap) - (Notifications.toasts.length > 0 ? root.gap : 0)
+  implicitHeight: toastColumn.childrenRect.height
 
   Behavior on implicitHeight {
     NumberAnimation {
@@ -38,6 +37,7 @@ PanelWindow {
   }
 
   Column {
+    id: toastColumn
     anchors.fill: parent
     spacing: root.gap
 

@@ -10,7 +10,7 @@ Rectangle {
 
   height: 22
   radius: 4
-  color: cbHover.containsMouse ? Colors.color1 : (cb.active ? Colors.accent : "transparent")
+  color: cbHover.containsMouse ? Colors.color1 : (cb.active ? Colors.accent : Colors.color8)
   border.color: cb.active ? "transparent" : Colors.color0
   border.width: 1
   opacity: cb.enabled ? 1 : 0.4
