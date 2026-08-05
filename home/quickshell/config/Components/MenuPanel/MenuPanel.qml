@@ -106,8 +106,8 @@ Scope {
       width: 860
       height: 540
       color: Colors.background
-      border.color: Colors.color0
-      border.width: 1
+      border.color: Colors.accent
+      border.width: 2
       radius: 12
       clip: true
 

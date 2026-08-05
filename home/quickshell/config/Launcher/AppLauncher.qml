@@ -164,8 +164,8 @@ Scope {
       width: 644
       height: 560
       color: Colors.background
-      border.color: Colors.color0
-      border.width: 1
+      border.color: Colors.accent
+      border.width: 2
       radius: 12
 
       Rectangle {
