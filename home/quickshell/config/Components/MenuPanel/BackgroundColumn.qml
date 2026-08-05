@@ -11,9 +11,17 @@ Item {
   property string currentBackground: ""
   property int currentIndex: -1
   signal focusMenuRequested()
+  signal focusNextRequested()
+  signal focusPreviousRequested()
   property bool navigating: false
-  property int reloadToken: 0
 
+  Timer {
+    id: navTimer
+    interval: 200
+    onTriggered: root.navigating = false
+  }
+
+  property int reloadToken: 0
   readonly property string backgroundsDir: (Quickshell.env("HOME") ?? "") + "/.local/share/themes/current/backgrounds"
 
   function load() {
@@ -64,10 +72,14 @@ Item {
   function updateCurrent() {
     root.currentIndex = root.backgrounds.indexOf(root.currentBackground)
     bgList.currentIndex = -1
+    if (root.currentIndex >= 0) {
+      bgList.positionViewAtIndex(root.currentIndex, ListView.Contain)
+    }
   }
 
   function takeFocus() {
     bgList.currentIndex = root.currentIndex >= 0 ? root.currentIndex : 0
+    bgList.positionViewAtIndex(bgList.currentIndex, ListView.Contain)
     bgList.forceActiveFocus()
   }
 
@@ -108,12 +120,14 @@ Item {
       Keys.onUpPressed: {
         if (bgList.currentIndex > 0) {
           root.navigating = true
+          navTimer.restart()
           bgList.currentIndex--
         }
       }
       Keys.onDownPressed: {
         if (bgList.currentIndex < bgList.count - 1) {
           root.navigating = true
+          navTimer.restart()
           bgList.currentIndex++
         }
       }
@@ -124,6 +138,14 @@ Item {
       }
       Keys.onLeftPressed: root.focusMenuRequested()
       Keys.onEscapePressed: root.focusMenuRequested()
+      Keys.onTabPressed: {
+        root.focusNextRequested()
+        event.accepted = true
+      }
+      Keys.onBacktabPressed: {
+        root.focusPreviousRequested()
+        event.accepted = true
+      }
 
       delegate: Item {
         required property string modelData
@@ -150,10 +172,15 @@ Item {
             hoverEnabled: true
             cursorShape: Qt.PointingHandCursor
             onPositionChanged: {
-              root.navigating = false
-              bgList.currentIndex = index
+              if (!root.navigating) {
+                bgList.currentIndex = index
+              }
             }
-            onClicked: root.activate(modelData)
+            onClicked: {
+              root.navigating = false
+              navTimer.stop()
+              root.activate(modelData)
+            }
           }
 
           RowLayout {

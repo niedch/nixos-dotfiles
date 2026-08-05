@@ -25,6 +25,12 @@ Item {
   property bool keybindingsLoaded: false
   property bool navigating: false
 
+  Timer {
+    id: navTimer
+    interval: 200
+    onTriggered: root.navigating = false
+  }
+
   property bool keymapDone: false
   property bool bindsDone: false
   property var displayItems: []
@@ -237,19 +243,20 @@ Item {
           font.family: Constants.fontFamily
           font.pixelSize: Constants.fontSize
           selectByMouse: true
-          activeFocusOnTab: false
           onTextChanged: root.setSearch(text)
 
           Keys.onEscapePressed: root.actionActivated()
           Keys.onUpPressed: {
             if (listView.currentIndex > 0) {
               root.navigating = true
+              navTimer.restart()
               listView.currentIndex--
             }
           }
           Keys.onDownPressed: {
             if (listView.currentIndex < listView.count - 1) {
               root.navigating = true
+              navTimer.restart()
               listView.currentIndex++
             }
           }
@@ -259,13 +266,24 @@ Item {
           Keys.onLeftPressed: {
             if (root.browseStack.length > 0 || root.showKeybindings || root.searchText !== "") {
               root.goBack()
-            } else {
-              root.moveLeftRequested()
             }
             event.accepted = true
           }
           Keys.onRightPressed: {
+            if (root.displayItems.length > 0) {
+              var item = root.displayItems[listView.currentIndex]
+              if (item && item.node && (item.node.kind === "group" || item.node.kind === "themes")) {
+                root.activate(item)
+              }
+            }
+            event.accepted = true
+          }
+          Keys.onTabPressed: {
             root.moveRightRequested()
+            event.accepted = true
+          }
+          Keys.onBacktabPressed: {
+            root.moveLeftRequested()
             event.accepted = true
           }
 
@@ -402,10 +420,15 @@ Item {
           hoverEnabled: true
           cursorShape: Qt.PointingHandCursor
           onPositionChanged: {
-            root.navigating = false
-            listView.currentIndex = index
+            if (!root.navigating) {
+              listView.currentIndex = index
+            }
           }
-          onClicked: root.activate(modelData)
+          onClicked: {
+            root.navigating = false
+            navTimer.stop()
+            root.activate(modelData)
+          }
         }
       }
     }

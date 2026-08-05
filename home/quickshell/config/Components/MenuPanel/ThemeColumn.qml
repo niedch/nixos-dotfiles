@@ -10,7 +10,15 @@ Item {
   signal themeChanged()
   signal themeSelected()
   signal focusMenuRequested()
+  signal focusNextRequested()
+  signal focusPreviousRequested()
   property bool navigating: false
+
+  Timer {
+    id: navTimer
+    interval: 200
+    onTriggered: root.navigating = false
+  }
 
   property var themes: []
   property string currentTheme: ""
@@ -67,10 +75,14 @@ Item {
   function updateCurrent() {
     root.currentIndex = root.themes.indexOf(root.currentTheme)
     themeList.currentIndex = -1
+    if (root.currentIndex >= 0) {
+      themeList.positionViewAtIndex(root.currentIndex, ListView.Contain)
+    }
   }
 
   function takeFocus() {
     themeList.currentIndex = root.currentIndex >= 0 ? root.currentIndex : 0
+    themeList.positionViewAtIndex(themeList.currentIndex, ListView.Contain)
     themeList.forceActiveFocus()
   }
 
@@ -111,12 +123,14 @@ Item {
       Keys.onUpPressed: {
         if (themeList.currentIndex > 0) {
           root.navigating = true
+          navTimer.restart()
           themeList.currentIndex--
         }
       }
       Keys.onDownPressed: {
         if (themeList.currentIndex < themeList.count - 1) {
           root.navigating = true
+          navTimer.restart()
           themeList.currentIndex++
         }
       }
@@ -125,8 +139,16 @@ Item {
           root.activate(root.themes[themeList.currentIndex])
         }
       }
-      Keys.onRightPressed: root.focusMenuRequested()
+      Keys.onLeftPressed: root.focusMenuRequested()
       Keys.onEscapePressed: root.focusMenuRequested()
+      Keys.onTabPressed: {
+        root.focusNextRequested()
+        event.accepted = true
+      }
+      Keys.onBacktabPressed: {
+        root.focusPreviousRequested()
+        event.accepted = true
+      }
 
       delegate: Item {
         required property string modelData
@@ -153,10 +175,15 @@ Item {
             hoverEnabled: true
             cursorShape: Qt.PointingHandCursor
             onPositionChanged: {
-              root.navigating = false
-              themeList.currentIndex = index
+              if (!root.navigating) {
+                themeList.currentIndex = index
+              }
             }
-            onClicked: root.activate(modelData)
+            onClicked: {
+              root.navigating = false
+              navTimer.stop()
+              root.activate(modelData)
+            }
           }
 
           RowLayout {

@@ -57,6 +57,18 @@ Scope {
     backgroundColumn.takeFocus()
   }
 
+  function focusNextColumn() {
+    if (root.activeColumn === "theme") root.focusMenu()
+    else if (root.activeColumn === "menu") root.focusBackground()
+    else if (root.activeColumn === "background") root.focusTheme()
+  }
+
+  function focusPreviousColumn() {
+    if (root.activeColumn === "theme") root.focusBackground()
+    else if (root.activeColumn === "menu") root.focusTheme()
+    else if (root.activeColumn === "background") root.focusMenu()
+  }
+
   IpcHandler {
     target: "menu"
     function toggle() { root.toggle() }
@@ -118,6 +130,8 @@ Scope {
           onThemeChanged: backgroundColumn.load()
           onThemeSelected: root.close()
           onFocusMenuRequested: root.focusMenu()
+          onFocusNextRequested: root.focusNextColumn()
+          onFocusPreviousRequested: root.focusPreviousColumn()
         }
 
         Rectangle {
@@ -146,6 +160,8 @@ Scope {
           width: 280
           height: parent.height
           onFocusMenuRequested: root.focusMenu()
+          onFocusNextRequested: root.focusNextColumn()
+          onFocusPreviousRequested: root.focusPreviousColumn()
         }
       }
     }
