@@ -8,10 +8,10 @@ function parseKeymap(text) {
     if (line.indexOf("xkb_keycodes") !== -1) { sec = "codes"; continue }
     if (line.indexOf("xkb_symbols") !== -1) { sec = "syms"; continue }
     if (sec === "codes") {
-      var m = line.match(/<([A-Za-z0-9_]+)>\s*=\s*([0-9]+)\s*;/)
+      var m = line.match(/^\s*<([A-Za-z0-9_]+)>\s*=\s*([0-9]+)\s*;/)
       if (m) codeByName[m[1]] = m[2]
     } else if (sec === "syms") {
-      var m2 = line.match(/key\s*<([A-Za-z0-9_]+)>\s*\{\s*\[\s*([^, \]]+)/)
+      var m2 = line.match(/^\s*key\s*<([A-Za-z0-9_]+)>\s*\{\s*\[\s*([^, \]]+)/)
       if (m2) symByName[m2[1]] = m2[2]
     }
   }
@@ -50,23 +50,19 @@ function resolveKey(root, b) {
   var key = b.key || ""
   var keycode = b.keycode || 0
   if (b.mouse) {
-    var mm = key.match(/mouse:([0-9]+)/)
-    if (mm) {
-      switch (mm[1]) {
-        case "272": return "LEFT MOUSE BUTTON"
-        case "273": return "RIGHT MOUSE BUTTON"
-        case "274": return "MIDDLE MOUSE BUTTON"
-        default: return "mouse:" + mm[1]
-      }
+    switch (keycode) {
+      case 272: return "LEFT MOUSE BUTTON"
+      case 273: return "RIGHT MOUSE BUTTON"
+      case 274: return "MIDDLE MOUSE BUTTON"
+      default: return "mouse:" + keycode
     }
-    return key
   }
   if (key.indexOf("code:") === 0) {
     var c = key.slice(5)
-    return root.keymap[c] || key
+    return root.keymap[c] || "key:" + c
   }
   if (key === "" && keycode) {
-    return root.keymap[String(keycode)] || "code:" + keycode
+    return root.keymap[String(keycode)] || "key:" + keycode
   }
   return key
 }

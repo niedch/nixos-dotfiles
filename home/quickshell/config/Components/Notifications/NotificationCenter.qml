@@ -10,7 +10,7 @@ PopupWindow {
   id: root
 
   required property Item target
-  property bool shown: Notifications.centerOpen
+  property bool shown: false
   property int gap: 6
 
   readonly property var anchorWindow: root.target && root.target.QsWindow ? root.target.QsWindow.window : null
@@ -28,10 +28,19 @@ PopupWindow {
 
   implicitHeight: root.headerHeight + (Notifications.notifications.length === 0 ? root.emptyHeight : root.listHeight) + 16
 
+  function toggle() {
+    root.shown = !root.shown
+    Notifications.centerOpen = root.shown
+    if (root.shown) Notifications.markSeen()
+  }
+
   HyprlandFocusGrab {
     windows: [root]
     active: root.shown
-    onCleared: Notifications.closeCenter()
+    onCleared: {
+      root.shown = false
+      Notifications.closeCenter()
+    }
   }
 
   anchor {

@@ -24,6 +24,9 @@ var menuTree = [
       { label: "Record + All Audio",     icon: "󰋎", kind: "action", action: "exec", cmd: ["cmd-screenrecord", "--with-desktop-audio", "--with-microphone-audio"] },
       { label: "Stop Recording",         icon: "󰓛", kind: "action", action: "exec", cmd: ["cmd-screenrecord", "--stop-recording"] },
     ]},
+    { label: "Timer", icon: "⏱", kind: "group", children: [
+      { label: "Set Timer", icon: "⏱", kind: "action", action: "exec", cmd: ["launch-tui", "cmd-timer"] },
+    ]},
   ]},
 
   // ─────────────── Share ───────────────
@@ -41,7 +44,7 @@ var menuTree = [
 
   // ─────────────── Setup ───────────────
   { label: "Setup", icon: "󰒓", kind: "group", children: [
-    { label: "Audio",     icon: "󰕾", kind: "action", action: "exec", cmd: ["pavucontrol"] },
+    { label: "Audio",     icon: "󰕾", kind: "action", action: "exec", cmd: ["launch-or-focus-tui", "wiremix"] },
     { label: "WiFi",      icon: "󰖩", kind: "action", action: "exec", cmd: ["launch-or-focus-tui", "wlctl"] },
     { label: "Bluetooth", icon: "󰂯", kind: "action", action: "exec", cmd: ["launch-or-focus-tui", "bluetui"] },
   ]},

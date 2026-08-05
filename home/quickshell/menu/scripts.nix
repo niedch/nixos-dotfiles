@@ -1,11 +1,11 @@
 {pkgs}: [
   {
     name = "launch-or-focus";
-    deps = with pkgs; [bash hyprland jq coreutils];
+    deps = with pkgs; [bash hyprland jq coreutils util-linux];
   }
   {
     name = "launch-tui";
-    deps = with pkgs; [bash coreutils ghostty];
+    deps = with pkgs; [bash coreutils ghostty util-linux];
   }
   {
     name = "launch-or-focus-tui";
@@ -73,5 +73,9 @@
   {
     name = "lock-screen";
     deps = with pkgs; [bash hyprland hyprlock libnotify procps];
+  }
+  {
+    name = "cmd-timer";
+    deps = with pkgs; [bash coreutils ghostty libnotify gum gnugrep systemd];
   }
 ]

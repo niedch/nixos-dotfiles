@@ -49,11 +49,12 @@ Item {
     cursorShape: Qt.PointingHandCursor
     onClicked: function(mouse) {
       if (mouse.button === Qt.RightButton) Notifications.toggleDnd()
-      else Notifications.toggleCenter()
+      else notificationCenter.toggle()
     }
   }
 
   NotificationCenter {
+    id: notificationCenter
     target: widget
   }
 

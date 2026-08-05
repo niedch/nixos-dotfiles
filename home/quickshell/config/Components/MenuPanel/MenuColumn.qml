@@ -180,7 +180,7 @@ Item {
   // ── keybinding loading ──
   Process {
     id: keymapProc
-    command: ["xkbcli", "compile-keymap"]
+    command: ["bash", "-c", "layout=$(hyprctl devices -j | jq -r '.keyboards[] | select(.main == true) | .layout' | head -n1); xkbcli compile-keymap --layout \"${layout:-us}\" < /dev/null"]
     stdout: StdioCollector { id: keymapOut }
     onExited: {
       root.keymap = Keybindings.parseKeymap(keymapOut.text)
@@ -354,8 +354,8 @@ Item {
         required property var modelData
         required property int index
         property bool isCurrent: listView.currentIndex === index
-        readonly property bool isDanger: modelData.node && modelData.node.danger === true
-        readonly property bool isGroup: modelData.node && (modelData.node.kind === "group" || modelData.node.kind === "themes")
+        readonly property bool isDanger: modelData.node ? modelData.node.danger === true : false
+        readonly property bool isGroup: modelData.node ? (modelData.node.kind === "group" || modelData.node.kind === "themes") : false
 
         width: listView.width
         height: 38

@@ -18,6 +18,10 @@
     source = ./toggle-sunset.sh;
     executable = true;
   };
+  xdg.configFile."hypr/cycle-workspace-monitor.sh" = {
+    source = ./cycle-workspace-monitor.sh;
+    executable = true;
+  };
 
   xdg.portal = {
     extraPortals = with pkgs; [xdg-desktop-portal-gtk];
