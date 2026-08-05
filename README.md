@@ -14,6 +14,12 @@ https://github.com/user-attachments/assets/e0bab9e3-ae21-42dc-b0bd-6bb02382538f
 | `laptop`   | Physical    | `nixos`  | systemd-boot | Dell Precision 5530, NVIDIA, Bluetooth, CUPS, PipeWire |
 | `dobby`    | Server      | `dobby`  | systemd-boot | Minimal, no desktop, SSH-only             |
 | `raspberry-pi` | Physical | `rpi`    | extlinux     | Raspberry Pi (aarch64), minimal SSH       |
+| `microvm`   | MicroVM     | `microvm` | N/A         | Try-before-you-buy, runnable via `nix run` |
+
+> Try out this configuration in a MicroVM:
+> ```
+> nix run github:niedch/nixos-dotfiles#microvm
+> ```
 
 ## Usage
 
@@ -40,91 +46,18 @@ flake.nix                     # Entry point, defines hosts + flake inputs
     └── server.nix            #   Minimal server config (3 submodules)
 ```
 
-## Structure
-
-```
-├── flake.nix                  # Flake entry point — 4 NixOS configurations
-├── flake.lock                 # Pinned flake inputs
-├── .sops.yaml                 # SOPS age key configuration
-├── secrets/
-│   └── secrets.yaml           # Encrypted secrets
-├── hosts/
-│   ├── virtual-machine/       # Desktop VM host (GRUB, QEMU guest)
-│   ├── laptop/                # Dell Precision 5530 (NVIDIA, Bluetooth, CUPS)
-│   ├── dobby/                 # Server host (minimal, SSH)
-│   └── rpi/                   # Raspberry Pi (aarch64, minimal SSH)
-├── modules/
-│   ├── common/                # Shared system modules
-│   │   ├── binfmt.nix         # QEMU binfmt for cross-arch builds (aarch64)
-│   │   ├── docker.nix         # Docker daemon + auto-prune
-│   │   ├── sops.nix           # SOPS secrets configuration
-│   │   ├── ssh.nix            # SSH server enable
-│   │   └── users.nix          # User "nic" definition
-│   ├── desktop/               # Desktop system modules
-│   │   ├── displaymanager.nix # Ly display manager
-│   │   ├── fonts.nix          # JetBrains Mono Nerd Font + Omarchy font
-│   │   └── hyprland.nix       # Hyprland system enable + Wayland env
-│   └── server/                # Server system modules
-│       └── openssh.nix        # SSH daemon config + firewall
-└── home/
-    ├── desktop.nix            # Desktop home-manager entry point
-    ├── server.nix             # Server home-manager entry point
-    ├── hyprland/              # Hyprland WM (Lua config, vim keybinds)
-    ├── quickshell/            # Quickshell status bar + menu panel (QML config)
-    ├── ghostty/               # Ghostty terminal emulator
-    ├── kdenlive/              # Kdenlive video editor config
-    ├── obsidian/              # Obsidian note-taking app config
-    ├── themes/                # Omarchy theme system (20+ themes)
-    ├── tmux/                  # Tmux config + sessionizer scripts
-    ├── mux-session/           # Tmux session manager with project configs
-    ├── nvim/                  # Neovim (LazyVim) + Go/Rust/TS toolchain
-    ├── zsh/                   # Zsh + oh-my-zsh + custom scripts
-    ├── mise/                  # Mise version manager
-    ├── git/                   # Git user config
-    ├── chromium/              # Chromium browser + webapp desktop entries with auto-fetched favicons
-    ├── ssh/                   # SSH client config + SOPS-managed keys
-    └── opencode/              # Opencode AI agent with custom agents
-```
-
-## Flake Inputs
-
-| Input | Source | Purpose |
-|-------|--------|---------|
-| `nixpkgs` | nixpkgs-unstable | Main package repository |
-| `home-manager` | master | User-level config management |
-| `hyprland` | Hyprwm/Hyprland | Wayland compositor |
-| `nix-omarchy-theme` | niedch/nix-omarchy-theme | Theme framework |
-| `sops-nix` | Mic92/sops-nix | Secrets management |
-| `nixos-hardware` | NixOS/nixos-hardware | Hardware profiles (Dell 5530) |
-| `wlctl` | aashish-thapa/wlctl | Wayland display manager controller |
-
 ## Key Components
 
 | Path | Description |
 |------|-------------|
-| `hosts/virtual-machine/` | Desktop VM host: hostname `nixos`, GRUB boot, QEMU guest tools |
-| `hosts/laptop/` | Laptop host: Dell Precision 5530, NVIDIA legacy 580, PipeWire, CUPS, Bluetooth |
-| `hosts/dobby/` | Server host: minimal, SSH-only, no desktop |
-| `modules/common/` | Shared NixOS modules (Docker, SOPS, SSH, users) |
-| `modules/desktop/` | Desktop system modules (Hyprland, Ly DM, fonts) |
-| `modules/server/` | Server system modules (SSH daemon, firewall) |
-| `home/desktop.nix` | Full desktop home-manager entry point |
-| `home/server.nix` | Minimal server home-manager entry point |
-| `home/hyprland/` | Hyprland WM with Lua config, vim-style keybinds, window rules |
-| `home/quickshell/` | Quickshell status bar with QML widgets, menu panel, cava audio viz, and popups |
-| `home/ghostty/` | Ghostty terminal with JetBrains Mono, tmux auto-start |
-| `home/kdenlive/` | Kdenlive video editor config |
-| `home/obsidian/` | Obsidian note-taking app config |
-| `home/themes/` | Omarchy theme system — 20+ themes symlinked to hypr/quickshell configs |
-| `home/tmux/` | Tmux with custom sessionizer, popup, and opener scripts |
-| `home/mux-session/` | Tmux session manager with per-project configs |
-| `home/nvim/` | LazyVim-based Neovim config with Go, Rust, Java, TypeScript tooling |
-| `home/zsh/` | Oh-my-zsh with fzf, autosuggestions, custom shell scripts |
-| `home/mise/` | Mise version manager (java, node, rust, maven, opencode) |
-| `home/git/` | Git user config with autoSetupRemote and pull.rebase |
-| `home/ssh/` | SSH client config with SOPS-managed ed25519 key |
-| `home/chromium/` | Chromium browser + webapp desktop entries with auto-fetched favicons via `pkgs.fetchurl` + `imagemagick` |
-| `home/opencode/` | Opencode AI coding agent with custom agents (build, plan, explore) |
+| `hosts/` | Per-host NixOS configs — hardware, bootloader, kernel (desktop VM, laptop, dobby, rpi, microvm) |
+| `modules/common/` | Shared modules: Docker, SOPS secrets, SSH, users, binfmt (aarch64 emulation) |
+| `modules/desktop/` | Desktop modules: Hyprland compositor, Ly display manager, JetBrains Mono font |
+| `modules/server/` | Server modules: SSH daemon, firewall |
+| `home/` | Home-manager configs: Hyprland (Lua), Quickshell bar (QML), Ghostty terminal, Neovim (LazyVim), Zsh, Tmux, Chromium web apps, Omarchy themes (20+), and more |
+| `secrets/` | SOPS-encrypted with age key recipients |
+| `mise.toml` | Task runner (`mise run build/switch/format/cleanup`) |
+| `.github/workflows/` | CI for Nix store caching and pre-built paths |
 
 ## Secrets
 

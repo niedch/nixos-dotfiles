@@ -7,4 +7,6 @@
     enable = true;
     user = "nic";
   };
+
+  services.displayManager.ly.settings.auto_login_session = "Hyprland";
 }
