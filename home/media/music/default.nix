@@ -61,4 +61,13 @@ in {
     spotifyAssets # desktop entry + icons from pkgs.spotify (no conflict)
     spicetify
   ];
+
+  xdg.desktopEntries.spotify = {
+    name = "Spotify";
+    exec = "spotify %U";
+    icon = "spotify-client";
+    terminal = false;
+    type = "Application";
+    categories = ["Audio" "Music" "Player" "AudioVideo"];
+  };
 }

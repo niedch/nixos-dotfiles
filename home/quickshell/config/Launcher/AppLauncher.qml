@@ -13,6 +13,13 @@ Scope {
 
   property bool open: false
   property var results: []
+  property bool navigating: false
+
+  Timer {
+    id: navTimer
+    interval: 100
+    onTriggered: root.navigating = false
+  }
 
   ModeConfig { id: modeConfig }
 
@@ -111,8 +118,10 @@ Scope {
     let idx = listView.currentIndex + delta
     if (idx < 0) idx = root.results.length - 1
     if (idx >= root.results.length) idx = 0
+    root.navigating = true
     listView.currentIndex = idx
     listView.positionViewAtIndex(idx, ListView.Contain)
+    navTimer.restart()
   }
 
   function autocomplete() {
@@ -247,7 +256,7 @@ Scope {
           Layout.preferredHeight: 420
           clip: true
           currentIndex: 0
-          highlightFollowsCurrentItem: true
+          highlightFollowsCurrentItem: false
           model: ScriptModel {
             objectProp: "key"
             values: root.results
@@ -255,7 +264,7 @@ Scope {
 
           delegate: ResultRow {
             isCurrent: listView.currentIndex === index
-            onHovered: listView.currentIndex = index
+            onHovered: { if (!root.navigating) listView.currentIndex = index }
             onActivated: root.activate(index)
           }
         }

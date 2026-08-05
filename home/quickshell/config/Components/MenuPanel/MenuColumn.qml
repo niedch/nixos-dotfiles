@@ -11,6 +11,8 @@ Item {
   id: root
 
   signal actionActivated()
+  signal moveLeftRequested()
+  signal moveRightRequested()
 
   // ── state ──
   property string searchText: ""
@@ -21,6 +23,8 @@ Item {
   property var keymap: ({})
   property string rawBinds: ""
   property bool keybindingsLoaded: false
+  property bool navigating: false
+
   property bool keymapDone: false
   property bool bindsDone: false
   property var displayItems: []
@@ -70,7 +74,8 @@ Item {
     } else {
       root.displayItems = MenuModel.buildDisplayItems(root)
     }
-    listView.currentIndex = root.displayItems.length > 0 ? 0 : -1
+    if (listView.currentIndex >= root.displayItems.length || listView.currentIndex < 0)
+      listView.currentIndex = root.displayItems.length > 0 ? 0 : -1
   }
 
   // ── activation ──
@@ -237,13 +242,31 @@ Item {
 
           Keys.onEscapePressed: root.actionActivated()
           Keys.onUpPressed: {
-            if (listView.currentIndex > 0) listView.currentIndex--
+            if (listView.currentIndex > 0) {
+              root.navigating = true
+              listView.currentIndex--
+            }
           }
           Keys.onDownPressed: {
-            if (listView.currentIndex < listView.count - 1) listView.currentIndex++
+            if (listView.currentIndex < listView.count - 1) {
+              root.navigating = true
+              listView.currentIndex++
+            }
           }
           Keys.onReturnPressed: {
             if (root.displayItems.length > 0) root.activate(root.displayItems[listView.currentIndex])
+          }
+          Keys.onLeftPressed: {
+            if (root.browseStack.length > 0 || root.showKeybindings || root.searchText !== "") {
+              root.goBack()
+            } else {
+              root.moveLeftRequested()
+            }
+            event.accepted = true
+          }
+          Keys.onRightPressed: {
+            root.moveRightRequested()
+            event.accepted = true
           }
 
           Text {
@@ -321,8 +344,8 @@ Item {
 
         Rectangle {
           anchors.fill: parent
-          color: isCurrent ? Colors.selectionBackground : (rowMouse.containsMouse ? Colors.selectionBackground : "transparent")
-          opacity: isCurrent || rowMouse.containsMouse ? 0.7 : 1.0
+          color: isCurrent ? Colors.selectionBackground : (!root.navigating && rowMouse.containsMouse ? Colors.selectionBackground : "transparent")
+          opacity: isCurrent || (!root.navigating && rowMouse.containsMouse) ? 0.7 : 1.0
         }
 
         RowLayout {
@@ -378,7 +401,10 @@ Item {
           anchors.fill: parent
           hoverEnabled: true
           cursorShape: Qt.PointingHandCursor
-          onPositionChanged: listView.currentIndex = index
+          onPositionChanged: {
+            root.navigating = false
+            listView.currentIndex = index
+          }
           onClicked: root.activate(modelData)
         }
       }

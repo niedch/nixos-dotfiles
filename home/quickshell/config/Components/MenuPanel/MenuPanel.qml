@@ -11,6 +11,7 @@ Scope {
   id: root
 
   property bool open: false
+  property string activeColumn: "menu"
 
   function toggle() {
     if (root.open) root.close()
@@ -35,6 +36,25 @@ Scope {
   function showSystem() {
     root.openMenu()
     menuColumn.navigateTo("System")
+  }
+
+  function focusMenu() {
+    if (root.activeColumn === "theme") themeColumn.defocus()
+    if (root.activeColumn === "background") backgroundColumn.defocus()
+    root.activeColumn = "menu"
+    menuColumn.focusSearch()
+  }
+
+  function focusTheme() {
+    if (root.activeColumn === "background") backgroundColumn.defocus()
+    root.activeColumn = "theme"
+    themeColumn.takeFocus()
+  }
+
+  function focusBackground() {
+    if (root.activeColumn === "theme") themeColumn.defocus()
+    root.activeColumn = "background"
+    backgroundColumn.takeFocus()
   }
 
   IpcHandler {
@@ -97,6 +117,7 @@ Scope {
           height: parent.height
           onThemeChanged: backgroundColumn.load()
           onThemeSelected: root.close()
+          onFocusMenuRequested: root.focusMenu()
         }
 
         Rectangle {
@@ -110,6 +131,8 @@ Scope {
           width: 298
           height: parent.height
           onActionActivated: root.close()
+          onMoveLeftRequested: root.focusTheme()
+          onMoveRightRequested: root.focusBackground()
         }
 
         Rectangle {
@@ -122,6 +145,7 @@ Scope {
           id: backgroundColumn
           width: 280
           height: parent.height
+          onFocusMenuRequested: root.focusMenu()
         }
       }
     }

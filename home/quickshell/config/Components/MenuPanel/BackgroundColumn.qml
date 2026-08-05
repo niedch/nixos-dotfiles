@@ -10,6 +10,8 @@ Item {
   property var backgrounds: []
   property string currentBackground: ""
   property int currentIndex: -1
+  signal focusMenuRequested()
+  property bool navigating: false
   property int reloadToken: 0
 
   readonly property string backgroundsDir: (Quickshell.env("HOME") ?? "") + "/.local/share/themes/current/backgrounds"
@@ -61,6 +63,16 @@ Item {
 
   function updateCurrent() {
     root.currentIndex = root.backgrounds.indexOf(root.currentBackground)
+    bgList.currentIndex = -1
+  }
+
+  function takeFocus() {
+    bgList.currentIndex = root.currentIndex >= 0 ? root.currentIndex : 0
+    bgList.forceActiveFocus()
+  }
+
+  function defocus() {
+    bgList.currentIndex = -1
   }
 
   ColumnLayout {
@@ -90,12 +102,34 @@ Item {
       Layout.fillWidth: true
       Layout.fillHeight: true
       clip: true
+      currentIndex: -1
       model: root.backgrounds
+
+      Keys.onUpPressed: {
+        if (bgList.currentIndex > 0) {
+          root.navigating = true
+          bgList.currentIndex--
+        }
+      }
+      Keys.onDownPressed: {
+        if (bgList.currentIndex < bgList.count - 1) {
+          root.navigating = true
+          bgList.currentIndex++
+        }
+      }
+      Keys.onReturnPressed: {
+        if (bgList.currentIndex >= 0) {
+          root.activate(root.backgrounds[bgList.currentIndex])
+        }
+      }
+      Keys.onLeftPressed: root.focusMenuRequested()
+      Keys.onEscapePressed: root.focusMenuRequested()
 
       delegate: Item {
         required property string modelData
         required property int index
         property bool isCurrent: modelData === root.currentBackground
+        property bool isSelected: bgList.currentIndex === index
 
         width: bgList.width
         height: 84
@@ -105,8 +139,9 @@ Item {
           anchors.leftMargin: 8
           anchors.rightMargin: 8
           radius: 6
-          color: "transparent"
-          border.color: isCurrent ? Colors.accent : (bgMouse.containsMouse ? Colors.selectionBackground : "transparent")
+          color: isSelected ? Colors.selectionBackground : "transparent"
+          opacity: isSelected ? 0.7 : 1.0
+          border.color: isCurrent ? Colors.accent : (!root.navigating && bgMouse.containsMouse ? Colors.selectionBackground : "transparent")
           border.width: isCurrent ? 2 : 1
 
           MouseArea {
@@ -114,6 +149,10 @@ Item {
             anchors.fill: parent
             hoverEnabled: true
             cursorShape: Qt.PointingHandCursor
+            onPositionChanged: {
+              root.navigating = false
+              bgList.currentIndex = index
+            }
             onClicked: root.activate(modelData)
           }
 

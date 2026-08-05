@@ -9,6 +9,8 @@ Item {
 
   signal themeChanged()
   signal themeSelected()
+  signal focusMenuRequested()
+  property bool navigating: false
 
   property var themes: []
   property string currentTheme: ""
@@ -64,6 +66,16 @@ Item {
 
   function updateCurrent() {
     root.currentIndex = root.themes.indexOf(root.currentTheme)
+    themeList.currentIndex = -1
+  }
+
+  function takeFocus() {
+    themeList.currentIndex = root.currentIndex >= 0 ? root.currentIndex : 0
+    themeList.forceActiveFocus()
+  }
+
+  function defocus() {
+    themeList.currentIndex = -1
   }
 
   ColumnLayout {
@@ -93,12 +105,34 @@ Item {
       Layout.fillWidth: true
       Layout.fillHeight: true
       clip: true
+      currentIndex: -1
       model: root.themes
+
+      Keys.onUpPressed: {
+        if (themeList.currentIndex > 0) {
+          root.navigating = true
+          themeList.currentIndex--
+        }
+      }
+      Keys.onDownPressed: {
+        if (themeList.currentIndex < themeList.count - 1) {
+          root.navigating = true
+          themeList.currentIndex++
+        }
+      }
+      Keys.onReturnPressed: {
+        if (themeList.currentIndex >= 0) {
+          root.activate(root.themes[themeList.currentIndex])
+        }
+      }
+      Keys.onRightPressed: root.focusMenuRequested()
+      Keys.onEscapePressed: root.focusMenuRequested()
 
       delegate: Item {
         required property string modelData
         required property int index
         property bool isCurrent: modelData === root.currentTheme
+        property bool isSelected: themeList.currentIndex === index
 
         width: themeList.width
         height: 84
@@ -108,14 +142,20 @@ Item {
           anchors.leftMargin: 8
           anchors.rightMargin: 8
           radius: 6
-          color: isCurrent ? Colors.selectionBackground : (themeMouse.containsMouse ? Colors.selectionBackground : "transparent")
-          opacity: isCurrent || themeMouse.containsMouse ? 0.7 : 1.0
+          color: isSelected ? Colors.selectionBackground : (!root.navigating && themeMouse.containsMouse ? Colors.selectionBackground : "transparent")
+          opacity: isSelected || (!root.navigating && themeMouse.containsMouse) ? 0.7 : 1.0
+          border.color: isCurrent ? Colors.accent : "transparent"
+          border.width: isCurrent ? 2 : 0
 
           MouseArea {
             id: themeMouse
             anchors.fill: parent
             hoverEnabled: true
             cursorShape: Qt.PointingHandCursor
+            onPositionChanged: {
+              root.navigating = false
+              themeList.currentIndex = index
+            }
             onClicked: root.activate(modelData)
           }
 
