@@ -62,6 +62,14 @@ Scope {
   }
 
   function activate(item) {
-    item.entry.execute()
+    const entry = item.entry
+    if (entry.runInTerminal) {
+      Quickshell.execDetached({
+        command: ["ghostty", "-e"].concat(entry.command),
+        workingDirectory: entry.workingDirectory,
+      })
+    } else {
+      entry.execute()
+    }
   }
 }

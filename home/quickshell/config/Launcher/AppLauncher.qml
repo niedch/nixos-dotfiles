@@ -138,7 +138,6 @@ Scope {
     visible: root.open
     color: "transparent"
     focusable: true
-    screen: Quickshell.primaryScreen
 
     anchors {
       top: true
