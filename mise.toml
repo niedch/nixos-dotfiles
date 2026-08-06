@@ -50,8 +50,22 @@ mise run switch ${usage_host?}
 [tasks.cleanup]
 description = "Cleanup old NixOS Derivations"
 run = '''
-if [ -e "$HOME/.local/state/nix/profiles/home-manager" ]; then
-  nix-env --delete-generations old -p "$HOME/.local/state/nix/profiles/home-manager"
+hm_profile="$HOME/.local/state/nix/profiles/home-manager"
+current_home="$HOME/.local/state/home-manager/gcroots/current-home"
+if [ -L "$hm_profile" ]; then
+  if [ -L "$current_home" ] && [ "$(readlink -f "$hm_profile")" != "$(readlink -f "$current_home")" ]; then
+    echo "Removing stale home-manager profile (does not match active generation)"
+    rm -f "$hm_profile" "$hm_profile"-*-link 2>/dev/null
+  else
+    nix-env --delete-generations old -p "$hm_profile"
+  fi
+fi
+nix_profile="$HOME/.local/state/nix/profiles/profile"
+if [ -L "$nix_profile" ]; then
+  current_link=$(basename "$(readlink "$nix_profile")")
+  for gen in "$nix_profile"-*-link; do
+    [ "$(basename "$gen")" != "$current_link" ] && rm -f "$gen"
+  done
 fi
 sudo nix-collect-garbage -d
 '''
