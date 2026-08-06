@@ -150,9 +150,6 @@
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
     };
 
-    packages.x86_64-linux.opencode-waybar-status =
-      opencode-waybar-status.packages.x86_64-linux.default;
-
     packages.x86_64-linux.nvim = import ./home/nvim/package.nix {
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
     };
