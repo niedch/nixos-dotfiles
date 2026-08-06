@@ -49,7 +49,12 @@ mise run switch ${usage_host?}
 
 [tasks.cleanup]
 description = "Cleanup old NixOS Derivations"
-run = "sudo nix-collect-garbage -d"
+run = '''
+if [ -e "$HOME/.local/state/nix/profiles/home-manager" ]; then
+  nix-env --delete-generations old -p "$HOME/.local/state/nix/profiles/home-manager"
+fi
+sudo nix-collect-garbage -d
+'''
 
 [tasks.cleanup-all-hosts]
 description = "Cleanup old NixOS Derivations on all hosts"
