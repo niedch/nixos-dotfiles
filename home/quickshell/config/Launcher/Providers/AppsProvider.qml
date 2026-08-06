@@ -62,6 +62,6 @@ Scope {
   }
 
   function activate(item) {
-    Quickshell.execDetached(item.entry.commandLine.filter(arg => !arg.startsWith("%")))
+    item.entry.execute()
   }
 }

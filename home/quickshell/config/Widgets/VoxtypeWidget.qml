@@ -15,7 +15,7 @@ Widget {
 
   Process {
     id: voxtypeProc
-    command: ["omarchy-voxtype-status"]
+    command: ["voxtype", "status", "--follow", "--extended", "--format", "json"]
     running: true
     stdout: SplitParser {
       splitMarker: "\n"
@@ -35,9 +35,9 @@ Widget {
     cursorShape: Qt.PointingHandCursor
     onClicked: function(mouse) {
       if (mouse.button === Qt.RightButton) {
-        configProc.command = ["omarchy-voxtype-config"]
+        configProc.command = ["ghostty", "--class=org.tui.Voxtype", "-e", "voxtype", "configure"]
       } else {
-        configProc.command = ["omarchy-voxtype-model"]
+        configProc.command = ["ghostty", "--class=org.tui.Voxtype", "-e", "voxtype", "setup", "model"]
       }
       configProc.running = true
     }

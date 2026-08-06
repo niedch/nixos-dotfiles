@@ -48,7 +48,6 @@ PanelWindow {
 
     Clock {}
     WeatherWidget {}
-    UpdateWidget {}
     VoxtypeWidget {}
     ScreenRecordingWidget {}
     IdleWidget {}

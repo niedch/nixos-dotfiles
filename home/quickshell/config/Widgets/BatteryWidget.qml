@@ -64,7 +64,7 @@ Widget {
     hoverEnabled: true
     onClicked: function(mouse) {
       if (mouse.button === Qt.RightButton) {
-        infoProc.command = ["bash", "-c", "notify-send -u low \"$(omarchy-battery-status)\""]
+        infoProc.command = ["notify-send", "-u", "low", "Battery " + widget.capacity + "% · " + widget.powerRate.toFixed(1) + "W (" + widget.status + ")"]
         infoProc.running = true
       } else {
         menuProc.command = ["quickshell-menu", "system"]

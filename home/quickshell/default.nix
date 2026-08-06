@@ -19,6 +19,7 @@ in {
     inputs.wlctl.packages.${pkgs.stdenv.hostPlatform.system}.default
     jq
     cava
+    voxtype
     quickshell
     libqalculate
     cliphist
