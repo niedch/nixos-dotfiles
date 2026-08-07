@@ -177,14 +177,15 @@
       "inputs": {
         "nixpkgs": [
           "nixpkgs"
-        ]
+        ],
+        "yaru-nixpkgs": "yaru-nixpkgs"
       },
       "locked": {
-        "lastModified": 1786081813,
-        "narHash": "sha256-ct1q2Ox193jthqKHZv48z6lBFQ29yay5JrvgqvnGhqA=",
+        "lastModified": 1786084298,
+        "narHash": "sha256-9dk6NMtmQOorDb4rXLmbyXC6N/sXYD2ARI72zxHbJDU=",
         "owner": "niedch",
         "repo": "nix-omarchy-theme",
-        "rev": "d4b7195146d183e1dfc50e90027b69e2a102bdbf",
+        "rev": "a169848fceca446879368411122e1cf1943e7319",
         "type": "github"
       },
       "original": {
@@ -279,8 +280,7 @@
         "opencode-waybar-status": "opencode-waybar-status",
         "sops-nix": "sops-nix",
         "speedtest-tracker": "speedtest-tracker",
-        "wlctl": "wlctl",
-        "yaru-nixpkgs": "yaru-nixpkgs"
+        "wlctl": "wlctl"
       }
     },
     "sops-nix": {
