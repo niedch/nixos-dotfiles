@@ -66,6 +66,11 @@
       sha256 = "sha256-y2rbGYQ7ZFvCJxgfUnRvAemo/abBEzjKwjxZd8fSOGw=";
     }
     {
+      name = "Google Maps";
+      url = "https://maps.google.com";
+      sha256 = "sha256-4xGybzQQ5dGUsnZLIt0dENBYk6t4pcEYfQy6hoNy6vg=";
+    }
+    {
       name = "Twitch";
       url = "https://www.twitch.tv/";
       sha256 = "sha256-PwTSKGIAQhu4rQxJlXeo+0Ei1kWd0Ks/wBTPnC8GiWM=";

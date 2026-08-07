@@ -146,6 +146,11 @@
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
     };
 
+    packages.x86_64-linux.mux-session = import ./home/tools/mux-session/package.nix {
+      pkgs = nixpkgs.legacyPackages.x86_64-linux;
+      mux-session = mux-session.packages.x86_64-linux.default;
+    };
+
     packages.x86_64-linux.opencode = import ./home/opencode/package.nix {
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
     };

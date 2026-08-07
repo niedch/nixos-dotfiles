@@ -181,11 +181,11 @@
         "yaru-nixpkgs": "yaru-nixpkgs"
       },
       "locked": {
-        "lastModified": 1786084298,
-        "narHash": "sha256-9dk6NMtmQOorDb4rXLmbyXC6N/sXYD2ARI72zxHbJDU=",
+        "lastModified": 1786088628,
+        "narHash": "sha256-RLjweGk/kbaS+TkJ1tv3dwpuEyO61+0rSIWyEGBZYs0=",
         "owner": "niedch",
         "repo": "nix-omarchy-theme",
-        "rev": "a169848fceca446879368411122e1cf1943e7319",
+        "rev": "c0090b3a7e190203c3260af7c9e5cde5b9511cb1",
         "type": "github"
       },
       "original": {
@@ -406,17 +406,17 @@
     },
     "yaru-nixpkgs": {
       "locked": {
-        "lastModified": 1782066581,
-        "narHash": "sha256-osIHqiEEfF56U2+s3XhcS2O/J+IluVZ2AiKoDs8C8Jo=",
-        "owner": "r-ryantm",
+        "lastModified": 1785989512,
+        "narHash": "sha256-HFQhkQcl5D1hUNoen3SGHCSFCt2Bg6uP+HgbrnA3InQ=",
+        "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "80dbc06de80a1b906dd55dcc5aab156fbfad748f",
+        "rev": "445d861c6d31b4af0c79d8d4be2331f762a361d7",
         "type": "github"
       },
       "original": {
-        "owner": "r-ryantm",
+        "owner": "NixOS",
+        "ref": "nixos-26.05",
         "repo": "nixpkgs",
-        "rev": "80dbc06de80a1b906dd55dcc5aab156fbfad748f",
         "type": "github"
       }
     }
