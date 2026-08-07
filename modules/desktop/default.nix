@@ -18,6 +18,10 @@
   # xdg-desktop-portal to apps like Chromium (prefers-color-scheme).
   programs.dconf.enable = true;
 
+  # udisks2 provides the daemon that udiskie talks to for mounting removable
+  # media (USB drives, SD cards) to /run/media/$USER/<label>.
+  services.udisks2.enable = true;
+
   services.fwupd = {
     enable = true;
     extraRemotes = [];

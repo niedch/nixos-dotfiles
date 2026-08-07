@@ -24,6 +24,10 @@
 
   time.timeZone = "Europe/Vienna";
 
+  environment.systemPackages = with pkgs; [
+    exfatprogs
+  ];
+
   nix.settings.require-sigs = false;
   system.stateVersion = "25.11"; # Did you read the comment?
 }

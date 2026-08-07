@@ -3,15 +3,28 @@ import Quickshell.Services.Pipewire
 import Quickshell.Io
 import QtQuick
 import qs
+import qs.Components.Audio
 
 Widget {
+  id: widget
+
   PwObjectTracker {
     objects: [Pipewire.defaultAudioSink]
+  }
+
+  readonly property bool isHeadphone: {
+    if (!Pipewire.defaultAudioSink || !Pipewire.defaultAudioSink.properties) return false
+    var ff = Pipewire.defaultAudioSink.properties["device.form-factor"]
+    if (ff === "headphone" || ff === "headset" || ff === "hands-free") return true
+    var icon = Pipewire.defaultAudioSink.properties["device.icon-name"]
+    if (icon && (icon.indexOf("headphone") >= 0 || icon.indexOf("headset") >= 0)) return true
+    return false
   }
 
   text: {
     if (!Pipewire.defaultAudioSink || !Pipewire.defaultAudioSink.audio) return ""
     if (Pipewire.defaultAudioSink.audio.muted) return ""
+    if (isHeadphone) return ""
     var vol = Math.round(Pipewire.defaultAudioSink.audio.volume * 100)
     var icon = ""
     if (vol > 50) icon = ""
@@ -28,8 +41,7 @@ Widget {
         toggleProc.command = ["pamixer", "-t"]
         toggleProc.running = true
       } else {
-        audioProc.command = ["ghostty", "--class=org.tui.Wiremix", "-e", "wiremix"]
-        audioProc.running = true
+        audioPopup.toggle()
       }
     }
     onWheel: function(wheel) {
@@ -45,5 +57,10 @@ Widget {
 
   Process {
     id: toggleProc
+  }
+
+  AudioPopup {
+    id: audioPopup
+    target: widget
   }
 }

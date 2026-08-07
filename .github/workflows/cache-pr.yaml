@@ -18,3 +18,4 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - run: nix build ".#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel" --print-out-paths --no-link
+      - run: nix copy --to file:///mnt/hdd/nix ".#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel"

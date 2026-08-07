@@ -28,6 +28,12 @@
     options = ["fmask=0022" "dmask=0022"];
   };
 
+  fileSystems."/mnt/hdd" = {
+    device = "/dev/disk/by-uuid/011E-3029";
+    fsType = "exfat";
+    options = ["uid=1000" "gid=100" "umask=000"];
+  };
+
   swapDevices = [
     {device = "/dev/disk/by-uuid/7fd88673-ec01-42d6-b12f-fce906820214";}
   ];

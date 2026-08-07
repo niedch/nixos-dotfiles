@@ -53,5 +53,6 @@
     swaybg
     wayfreeze
     wl-screenrec
+    udiskie
   ];
 }

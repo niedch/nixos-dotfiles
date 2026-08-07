@@ -7,7 +7,7 @@
     enable = true;
     host = "0.0.0.0";
     openFirewall = true;
-    mediaLocation = "/var/lib/immich";
+    mediaLocation = "/mnt/hdd/immich";
   };
   services.redis.servers.immich.logLevel = "warning";
 
@@ -20,10 +20,10 @@
   };
 
   services.restic.backups.immich = {
-    repository = "/srv/samba/share/restic-immich";
+    repository = "/mnt/hdd/restic/restic-immich";
     passwordFile = config.sops.secrets.RESTIC_PASSWORD.path;
     paths = [
-      "/var/lib/immich"
+      "/mnt/hdd/immich"
       "/var/backup/postgresql"
     ];
     initialize = true;

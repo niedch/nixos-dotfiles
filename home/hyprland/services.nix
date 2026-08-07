@@ -33,6 +33,23 @@
     };
   };
 
+  systemd.user.services.udiskie = {
+    Unit = {
+      Description = "Udiskie automount daemon";
+      ConditionEnvironment = "WAYLAND_DISPLAY";
+      After = ["hyprland-session.target"];
+      PartOf = ["hyprland-session.target"];
+    };
+    Service = {
+      ExecStart = "${pkgs.udiskie}/bin/udiskie --notify";
+      Restart = "on-failure";
+      RestartSec = 2;
+    };
+    Install = {
+      WantedBy = ["hyprland-session.target"];
+    };
+  };
+
   systemd.user.services.polkit-gnome = {
     Unit = {
       Description = "PolicyKit Authentication Agent";

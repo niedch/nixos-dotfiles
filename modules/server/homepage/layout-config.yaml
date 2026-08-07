@@ -1,0 +1,23 @@
+title: Dobby Dashboard
+theme: dark
+headerStyle: boxed
+statusStyle: dot
+target: _blank
+background:
+  image: https://w.wallhaven.cc/full/je/wallhaven-jexkwm.jpg
+  blur: sm
+  saturate: 50
+  brightness: 50
+  opacity: 50
+layout:
+  Media: {}
+  Infrastructure: {}
+  Smart Home: {}
+  Network: {}
+  Dobby:
+    style: column
+    Storage:
+      style: row
+      columns: 2
+  Laptop: {}
+  Raspberry Pi: {}

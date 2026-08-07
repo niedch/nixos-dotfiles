@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   pkgs,
   ...
 }: {
@@ -25,42 +26,17 @@
       config.sops.secrets.HOMEPAGE_ENV.path
     ];
 
-    settings = {
-      title = "Dobby Dashboard";
-      theme = "dark";
-      headerStyle = "boxed";
-      statusStyle = "dot";
-      target = "_blank";
-      background = {
-        image = "https://w.wallhaven.cc/full/je/wallhaven-jexkwm.jpg";
-        blur = "sm";
-        saturate = 50;
-        brightness = 50;
-        opacity = 50;
-      };
-      layout = {
-        Systems = {
-          style = "row";
-          columns = 2;
-          Dobby = {
-            style = "column";
-          };
-          "Raspberry Pi" = {
-            style = "column";
-          };
-          Laptop = {
-            style = "column";
-          };
-        };
-      };
-    };
+    settings = {};
 
     widgets = [
       {
         resources = {
           cpu = true;
           memory = true;
-          disk = "/";
+          disk = [
+            "/"
+            "/mnt/hdd"
+          ];
         };
       }
       {
@@ -222,16 +198,32 @@
             };
           }
           {
-            "Dobby Storage" = {
-              icon = "glances.png";
-              href = "http://dobby:61208";
-              widget = {
-                type = "glances";
-                url = "http://127.0.0.1:61208";
-                metric = "fs:/";
-                version = 4;
-              };
-            };
+            Storage = [
+              {
+                "Dobby Storage" = {
+                  icon = "glances.png";
+                  href = "http://dobby:61208";
+                  widget = {
+                    type = "glances";
+                    url = "http://127.0.0.1:61208";
+                    metric = "fs:/";
+                    version = 4;
+                  };
+                };
+              }
+              {
+                "Dobby HDD" = {
+                  icon = "glances.png";
+                  href = "http://dobby:61208";
+                  widget = {
+                    type = "glances";
+                    url = "http://127.0.0.1:61208";
+                    metric = "fs:/mnt/hdd";
+                    version = 4;
+                  };
+                };
+              }
+            ];
           }
         ];
       }
@@ -293,4 +285,6 @@
       }
     ];
   };
+
+  environment.etc."homepage-dashboard/settings.yaml".source = lib.mkForce ./layout-config.yaml;
 }

@@ -1,4 +1,8 @@
-{pkgs, inputs, ...}: let
+{
+  pkgs,
+  inputs,
+  ...
+}: let
   opencode = import ./package.nix {inherit pkgs;};
 in {
   imports = [
