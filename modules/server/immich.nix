@@ -23,7 +23,7 @@
     repository = "/mnt/hdd/restic/restic-immich";
     passwordFile = config.sops.secrets.RESTIC_PASSWORD.path;
     paths = [
-      "/mnt/hdd/immmich"
+      "/mnt/hdd/immich"
       "/var/backup/postgresql"
     ];
     initialize = true;
