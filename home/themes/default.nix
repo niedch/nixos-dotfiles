@@ -10,12 +10,15 @@
 }: let
   omarchyRepo = "https://github.com/basecamp/omarchy.git";
   omarchyRef = "88ef6ca597929aa7ea6ca198a404821ad64f9714";
+in let
+  yaruTheme = inputs.yaru-nixpkgs.legacyPackages.${pkgs.system}.yaru-theme;
 in {
   imports = [inputs.nix-omarchy-theme.homeManagerModules.default];
 
   omarchy-themes = {
     enable = true;
     defaultTheme = "koyanagi";
+    iconPackages = with pkgs; [ adwaita-icon-theme yaruTheme ];
 
     themes = {
       catppuccin-latte = {

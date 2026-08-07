@@ -53,6 +53,11 @@
       url = "github:niedch/opencode-waybar-status";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    yaru-nixpkgs = {
+      url = "github:r-ryantm/nixpkgs/80dbc06de80a1b906dd55dcc5aab156fbfad748f";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -68,6 +73,7 @@
     speedtest-tracker,
     comd,
     opencode-waybar-status,
+    yaru-nixpkgs,
     ...
   } @ inputs: let
     mkSystem = extraModules:

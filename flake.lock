@@ -180,11 +180,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1785952506,
-        "narHash": "sha256-1yPShiKC2DIRyxD6t98maYsaPpUBBmZ2bG+FEFjgm+A=",
+        "lastModified": 1786081813,
+        "narHash": "sha256-ct1q2Ox193jthqKHZv48z6lBFQ29yay5JrvgqvnGhqA=",
         "owner": "niedch",
         "repo": "nix-omarchy-theme",
-        "rev": "0b51de68e9999a4bb01da7ad2d60347a3a3e67b2",
+        "rev": "d4b7195146d183e1dfc50e90027b69e2a102bdbf",
         "type": "github"
       },
       "original": {
@@ -279,7 +279,8 @@
         "opencode-waybar-status": "opencode-waybar-status",
         "sops-nix": "sops-nix",
         "speedtest-tracker": "speedtest-tracker",
-        "wlctl": "wlctl"
+        "wlctl": "wlctl",
+        "yaru-nixpkgs": "yaru-nixpkgs"
       }
     },
     "sops-nix": {
@@ -400,6 +401,22 @@
       "original": {
         "owner": "aashish-thapa",
         "repo": "wlctl",
+        "type": "github"
+      }
+    },
+    "yaru-nixpkgs": {
+      "locked": {
+        "lastModified": 1782066581,
+        "narHash": "sha256-osIHqiEEfF56U2+s3XhcS2O/J+IluVZ2AiKoDs8C8Jo=",
+        "owner": "r-ryantm",
+        "repo": "nixpkgs",
+        "rev": "80dbc06de80a1b906dd55dcc5aab156fbfad748f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "r-ryantm",
+        "repo": "nixpkgs",
+        "rev": "80dbc06de80a1b906dd55dcc5aab156fbfad748f",
         "type": "github"
       }
     }
