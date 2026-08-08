@@ -26,6 +26,7 @@
   users.users.runner = {
     isSystemUser = true;
     group = "runner";
+    extraGroups = ["nixbld"];
     home = "/var/lib/github-runner";
     createHome = true;
   };
