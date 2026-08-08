@@ -27,7 +27,7 @@ usage = '''
 arg "<host>" help="Host configuration name"
 arg "<target>" help="SSH target (user@host)"
 '''
-run = "nixos-rebuild switch --flake .#${usage_host?} --target-host ${usage_target?} --sudo --ask-sudo-password"
+run = "nixos-rebuild switch --flake .#${usage_host?} --target-host ${usage_target?} --sudo --ask-sudo-password --fallback"
 
 [tasks.switch-all-hosts]
 description = "Build and deploy to all hosts"
