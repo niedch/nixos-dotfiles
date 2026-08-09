@@ -1,7 +1,4 @@
-{
-  pkgs,
-  ...
-}: let
+{pkgs, ...}: let
   python = pkgs.python3.withPackages (ps: [ps.fastapi ps.uvicorn]);
 
   mainScript = pkgs.writeTextFile {
@@ -72,7 +69,7 @@
               })
           for m in messages:
               widget_item(m)
-          return JSONResponse(content=result)
+          return JSONResponse(content=list(reversed(result)))
 
 
       @app.post("/")
