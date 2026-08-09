@@ -8,6 +8,7 @@
     user = "runner";
     group = "runner";
     replace = true;
+    serviceOverrides.ReadWritePaths = ["/mnt/hdd/nix"];
   };
 
   sops.secrets.GITHUB_RUNNER_TOKEN = {};

@@ -31,6 +31,7 @@
   fileSystems."/mnt/hdd" = {
     device = "/dev/disk/by-uuid/f3675b6a-d05d-4ca0-8d64-75f154d62444";
     fsType = "ext4";
+    options = ["nofail"];
   };
 
   swapDevices = [
