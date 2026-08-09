@@ -288,7 +288,7 @@
         "Messages" = [
           {
             "Messages" = {
-              icon = "nixos.png";
+              icon = "mdi-clipboard-text";
               href = "http://dobby:8090";
               description = "Server Messages";
               widget = {
