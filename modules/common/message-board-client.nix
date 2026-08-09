@@ -4,7 +4,7 @@
       set -euo pipefail
 
       SERVER="''${MESSAGE_BOARD_HOST:-dobby:8090}"
-      HOST="''${MESSAGE_BOARD_SENDER:-$(hostname)}"
+      HOST="''${MESSAGE_BOARD_SENDER:-$HOSTNAME}"
 
       usage() {
         echo "Usage: post-homepage-message-board <message> [type]"
