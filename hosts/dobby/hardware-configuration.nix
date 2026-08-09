@@ -29,9 +29,8 @@
   };
 
   fileSystems."/mnt/hdd" = {
-    device = "/dev/disk/by-uuid/011E-3029";
-    fsType = "exfat";
-    options = ["uid=1000" "gid=100" "umask=000"];
+    device = "/dev/disk/by-uuid/f3675b6a-d05d-4ca0-8d64-75f154d62444";
+    fsType = "ext4";
   };
 
   swapDevices = [
