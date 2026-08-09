@@ -8,6 +8,7 @@
     ./prometheus.nix
     ./kuma.nix
     ./speedtest-tracker.nix
+    ./message-board.nix
   ];
 
   sops.secrets.HOMEPAGE_ENV = {
@@ -278,6 +279,26 @@
                 url = "http://nixos:61208";
                 metric = "fs:/";
                 version = 4;
+              };
+            };
+          }
+        ];
+      }
+      {
+        "Messages" = [
+          {
+            "Messages" = {
+              icon = "nixos.png";
+              href = "http://dobby:8090";
+              description = "Server Messages";
+              widget = {
+                type = "customapi";
+                url = "http://dobby:8090";
+                display = "dynamic-list";
+                mappings = {
+                  name = "name";
+                  label = "label";
+                };
               };
             };
           }

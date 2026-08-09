@@ -11,6 +11,7 @@
     ./users.nix
     ./ssh.nix
     ./sops.nix
+    ./message-board-client.nix
   ];
 
   config = {

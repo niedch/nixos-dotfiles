@@ -115,6 +115,7 @@
         ./modules/common/users.nix
         ./modules/common/cache-config.nix
         ./modules/common/nix-gc.nix
+        ./modules/common/message-board-client.nix
         ./modules/server
         ./modules/server/homebridge
         (mkHM (import ./home/server.nix))

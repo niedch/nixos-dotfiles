@@ -2,7 +2,17 @@
   config,
   pkgs,
   ...
-}: {
+}: let
+  postStarted = pkgs.writeShellScript "immich-backup-started" ''
+    /run/current-system/sw/bin/post-homepage-message-board "Immich backup started" info
+  '';
+  postDone = pkgs.writeShellScript "immich-backup-done" ''
+    /run/current-system/sw/bin/post-homepage-message-board "Immich backup completed" success
+  '';
+  postFailed = pkgs.writeShellScript "immich-backup-failed" ''
+    /run/current-system/sw/bin/post-homepage-message-board "Immich backup failed" error
+  '';
+in {
   services.immich = {
     enable = true;
     host = "0.0.0.0";
@@ -40,8 +50,24 @@
   };
 
   systemd.services.restic-backups-immich = {
-    after = ["postgresqlBackup-immich.service"];
+    after = ["postgresqlBackup-immich.service" "message-board.service"];
     requires = ["postgresqlBackup-immich.service"];
+    wants = ["message-board.service"];
+    onFailure = ["restic-backups-immich-failure.service"];
+    serviceConfig = {
+      ExecStartPre = [postStarted];
+      ExecStartPost = [postDone];
+    };
+  };
+
+  systemd.services.restic-backups-immich-failure = {
+    description = "Post immich backup failure to message board";
+    after = ["message-board.service"];
+    wants = ["message-board.service"];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = postFailed;
+    };
   };
 
   sops.secrets.RESTIC_PASSWORD = {
