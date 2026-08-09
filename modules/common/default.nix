@@ -6,6 +6,7 @@
   imports = [
     ./binfmt.nix
     ./cache-config.nix
+    ./nix-gc.nix
     ./docker.nix
     ./users.nix
     ./ssh.nix

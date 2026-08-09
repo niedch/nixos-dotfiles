@@ -114,6 +114,7 @@
         ./modules/common/ssh.nix
         ./modules/common/users.nix
         ./modules/common/cache-config.nix
+        ./modules/common/nix-gc.nix
         ./modules/server
         ./modules/server/homebridge
         (mkHM (import ./home/server.nix))
@@ -126,6 +127,7 @@
         ./modules/server/openssh.nix
         ./modules/server/immich.nix
         ./modules/server/nix-cache.nix
+        ./modules/server/nix-gc-cache.nix
         ./modules/server/samba.nix
         ./modules/server/github-runner.nix
         ./modules/server/glances.nix
