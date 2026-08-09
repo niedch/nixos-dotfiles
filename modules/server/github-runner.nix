@@ -8,7 +8,10 @@
     user = "runner";
     group = "runner";
     replace = true;
-    serviceOverrides.ReadWritePaths = ["/mnt/hdd/nix"];
+    serviceOverrides = {
+      ReadWritePaths = ["/mnt/hdd/nix"];
+      Environment = ["TMPDIR=/run/github-runner/nix-harmonia-runner"];
+    };
   };
 
   sops.secrets.GITHUB_RUNNER_TOKEN = {};
