@@ -107,6 +107,9 @@ in {
 
   systemd.tmpfiles.rules = [
     "d /mnt/hdd/samba/immich-images 0770 nic users - -"
+    "d /mnt/hdd/samba/immich-images/nic 0770 nic users - -"
+    "d /mnt/hdd/samba/immich-images/melio 0770 nic users - -"
+    "d /mnt/hdd/samba/immich-images/poldi 0770 nic users - -"
     "d /var/lib/immich/thumbs 0750 immich immich - -"
     "d /var/lib/immich/encoded-video 0750 immich immich - -"
     "d /var/lib/immich/profile 0750 immich immich - -"
@@ -186,37 +189,41 @@ in {
         sleep 2
       done
 
-      # Get admin user UUID
-      ADMIN_ID=$(curl -sf -H "x-api-key: $API_KEY" "$BASE/users/me" | jq -r .id)
-      if [ -z "$ADMIN_ID" ] || [ "$ADMIN_ID" = "null" ]; then
-        echo "ERROR: Could not retrieve admin user ID" >&2
-        exit 1
-      fi
+      # Per-user external libraries
+      setup_library() {
+        local NAME="$1"
+        local OWNER_ID="$2"
+        local IMPORT_PATH="$3"
 
-      # Check if library already exists (idempotent)
-      LIB_ID=$(curl -sf -H "x-api-key: $API_KEY" "$BASE/libraries" \
-        | jq -r '.[] | select(.name == "Samba") | .id')
+        # Check if library already exists (idempotent)
+        LIB_ID=$(curl -sf -H "x-api-key: $API_KEY" "$BASE/libraries" \
+          | jq -r --arg name "$NAME" '.[] | select(.name == $name) | .id')
 
-      if [ -z "$LIB_ID" ]; then
-        echo "Creating external library 'Samba'..."
-        LIB_ID=$(curl -sf -X POST \
-          -H "x-api-key: $API_KEY" \
-          -H "Content-Type: application/json" \
-          -d "{\"ownerId\":\"$ADMIN_ID\",\"name\":\"Samba\",\"importPaths\":[\"/mnt/hdd/samba/immich-images\"]}" \
-          "$BASE/libraries" | jq -r .id)
-        if [ -z "$LIB_ID" ] || [ "$LIB_ID" = "null" ]; then
-          echo "ERROR: Failed to create library" >&2
-          exit 1
+        if [ -z "$LIB_ID" ]; then
+          echo "Creating external library '$NAME'..."
+          LIB_ID=$(curl -sf -X POST \
+            -H "x-api-key: $API_KEY" \
+            -H "Content-Type: application/json" \
+            -d "{\"ownerId\":\"$OWNER_ID\",\"name\":\"$NAME\",\"importPaths\":[\"$IMPORT_PATH\"]}" \
+            "$BASE/libraries" | jq -r .id)
+          if [ -z "$LIB_ID" ] || [ "$LIB_ID" = "null" ]; then
+            echo "ERROR: Failed to create library '$NAME'" >&2
+            exit 1
+          fi
+          echo "Library created: $LIB_ID"
+        else
+          echo "Library '$NAME' already exists: $LIB_ID"
         fi
-        echo "Library created: $LIB_ID"
-      else
-        echo "Library 'Samba' already exists: $LIB_ID"
-      fi
 
-      # Trigger scan
-      echo "Scanning library..."
-      curl -sf -X POST -H "x-api-key: $API_KEY" "$BASE/libraries/$LIB_ID/scan" >/dev/null
-      echo "Scan triggered for library $LIB_ID"
+        # Trigger scan
+        echo "Scanning library..."
+        curl -sf -X POST -H "x-api-key: $API_KEY" "$BASE/libraries/$LIB_ID/scan" >/dev/null
+        echo "Scan triggered for library $LIB_ID"
+      }
+
+      setup_library "nic" "34948c21-a55d-4a97-b9cb-e1896cb5c0b0" "/mnt/hdd/samba/immich-images/nic"
+      setup_library "meli" "463efc62-b1f1-4e52-9e61-504e59464a5a" "/mnt/hdd/samba/immich-images/melio"
+      setup_library "poldi" "462beaa3-8d60-4227-befd-a1e530cba72d" "/mnt/hdd/samba/immich-images/poldi"
     '';
   };
 

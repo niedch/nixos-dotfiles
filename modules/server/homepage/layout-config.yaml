@@ -10,7 +10,6 @@ background:
   brightness: 50
   opacity: 50
 layout:
-  Media: {}
   Messages: {}
   Infrastructure: {}
   Smart Home: {}

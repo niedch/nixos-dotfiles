@@ -58,7 +58,7 @@
 
     services = [
       {
-        "Media" = [
+        "Smart Home" = [
           {
             Immich = {
               icon = "immich.png";
@@ -72,10 +72,6 @@
               };
             };
           }
-        ];
-      }
-      {
-        "Smart Home" = [
           {
             Homebridge = {
               icon = "homebridge.png";
