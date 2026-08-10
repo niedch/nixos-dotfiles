@@ -4,7 +4,7 @@
   ...
 }: let
   shareName = "share";
-  sharePath = "/srv/samba/share";
+  sharePath = "/mnt/hdd/samba";
 in {
   systemd.tmpfiles.rules = [
     "d ${sharePath} 0755 nic users - -"

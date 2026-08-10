@@ -311,7 +311,7 @@
   environment.etc."homepage-dashboard/settings.yaml".source = lib.mkForce ./layout-config.yaml;
 
   environment.etc."homepage-dashboard/custom.css".text = ''
-    #messages .h-full {
+    #messages .service-container > div {
       max-height: 20rem;
       overflow-y: auto;
     }

@@ -12,6 +12,64 @@
   postFailed = pkgs.writeShellScript "immich-backup-failed" ''
     /run/current-system/sw/bin/post-homepage-message-board "Immich backup failed" error
   '';
+  bindMountStart = pkgs.writeShellScript "immich-bind-mount-start" ''
+    set -euo pipefail
+    SRC_PREFIX="/var/lib/immich"
+    DST_PREFIX="/mnt/hdd/immich"
+
+    for DIR in thumbs encoded-video profile; do
+      SRC="$SRC_PREFIX/$DIR"
+      DST="$DST_PREFIX/$DIR"
+
+      # Ensure target mount point exists on HDD
+      mkdir -p "$DST"
+
+      # Check if already mounted
+      if mountpoint -q "$DST"; then
+        echo "$DST is already a bind mount, skipping"
+        continue
+      fi
+
+      # If DST has content, migrate it to SRC (one-time migration)
+      if [ -d "$DST" ] && [ "$(ls -A "$DST" 2>/dev/null)" ]; then
+        echo "Migrating existing $DIR data from HDD to SSD..."
+        # Migrate regular items
+        for item in "$DST"/*; do
+          [ -e "$item" ] || continue
+          name=$(basename "$item")
+          if [ -e "$SRC/$name" ]; then
+            echo "WARNING: $SRC/$name already exists, skipping $item"
+          else
+            mv "$item" "$SRC/"
+          fi
+        done
+        # Migrate hidden items (but not . or ..)
+        for item in "$DST"/.[!.]*; do
+          [ -e "$item" ] || continue
+          name=$(basename "$item")
+          if [ "$name" = "." ] || [ "$name" = ".." ]; then
+            continue
+          fi
+          if [ -e "$SRC/$name" ]; then
+            echo "WARNING: $SRC/$name already exists, skipping $item"
+          else
+            mv "$item" "$SRC/"
+          fi
+        done
+      fi
+
+      # Bind mount SSD over HDD
+      echo "Bind-mounting $SRC -> $DST"
+      mount --bind "$SRC" "$DST"
+    done
+  '';
+
+  bindMountStop = pkgs.writeShellScript "immich-bind-mount-stop" ''
+    set -euo pipefail
+    for DIR in thumbs encoded-video profile; do
+      umount "/mnt/hdd/immich/$DIR" 2>/dev/null || true
+    done
+  '';
 in {
   services.immich = {
     enable = true;
@@ -20,6 +78,39 @@ in {
     mediaLocation = "/mnt/hdd/immich";
   };
   services.redis.servers.immich.logLevel = "warning";
+
+  systemd.services.immich-server = {
+    after = ["immich-bind-mounts.service"];
+    requires = ["immich-bind-mounts.service"];
+    serviceConfig = {
+      ReadWritePaths = [
+        "/mnt/hdd/samba/immich-images"
+        "/var/lib/immich"
+      ];
+      SupplementaryGroups = ["users"];
+    };
+  };
+
+  systemd.services.immich-bind-mounts = {
+    description = "Bind-mount Immich thumbs/encoded-video/profile to SSD";
+    after = ["local-fs.target" "mnt-hdd.mount"];
+    before = ["immich-server.service"];
+    wantedBy = ["multi-user.target"];
+    path = [pkgs.util-linux pkgs.coreutils];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = bindMountStart;
+      ExecStop = bindMountStop;
+    };
+  };
+
+  systemd.tmpfiles.rules = [
+    "d /mnt/hdd/samba/immich-images 0770 nic users - -"
+    "d /var/lib/immich/thumbs 0750 immich immich - -"
+    "d /var/lib/immich/encoded-video 0750 immich immich - -"
+    "d /var/lib/immich/profile 0750 immich immich - -"
+  ];
 
   services.postgresqlBackup = {
     enable = true;
@@ -34,7 +125,9 @@ in {
     passwordFile = config.sops.secrets.RESTIC_PASSWORD.path;
     paths = [
       "/mnt/hdd/immich"
+      "/mnt/hdd/samba/immich-images"
       "/var/backup/postgresql"
+      "/var/lib/immich"
     ];
     initialize = true;
     timerConfig = {
@@ -70,7 +163,70 @@ in {
     };
   };
 
+  systemd.services.immich-library-setup = {
+    description = "Create Immich external library for Samba share";
+    after = ["network.target" "immich-server.service"];
+    wants = ["immich-server.service"];
+    wantedBy = ["multi-user.target"];
+    unitConfig.ConditionPathExists = config.sops.secrets.IMMICH_API_KEY.path;
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = "yes";
+    };
+    path = [pkgs.curl pkgs.jq];
+    script = ''
+      API_KEY="$(cat ${config.sops.secrets.IMMICH_API_KEY.path})"
+      BASE="http://127.0.0.1:2283/api"
+
+      # Wait for immich-server to be ready (Type=simple, no readiness signal)
+      for i in $(seq 1 30); do
+        if curl -sf -H "x-api-key: $API_KEY" "$BASE/server/ping" >/dev/null 2>&1; then
+          break
+        fi
+        sleep 2
+      done
+
+      # Get admin user UUID
+      ADMIN_ID=$(curl -sf -H "x-api-key: $API_KEY" "$BASE/users/me" | jq -r .id)
+      if [ -z "$ADMIN_ID" ] || [ "$ADMIN_ID" = "null" ]; then
+        echo "ERROR: Could not retrieve admin user ID" >&2
+        exit 1
+      fi
+
+      # Check if library already exists (idempotent)
+      LIB_ID=$(curl -sf -H "x-api-key: $API_KEY" "$BASE/libraries" \
+        | jq -r '.[] | select(.name == "Samba") | .id')
+
+      if [ -z "$LIB_ID" ]; then
+        echo "Creating external library 'Samba'..."
+        LIB_ID=$(curl -sf -X POST \
+          -H "x-api-key: $API_KEY" \
+          -H "Content-Type: application/json" \
+          -d "{\"ownerId\":\"$ADMIN_ID\",\"name\":\"Samba\",\"importPaths\":[\"/mnt/hdd/samba/immich-images\"]}" \
+          "$BASE/libraries" | jq -r .id)
+        if [ -z "$LIB_ID" ] || [ "$LIB_ID" = "null" ]; then
+          echo "ERROR: Failed to create library" >&2
+          exit 1
+        fi
+        echo "Library created: $LIB_ID"
+      else
+        echo "Library 'Samba' already exists: $LIB_ID"
+      fi
+
+      # Trigger scan
+      echo "Scanning library..."
+      curl -sf -X POST -H "x-api-key: $API_KEY" "$BASE/libraries/$LIB_ID/scan" >/dev/null
+      echo "Scan triggered for library $LIB_ID"
+    '';
+  };
+
   sops.secrets.RESTIC_PASSWORD = {
+    owner = "root";
+    group = "root";
+    mode = "0400";
+  };
+
+  sops.secrets.IMMICH_API_KEY = {
     owner = "root";
     group = "root";
     mode = "0400";
