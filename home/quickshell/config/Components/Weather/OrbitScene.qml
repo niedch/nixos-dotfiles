@@ -36,6 +36,9 @@ Item {
   // Active hour index (today only) - finds the hourly entry closest to current time
   property int activeIndex: -1
 
+  // Click-to-select highlight (visual-only)
+  property int selectedIndex: -1
+
   function updateActiveIndex() {
     if (dayIndex !== 0) { activeIndex = -1; return }
     if (!target || !target.forecastHourly || !target.forecastHourly[0] || !target.forecastHourly[0].hours) {
@@ -57,6 +60,7 @@ Item {
 
   onDayIndexChanged: {
     _settled = false
+    selectedIndex = -1
     updateActiveIndex()
     settledTimer.start()
   }
@@ -207,9 +211,9 @@ Item {
         Rectangle {
           anchors.fill: parent
           radius: 8
-          color: isActive ? Colors.color3 : Colors.background
-          border.color: isActive ? Colors.color3 : Colors.color8
-          border.width: isActive ? 1.5 : 0.5
+          color: scene.selectedIndex === index ? Colors.accent : (isActive ? Colors.color3 : Colors.background)
+          border.color: scene.selectedIndex === index ? Colors.accent : (isActive ? Colors.color3 : Colors.color8)
+          border.width: scene.selectedIndex === index ? 2 : (isActive ? 1.5 : 0.5)
 
           Behavior on color { ColorAnimation { duration: transitionDuration } }
           Behavior on border.color { ColorAnimation { duration: transitionDuration } }
@@ -221,7 +225,7 @@ Item {
             Text {
               anchors.horizontalCenter: parent.horizontalCenter
               text: modelData.time || ""
-              color: isActive ? Colors.background : Colors.color8
+              color: (scene.selectedIndex === index || isActive) ? Colors.background : Colors.color8
               font.family: Constants.fontFamily
               font.pixelSize: 9
               font.bold: true
@@ -243,6 +247,12 @@ Item {
               font.pixelSize: 10
               font.bold: true
             }
+          }
+
+          MouseArea {
+            anchors.fill: parent
+            cursorShape: Qt.PointingHandCursor
+            onClicked: scene.selectedIndex = scene.selectedIndex === index ? -1 : index
           }
         }
       }
