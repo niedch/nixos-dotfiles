@@ -57,6 +57,7 @@
   services.qemuGuest.enable = true;
 
   services.seatd.enable = true;
+  services.quickshell-omarchy.enable = true;
 
   users.users.nic.extraGroups = ["input"];
 

@@ -5,10 +5,10 @@ hl.bind(mainMod .. " + SHIFT + F",     hl.dsp.window.float({ action = "toggle" }
 hl.bind(mainMod .. " + SHIFT + N",     hl.dsp.exec_cmd(terminal .. " -e nvim"), { description = "Open Neovim" })
 hl.bind(mainMod .. " + SHIFT + T",     hl.dsp.exec_cmd("theme-switcher"), { description = "Switch theme" })
 hl.bind(mainMod .. " + SHIFT + B",     hl.dsp.exec_cmd("theme-wallpaper"), { description = "Switch wallpaper" })
-hl.bind(mainMod .. " + Space",         hl.dsp.exec_cmd(launcher .. " toggle"), { description = "Application launcher" })
-hl.bind(mainMod .. " + ALT + Space",   hl.dsp.exec_cmd(menu .. " toggle"), { description = "System menu" })
-hl.bind(mainMod .. " + CTRL + E",      hl.dsp.exec_cmd(launcher .. " symbols"), { description = "Emoji picker" })
-hl.bind(mainMod .. " + CTRL + V",      hl.dsp.exec_cmd(launcher .. " clipboard"), { description = "Clipboard history" })
+hl.bind(mainMod .. " + Space",         hl.dsp.exec_cmd(launcher_apps), { description = "Application launcher" })
+hl.bind(mainMod .. " + ALT + Space",   hl.dsp.exec_cmd(launcher_menu), { description = "System menu" })
+hl.bind(mainMod .. " + CTRL + E",      hl.dsp.exec_cmd("quickshell-omarchy-ipc shell toggle omarchy.emojis"), { description = "Emoji picker" })
+hl.bind(mainMod .. " + CTRL + V",      hl.dsp.exec_cmd("quickshell-omarchy-ipc shell toggle omarchy.clipboard"), { description = "Clipboard history" })
 
 -- Universal copy/paste/cut
 hl.bind(mainMod .. " + C", hl.dsp.send_shortcut({ mods = "CTRL", key = "Insert" }), { description = "Copy (send Ctrl+Insert)" })
@@ -108,11 +108,11 @@ for i = 1, 5 do
 end
 
 -- Notifications
-hl.bind(mainMod .. " + COMMA",         hl.dsp.exec_cmd("quickshell-notif toggle"), { description = "Notification center" })
-hl.bind(mainMod .. " + SHIFT + COMMA", hl.dsp.exec_cmd("quickshell-notif clear"), { description = "Clear notifications" })
+hl.bind(mainMod .. " + COMMA",         hl.dsp.exec_cmd("quickshell-omarchy-ipc notifications toggleDnd"), { description = "Toggle Do Not Disturb" })
+hl.bind(mainMod .. " + SHIFT + COMMA", hl.dsp.exec_cmd("quickshell-omarchy-ipc notifications clear"), { description = "Clear notifications" })
 
 -- Capture menu and color picker
-hl.bind("Print",                       hl.dsp.exec_cmd(menu .. " toggle"), { description = "Quick menu" })
+hl.bind("Print", hl.dsp.exec_cmd(launcher_menu), { description = "Quick menu" })
 hl.bind(mainMod .. " + Print",         hl.dsp.exec_cmd("pkill hyprpicker; hyprpicker -a"), { description = "Color picker" })
 
 -- Lock screen

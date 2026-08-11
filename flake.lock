@@ -173,6 +173,24 @@
         "type": "github"
       }
     },
+    "nix-omarchy-quickshell": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "omarchy": "omarchy"
+      },
+      "locked": {
+        "lastModified": 1786473495,
+        "narHash": "sha256-gQ6fgjgxfNq7CrZLuMptf/0B8DGPZTFWYn35sMdabZg=",
+        "path": "/home/nic/Projects/nix-omarchy-quickshell",
+        "type": "path"
+      },
+      "original": {
+        "path": "/home/nic/Projects/nix-omarchy-quickshell",
+        "type": "path"
+      }
+    },
     "nix-omarchy-theme": {
       "inputs": {
         "nixpkgs": [
@@ -246,6 +264,23 @@
         "type": "github"
       }
     },
+    "omarchy": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1786466047,
+        "narHash": "sha256-ywqeHJTOXqiwmt0WuIZEy5ZDnQCVEl8kYpU3cPeBlsM=",
+        "owner": "basecamp",
+        "repo": "omarchy",
+        "rev": "08204846ef6c2e2de8eba873d5888749e1d46ba5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "basecamp",
+        "ref": "quattro",
+        "repo": "omarchy",
+        "type": "github"
+      }
+    },
     "opencode-waybar-status": {
       "inputs": {
         "flake-utils": "flake-utils_3",
@@ -274,6 +309,7 @@
         "home-manager": "home-manager",
         "microvm": "microvm",
         "mux-session": "mux-session",
+        "nix-omarchy-quickshell": "nix-omarchy-quickshell",
         "nix-omarchy-theme": "nix-omarchy-theme",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",

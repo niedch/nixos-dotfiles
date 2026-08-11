@@ -7,7 +7,6 @@
     ./chromium
     ./ghostty
     ./hyprland
-    ./quickshell
     ./media
     ./themes
     ./tmux
@@ -18,6 +17,7 @@
     ./opencode
     ./git
     ./obsidian
+    ./quickshell-omarchy
   ];
 
   home.username = "nic";

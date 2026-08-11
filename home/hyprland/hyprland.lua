@@ -8,8 +8,8 @@ end
 mainMod = "SUPER"
 terminal = "ghostty"
 fileManager = "nautilus"
-launcher = "quickshell-launcher"
-menu = "quickshell-menu"
+launcher_apps = "quickshell-omarchy-ipc shell toggle omarchy.menu '{\"menu\":\"apps\"}'"
+launcher_menu = "quickshell-omarchy-ipc shell toggle omarchy.menu '{\"menu\":\"root\"}'"
 
 local conf_dir = os.getenv("HOME") .. "/.config/hypr/conf"
 dofile(conf_dir .. "/env.lua")

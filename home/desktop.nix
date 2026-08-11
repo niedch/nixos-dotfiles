@@ -14,7 +14,7 @@
     ./git
     ./ssh
     ./obsidian
-    ./quickshell
+    ./quickshell-omarchy
   ];
 
   home.username = "nic";

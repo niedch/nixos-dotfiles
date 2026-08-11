@@ -10,6 +10,7 @@
 }: let
   omarchyRepo = "https://github.com/basecamp/omarchy.git";
   omarchyRef = "88ef6ca597929aa7ea6ca198a404821ad64f9714";
+  quickshellOmarchyTemplates = inputs.nix-omarchy-quickshell.templates;
 in {
   imports = [inputs.nix-omarchy-theme.homeManagerModules.default];
 
@@ -140,36 +141,11 @@ in {
 
     selectorCommand = "false";
 
-    templates."quickshell.colors.json.tpl" = ''
-      {
-        "background": "{{ background }}",
-        "foreground": "{{ foreground }}",
-        "cursor": "{{ cursor }}",
-        "accent": "{{ accent }}",
-        "selectionBackground": "{{ selection_background }}",
-        "selectionForeground": "{{ selection_foreground }}",
-        "color0": "{{ color0 }}",
-        "color1": "{{ color1 }}",
-        "color2": "{{ color2 }}",
-        "color3": "{{ color3 }}",
-        "color4": "{{ color4 }}",
-        "color5": "{{ color5 }}",
-        "color6": "{{ color6 }}",
-        "color7": "{{ color7 }}",
-        "color8": "{{ color8 }}",
-        "color9": "{{ color9 }}",
-        "color10": "{{ color10 }}",
-        "color11": "{{ color11 }}",
-        "color12": "{{ color12 }}",
-        "color13": "{{ color13 }}",
-        "color14": "{{ color14 }}",
-        "color15": "{{ color15 }}"
-      }
-    '';
+    templates."colors.toml.tpl" = quickshellOmarchyTemplates."colors.toml.tpl";
+    templates."shell.toml.tpl" = quickshellOmarchyTemplates."shell.toml.tpl";
 
     symlinks = {
       "hypr/theme.lua".source = "hyprland.lua";
-      "quickshell/colors.json".source = "quickshell.colors.json";
       "hypr/hyprlock-theme.conf".source = "hyprlock.conf";
       "btop/themes/btop.theme".source = "btop.theme";
       "gtk-3.0/settings.ini" = {
@@ -198,8 +174,21 @@ in {
             ${pkgs.websocat}/bin/websocat "$WS_URL" 2>/dev/null || true
         fi
       '';
-      "05_quickshell_reload" = ''
-        quickshell-reload-theme 2>/dev/null || true
+      "06_quickshell_omarchy_theme" = ''
+        STATE_DIR="$HOME/.local/state/omarchy/current/theme"
+        THEME_DIR="$HOME/.local/share/themes/current"
+        mkdir -p "$STATE_DIR"
+        if [ -f "$THEME_DIR/colors.toml" ]; then
+          cp "$THEME_DIR/colors.toml" "$STATE_DIR/colors.toml" 2>/dev/null || true
+        fi
+        if [ -f "$THEME_DIR/shell.toml" ]; then
+          cp "$THEME_DIR/shell.toml" "$STATE_DIR/shell.toml" 2>/dev/null || true
+        fi
+        COLORS_B64=$(base64 -w0 "$STATE_DIR/colors.toml" 2>/dev/null || base64 "$STATE_DIR/colors.toml" 2>/dev/null || true)
+        SHELL_B64=$(base64 -w0 "$STATE_DIR/shell.toml" 2>/dev/null || base64 "$STATE_DIR/shell.toml" 2>/dev/null || true)
+        if [ -n "$COLORS_B64" ] && [ -n "$SHELL_B64" ]; then
+          quickshell-omarchy-ipc shell applyTheme "$COLORS_B64" "$SHELL_B64" 2>/dev/null || true
+        fi
       '';
     };
   };

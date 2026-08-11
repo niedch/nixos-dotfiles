@@ -34,6 +34,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix-omarchy-quickshell = {
+      url = "path:/home/nic/Projects/nix-omarchy-quickshell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     mux-session = {
       url = "github:niedch/mux-session";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -61,6 +66,7 @@
     microvm,
     home-manager,
     nix-omarchy-theme,
+    nix-omarchy-quickshell,
     sops-nix,
     wlctl,
     nixos-hardware,
@@ -95,6 +101,7 @@
         ./hosts/virtual-machine
         ./modules/common
         ./modules/desktop
+        inputs.nix-omarchy-quickshell.nixosModules.default
         (mkHM (import ./home/desktop.nix))
       ];
 
@@ -102,6 +109,7 @@
         ./hosts/laptop
         ./modules/common
         ./modules/desktop
+        inputs.nix-omarchy-quickshell.nixosModules.default
         ./modules/server/glances.nix
         nixos-hardware.nixosModules.dell-precision-5530
         (mkHM (import ./home/desktop.nix))
@@ -141,12 +149,9 @@
         ./hosts/microvm
         ./modules/common
         ./modules/desktop
+        inputs.nix-omarchy-quickshell.nixosModules.default
         (mkHM (import ./home/microvm.nix))
       ];
-    };
-
-    packages.x86_64-linux.quickshell = import ./home/quickshell/package.nix {
-      pkgs = nixpkgs.legacyPackages.x86_64-linux;
     };
 
     packages.x86_64-linux.mux-session = import ./home/tools/mux-session/package.nix {

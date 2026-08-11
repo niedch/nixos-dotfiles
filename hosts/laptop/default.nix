@@ -59,5 +59,7 @@
     pulse.enable = true;
   };
 
+  services.quickshell-omarchy.enable = true;
+
   system.stateVersion = "25.11"; # Did you read the comment?
 }
