@@ -126,21 +126,18 @@ Item {
     moonIllumination = astro ? String(astro.moon_illumination || "") : ""
 
     var days = []
+    var hourlyDays = []
     var weather = obj.weather || []
     for (var i = 0; i < weather.length; i++) {
       var w = weather[i]
+      var date = String(w.date || "")
       days.push({
-        date: String(w.date || ""),
+        date: date,
         maxC: String(w.maxtempC || ""),
         minC: String(w.mintempC || ""),
         icon: WeatherCodes.mapIcon(String(w.weatherCode || ""), false),
         desc: w.weatherDesc && w.weatherDesc[0] ? w.weatherDesc[0].value : ""
       })
-    }
-    forecast = days
-    var hourlyDays = []
-    for (var j = 0; j < weather.length; j++) {
-      var w = weather[j]
       var hours = []
       if (w.hourly) {
         for (var h = 0; h < w.hourly.length; h++) {
@@ -152,25 +149,16 @@ Item {
           hours.push({
             time: timeLabel,
             tempC: String(hr.tempC || ""),
-            weatherCode: String(hr.weatherCode || ""),
-            icon: WeatherCodes.mapIcon(String(hr.weatherCode || ""), false),
-            hex: "",
-            feelsLikeC: String(hr.FeelsLikeC || ""),
-            humidity: String(hr.humidity || ""),
-            windSpeed: String(hr.windspeedKmph || ""),
-            desc: hr.weatherDesc && hr.weatherDesc[0] ? hr.weatherDesc[0].value : ""
+            icon: WeatherCodes.mapIcon(String(hr.weatherCode || ""), false)
           })
         }
       }
       hourlyDays.push({
-        date: String(w.date || ""),
-        maxC: String(w.maxtempC || ""),
-        minC: String(w.mintempC || ""),
-        icon: WeatherCodes.mapIcon(String(w.weatherCode || ""), false),
-        desc: w.weatherDesc && w.weatherDesc[0] ? w.weatherDesc[0].value : "",
+        date: date,
         hours: hours
       })
     }
+    forecast = days
     forecastHourly = hourlyDays
   }
 }

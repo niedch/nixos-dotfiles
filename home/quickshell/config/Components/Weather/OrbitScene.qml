@@ -1,6 +1,4 @@
 import QtQuick
-import QtQuick.Layouts
-import QtQuick.Controls
 import qs
 import qs.Components.Weather
 
@@ -12,19 +10,31 @@ Item {
 
   required property var target
   property int dayIndex: 0
-  property bool settled: false
+  property bool _settled: false
+
+  // Geometry
+  readonly property int ringRadiusX: 120
+  readonly property int ringRadiusY: 48
+  readonly property int hubYOffset: 30
+  readonly property int maxSlots: 8
+
+  // Animation durations (ms)
+  readonly property int orbitDuration: 90000
+  readonly property int transitionDuration: 600
 
   // Force dependency tracking by reading properties first
   readonly property var hourlyData: {
-    if (!settled) return []
+    if (!_settled) return []
     if (!target || !target.forecastHourly || !target.forecastHourly[dayIndex]) return []
     return target.forecastHourly[dayIndex].hours || []
   }
   readonly property int itemCount: hourlyData.length
 
+  readonly property bool hasData: target && target.forecastHourly && target.forecastHourly.length > 0
+                                   && target.forecastHourly[0].hours && target.forecastHourly[0].hours.length > 0
+
   // Active hour index (today only) - finds the hourly entry closest to current time
   property int activeIndex: -1
-  property int selectedIndex: -1
 
   function updateActiveIndex() {
     if (dayIndex !== 0) { activeIndex = -1; return }
@@ -46,8 +56,7 @@ Item {
   }
 
   onDayIndexChanged: {
-    settled = false
-    selectedIndex = -1
+    _settled = false
     updateActiveIndex()
     settledTimer.start()
   }
@@ -60,41 +69,24 @@ Item {
     id: settledTimer
     interval: 0
     running: false
-    onTriggered: scene.settled = true
+    onTriggered: scene._settled = true
   }
 
   // Day navigation
   function prevDay() { if (dayIndex > 0) dayIndex-- }
   function nextDay() {
-    var max = target && target.forecastHourly ? target.forecastHourly.length - 1 : 0
+    var max = hasData ? target.forecastHourly.length - 1 : 0
     if (dayIndex < max) dayIndex++
   }
-  function dayLabel() {
-    if (!target || !target.forecastHourly || !target.forecastHourly[dayIndex]) return ""
-    var d = target.forecastHourly[dayIndex]
-    var parts = String(d.date).split("-")
-    if (parts.length !== 3) return ""
-    var dt = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]))
-    var today = new Date()
-    if (dt.getFullYear() === today.getFullYear()
-        && dt.getMonth() === today.getMonth()
-        && dt.getDate() === today.getDate()) return "Today"
-    var names = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
-    return names[dt.getDay()]
-  }
-
   Connections {
+    enabled: scene.target !== null
     target: scene.target
     function onForecastHourlyChanged() {
-      settled = false
+      _settled = false
       updateActiveIndex()
       settledTimer.start()
     }
   }
-
-  // Ring geometry
-  readonly property real rx: 120
-  readonly property real ry: 48
 
   // Animatable properties
   property real orbitAngle: 0
@@ -104,7 +96,7 @@ Item {
   NumberAnimation on orbitAngle {
     from: 0
     to: Math.PI * 2
-    duration: 90000
+    duration: orbitDuration
     loops: Animation.Infinite
     running: true
     easing.type: Easing.Linear
@@ -121,7 +113,7 @@ Item {
   Item {
     id: centralHub
     anchors.horizontalCenter: parent.horizontalCenter
-    y: 30 + ry
+    y: hubYOffset + ringRadiusY
     width: 1
     height: 1
 
@@ -156,8 +148,8 @@ Item {
     // Dashed ellipse guide ring
     Canvas {
       id: orbitCanvas
-      width: rx * 2 + 40
-      height: ry * 2 + 40
+      width: ringRadiusX * 2 + 40
+      height: ringRadiusY * 2 + 40
       anchors.centerIn: parent
       opacity: 0.2
       scale: orbitBreath
@@ -170,7 +162,7 @@ Item {
         ctx.lineWidth = 1
         ctx.setLineDash([3, 8])
         ctx.beginPath()
-        ctx.ellipse(width / 2, height / 2, rx, ry)
+        ctx.ellipse(width / 2, height / 2, ringRadiusX, ringRadiusY)
         ctx.stroke()
       }
     }
@@ -192,35 +184,35 @@ Item {
         // Other days: rotating ring
         readonly property real angle: {
           if (dayIndex === 0 && scene.activeIndex >= 0) {
-            return (Math.PI / 2) + (index - scene.activeIndex) * Math.PI * 2 / 8
+            return (Math.PI / 2) + (index - scene.activeIndex) * Math.PI * 2 / maxSlots
           }
-          return orbitAngle + index * Math.PI * 2 / 8
+          return orbitAngle + index * Math.PI * 2 / maxSlots
         }
 
         readonly property real cosVal: Math.cos(angle)
         readonly property real sinVal: Math.sin(angle)
 
-        x: cosVal * rx * orbitBreath - width / 2
-        y: sinVal * ry * orbitBreath - height / 2
+        x: cosVal * ringRadiusX * orbitBreath - width / 2
+        y: sinVal * ringRadiusY * orbitBreath - height / 2
         z: Math.round(sinVal * 100)
 
         scale: isActive ? 1.25 : 0.85 + 0.15 * ((sinVal + 1) / 2)
         opacity: isActive ? 1.0 : 0.5 + 0.35 * ((sinVal + 1) / 2)
 
-        Behavior on x { NumberAnimation { duration: 600; easing.type: Easing.OutCubic } }
-        Behavior on y { NumberAnimation { duration: 600; easing.type: Easing.OutCubic } }
-        Behavior on scale { NumberAnimation { duration: 600; easing.type: Easing.OutCubic } }
-        Behavior on opacity { NumberAnimation { duration: 600 } }
+        Behavior on x { NumberAnimation { duration: transitionDuration; easing.type: Easing.OutCubic } }
+        Behavior on y { NumberAnimation { duration: transitionDuration; easing.type: Easing.OutCubic } }
+        Behavior on scale { NumberAnimation { duration: transitionDuration; easing.type: Easing.OutCubic } }
+        Behavior on opacity { NumberAnimation { duration: transitionDuration } }
 
         Rectangle {
           anchors.fill: parent
           radius: 8
-          color: scene.selectedIndex === index ? Colors.accent : (isActive ? Colors.color3 : Colors.background)
-          border.color: scene.selectedIndex === index ? Colors.accent : (isActive ? Colors.color3 : Colors.color8)
-          border.width: scene.selectedIndex === index ? 2 : (isActive ? 1.5 : 0.5)
+          color: isActive ? Colors.color3 : Colors.background
+          border.color: isActive ? Colors.color3 : Colors.color8
+          border.width: isActive ? 1.5 : 0.5
 
-          Behavior on color { ColorAnimation { duration: 600 } }
-          Behavior on border.color { ColorAnimation { duration: 600 } }
+          Behavior on color { ColorAnimation { duration: transitionDuration } }
+          Behavior on border.color { ColorAnimation { duration: transitionDuration } }
 
           Column {
             anchors.centerIn: parent
@@ -229,7 +221,7 @@ Item {
             Text {
               anchors.horizontalCenter: parent.horizontalCenter
               text: modelData.time || ""
-              color: (scene.selectedIndex === index || isActive) ? Colors.background : Colors.color8
+              color: isActive ? Colors.background : Colors.color8
               font.family: Constants.fontFamily
               font.pixelSize: 9
               font.bold: true
@@ -252,18 +244,6 @@ Item {
               font.bold: true
             }
           }
-
-          MouseArea {
-            anchors.fill: parent
-            cursorShape: Qt.PointingHandCursor
-            onClicked: {
-              if (scene.selectedIndex === index) {
-                scene.selectedIndex = -1
-              } else {
-                scene.selectedIndex = index
-              }
-            }
-          }
         }
       }
     }
@@ -271,7 +251,7 @@ Item {
     // Day label centered in the ring
     Text {
       anchors.centerIn: parent
-      text: dayLabel()
+      text: WeatherCodes.dayLabel(target && target.forecastHourly && target.forecastHourly[dayIndex] ? target.forecastHourly[dayIndex].date : "")
       color: Colors.accent
       font.family: Constants.fontFamily
       font.pixelSize: 14
@@ -303,7 +283,7 @@ Item {
     Text {
       text: "▶"
       color: {
-        var max = target && target.forecastHourly ? target.forecastHourly.length - 1 : 0
+        var max = hasData ? target.forecastHourly.length - 1 : 0
         return dayIndex < max ? Colors.foreground : Colors.color8
       }
       font.family: Constants.fontFamily
