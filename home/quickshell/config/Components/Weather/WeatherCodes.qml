@@ -93,4 +93,16 @@ Singleton {
     if (m[3] === "AM" && h === 12) h = 0
     return h * 60 + parseInt(m[2])
   }
+
+  function dayLabel(dateStr) {
+    var parts = String(dateStr).split("-")
+    if (parts.length !== 3) return ""
+    var d = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]))
+    var today = new Date()
+    if (d.getFullYear() === today.getFullYear()
+      && d.getMonth() === today.getMonth()
+      && d.getDate() === today.getDate()) return "Today"
+    var names = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+    return names[d.getDay()]
+  }
 }

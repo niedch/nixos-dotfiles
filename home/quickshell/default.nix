@@ -72,6 +72,8 @@ in {
       ExecStart = "${quickshell}/bin/quickshell";
       Restart = "always";
       RestartSec = 2;
+      KillMode = "process";
+      SendSIGKILL = "no";
     };
     Install = {
       WantedBy = ["hyprland-session.target"];

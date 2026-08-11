@@ -22,18 +22,6 @@ PopupWindow {
     root.shown = !root.shown
   }
 
-  function dayName(dateStr) {
-    var parts = String(dateStr).split("-")
-    if (parts.length !== 3) return ""
-    var d = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]))
-    var today = new Date()
-    if (d.getFullYear() === today.getFullYear()
-      && d.getMonth() === today.getMonth()
-      && d.getDate() === today.getDate()) return "Today"
-    var names = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
-    return names[d.getDay()]
-  }
-
   HyprlandFocusGrab {
     windows: [root]
     active: root.shown
@@ -74,7 +62,7 @@ PopupWindow {
       anchors.right: parent.right
       anchors.top: parent.top
       anchors.margins: 12
-      spacing: 8
+      spacing: 4
 
       Row {
         width: parent.width
@@ -124,7 +112,7 @@ PopupWindow {
           spacing: 2
 
           Row {
-            spacing: 8
+      spacing: 4
 
             Text {
               text: (root.target ? root.target.tempC : "") + "°C"
@@ -163,10 +151,18 @@ PopupWindow {
         }
       }
 
+      OrbitScene {
+        id: orbitScene
+        anchors.horizontalCenter: parent.horizontalCenter
+        target: root.target
+        visible: orbitScene.hasData
+      }
+
       Rectangle {
         width: parent.width
         height: 1
         color: Colors.color0
+        visible: orbitScene.visible
       }
 
       Row {
@@ -214,7 +210,7 @@ PopupWindow {
 
           Text {
             width: 44
-            text: root.dayName(modelData.date)
+            text: WeatherCodes.dayLabel(modelData.date)
             anchors.verticalCenter: parent.verticalCenter
             color: Colors.foreground
             font.family: Constants.fontFamily
