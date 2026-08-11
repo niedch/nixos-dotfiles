@@ -54,5 +54,7 @@
     wayfreeze
     wl-screenrec
     udiskie
+    bluez
+    iw
   ];
 }
