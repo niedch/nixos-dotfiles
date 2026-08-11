@@ -74,7 +74,7 @@ PopupWindow {
       anchors.right: parent.right
       anchors.top: parent.top
       anchors.margins: 12
-      spacing: 8
+      spacing: 4
 
       Row {
         width: parent.width
@@ -124,7 +124,7 @@ PopupWindow {
           spacing: 2
 
           Row {
-            spacing: 8
+      spacing: 4
 
             Text {
               text: (root.target ? root.target.tempC : "") + "°C"
@@ -163,10 +163,22 @@ PopupWindow {
         }
       }
 
+      OrbitScene {
+        id: orbitScene
+        anchors.horizontalCenter: parent.horizontalCenter
+        target: root.target
+        visible: root.target &&
+                 root.target.forecastHourly &&
+                 root.target.forecastHourly.length > 0 &&
+                 root.target.forecastHourly[0].hours &&
+                 root.target.forecastHourly[0].hours.length > 0
+      }
+
       Rectangle {
         width: parent.width
         height: 1
         color: Colors.color0
+        visible: orbitScene.visible
       }
 
       Row {

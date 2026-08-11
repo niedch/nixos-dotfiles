@@ -20,6 +20,8 @@ Item {
   property string moonPhase: ""
   property string moonIllumination: ""
   property var forecast: []
+  property var forecastHourly: []
+  property string location: ""
 
   implicitHeight: Constants.barHeight
   width: weatherIcon !== "" ? iconText.implicitWidth + widthPadding : 0
@@ -112,6 +114,8 @@ Item {
     description = cc.weatherDesc && cc.weatherDesc[0] ? cc.weatherDesc[0].value : ""
     humidity = String(cc.humidity || "")
     windSpeed = String(cc.windspeedKmph || "")
+    var area = obj.nearest_area && obj.nearest_area[0]
+    location = area ? (area.areaName || []).map(function(v) { return v.value }).join(", ") + ", " + (area.country || []).map(function(v) { return v.value }).join(", ") : ""
     isNight = WeatherCodes.nightTime(obj)
 
     weatherIcon = WeatherCodes.mapIcon(weatherCode, isNight)
@@ -134,5 +138,39 @@ Item {
       })
     }
     forecast = days
+    var hourlyDays = []
+    for (var j = 0; j < weather.length; j++) {
+      var w = weather[j]
+      var hours = []
+      if (w.hourly) {
+        for (var h = 0; h < w.hourly.length; h++) {
+          var hr = w.hourly[h]
+          var timeVal = parseInt(String(hr.time || "0"))
+          var hour = Math.floor(timeVal / 100) % 24
+          var minute = String(timeVal % 100).padStart(2, "0")
+          var timeLabel = String(hour).padStart(2, "0") + ":" + minute
+          hours.push({
+            time: timeLabel,
+            tempC: String(hr.tempC || ""),
+            weatherCode: String(hr.weatherCode || ""),
+            icon: WeatherCodes.mapIcon(String(hr.weatherCode || ""), false),
+            hex: "",
+            feelsLikeC: String(hr.FeelsLikeC || ""),
+            humidity: String(hr.humidity || ""),
+            windSpeed: String(hr.windspeedKmph || ""),
+            desc: hr.weatherDesc && hr.weatherDesc[0] ? hr.weatherDesc[0].value : ""
+          })
+        }
+      }
+      hourlyDays.push({
+        date: String(w.date || ""),
+        maxC: String(w.maxtempC || ""),
+        minC: String(w.mintempC || ""),
+        icon: WeatherCodes.mapIcon(String(w.weatherCode || ""), false),
+        desc: w.weatherDesc && w.weatherDesc[0] ? w.weatherDesc[0].value : "",
+        hours: hours
+      })
+    }
+    forecastHourly = hourlyDays
   }
 }
