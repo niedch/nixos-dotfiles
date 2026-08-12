@@ -14,6 +14,11 @@
     };
   };
 
+  systemd.services.github-runner-nix-harmonia-runner = {
+    after = ["mnt-hdd.mount"];
+    requires = ["mnt-hdd.mount"];
+  };
+
   sops.secrets.GITHUB_RUNNER_TOKEN = {};
 
   nix.settings = {
