@@ -2,14 +2,14 @@
 set -u
 
 # Kill leftover cava processes from previous quickshell sessions
-for pid in $(pgrep -f "cava.*quickshell_cava_config"); do
+for pid in $(pgrep -f "cava.*quickshell_cava_config_"); do
     [ "$pid" != "$$" ] && kill "$pid" 2>/dev/null
 done
 
 bars=(▁ ▂ ▃ ▄ ▅ ▆ ▇ █)
-config_file="/tmp/quickshell_cava_config"
-fifo="/tmp/quickshell_cava_fifo"
-err_log="/tmp/quickshell_cava_err.log"
+config_file="/tmp/quickshell_cava_config_$$"
+fifo="/tmp/quickshell_cava_fifo_$$"
+err_log="/tmp/quickshell_cava_err_$$.log"
 
 # Prefer pipewire input, fall back to pulse (pipewire-pulse compat)
 if [ -S "${XDG_RUNTIME_DIR:-/run/user/$(id -u)}/pipewire-0" ] || [ -n "${PIPEWIRE_REMOTE:-}" ]; then
