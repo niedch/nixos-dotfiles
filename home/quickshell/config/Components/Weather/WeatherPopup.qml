@@ -105,6 +105,7 @@ PopupWindow {
           anchors.verticalCenter: parent.verticalCenter
           weatherCode: root.target ? root.target.weatherCode : ""
           isNight: root.target ? root.target.isNight : false
+          popupShown: root.shown
         }
 
         Column {
@@ -155,6 +156,7 @@ PopupWindow {
         id: orbitScene
         anchors.horizontalCenter: parent.horizontalCenter
         target: root.target
+        popupShown: root.shown
         visible: orbitScene.hasData
       }
 

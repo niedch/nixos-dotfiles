@@ -4,6 +4,7 @@ import qs
 Item {
   id: root
   property bool active: false
+  property bool popupShown: false
   visible: root.active
   anchors.fill: parent
 
@@ -12,7 +13,7 @@ Item {
     property int twinkleDur: 2000
     SequentialAnimation on opacity {
       loops: Animation.Infinite
-      running: root.active
+      running: root.active && root.popupShown
       NumberAnimation {
         from: 0.1
         to: 1.0

@@ -4,6 +4,7 @@ import qs
 Item {
   id: root
   property bool active: false
+  property bool popupShown: false
   visible: root.active
   anchors.fill: parent
 
@@ -44,7 +45,7 @@ Item {
   Timer {
     id: tick
     interval: 33
-    running: root.active
+    running: root.active && root.popupShown
     repeat: true
     onTriggered: root.step()
   }

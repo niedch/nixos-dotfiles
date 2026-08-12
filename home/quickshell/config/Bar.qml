@@ -36,8 +36,9 @@ PanelWindow {
     MprisWidget {
       id: mpris
     }
-    CavaWidget {
-      visible: mpris.active
+    Loader {
+      active: mpris.playing
+      sourceComponent: CavaWidget {}
     }
   }
 

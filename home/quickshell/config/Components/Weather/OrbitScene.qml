@@ -11,6 +11,7 @@ Item {
   required property var target
   property int dayIndex: 0
   property bool _settled: false
+  property bool popupShown: false
 
   // Geometry
   readonly property int ringRadiusX: 120
@@ -102,13 +103,14 @@ Item {
     to: Math.PI * 2
     duration: orbitDuration
     loops: Animation.Infinite
-    running: true
+    running: scene.popupShown
     easing.type: Easing.Linear
   }
 
   // Subtle breathing of the ring
   SequentialAnimation on orbitBreath {
     loops: Animation.Infinite
+    running: scene.popupShown
     NumberAnimation { from: 1.0; to: 1.03; duration: 3500; easing.type: Easing.InOutSine }
     NumberAnimation { from: 1.03; to: 1.0; duration: 3500; easing.type: Easing.InOutSine }
   }
@@ -139,12 +141,14 @@ Item {
     // Subtle wobble animations
     SequentialAnimation {
       loops: Animation.Infinite
+      running: scene.popupShown
       NumberAnimation { target: pitchRot; property: "angle"; from: -2.5; to: 2.5; duration: 4200; easing.type: Easing.InOutSine }
       NumberAnimation { target: pitchRot; property: "angle"; from: 2.5; to: -2.5; duration: 4200; easing.type: Easing.InOutSine }
     }
 
     SequentialAnimation {
       loops: Animation.Infinite
+      running: scene.popupShown
       NumberAnimation { target: yawRot; property: "angle"; from: -2; to: 2; duration: 5100; easing.type: Easing.InOutSine }
       NumberAnimation { target: yawRot; property: "angle"; from: 2; to: -2; duration: 5100; easing.type: Easing.InOutSine }
     }

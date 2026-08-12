@@ -6,6 +6,7 @@ import qs.Components.Weather
 Item {
   id: root
   property bool active: false
+  property bool popupShown: false
   visible: root.active
   anchors.fill: parent
 
@@ -16,7 +17,7 @@ Item {
 
   RainScene {
     anchors.fill: parent
-    active: root.active
+    active: root.active && root.popupShown
   }
 
   Rectangle {
@@ -39,7 +40,7 @@ Item {
     Timer {
       id: lightningTimer
       interval: 3500
-      running: root.active
+      running: root.active && root.popupShown
       repeat: true
       onTriggered: {
         flashAnim.restart()

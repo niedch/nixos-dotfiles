@@ -15,7 +15,7 @@ Widget {
 
   Timer {
     id: cpuTimer
-    interval: Constants.pollFast
+    interval: Constants.pollNormal
     running: true
     repeat: true
     onTriggered: pollProc.running = true

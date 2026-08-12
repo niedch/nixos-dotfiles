@@ -4,6 +4,7 @@ import qs
 Item {
   id: root
   property bool active: false
+  property bool popupShown: false
   visible: root.active
   anchors.fill: parent
 
@@ -32,7 +33,7 @@ Item {
       to: 360
       duration: 12000
       loops: Animation.Infinite
-      running: root.active
+      running: root.active && root.popupShown
     }
 
     SunRay {}
@@ -48,7 +49,7 @@ Item {
 
       SequentialAnimation on scale {
         loops: Animation.Infinite
-        running: root.active
+        running: root.active && root.popupShown
         NumberAnimation {
           from: 1.0
           to: 1.15

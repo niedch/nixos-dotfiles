@@ -4,6 +4,7 @@ import qs
 Item {
   id: root
   property bool active: false
+  property bool popupShown: false
   visible: root.active
   anchors.fill: parent
 
@@ -24,7 +25,7 @@ Item {
       to: root.width
       duration: driftDur
       loops: Animation.Infinite
-      running: root.active
+      running: root.active && root.popupShown
     }
   }
 

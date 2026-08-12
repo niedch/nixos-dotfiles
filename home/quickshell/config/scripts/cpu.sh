@@ -1,28 +1,28 @@
 #!/usr/bin/env bash
 set -u
 
-cpu_sample() {
-    awk '
-        /^cpu / {
-            for (i = 2; i <= NF; i++) total += $i
-            idle = $5 + $6
-            print total, idle
-        }
-    ' /proc/stat
-}
+state_file="${XDG_RUNTIME_DIR:-/tmp}/cpu-usage-state"
 
-read -r t1 i1 <<< "$(cpu_sample)"
-sleep 0.2
-read -r t2 i2 <<< "$(cpu_sample)"
+# Read current CPU totals from /proc/stat
+read -r t_now i_now <<< "$(awk '/^cpu / { for (i=2; i<=NF; i++) total+=$i; idle=$5+$6; print total, idle }' /proc/stat)"
 
-usage=$(awk -v t1="$t1" -v i1="$i1" -v t2="$t2" -v i2="$i2" '
-    BEGIN {
-        dt = t2 - t1
-        di = i2 - i1
-        printf "%.1f", (dt > 0) ? 100 * (dt - di) / dt : 0
-    }
-')
-
+# Read load averages (still needed)
 read -r l1 l2 l3 _ < /proc/loadavg
+
+if [ -f "$state_file" ]; then
+    read -r t_prev i_prev < "$state_file"
+    dt=$((t_now - t_prev))
+    di=$((i_now - i_prev))
+    if [ "$dt" -gt 0 ]; then
+        usage=$(awk -v dt="$dt" -v di="$di" 'BEGIN { printf "%.1f", 100 * (dt - di) / dt }')
+    else
+        usage="0.0"
+    fi
+else
+    usage="0.0"
+fi
+
+# Store current totals for next run
+echo "$t_now $i_now" > "$state_file"
 
 printf "%s|%s|%s|%s\n" "$usage" "$l1" "$l2" "$l3"

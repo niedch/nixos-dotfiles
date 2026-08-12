@@ -67,8 +67,8 @@ hl.config({
 		on_focus_under_fullscreen = 1,
 	},
 	debug = {
-		enable_stdout_logs = true,
-		disable_logs = false,
+		enable_stdout_logs = false,
+		disable_logs = true,
 	},
 	cursor = {
 		hide_on_key_press = true,

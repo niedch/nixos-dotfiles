@@ -8,6 +8,7 @@ Widget {
   id: widget
 
   property bool active: mediaPopup.player !== null
+  property bool playing: mediaPopup.player !== null && mediaPopup.player.isPlaying
 
   textItem.elide: Text.ElideRight
   textItem.maximumLineCount: 1

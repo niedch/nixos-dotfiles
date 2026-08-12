@@ -42,7 +42,7 @@ Widget {
   // Poll timer: check every 2 seconds
   Timer {
     id: pollTimer
-    interval: 2000
+    interval: Constants.pollNormal
     running: true
     repeat: true
     onTriggered: statusCheck.running = true

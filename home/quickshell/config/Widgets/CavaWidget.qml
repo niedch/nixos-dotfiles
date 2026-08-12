@@ -32,4 +32,8 @@ Widget {
   }
 
   Component.onCompleted: proc.running = true
+  Component.onDestruction: {
+    restartTimer.stop()
+    proc.running = false
+  }
 }

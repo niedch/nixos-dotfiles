@@ -42,7 +42,7 @@ Item {
 
   SequentialAnimation {
     id: pulseAnim
-    running: widget.weatherIcon !== ""
+    running: widget.weatherIcon !== "" && weatherPopup.shown
     loops: Animation.Infinite
     NumberAnimation {
       target: iconText

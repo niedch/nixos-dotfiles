@@ -9,6 +9,7 @@ Item {
 
   property string weatherCode: ""
   property bool isNight: false
+  property bool popupShown: false
   property bool debugCycle: false
 
   property var debugCodes: [
@@ -41,30 +42,37 @@ Item {
 
   SunScene {
     active: WeatherCodes.isSun(scene.effectiveCode) && !scene.effectiveNight
+    popupShown: scene.popupShown
   }
 
   MoonScene {
     active: WeatherCodes.isSun(scene.effectiveCode) && scene.effectiveNight
+    popupShown: scene.popupShown
   }
 
   CloudScene {
     active: WeatherCodes.isCloudy(scene.effectiveCode) || WeatherCodes.isFog(scene.effectiveCode) || WeatherCodes.isThunder(scene.effectiveCode)
+    popupShown: scene.popupShown
   }
 
   RainScene {
     active: WeatherCodes.isRain(scene.effectiveCode)
+    popupShown: scene.popupShown
   }
 
   SnowScene {
     active: WeatherCodes.isSnow(scene.effectiveCode)
+    popupShown: scene.popupShown
   }
 
   ThunderScene {
     active: WeatherCodes.isThunder(scene.effectiveCode)
+    popupShown: scene.popupShown
   }
 
   FogScene {
     active: WeatherCodes.isFog(scene.effectiveCode)
+    popupShown: scene.popupShown
   }
 
   // ---- debug label ----

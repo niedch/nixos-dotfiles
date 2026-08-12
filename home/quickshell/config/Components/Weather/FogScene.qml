@@ -4,6 +4,7 @@ import qs
 Item {
   id: root
   property bool active: false
+  property bool popupShown: false
   visible: root.active
   anchors.fill: parent
 
@@ -26,12 +27,12 @@ Item {
       to: root.width
       duration: driftDur
       loops: Animation.Infinite
-      running: root.active
+      running: root.active && root.popupShown
     }
 
     SequentialAnimation on opacity {
       loops: Animation.Infinite
-      running: root.active
+      running: root.active && root.popupShown
       NumberAnimation {
         from: 0.3
         to: 1.0
