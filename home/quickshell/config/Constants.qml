@@ -9,6 +9,7 @@ Singleton {
   readonly property int barHeight: 26
   readonly property int fontSize: 12
   readonly property int fontSizeSmall: 10
+  readonly property int fontSizeLarge: 14
   readonly property int defaultPadding: 16
 
   readonly property int pollFast: 1000

@@ -396,7 +396,7 @@ Item {
               text: root.displayItemLabel(modelData)
               color: isDanger ? Colors.color1 : Colors.foreground
               font.family: Constants.fontFamily
-              font.pixelSize: Constants.fontSize
+              font.pixelSize: Constants.fontSizeLarge
               elide: Text.ElideRight
             }
 

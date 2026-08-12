@@ -102,7 +102,7 @@ Item {
       text: "󰉼 Theme"
       color: Colors.foreground
       font.family: Constants.fontFamily
-      font.pixelSize: Constants.fontSize
+      font.pixelSize: Constants.fontSizeLarge
       font.bold: true
     }
 
@@ -213,7 +213,7 @@ Item {
               text: modelData
               color: isCurrent ? Colors.accent : Colors.foreground
               font.family: Constants.fontFamily
-              font.pixelSize: Constants.fontSize
+              font.pixelSize: Constants.fontSizeLarge
               elide: Text.ElideRight
               wrapMode: Text.Wrap
               maximumLineCount: 2
