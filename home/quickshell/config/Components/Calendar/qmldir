@@ -1,0 +1,5 @@
+module qs.Components.Calendar
+CalendarPopup 1.0 CalendarPopup.qml
+EventChip 1.0 EventChip.qml
+MonthGrid 1.0 MonthGrid.qml
+WeekGrid 1.0 WeekGrid.qml

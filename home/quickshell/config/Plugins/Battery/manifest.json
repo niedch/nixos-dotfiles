@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "quickshell.battery",
+  "name": "Battery",
+  "version": "1.0.0",
+  "author": "quickshell-dotfiles",
+  "description": "Battery level and charging status",
+  "kinds": ["bar-widget"],
+  "entryPoints": {
+    "barWidget": "BarWidget.qml"
+  },
+  "barWidget": {
+    "displayName": "Battery",
+    "description": "Battery level and charging status",
+    "category": "System",
+    "allowMultiple": false
+  }
+}

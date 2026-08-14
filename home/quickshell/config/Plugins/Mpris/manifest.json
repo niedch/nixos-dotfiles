@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "quickshell.mpris",
+  "name": "Media Player",
+  "version": "1.0.0",
+  "author": "quickshell-dotfiles",
+  "description": "Media player info with separator and audio visualizer",
+  "kinds": ["bar-widget"],
+  "entryPoints": {
+    "barWidget": "BarWidget.qml"
+  },
+  "barWidget": {
+    "displayName": "Media Player",
+    "description": "Media player info with separator and audio visualizer",
+    "category": "Media",
+    "allowMultiple": false
+  }
+}

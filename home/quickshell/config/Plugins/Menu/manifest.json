@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "quickshell.menu",
+  "name": "Menu",
+  "version": "1.0.0",
+  "author": "quickshell-dotfiles",
+  "description": "Application menu launcher",
+  "kinds": ["bar-widget"],
+  "entryPoints": {
+    "barWidget": "BarWidget.qml"
+  },
+  "barWidget": {
+    "displayName": "Menu",
+    "description": "Application menu launcher",
+    "category": "Navigation",
+    "allowMultiple": false
+  }
+}

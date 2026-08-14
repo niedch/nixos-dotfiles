@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "quickshell.opencode",
+  "name": "OpenCode",
+  "version": "1.0.0",
+  "author": "quickshell-dotfiles",
+  "description": "OpenCode AI agent status indicator",
+  "kinds": ["bar-widget"],
+  "entryPoints": {
+    "barWidget": "BarWidget.qml"
+  },
+  "barWidget": {
+    "displayName": "OpenCode",
+    "description": "OpenCode AI agent status indicator",
+    "category": "Development",
+    "allowMultiple": false
+  }
+}

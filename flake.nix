@@ -145,9 +145,14 @@
       ];
     };
 
-    packages.x86_64-linux.quickshell = import ./home/quickshell/package.nix {
+    packages.x86_64-linux.quickshell = let
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
-    };
+    in
+      import ./home/quickshell/package.nix {
+        inherit pkgs;
+        inherit (pkgs) lib;
+        plugins = (import ./home/quickshell/plugins.nix {inherit (pkgs) lib;}).quickshell.plugins;
+      };
 
     packages.x86_64-linux.mux-session = import ./home/tools/mux-session/package.nix {
       pkgs = nixpkgs.legacyPackages.x86_64-linux;

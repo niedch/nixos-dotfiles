@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "quickshell.notification-center",
+  "name": "Notification Center",
+  "version": "1.0.0",
+  "author": "quickshell-dotfiles",
+  "description": "Notification bell with unread count and center",
+  "kinds": ["bar-widget"],
+  "entryPoints": {
+    "barWidget": "BarWidget.qml"
+  },
+  "barWidget": {
+    "displayName": "Notification Center",
+    "description": "Notification bell with unread count and center",
+    "category": "System",
+    "allowMultiple": false
+  }
+}

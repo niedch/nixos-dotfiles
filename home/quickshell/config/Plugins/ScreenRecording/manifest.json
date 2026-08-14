@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "quickshell.screen-recording",
+  "name": "Screen Recording",
+  "version": "1.0.0",
+  "author": "quickshell-dotfiles",
+  "description": "Screen recording indicator",
+  "kinds": ["bar-widget"],
+  "entryPoints": {
+    "barWidget": "BarWidget.qml"
+  },
+  "barWidget": {
+    "displayName": "Screen Recording",
+    "description": "Screen recording indicator",
+    "category": "Status",
+    "allowMultiple": false
+  }
+}

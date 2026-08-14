@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "bar": {
+    "position": "top",
+    "layout": {
+      "left": [
+        { "id": "quickshell.menu" },
+        { "id": "quickshell.workspaces" },
+        { "id": "quickshell.mpris" }
+      ],
+      "center": [
+        { "id": "quickshell.clock" },
+        { "id": "quickshell.weather" },
+        { "id": "quickshell.voxtype" },
+        { "id": "quickshell.screen-recording" },
+        { "id": "quickshell.idle" },
+        { "id": "quickshell.sunset" },
+        { "id": "quickshell.notification-center" },
+        { "id": "quickshell.opencode" }
+      ],
+      "right": [
+        { "id": "quickshell.tray" },
+        { "id": "quickshell.bluetooth" },
+        { "id": "quickshell.network" },
+        { "id": "quickshell.audio" },
+        { "id": "quickshell.cpu" },
+        { "id": "quickshell.battery" },
+        { "id": "stappmus.activity-monitor" }
+      ]
+    }
+  },
+  "plugins": []
+}
