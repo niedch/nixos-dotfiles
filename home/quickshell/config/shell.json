@@ -23,7 +23,6 @@
         { "id": "quickshell.bluetooth" },
         { "id": "quickshell.network" },
         { "id": "quickshell.audio" },
-        { "id": "quickshell.cpu" },
         { "id": "quickshell.battery" },
         { "id": "stappmus.activity-monitor" }
       ]
