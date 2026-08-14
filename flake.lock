@@ -181,8 +181,8 @@
         "omarchy": "omarchy"
       },
       "locked": {
-        "lastModified": 1786473495,
-        "narHash": "sha256-gQ6fgjgxfNq7CrZLuMptf/0B8DGPZTFWYn35sMdabZg=",
+        "lastModified": 1786547757,
+        "narHash": "sha256-X25IMJqtCU4OtvfUM1E+zXcnRFxLKqHko/ic3CwUbTk=",
         "path": "/home/nic/Projects/nix-omarchy-quickshell",
         "type": "path"
       },
