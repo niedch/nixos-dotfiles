@@ -1,4 +1,4 @@
-module qs.Components.Weather
+module qs.Plugins.Weather
 CloudScene 1.0 CloudScene.qml
 FogScene 1.0 FogScene.qml
 MoonScene 1.0 MoonScene.qml

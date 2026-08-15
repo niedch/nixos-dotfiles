@@ -5,7 +5,6 @@ import Quickshell.Wayland
 import QtQuick
 import QtQuick.Layouts
 import qs
-import qs.Components.MenuPanel
 
 Scope {
   id: root

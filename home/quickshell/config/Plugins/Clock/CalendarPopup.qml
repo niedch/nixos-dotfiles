@@ -4,7 +4,6 @@ import Quickshell.Io
 import QtQuick
 import QtQuick.Layouts
 import qs
-import qs.Components.Calendar
 
 PopupWindow {
   id: root

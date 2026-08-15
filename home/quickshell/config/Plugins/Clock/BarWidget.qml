@@ -3,7 +3,6 @@ import QtQuick
 import qs
 import qs.Ui
 import qs.Commons
-import qs.Components.Calendar
 
 BarWidget {
   id: clock

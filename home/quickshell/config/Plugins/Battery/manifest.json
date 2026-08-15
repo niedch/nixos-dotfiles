@@ -4,14 +4,14 @@
   "name": "Battery",
   "version": "1.0.0",
   "author": "quickshell-dotfiles",
-  "description": "Battery level and charging status",
+  "description": "Battery status with charging stats",
   "kinds": ["bar-widget"],
   "entryPoints": {
-    "barWidget": "BarWidget.qml"
+    "barWidget": "Panel.qml"
   },
   "barWidget": {
     "displayName": "Battery",
-    "description": "Battery level and charging status",
+    "description": "Battery status with charging stats",
     "category": "System",
     "allowMultiple": false
   }

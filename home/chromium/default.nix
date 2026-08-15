@@ -157,6 +157,11 @@
       sha256 = "sha256-3Xi5WD5lVLnYLVOlgNwETtzYT6wAf7DIEeIrzStB0iE=";
       faviconDomain = "https://gethomepage.dev/";
     }
+    {
+      name = "Instagram";
+      url = "https://www.instagram.com";
+      sha256 = "sha256-7zU488xJDlPF4+oAbob9T/WvGsblnA3YTzHnwEdeQw8=";
+    }
   ];
 in {
   xdg.desktopEntries = builtins.listToAttrs (map (app: {

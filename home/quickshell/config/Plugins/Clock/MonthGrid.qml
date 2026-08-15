@@ -71,14 +71,16 @@ Item {
         width: 26
         height: 26
         radius: 13
-        color: cell.isToday ? Colors.accent : "transparent"
-        border.color: (!cell.isToday && cell.isSelected) ? Colors.accent : "transparent"
-        border.width: (!cell.isToday && cell.isSelected) ? 2 : 0
+        color: cell.isToday
+          ? theme.tint(Colors.accent, 0.18)
+          : (cell.isSelected ? theme.tint(Colors.foreground, 0.12) : "transparent")
+        border.color: (cell.isToday || cell.isSelected) ? Colors.accent : "transparent"
+        border.width: (cell.isToday || cell.isSelected) ? 2 : 0
 
         Text {
           anchors.centerIn: parent
           text: cell.day.getDate()
-          color: cell.isToday ? "#ffffff" : (cell.inMonth ? Colors.foreground : Colors.color8)
+          color: cell.inMonth ? Colors.foreground : Colors.color8
           font.family: Constants.fontFamily
           font.pixelSize: 11
           font.weight: cell.isToday ? Font.DemiBold : Font.Normal

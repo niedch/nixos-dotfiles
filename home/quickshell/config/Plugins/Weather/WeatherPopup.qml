@@ -2,7 +2,6 @@ import Quickshell
 import Quickshell.Hyprland
 import QtQuick
 import qs
-import qs.Components.Weather
 
 PopupWindow {
   id: root

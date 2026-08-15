@@ -117,12 +117,14 @@ Item {
             width: 22
             height: 22
             radius: 11
-            color: dh.isToday ? Colors.accent : "transparent"
+            color: dh.isToday ? theme.tint(Colors.accent, 0.18) : "transparent"
+            border.color: dh.isToday ? Colors.accent : "transparent"
+            border.width: dh.isToday ? 2 : 0
 
             Text {
               anchors.centerIn: parent
               text: dh.day.getDate()
-              color: dh.isToday ? "#ffffff" : Colors.foreground
+              color: Colors.foreground
               font.family: Constants.fontFamily
               font.pixelSize: 10
             }

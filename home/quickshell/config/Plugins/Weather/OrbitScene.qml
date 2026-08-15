@@ -1,6 +1,6 @@
 import QtQuick
 import qs
-import qs.Components.Weather
+import qs.Commons
 
 Item {
   id: scene
@@ -215,7 +215,9 @@ Item {
         Rectangle {
           anchors.fill: parent
           radius: 8
-          color: scene.selectedIndex === index ? Colors.accent : (isActive ? Colors.color3 : Colors.background)
+          color: scene.selectedIndex === index
+            ? Util.alpha(Colors.accent, 0.18)
+            : (isActive ? Util.alpha(Colors.foreground, 0.12) : Colors.background)
           border.color: scene.selectedIndex === index ? Colors.accent : (isActive ? Colors.color3 : Colors.color8)
           border.width: scene.selectedIndex === index ? 2 : (isActive ? 1.5 : 0.5)
 
@@ -229,7 +231,7 @@ Item {
             Text {
               anchors.horizontalCenter: parent.horizontalCenter
               text: modelData.time || ""
-              color: (scene.selectedIndex === index || isActive) ? Colors.background : Colors.color8
+              color: (scene.selectedIndex === index || isActive) ? Colors.foreground : Colors.color8
               font.family: Constants.fontFamily
               font.pixelSize: 9
               font.bold: true

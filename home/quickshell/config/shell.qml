@@ -2,7 +2,7 @@ import Quickshell
 import Quickshell.Io
 import QtQuick
 
-import qs.Components.MenuPanel
+import qs.Plugins.Menu
 import qs.Launcher
 import qs.services
 

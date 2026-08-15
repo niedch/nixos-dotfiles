@@ -2,7 +2,6 @@ import QtQuick
 import qs
 import qs.Ui
 import qs.Commons
-import qs.Components.Notifications
 
 BarWidget {
   id: widget

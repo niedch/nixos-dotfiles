@@ -3,6 +3,7 @@ import Quickshell.Io
 import QtQuick
 import QtQuick.Layouts
 import qs
+import qs.Commons
 import "MenuTree.js" as MenuTree
 import "MenuModel.js" as MenuModel
 import "Keybindings.js" as Keybindings
@@ -368,8 +369,11 @@ Item {
 
         Rectangle {
           anchors.fill: parent
-          color: isCurrent ? Colors.selectionBackground : (!root.navigating && rowMouse.containsMouse ? Colors.selectionBackground : "transparent")
-          opacity: isCurrent || (!root.navigating && rowMouse.containsMouse) ? 0.7 : 1.0
+          color: isCurrent
+            ? Util.alpha(Colors.accent, 0.12)
+            : (!root.navigating && rowMouse.containsMouse ? Util.alpha(Colors.foreground, 0.08) : "transparent")
+          border.color: isCurrent ? Colors.accent : "transparent"
+          border.width: isCurrent ? 2 : 0
         }
 
         RowLayout {
@@ -381,7 +385,7 @@ Item {
           Text {
             Layout.preferredWidth: 18
             text: root.displayItemIcon(modelData)
-            color: isDanger ? Colors.color1 : Colors.color8
+            color: isDanger ? Colors.color1 : Colors.foreground
             font.family: Constants.fontFamily
             font.pixelSize: 14
             horizontalAlignment: Text.AlignHCenter
@@ -404,7 +408,7 @@ Item {
               Layout.fillWidth: true
               visible: root.displayItemSub(modelData) !== ""
               text: root.displayItemSub(modelData)
-              color: Colors.color8
+              color: Qt.darker(Colors.foreground, 1.5)
               font.family: Constants.fontFamily
               font.pixelSize: Constants.fontSizeSmall
               elide: Text.ElideRight
@@ -414,7 +418,7 @@ Item {
           Text {
             visible: isGroup
             text: "󰁔"
-            color: Colors.color8
+            color: Qt.darker(Colors.foreground, 1.5)
             font.family: Constants.fontFamily
             font.pixelSize: 10
           }

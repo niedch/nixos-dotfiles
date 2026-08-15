@@ -5,7 +5,6 @@ import QtQuick
 import qs
 import qs.Ui
 import qs.Commons
-import qs.Components.MediaPopup
 
 BarWidget {
   id: widget

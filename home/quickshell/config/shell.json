@@ -23,6 +23,7 @@
         { "id": "quickshell.bluetooth" },
         { "id": "quickshell.network" },
         { "id": "quickshell.audio" },
+        { "id": "robzolkos.github" },
         { "id": "stappmus.activity-monitor" },
         { "id": "quickshell.battery" }
       ]

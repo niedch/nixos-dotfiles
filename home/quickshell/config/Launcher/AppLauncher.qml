@@ -243,7 +243,7 @@ Scope {
           Layout.rightMargin: 12
           Layout.topMargin: 4
           text: modeConfig.modeLabel(modeConfig.detectMode(searchInput.text))
-          color: Colors.color8
+          color: Colors.color3
           font.family: Constants.fontFamily
           font.pixelSize: Constants.fontSizeSmall
         }
@@ -274,7 +274,7 @@ Scope {
           Layout.bottomMargin: 8
           Layout.topMargin: 4
           text: "↑↓ navigate · Enter open · Esc close"
-          color: Colors.color8
+          color: Colors.color3
           font.family: Constants.fontFamily
           font.pixelSize: Constants.fontSizeSmall
           horizontalAlignment: Text.AlignHCenter

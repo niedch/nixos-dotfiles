@@ -4,7 +4,6 @@ import QtQuick
 import qs
 import qs.Ui
 import qs.Commons
-import qs.Components.Weather
 
 BarWidget {
   id: widget

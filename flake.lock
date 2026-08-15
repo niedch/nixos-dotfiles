@@ -255,11 +255,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1785945322,
-        "narHash": "sha256-8MdYcliaYIaCVShjeWtNt7Rk8d7XeTI1dZH6c60iYCM=",
+        "lastModified": 1786810007,
+        "narHash": "sha256-Cb8p/1mSwtg/Ag1Riz/e5HvQgTQVr4b9CNnllv3q3/I=",
         "owner": "niedch",
         "repo": "opencode-waybar-status",
-        "rev": "923c888922252fc51d74f08b03b73b915d0b7f56",
+        "rev": "b128d749988489b1f2b6f479ef1fa99e4e228f0f",
         "type": "github"
       },
       "original": {

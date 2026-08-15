@@ -1,0 +1,5 @@
+module qs.Plugins.Menu
+MenuPanel 1.0 MenuPanel.qml
+MenuColumn 1.0 MenuColumn.qml
+BackgroundColumn 1.0 BackgroundColumn.qml
+ThemeColumn 1.0 ThemeColumn.qml

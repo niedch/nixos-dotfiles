@@ -3,12 +3,14 @@ import Quickshell.Io
 import QtQuick
 import QtQuick.Layouts
 import qs
+import qs.Commons
 
 Item {
   id: root
 
-  signal themeChanged()
-  signal themeSelected()
+  property var backgrounds: []
+  property string currentBackground: ""
+  property int currentIndex: -1
   signal focusMenuRequested()
   signal focusNextRequested()
   signal focusPreviousRequested()
@@ -20,45 +22,42 @@ Item {
     onTriggered: root.navigating = false
   }
 
-  property var themes: []
-  property string currentTheme: ""
-  property int currentIndex: -1
-
-  readonly property string themesDir: (Quickshell.env("HOME") ?? "") + "/.local/share/themes"
+  property int reloadToken: 0
+  readonly property string backgroundsDir: (Quickshell.env("HOME") ?? "") + "/.local/share/themes/current/backgrounds"
 
   function load() {
+    root.reloadToken++
     listProc.running = true
     currentProc.running = true
   }
 
   function activate(name) {
-    if (name === root.currentTheme) return
-    root.themeSelected()
-    switchProc.command = ["theme-switcher", name]
+    if (name === root.currentBackground) return
+    switchProc.command = ["theme-wallpaper", name]
     switchProc.running = true
   }
 
   Process {
     id: listProc
-    command: ["bash", "-c", "ls -1 \"$HOME/.local/share/themes\" | grep -v -E '^(current|current-background)$' | sort"]
+    command: ["bash", "-c", "ls -1 \"$HOME/.local/share/themes/current/backgrounds\" 2>/dev/null | sort"]
     stdout: StdioCollector {
       id: listOut
     }
     onExited: {
       var names = listOut.text.trim().split("\n").filter(function (x) { return x !== "" })
-      root.themes = names
+      root.backgrounds = names
       root.updateCurrent()
     }
   }
 
   Process {
     id: currentProc
-    command: ["bash", "-c", "basename \"$(readlink \"$HOME/.local/share/themes/current\")\" 2>/dev/null"]
+    command: ["bash", "-c", "basename \"$(readlink \"$HOME/.local/share/themes/current-background\")\" 2>/dev/null"]
     stdout: StdioCollector {
       id: currentOut
     }
     onExited: {
-      root.currentTheme = currentOut.text.trim()
+      root.currentBackground = currentOut.text.trim()
       root.updateCurrent()
     }
   }
@@ -66,28 +65,27 @@ Item {
   Process {
     id: switchProc
     onExited: {
-      root.themeChanged()
       // refresh current marker after switching
       currentProc.running = true
     }
   }
 
   function updateCurrent() {
-    root.currentIndex = root.themes.indexOf(root.currentTheme)
-    themeList.currentIndex = -1
+    root.currentIndex = root.backgrounds.indexOf(root.currentBackground)
+    bgList.currentIndex = -1
     if (root.currentIndex >= 0) {
-      themeList.positionViewAtIndex(root.currentIndex, ListView.Contain)
+      bgList.positionViewAtIndex(root.currentIndex, ListView.Contain)
     }
   }
 
   function takeFocus() {
-    themeList.currentIndex = root.currentIndex >= 0 ? root.currentIndex : 0
-    themeList.positionViewAtIndex(themeList.currentIndex, ListView.Contain)
-    themeList.forceActiveFocus()
+    bgList.currentIndex = root.currentIndex >= 0 ? root.currentIndex : 0
+    bgList.positionViewAtIndex(bgList.currentIndex, ListView.Contain)
+    bgList.forceActiveFocus()
   }
 
   function defocus() {
-    themeList.currentIndex = -1
+    bgList.currentIndex = -1
   }
 
   ColumnLayout {
@@ -99,7 +97,7 @@ Item {
       Layout.preferredHeight: 36
       horizontalAlignment: Text.AlignHCenter
       verticalAlignment: Text.AlignVCenter
-      text: "󰉼 Theme"
+      text: "󰸉 Backgrounds"
       color: Colors.foreground
       font.family: Constants.fontFamily
       font.pixelSize: Constants.fontSizeLarge
@@ -113,30 +111,30 @@ Item {
     }
 
     ListView {
-      id: themeList
+      id: bgList
       Layout.fillWidth: true
       Layout.fillHeight: true
       clip: true
       currentIndex: -1
-      model: root.themes
+      model: root.backgrounds
 
       Keys.onUpPressed: {
-        if (themeList.currentIndex > 0) {
+        if (bgList.currentIndex > 0) {
           root.navigating = true
           navTimer.restart()
-          themeList.currentIndex--
+          bgList.currentIndex--
         }
       }
       Keys.onDownPressed: {
-        if (themeList.currentIndex < themeList.count - 1) {
+        if (bgList.currentIndex < bgList.count - 1) {
           root.navigating = true
           navTimer.restart()
-          themeList.currentIndex++
+          bgList.currentIndex++
         }
       }
       Keys.onReturnPressed: {
-        if (themeList.currentIndex >= 0) {
-          root.activate(root.themes[themeList.currentIndex])
+        if (bgList.currentIndex >= 0) {
+          root.activate(root.backgrounds[bgList.currentIndex])
         }
       }
       Keys.onLeftPressed: root.focusMenuRequested()
@@ -153,10 +151,10 @@ Item {
       delegate: Item {
         required property string modelData
         required property int index
-        property bool isCurrent: modelData === root.currentTheme
-        property bool isSelected: themeList.currentIndex === index
+        property bool isCurrent: modelData === root.currentBackground
+        property bool isSelected: bgList.currentIndex === index
 
-        width: themeList.width
+        width: bgList.width
         height: 84
 
         Rectangle {
@@ -164,19 +162,20 @@ Item {
           anchors.leftMargin: 8
           anchors.rightMargin: 8
           radius: 6
-          color: isSelected ? Colors.selectionBackground : (!root.navigating && themeMouse.containsMouse ? Colors.selectionBackground : "transparent")
-          opacity: isSelected || (!root.navigating && themeMouse.containsMouse) ? 0.7 : 1.0
-          border.color: isCurrent ? Colors.accent : "transparent"
-          border.width: isCurrent ? 2 : 0
+          color: isSelected
+            ? Util.alpha(Colors.accent, 0.12)
+            : (!root.navigating && bgMouse.containsMouse ? Util.alpha(Colors.foreground, 0.08) : "transparent")
+          border.color: (isCurrent || isSelected) ? Colors.accent : "transparent"
+          border.width: (isCurrent || isSelected) ? 2 : 0
 
           MouseArea {
-            id: themeMouse
+            id: bgMouse
             anchors.fill: parent
             hoverEnabled: true
             cursorShape: Qt.PointingHandCursor
             onPositionChanged: {
               if (!root.navigating) {
-                themeList.currentIndex = index
+                bgList.currentIndex = index
               }
             }
             onClicked: {
@@ -200,7 +199,7 @@ Item {
 
               Image {
                 anchors.fill: parent
-                source: "file://" + root.themesDir + "/" + modelData + "/preview.png"
+                source: "file://" + root.backgroundsDir + "/" + modelData + "?t=" + root.reloadToken
                 sourceSize.width: 192
                 sourceSize.height: 120
                 asynchronous: true
@@ -217,7 +216,6 @@ Item {
               elide: Text.ElideRight
               wrapMode: Text.Wrap
               maximumLineCount: 2
-              verticalAlignment: Text.AlignVCenter
             }
           }
         }

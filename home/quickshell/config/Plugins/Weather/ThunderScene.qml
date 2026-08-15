@@ -1,7 +1,6 @@
 import Quickshell
 import QtQuick
 import qs
-import qs.Components.Weather
 
 Item {
   id: root

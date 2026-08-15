@@ -22,6 +22,10 @@
   # media (USB drives, SD cards) to /run/media/$USER/<label>.
   services.udisks2.enable = true;
 
+  # UPower daemon + D-Bus service backing the quickshell battery widget's
+  # Quickshell.Services.UPower reads (battery level, state, on-battery flag).
+  services.upower.enable = true;
+
   services.fwupd = {
     enable = true;
     extraRemotes = [];

@@ -3,8 +3,6 @@ import Quickshell.Hyprland
 import QtQuick
 import QtQuick.Layouts
 import qs
-import qs.Components
-import qs.Components.Notifications
 
 PopupWindow {
   id: root

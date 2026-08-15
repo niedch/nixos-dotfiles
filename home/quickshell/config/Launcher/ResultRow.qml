@@ -3,6 +3,7 @@ import Quickshell.Widgets
 import QtQuick
 import QtQuick.Layouts
 import qs
+import qs.Commons
 
 Item {
   id: row
@@ -50,8 +51,9 @@ Item {
 
   Rectangle {
     anchors.fill: parent
-    color: row.isCurrent ? Colors.selectionBackground : "transparent"
-    opacity: row.isCurrent ? 0.7 : 1.0
+    color: row.isCurrent ? Util.alpha(Colors.accent, 0.12) : "transparent"
+    border.color: row.isCurrent ? Colors.accent : "transparent"
+    border.width: row.isCurrent ? 2 : 0
 
     MouseArea {
       anchors.fill: parent
@@ -103,7 +105,7 @@ Item {
           Layout.fillWidth: true
           visible: row.subtitle(row.modelData) !== ""
           text: row.subtitle(row.modelData)
-          color: Colors.color8
+          color: Qt.darker(Colors.foreground, 1.5)
           font.family: Constants.fontFamily
           font.pixelSize: Constants.fontSizeSmall
           elide: Text.ElideRight

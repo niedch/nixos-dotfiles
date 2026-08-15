@@ -54,6 +54,7 @@ in {
       inputs.wlctl.packages.${pkgs.stdenv.hostPlatform.system}.default
       jq
       cava
+      upower
       voxtype
       quickshell
       libqalculate
@@ -63,6 +64,10 @@ in {
       (pkgs.writeShellScriptBin "qs-network-status" (builtins.readFile ./config/scripts/qs-network-status))
       (pkgs.writeShellScriptBin "qs-network-speedtest" (builtins.readFile ./config/scripts/qs-network-speedtest))
       (pkgs.writeShellScriptBin "qs-dns" (builtins.readFile ./config/scripts/qs-dns))
+      (pkgs.writeShellScriptBin "omarchy-battery-status" (builtins.readFile ./config/scripts/omarchy-battery-status))
+      (pkgs.writeShellScriptBin "omarchy-launch-browser" ''
+        exec ${pkgs.xdg-utils}/bin/xdg-open "$@"
+      '')
       (pkgs.writeShellScriptBin "quickshell-reload-theme" ''
         QSID=$(env -u QS_CONFIG_PATH -u QS_CONFIG_NAME -u __QUICKSHELL_CRASH_INFO_FD -u __QUICKSHELL_CRASH_DUMP_PID -u __QUICKSHELL_CRASH_SIGNAL ${pkgs.quickshell}/bin/quickshell list --all 2>/dev/null | awk '/^Instance / {gsub(":", "", $2); print $2; exit}')
         if [ -n "$QSID" ]; then
