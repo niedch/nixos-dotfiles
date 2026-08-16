@@ -15,15 +15,15 @@
     script = ''
       STORE=/mnt/hdd/nix
 
-      mkdir -p "$STORE/var/nix/gcroots/auto"
-      nix-store --store "$STORE" -qR --all > "$STORE/var/nix/gcroots/auto/cache-keep"
+      mkdir -p "$STORE/nix/var/nix/gcroots/auto"
+      nix-store --store "$STORE" -qR --all > "$STORE/nix/var/nix/gcroots/auto/cache-keep"
 
-      find "$STORE/store" -type f -atime +5 -delete 2>/dev/null || true
-      find "$STORE/store" -type d -empty -delete 2>/dev/null || true
+      find "$STORE/nix/store" -type f -atime +5 -delete 2>/dev/null || true
+      find "$STORE/nix/store" -type d -empty -delete 2>/dev/null || true
 
       nix-store --store "$STORE" --gc
 
-      rm -f "$STORE/var/nix/gcroots/auto/cache-keep"
+      rm -f "$STORE/nix/var/nix/gcroots/auto/cache-keep"
     '';
   };
 }
