@@ -19,6 +19,7 @@ jobs:
       - uses: actions/checkout@v7
       - run: nix build ".#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel" --print-out-paths --no-link
       - run: nix copy --to /mnt/hdd/nix ".#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel"
+      - run: nix copy --to /mnt/hdd/nix --derivation ".#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel"
       - if: success()
         run: /run/current-system/sw/bin/post-homepage-message-board "Cache built for ${{ matrix.host }}" success
       - if: failure()
