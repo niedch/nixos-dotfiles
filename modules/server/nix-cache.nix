@@ -8,6 +8,7 @@
 
   services.harmonia.cache.enable = true;
   services.harmonia.cache.settings.real_nix_store = "/mnt/hdd/nix/nix/store";
+  services.harmonia.cache.settings.priority = 30;
   services.harmonia.cache.signKeyPaths = [
     config.sops.secrets.harmonia-secret.path
   ];
