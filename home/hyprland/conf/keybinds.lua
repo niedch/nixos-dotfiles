@@ -9,6 +9,8 @@ hl.bind(mainMod .. " + Space",         hl.dsp.exec_cmd(launcher .. " toggle"), {
 hl.bind(mainMod .. " + ALT + Space",   hl.dsp.exec_cmd(menu .. " toggle"), { description = "System menu" })
 hl.bind(mainMod .. " + CTRL + E",      hl.dsp.exec_cmd(launcher .. " symbols"), { description = "Emoji picker" })
 hl.bind(mainMod .. " + CTRL + V",      hl.dsp.exec_cmd(launcher .. " clipboard"), { description = "Clipboard history" })
+hl.bind(mainMod .. " + CTRL + C",      hl.dsp.exec_cmd("quickshell-shell toggle quickshell.clipboard"), { locked = true, description = "Clipboard manager" })
+hl.bind(mainMod .. " + CTRL + R",      hl.dsp.exec_cmd("omarchy-reminder -i"), { locked = true, description = "Set reminder" })
 
 -- Universal copy/paste/cut
 hl.bind(mainMod .. " + C", hl.dsp.send_shortcut({ mods = "CTRL", key = "Insert" }), { description = "Copy (send Ctrl+Insert)" })
@@ -125,16 +127,16 @@ hl.bind(mainMod .. " + ALT + N",  hl.dsp.exec_cmd("~/.config/hypr/toggle-sunset.
 hl.bind(mainMod .. " + CTRL + T",     hl.dsp.exec_cmd(terminal .. " -e btop"), { description = "System monitor (btop)" })
 
 -- Volume
-hl.bind("XF86AudioRaiseVolume",        hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true, description = "Raise volume" })
-hl.bind("XF86AudioLowerVolume",        hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),      { locked = true, repeating = true, description = "Lower volume" })
-hl.bind("XF86AudioMute",               hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"),     { locked = true, description = "Toggle mute" })
-hl.bind("XF86AudioMicMute",            hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"),   { locked = true, description = "Toggle mic mute" })
+hl.bind("XF86AudioRaiseVolume",        hl.dsp.exec_cmd("qs-volume up"),                                        { locked = true, repeating = true, description = "Raise volume" })
+hl.bind("XF86AudioLowerVolume",        hl.dsp.exec_cmd("qs-volume down"),                                      { locked = true, repeating = true, description = "Lower volume" })
+hl.bind("XF86AudioMute",               hl.dsp.exec_cmd("qs-volume mute"),                                     { locked = true, description = "Toggle mute" })
+hl.bind("XF86AudioMicMute",            hl.dsp.exec_cmd("qs-volume micmute"),                                  { locked = true, description = "Toggle mic mute" })
 
 -- Brightness
-hl.bind("XF86MonBrightnessUp",         hl.dsp.exec_cmd("brightnessctl set 5%+"),                           { locked = true, repeating = true, description = "Brightness up" })
-hl.bind("XF86MonBrightnessDown",       hl.dsp.exec_cmd("brightnessctl set 5%-"),                           { locked = true, repeating = true, description = "Brightness down" })
-hl.bind("SHIFT + XF86MonBrightnessUp",   hl.dsp.exec_cmd("brightnessctl set 100%"),                        { locked = true, description = "Brightness max" })
-hl.bind("SHIFT + XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl set 1%"),                          { locked = true, description = "Brightness min" })
+hl.bind("XF86MonBrightnessUp",         hl.dsp.exec_cmd("omarchy-brightness-display +5%"),                      { locked = true, repeating = true, description = "Brightness up" })
+hl.bind("XF86MonBrightnessDown",       hl.dsp.exec_cmd("omarchy-brightness-display 5%-"),                      { locked = true, repeating = true, description = "Brightness down" })
+hl.bind("SHIFT + XF86MonBrightnessUp",   hl.dsp.exec_cmd("omarchy-brightness-display 100%"),                   { locked = true, description = "Brightness max" })
+hl.bind("SHIFT + XF86MonBrightnessDown", hl.dsp.exec_cmd("omarchy-brightness-display 1%"),                     { locked = true, description = "Brightness min" })
 
 -- Media
 hl.bind("XF86AudioNext",               hl.dsp.exec_cmd("playerctl next"),                                 { locked = true, description = "Next track" })

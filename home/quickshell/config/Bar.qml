@@ -59,6 +59,7 @@ PanelWindow {
     readonly property int barSize: Constants.barHeight
     readonly property color foreground: Colors.foreground
     readonly property color barForeground: Colors.foreground
+    readonly property color background: Colors.background
     readonly property string fontFamily: Constants.fontFamily
     readonly property color urgent: Colors.color1
     readonly property bool foregroundAnimationEnabled: true

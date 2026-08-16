@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "quickshell.osd",
+  "name": "On-screen display",
+  "version": "1.0.0",
+  "author": "quickshell-dotfiles",
+  "description": "Quickshell volume, brightness, and status overlays.",
+  "kinds": ["panel"],
+  "keepLoaded": true,
+  "entryPoints": {
+    "panel": "Osd.qml"
+  }
+}

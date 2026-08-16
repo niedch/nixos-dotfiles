@@ -55,6 +55,10 @@ in {
       jq
       cava
       upower
+      wtype
+      wl-clipboard
+      procps
+      util-linux
       voxtype
       quickshell
       libqalculate
@@ -65,6 +69,18 @@ in {
       (pkgs.writeShellScriptBin "qs-network-speedtest" (builtins.readFile ./config/scripts/qs-network-speedtest))
       (pkgs.writeShellScriptBin "qs-dns" (builtins.readFile ./config/scripts/qs-dns))
       (pkgs.writeShellScriptBin "omarchy-battery-status" (builtins.readFile ./config/scripts/omarchy-battery-status))
+      (pkgs.writeShellScriptBin "omarchy-monitor-state" (builtins.readFile ./config/scripts/omarchy-monitor-state))
+      (pkgs.writeShellScriptBin "omarchy-brightness-display" (builtins.readFile ./config/scripts/omarchy-brightness-display))
+      (pkgs.writeShellScriptBin "omarchy-hyprland-monitor-scaling" (builtins.readFile ./config/scripts/omarchy-hyprland-monitor-scaling))
+      (pkgs.writeShellScriptBin "omarchy-hyprland-monitor-focused" (builtins.readFile ./config/scripts/omarchy-hyprland-monitor-focused))
+      (pkgs.writeShellScriptBin "omarchy-hw-display" (builtins.readFile ./config/scripts/omarchy-hw-display))
+      (pkgs.writeShellScriptBin "omarchy-osd" (builtins.readFile ./config/scripts/omarchy-osd))
+      (pkgs.writeShellScriptBin "qs-volume" (builtins.readFile ./config/scripts/qs-volume))
+      (pkgs.writeShellScriptBin "omarchy-clipboard-paste-text" (builtins.readFile ./config/scripts/omarchy-clipboard-paste-text))
+      (pkgs.writeShellScriptBin "omarchy-clipboard-paste-file" (builtins.readFile ./config/scripts/omarchy-clipboard-paste-file))
+      (pkgs.writeShellScriptBin "omarchy-clipboard-open" (builtins.readFile ./config/scripts/omarchy-clipboard-open))
+      (pkgs.writeShellScriptBin "omarchy-reminder" (builtins.readFile ./config/scripts/omarchy-reminder))
+      (pkgs.writeShellScriptBin "omarchy-notification-send" (builtins.readFile ./config/scripts/omarchy-notification-send))
       (pkgs.writeShellScriptBin "omarchy-launch-browser" ''
         exec ${pkgs.xdg-utils}/bin/xdg-open "$@"
       '')
@@ -106,6 +122,17 @@ in {
         if [ -n "$QSID" ]; then
           env -u QS_CONFIG_PATH -u QS_CONFIG_NAME -u __QUICKSHELL_CRASH_INFO_FD -u __QUICKSHELL_CRASH_DUMP_PID -u __QUICKSHELL_CRASH_SIGNAL ${pkgs.quickshell}/bin/quickshell ipc -i "$QSID" call shell rescanPlugins >/dev/null 2>&1 || true
         fi
+      '')
+      (pkgs.writeShellScriptBin "quickshell-shell" ''
+        # Default the JSON payload to {} for summon/toggle when omitted.
+        case "$1" in
+          summon|toggle)
+            if [ $# -eq 2 ]; then
+              set -- "$1" "$2" "{}"
+            fi
+            ;;
+        esac
+        quickshell ipc call shell "$@" >/dev/null 2>&1 || true
       '')
     ];
 

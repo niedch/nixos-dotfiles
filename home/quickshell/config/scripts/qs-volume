@@ -1,0 +1,34 @@
+#!/bin/bash
+# usage: qs-volume <up|down|mute|micmute>
+set -euo pipefail
+
+SINK="@DEFAULT_AUDIO_SINK@"
+SOURCE="@DEFAULT_AUDIO_SOURCE@"
+
+sink_muted() { wpctl get-volume "$SINK" | grep -q MUTED; }
+source_muted() { wpctl get-volume "$SOURCE" | grep -q MUTED; }
+sink_percent() { wpctl get-volume "$SINK" | awk '{ gsub(/\[.*\]/, "", $2); printf "%d", $2 * 100 }'; }
+
+case "${1:-}" in
+  up) wpctl set-volume -l 1 "$SINK" 5%+ ;;
+  down) wpctl set-volume "$SINK" 5%- ;;
+  mute) wpctl set-mute "$SINK" toggle ;;
+  micmute) wpctl set-mute "$SOURCE" toggle ;;
+  *) echo "usage: qs-volume <up|down|mute|micmute>" >&2; exit 1 ;;
+esac
+
+if [[ "${1:-}" == "micmute" ]]; then
+  if source_muted; then omarchy-osd -i microphone-muted -m "Microphone muted"
+  else omarchy-osd -i microphone -m "Microphone on"; fi
+  exit 0
+fi
+
+if sink_muted; then
+  omarchy-osd -i volume-muted -m "Muted"
+else
+  p=$(sink_percent)
+  if (( p <= 33 )); then icon=volume-low
+  elif (( p <= 66 )); then icon=volume-medium
+  else icon=volume-high; fi
+  omarchy-osd -i "$icon" -p "$p"
+fi

@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "quickshell.monitor",
+  "name": "Display",
+  "version": "1.0.0",
+  "author": "quickshell-dotfiles",
+  "description": "Brightness slider and display controls",
+  "kinds": ["bar-widget"],
+  "entryPoints": {
+    "barWidget": "Panel.qml"
+  },
+  "barWidget": {
+    "displayName": "Display",
+    "description": "Brightness slider and display controls",
+    "category": "System",
+    "allowMultiple": false
+  }
+}

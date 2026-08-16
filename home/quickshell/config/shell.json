@@ -25,6 +25,7 @@
         { "id": "quickshell.audio" },
         { "id": "robzolkos.github" },
         { "id": "stappmus.activity-monitor" },
+        { "id": "quickshell.monitor" },
         { "id": "quickshell.battery" }
       ]
     }

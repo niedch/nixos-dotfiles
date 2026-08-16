@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "quickshell.clipboard",
+  "name": "Clipboard",
+  "version": "1.0.0",
+  "author": "quickshell-dotfiles",
+  "description": "A clipboard manager to view and paste history",
+  "kinds": ["overlay"],
+  "keepLoaded": true,
+  "entryPoints": {
+    "overlay": "Clipboard.qml"
+  }
+}

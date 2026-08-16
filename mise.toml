@@ -7,6 +7,14 @@ description = "Build a NixOS configuration (e.g. laptop, desktop, dobby)"
 usage = '''arg "<host>" help="Host configuration name"'''
 run = "nix build .#nixosConfigurations.${usage_host?}.config.system.build.toplevel"
 
+[tasks.diff]
+description = "Build a host config and show package changes vs. the previous generation (e.g. laptop, desktop)"
+usage = '''arg "<host>" help="Host configuration name"'''
+run = '''
+prev=$(ls -dv /nix/var/nix/profiles/system-*-link | tail -n2 | head -n1)
+nix run nixpkgs#nvd -- diff "$prev" result
+'''
+
 [tasks.switch]
 description = "Switch to a NixOS configuration with sudo (e.g. laptop, desktop, dobby)"
 usage = '''arg "<host>" help="Host configuration name"'''
