@@ -181,6 +181,7 @@
           mise
           watchexec
           sops
+          nh
         ];
       };
   };

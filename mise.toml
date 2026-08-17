@@ -5,7 +5,7 @@ run = "nix run nixpkgs#alejandra -- . 2>&1"
 [tasks.build]
 description = "Build a NixOS configuration (e.g. laptop, desktop, dobby)"
 usage = '''arg "<host>" help="Host configuration name"'''
-run = "nix build .#nixosConfigurations.${usage_host?}.config.system.build.toplevel"
+run = "nh os build . -H ${usage_host?}"
 
 [tasks.diff]
 description = "Build a host config and show package changes vs. the previous generation (e.g. laptop, desktop)"
@@ -18,7 +18,7 @@ nix run nixpkgs#nvd -- diff "$prev" result
 [tasks.switch]
 description = "Switch to a NixOS configuration with sudo (e.g. laptop, desktop, dobby)"
 usage = '''arg "<host>" help="Host configuration name"'''
-run = "sudo nixos-rebuild switch --flake .#${usage_host?}"
+run = "nh os switch . -H ${usage_host?}"
 
 [tasks.quickshell]
 description = "Watch quickshell"
@@ -35,7 +35,7 @@ usage = '''
 arg "<host>" help="Host configuration name"
 arg "<target>" help="SSH target (user@host)"
 '''
-run = "nixos-rebuild switch --flake .#${usage_host?} --target-host ${usage_target?} --sudo --ask-sudo-password --fallback"
+run = "nh os switch . -H ${usage_host?} --target-host ${usage_target?}"
 
 [tasks.switch-all-hosts]
 description = "Build and deploy to all hosts"
