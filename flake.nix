@@ -132,7 +132,6 @@
         ./modules/server/samba.nix
         ./modules/server/github-runner.nix
         ./modules/server/glances.nix
-        ./modules/server/gameserver
         speedtest-tracker.nixosModules.default
         ./modules/server/homepage
         (mkHM (import ./home/server.nix))

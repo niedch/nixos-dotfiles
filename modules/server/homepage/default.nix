@@ -195,13 +195,6 @@
             };
           }
           {
-            Valheim = {
-              icon = "steam.png";
-              href = "steam://connect/dobby:2456";
-              description = "Valheim Dedicated Server";
-            };
-          }
-          {
             Storage = [
               {
                 "Dobby Storage" = {
