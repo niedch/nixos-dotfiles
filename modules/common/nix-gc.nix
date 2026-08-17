@@ -17,6 +17,8 @@ in {
 
   systemd.services.nix-gc = {
     onFailure = ["nix-gc-failure.service"];
+    wants = ["network-online.target"];
+    after = ["network-online.target"];
     serviceConfig = {
       ExecStartPre = [gcStarted];
       ExecStartPost = [gcDone];
