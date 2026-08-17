@@ -11,7 +11,7 @@ https://github.com/user-attachments/assets/e0bab9e3-ae21-42dc-b0bd-6bb02382538f
 | Host       | Type        | Hostname | Boot        | Key Features                              |
 |------------|-------------|----------|-------------|-------------------------------------------|
 | `desktop`  | QEMU/KVM VM | `nixos`  | GRUB        | Desktop VM, virtio GPU, QEMU guest tools  |
-| `laptop`   | Physical    | `nixos`  | systemd-boot | Dell Precision 5530, NVIDIA, Bluetooth, CUPS, PipeWire |
+| `laptop`   | Physical    | `laptop` | systemd-boot | Dell Precision 5530, NVIDIA, Bluetooth, CUPS, PipeWire |
 | `dobby`    | Server      | `dobby`  | systemd-boot | Minimal, no desktop, SSH-only             |
 | `raspberry-pi` | Physical | `rpi`    | extlinux     | Raspberry Pi (aarch64), minimal SSH       |
 | `microvm`   | MicroVM     | `microvm` | N/A         | Try-before-you-buy, runnable via `nix run` |

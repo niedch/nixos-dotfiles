@@ -14,7 +14,7 @@
   };
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "laptop";
 
   networking.networkmanager.enable = true;
   networking.wireless.enable = true;

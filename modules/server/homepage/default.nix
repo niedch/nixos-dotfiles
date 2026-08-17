@@ -195,6 +195,13 @@
             };
           }
           {
+            Valheim = {
+              icon = "steam.png";
+              href = "steam://connect/dobby:2456";
+              description = "Valheim Dedicated Server";
+            };
+          }
+          {
             Storage = [
               {
                 "Dobby Storage" = {
@@ -257,10 +264,10 @@
           {
             "Laptop" = {
               icon = "glances.png";
-              href = "http://nixos:61208";
+              href = "http://laptop:61208";
               widget = {
                 type = "glances";
-                url = "http://nixos:61208";
+                url = "http://laptop:61208";
                 metric = "info";
                 version = 4;
               };
@@ -269,10 +276,10 @@
           {
             "Laptop Storage" = {
               icon = "glances.png";
-              href = "http://nixos:61208";
+              href = "http://laptop:61208";
               widget = {
                 type = "glances";
-                url = "http://nixos:61208";
+                url = "http://laptop:61208";
                 metric = "fs:/";
                 version = 4;
               };
