@@ -53,7 +53,7 @@
   spotifyAssets = pkgs.runCommandLocal "spotify-assets" {} ''
     mkdir -p $out/share/applications $out/share/icons
     cp -r ${pkgs.spotify}/share/applications/* $out/share/applications/
-    cp -r ${pkgs.spotify}/share/icons/* $out/share/icons/
+    cp -rL ${pkgs.spotify}/share/icons/* $out/share/icons/
   '';
 in {
   home.packages = [

@@ -10,7 +10,7 @@
       ],
       "center": [
         { "id": "quickshell.clock" },
-        { "id": "quickshell.weather" },
+        { "id": "nic.omarchy-weather" },
         { "id": "quickshell.voxtype" },
         { "id": "quickshell.screen-recording" },
         { "id": "quickshell.idle" },
