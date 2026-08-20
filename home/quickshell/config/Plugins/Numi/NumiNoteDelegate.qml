@@ -26,6 +26,8 @@ Rectangle {
     : mouse.containsMouse
       ? Style.hoverFillFor(foreground, Color.accent)
       : "transparent"
+  border.color: "transparent"
+  border.width: 0
 
   MouseArea {
     id: mouse

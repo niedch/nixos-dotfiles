@@ -240,6 +240,12 @@ Panel {
 
   function loadNotes(raw) {
     var parsed = NumiNotes.parseNotes(raw)
+    
+    // Safeguard active typing buffer from being overwritten during asynchronous disk loads
+    var isSameActive = (parsed.activeNoteId === root.activeNoteId)
+    var activeIdx = NumiNotes.findIndex(parsed.notes, parsed.activeNoteId)
+    var isSameText = activeIdx >= 0 && (parsed.notes[activeIdx].text === root.text)
+
     root.notes = parsed.notes
     root.activeNoteId = parsed.activeNoteId
     if (root.notes.length === 0) {
@@ -248,7 +254,11 @@ Panel {
     }
     root.selectedNoteIndex = Math.max(0, NumiNotes.findIndex(root.notes, root.activeNoteId))
     root.rebuildNotes()
-    root.text = root.notes[root.selectedNoteIndex].text
+
+    // Only update the active editor text if the note changed, or if there is genuine text differences on disk
+    if (!isSameActive || !isSameText) {
+      root.text = root.notes[root.selectedNoteIndex].text
+    }
   }
 
   function saveNotes() {
@@ -260,25 +270,37 @@ Panel {
     return root.notes[Math.max(0, Math.min(root.selectedNoteIndex, root.notes.length - 1))]
   }
 
-  function saveCurrentNote() {
+  function updateCurrentNoteMemory() {
     var n = root.currentNote()
     if (!n) return
     n.text = root.text
     n.updatedAt = new Date().toISOString()
     root.rebuildNotes()
+  }
+
+  function saveCurrentNote() {
+    root.updateCurrentNoteMemory()
     root.saveNotes()
   }
 
   function rebuildNotes() {
-    notesModel.clear()
     var rows = NumiNotes.displayRows(root.notes)
-    for (var i = 0; i < rows.length; i++) {
-      notesModel.append({id: rows[i].id, title: rows[i].title, lineCount: rows[i].lineCount})
+    if (notesModel.count === rows.length) {
+      // In-place update to prevent clearing the model and losing current selection/focus
+      for (var i = 0; i < rows.length; i++) {
+        notesModel.set(i, {id: rows[i].id, title: rows[i].title, lineCount: rows[i].lineCount})
+      }
+    } else {
+      // Only clear and rebuild if the size changes (e.g. note added or deleted)
+      notesModel.clear()
+      for (var j = 0; j < rows.length; j++) {
+        notesModel.append({id: rows[j].id, title: rows[j].title, lineCount: rows[j].lineCount})
+      }
     }
   }
 
   function newNote() {
-    root.saveCurrentNote()
+    root.updateCurrentNoteMemory()
     root.notes = NumiNotes.addNote(root.notes, NumiNotes.newNote())
     root.activeNoteId = root.notes[root.notes.length - 1].id
     root.selectedNoteIndex = root.notes.length - 1
@@ -304,16 +326,28 @@ Panel {
     root.saveNotes()
   }
 
-  function switchNote(index) {
-    if (index < 0 || index >= root.notes.length || index === root.selectedNoteIndex) return
-    root.saveCurrentNote()
+  function switchNote(index, focusEditor = true) {
+    if (index < 0 || index >= root.notes.length) return
+
+    if (index === root.selectedNoteIndex) {
+      if (focusEditor) {
+        Qt.callLater(function() { popup.forceEditorFocus() })
+      }
+      return
+    }
+
+    root.updateCurrentNoteMemory()
     root.selectedNoteIndex = index
     root.activeNoteId = root.notes[index].id
     root.resetSession()
     root.text = root.notes[index].text
     root.rebuildNotes()
     root.saveNotes()
-    Qt.callLater(function() { popup.forceEditorFocus() })
+    root.evaluateNow()
+
+    if (focusEditor) {
+      Qt.callLater(function() { popup.forceEditorFocus() })
+    }
   }
 
   BarIconButton {
@@ -352,7 +386,7 @@ Panel {
 
     onNewNoteClicked: root.newNote()
     onNewNoteRequested: root.newNote()
-    onSwitchNoteRequested: function(index) { root.switchNote(index) }
+    onSwitchNoteRequested: function(index, focusEditor) { root.switchNote(index, focusEditor) }
     onResultClicked: function(index) { root.copyResult(index) }
     onCopyAllClicked: root.copyAll()
     onClearAllClicked: root.clearAll()

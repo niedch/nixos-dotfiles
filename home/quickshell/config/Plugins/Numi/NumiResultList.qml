@@ -28,6 +28,7 @@ ColumnLayout {
       font.family: root.bar ? root.bar.fontFamily : "sans-serif"
       font.pixelSize: Style.font.caption
       font.bold: true
+      font.letterSpacing: 1.2
       color: root.bar ? Qt.darker(root.bar.foreground, 1.4) : "grey"
     }
 

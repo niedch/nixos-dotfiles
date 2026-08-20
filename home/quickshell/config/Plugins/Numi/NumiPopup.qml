@@ -12,6 +12,8 @@ KeyboardPanel {
   required property var notesModel
   required property var resultModel
   property int selectedNoteIndex: 0
+  onSelectedNoteIndexChanged: {
+  }
   property alias text: editor.text
   property bool numrAvailable: true
   property string statusText: ""
@@ -19,12 +21,21 @@ KeyboardPanel {
   // --- Interface Signals ---
   signal newNoteClicked()
   signal newNoteRequested()
-  signal switchNoteRequested(int index)
+  signal switchNoteRequested(int index, bool focusEditor)
   signal resultClicked(int index)
   signal copyAllClicked()
   signal clearAllClicked()
   signal deleteNoteClicked()
   signal evaluateNowRequested()
+
+  readonly property bool opened: open
+
+  readonly property var activePhrases: [
+    "Crunching numbers", "Solving equations", "Balancing ledgers",
+    "Summing columns", "Synthesizing variables", "Parsing matrices",
+    "Evaluating proofs", "Calculating limits"
+  ]
+  property int phraseIndex: 0
 
   // --- Interface Functions ---
   function forceEditorFocus() {
@@ -35,12 +46,26 @@ KeyboardPanel {
   contentWidth: popup.fittedContentWidth(Style.space(660))
   contentHeight: popup.fittedContentHeight(Style.space(420))
 
-  // Catches keys that bubble up from the editor. QQC2 TextArea consumes
-  // plain Enter (new paragraph) but not Escape or Ctrl+Return, so both
-  // reach us here.
   Item {
     anchors.fill: parent
+
+    Timer {
+      id: phraseTimer
+      interval: 2800
+      running: popup.opened
+      repeat: true
+      triggeredOnStart: false
+      onTriggered: phraseSwap.restart()
+    }
+
+    SequentialAnimation {
+      id: phraseSwap
+      PropertyAnimation { target: headerStatus; property: "opacity"; to: 0.0; duration: 180; easing.type: Easing.OutQuad }
+      ScriptAction { script: { var n = popup.activePhrases.length; if (n > 0) popup.phraseIndex = (popup.phraseIndex + 1) % n } }
+      PropertyAnimation { target: headerStatus; property: "opacity"; to: 1.0; duration: 260; easing.type: Easing.InQuad }
+    }
     Keys.onPressed: function(event) {
+
       if (event.key === Qt.Key_Escape) {
         popup.close()
         event.accepted = true
@@ -57,8 +82,11 @@ KeyboardPanel {
         return
       }
       if (event.key === Qt.Key_Tab && (event.modifiers & Qt.ControlModifier)) {
-        if (editor.activeFocus) sidebar.focusList()
-        else editor.forceActiveFocus()
+        if (editor.activeFocus) {
+          sidebar.focusList()
+        } else {
+          editor.forceActiveFocus()
+        }
         event.accepted = true
         return
       }
@@ -68,34 +96,60 @@ KeyboardPanel {
       anchors.fill: parent
       spacing: Style.spacing.md
 
-      // Header: title left, live hint right.
-      RowLayout {
+      // Hero Header aligned with Battery's hero metrics
+      Item {
         Layout.fillWidth: true
+        implicitHeight: Math.max(heroIcon.implicitHeight, heroLabels.implicitHeight)
 
         Text {
-          text: "Numi"
-          font.family: popup.bar.fontFamily
-          font.pixelSize: Style.font.heading
+          id: heroIcon
+          text: "\uf1ec" // JetBrainsMono Nerd Font Calculator Icon ()
           color: popup.bar.foreground
-        }
-
-        Item {
-          Layout.fillWidth: true
-        }
-
-        Text {
-          text: "live · Esc to close"
           font.family: popup.bar.fontFamily
-          font.pixelSize: Style.font.caption
-          color: Qt.darker(popup.bar.foreground, 1.4)
+          font.pixelSize: Style.font.display // Matches 24px battery icon
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
         }
+
+        Column {
+          id: heroLabels
+          anchors.left: heroIcon.right
+          anchors.leftMargin: Style.space(14)
+          anchors.right: shortcutHint.left
+          anchors.rightMargin: Style.space(10)
+          anchors.verticalCenter: parent.verticalCenter
+          spacing: Style.space(2)
+
+          Text {
+            text: "Numi Calculator"
+            color: popup.bar.foreground
+            font.family: popup.bar.fontFamily
+            font.pixelSize: Style.font.title // Matches 14px Battery bold label
+            font.bold: true
+          }
+
+          Text {
+            id: headerStatus
+            text: popup.activePhrases[popup.phraseIndex].toUpperCase()
+            color: Qt.darker(popup.bar.foreground, 1.4)
+            font.family: popup.bar.fontFamily
+            font.pixelSize: Style.font.caption // Matches 10px tracked battery label
+            font.bold: true
+            font.letterSpacing: 1.2 // Tracked letter-spacing
+          }
+        }
+      }
+
+      PanelSeparator {
+        Layout.fillWidth: true
+        foreground: popup.bar.foreground
       }
 
       // Body: notes column | divider | editor + results + footer.
       RowLayout {
         Layout.fillWidth: true
         Layout.fillHeight: true
-        spacing: Style.space(10)
+        spacing: Style.spacing.panelGap
 
         NumiSidebar {
           id: sidebar
@@ -103,7 +157,7 @@ KeyboardPanel {
           notesModel: popup.notesModel
           selectedNoteIndex: popup.selectedNoteIndex
           onNewNoteClicked: popup.newNoteClicked()
-          onSwitchNoteRequested: function(index) { popup.switchNoteRequested(index) }
+          onSwitchNoteRequested: function(index, focusEditor) { popup.switchNoteRequested(index, focusEditor) }
         }
 
         // ---- divider ----

@@ -12,9 +12,13 @@ Item {
   property alias notesModel: notesList.model  // Aliases ListView's model to bind notes data
   property int selectedNoteIndex: 0   // Tracks the selected index for delegation sync
 
+  onSelectedNoteIndexChanged: {
+    notesList.currentIndex = selectedNoteIndex
+  }
+
   // --- Interface Signals ---
   signal newNoteClicked()             // Emitted when the "+" button is clicked
-  signal switchNoteRequested(int index) // Emitted when a note delegate is clicked or return/enter is pressed
+  signal switchNoteRequested(int index, bool focusEditor) // Emitted when a note delegate is clicked or return/enter is pressed
 
   // --- Interface Functions ---
   function focusList() {
@@ -37,6 +41,7 @@ Item {
         font.family: root.bar ? root.bar.fontFamily : "sans-serif"
         font.pixelSize: Style.font.caption
         font.bold: true
+        font.letterSpacing: 1.2
         color: root.bar ? Qt.darker(root.bar.foreground, 1.4) : "grey"
       }
 
@@ -68,21 +73,46 @@ Item {
         spacing: Style.space(4)
         boundsBehavior: Flickable.StopAtBounds
         interactive: contentHeight > height
-        currentIndex: root.selectedNoteIndex
         focus: true
 
-        Keys.onReturnPressed: root.switchNoteRequested(currentIndex)
-        Keys.onEnterPressed: root.switchNoteRequested(currentIndex)
+        onCountChanged: {
+          if (count > 0) {
+            Qt.callLater(function() {
+              notesList.currentIndex = root.selectedNoteIndex
+            })
+          }
+        }
+
+        Keys.onUpPressed: function(event) {
+          notesList.decrementCurrentIndex()
+          event.accepted = true
+        }
+
+        Keys.onDownPressed: function(event) {
+          notesList.incrementCurrentIndex()
+          event.accepted = true
+        }
+
+        Keys.onReturnPressed: {
+          root.switchNoteRequested(currentIndex, true)
+        }
+
+        Keys.onEnterPressed: {
+          root.switchNoteRequested(currentIndex, true)
+          root.evaluateNow()
+        }
 
         ScrollBar.vertical: NumiScrollBar {
           foregroundColor: root.bar ? root.bar.foreground : "white"
         }
 
         delegate: NumiNoteDelegate {
-          selected: index === root.selectedNoteIndex
+          selected: index === notesList.currentIndex
           foreground: root.bar ? root.bar.foreground : "white"
           fontFamily: root.bar ? root.bar.fontFamily : "sans-serif"
-          onClicked: root.switchNoteRequested(index)
+          onClicked: {
+            root.switchNoteRequested(index, true)
+          }
         }
       }
 
