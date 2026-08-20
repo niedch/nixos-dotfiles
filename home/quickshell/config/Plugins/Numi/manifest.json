@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "nic.numi",
+  "name": "Numi",
+  "version": "1.1.0",
+  "author": "quickshell-dotfiles",
+  "description": "Natural language calculator powered by numi-cli",
+  "kinds": ["bar-widget"],
+  "entryPoints": {
+    "barWidget": "NumiPanel.qml"
+  },
+  "barWidget": {
+    "displayName": "Numi",
+    "description": "Natural language calculator (numi-cli)",
+    "category": "Utilities",
+    "allowMultiple": false
+  }
+}

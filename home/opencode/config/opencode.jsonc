@@ -13,11 +13,11 @@
   "agent": {
     "build": {
       "mode": "primary",
-      "model": "opencode-go/deepseek-v4-flash"
+      "model": "google/gemini-3.5-flash"
     },
     "orchestrator": {
       "mode": "primary",
-      "model": "opencode-go/deepseek-v4-pro",
+      "model": "google/gemini-3.5-flash",
       "prompt": "{file:./prompts/orchestrator.md}",
       "permission": {
         "edit": "deny",
@@ -29,7 +29,7 @@
     },
     "plan": {
       "mode": "primary",
-      "model": "opencode-go/deepseek-v4-pro",
+      "model": "google/gemini-3.5-flash",
       "permission": {
         "edit": "deny"
       }
@@ -37,7 +37,7 @@
   // ------------------------------- Agents -------------------------------
     "explore": {
       "description": "Fast agent specialized for exploring codebases and answering search questions",
-      "model": "opencode-go/deepseek-v4-flash",
+      "model": "google/gemini-3.5-flash",
       "mode": "subagent",
       "permission": {
         "edit": "deny",
@@ -46,12 +46,12 @@
       }
     },
     "general": {
-      "model": "opencode-go/deepseek-v4-flash"
+      "model": "google/gemini-3.5-flash"
     },
     "researcher": {
       "description": "Explores code structure and answers architecture questions (read-only)",
       "mode": "subagent",
-      "model": "opencode-go/deepseek-v4-flash",
+      "model": "google/gemini-3.5-flash",
       "prompt": "{file:./prompts/researcher.md}",
       "permission": {
         "edit": "deny",
@@ -62,7 +62,7 @@
     "builder": {
       "description": "Implements code changes based on research findings",
       "mode": "subagent",
-      "model": "opencode-go/deepseek-v4-flash",
+      "model": "google/gemini-3.5-flash",
       "permission": {
         "edit": "allow",
         "bash": "allow",
@@ -72,7 +72,7 @@
     "willhaben-agent": {
       "description": "Searches willhaben.at for best deals based on user criteria",
       "mode": "subagent",
-      "model": "opencode-go/deepseek-v4-flash",
+      "model": "google/gemini-3.5-flash",
       "prompt": "{file:./prompts/willhaben-agent.md}",
       "permission": {
         "edit": "deny",
@@ -81,9 +81,9 @@
       }
     },
     "pr-summarizer": {
-      "description": "Summarizes GitHub pull request comments using gh CLI and deepseek-v4-flash",
+      "description": "Summarizes GitHub pull request comments using gh CLI and gemini-3.5-flash",
       "mode": "subagent",
-      "model": "opencode-go/deepseek-v4-flash",
+      "model": "google/gemini-3.5-flash",
       "prompt": "{file:./prompts/pr-summarizer.md}",
       "permission": {
         "edit": "deny",

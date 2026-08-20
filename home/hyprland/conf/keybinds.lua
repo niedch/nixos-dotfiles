@@ -10,6 +10,7 @@ hl.bind(mainMod .. " + ALT + Space",   hl.dsp.exec_cmd(menu .. " toggle"), { des
 hl.bind(mainMod .. " + CTRL + E",      hl.dsp.exec_cmd(launcher .. " symbols"), { description = "Emoji picker" })
 hl.bind(mainMod .. " + CTRL + V",      hl.dsp.exec_cmd(launcher .. " clipboard"), { description = "Clipboard history" })
 hl.bind(mainMod .. " + CTRL + C",      hl.dsp.exec_cmd("quickshell-shell toggle quickshell.clipboard"), { locked = true, description = "Clipboard manager" })
+hl.bind(mainMod .. " + N",             hl.dsp.exec_cmd("quickshell ipc call nic.numi toggle"), { locked = true, description = "Numi calculator" })
 hl.bind(mainMod .. " + CTRL + R",      hl.dsp.exec_cmd("omarchy-reminder -i"), { locked = true, description = "Set reminder" })
 
 -- Universal copy/paste/cut
