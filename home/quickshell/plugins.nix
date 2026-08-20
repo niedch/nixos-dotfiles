@@ -15,8 +15,8 @@
     {
       owner = "niedch";
       repo = "omarchy-weather-plugin";
-      rev = "f40fb98c3b72f40e220d8d457c7b1fd8f95229fc";
-      sha256 = "sha256-A5qAo6mDQQ8Wsr7cE8e3cl/V/q28uEqSjiFO2oF0v0Q=";
+      rev = "2192739dadf87f7fd05cc6d18154f8050f670412";
+      sha256 = "sha256-71YENyl2G1r6nmiuz/DbJP70s453WiHDq9xcDjqjMtU=";
     }
   ];
 }
