@@ -5,7 +5,7 @@ import Quickshell
 import Quickshell.Io
 import qs.Ui
 import qs.Commons
-import "NumiNotes.js" as NumiNotes
+import "NumrNotes.js" as NumrNotes
 
 // Natural-language calculator powered by numr-cli. Each non-empty line of
 // the scratch pad is evaluated live (debounced 300ms) over a persistent
@@ -16,8 +16,8 @@ import "NumiNotes.js" as NumiNotes
 // and are switchable from the side column.
 Panel {
   id: root
-  moduleName: "nic.numi"
-  ipcTarget: "nic.numi"
+  moduleName: "nic.numr"
+  ipcTarget: "nic.numr"
 
   // --- state ---
   property string text: "" // bound two-way to the editor
@@ -34,10 +34,11 @@ Panel {
   property int completedEvalCount: 0
   property bool isCliCheckComplete: false
   readonly property string stateDir: Quickshell.env("HOME") + "/.local/state/omarchy"
-  property string notesPath: root.stateDir + "/numi-notes.json"
+  property string notesPath: root.stateDir + "/numr-notes.json"
   property var notes: []
   property string activeNoteId: ""
   property int selectedNoteIndex: 0
+  property int currentEditorLine: 0
 
   implicitWidth: button.implicitWidth
   implicitHeight: button.implicitHeight
@@ -121,7 +122,10 @@ Panel {
   // Closing the popup stops the debounce and persists the current note; the
   // background queue keeps draining so results are preserved on reopen.
   onOpenedChanged: {
-    if (opened) return
+    if (opened) {
+      root.evaluateNow()
+      return
+    }
     evalDebounce.stop()
     saveTimer.stop()
     root.saveCurrentNote()
@@ -135,6 +139,31 @@ Panel {
   function evaluateNow() {
     evalDebounce.stop()
     root.evaluateAll()
+  }
+
+  function findModelIndexForLine(lineNum) {
+    if (resultModel.count === 0) return -1
+    
+    var bestIdx = -1
+    for (var i = 0; i < resultModel.count; i++) {
+      var row = resultModel.get(i)
+      if (!row) continue
+      if (row.line === lineNum) {
+        return i
+      }
+      if (row.line < lineNum) {
+        bestIdx = i
+      } else {
+        break
+      }
+    }
+    return bestIdx
+  }
+
+  function syncHighlight() {
+    if (!popup || !resultModel) return
+    var idx = root.findModelIndexForLine(root.currentEditorLine)
+    popup.scrollToResultIndex(idx)
   }
 
   function evaluateAll() {
@@ -153,13 +182,19 @@ Panel {
     var exprs = []
     for (var i = 0; i < lines.length; i++) {
       var expr = lines[i].trim()
-      if (expr === "" || expr.charAt(0) === "#") continue
+      if (expr === "") continue
+      var isComment = expr.charAt(0) === "#" || expr.indexOf("//") === 0
+      if (isComment) {
+        resultModel.append({line: i, expr: expr, result: "", error: false, pending: false, isComment: true})
+        continue
+      }
       exprs.push(expr)
-      resultModel.append({line: i, expr: expr, result: "", error: false, pending: true})
+      resultModel.append({line: i, expr: expr, result: "", error: false, pending: true, isComment: false})
     }
     if (exprs.length === 0) {
       root.busy = false
       root.statusText = ""
+      root.syncHighlight()
       return
     }
     root.totalEvalCount = exprs.length
@@ -168,6 +203,7 @@ Panel {
     root.statusText = "evaluating…"
     var req = JSON.stringify({jsonrpc: "2.0", method: "eval_lines", params: {lines: exprs}, id: gen})
     serverProc.write(req + "\n")
+    root.syncHighlight()
   }
 
   function handleServerResponse(data) {
@@ -184,20 +220,26 @@ Panel {
     }
     var vals = parsed.result
     if (!Array.isArray(vals)) return
-    var count = Math.min(resultModel.count, vals.length)
-    for (var i = 0; i < count; i++) {
-      var v = vals[i] || {}
+    var valIdx = 0
+    for (var i = 0; i < resultModel.count; i++) {
+      var row = resultModel.get(i)
+      if (!row) continue
+      if (row.isComment) continue
+      if (valIdx >= vals.length) break
+      var v = vals[valIdx] || {}
       var isErr = v.type === "error"
       var display = v.display !== undefined ? String(v.display) : ""
       resultModel.set(i, {
-        line: resultModel.get(i).line,
-        expr: resultModel.get(i).expr,
+        line: row.line,
+        expr: row.expr,
         result: isErr ? (v.message !== undefined ? String(v.message) : "error") : display,
         error: isErr,
-        pending: false
+        pending: false,
+        isComment: false
       })
+      valIdx++
     }
-    root.completedEvalCount = count
+    root.completedEvalCount = valIdx
     if (root.completedEvalCount >= root.totalEvalCount) {
       root.busy = false
       root.statusText = ""
@@ -206,21 +248,28 @@ Panel {
 
   function copyResult(modelIndex) {
     var row = resultModel.get(modelIndex)
-    if (!row || row.error || row.pending || row.result === "") return
+    if (!row || row.isComment || row.error || row.pending || row.result === "") return
     Quickshell.clipboardText = row.result
     root.statusText = "copied " + row.result
   }
 
   function copyAll() {
     var parts = []
+    var resultCount = 0
     for (var i = 0; i < resultModel.count; i++) {
       var row = resultModel.get(i)
-      if (row.error || row.pending) continue
-      parts.push(row.expr + " = " + row.result)
+      if (!row) continue
+      if (row.isComment) {
+        parts.push(row.expr)
+      } else {
+        if (row.error || row.pending) continue
+        parts.push(row.expr + " = " + row.result)
+        resultCount++
+      }
     }
     if (parts.length === 0) return
     Quickshell.clipboardText = parts.join("\n")
-    root.statusText = "copied " + parts.length + " result" + (parts.length > 1 ? "s" : "")
+    root.statusText = "copied " + resultCount + " result" + (resultCount !== 1 ? "s" : "")
   }
 
   function resetSession() {
@@ -239,25 +288,29 @@ Panel {
   }
 
   function loadNotes(raw) {
-    var parsed = NumiNotes.parseNotes(raw)
+    var parsed = NumrNotes.parseNotes(raw)
     
     // Safeguard active typing buffer from being overwritten during asynchronous disk loads
     var isSameActive = (parsed.activeNoteId === root.activeNoteId)
-    var activeIdx = NumiNotes.findIndex(parsed.notes, parsed.activeNoteId)
+    var activeIdx = NumrNotes.findIndex(parsed.notes, parsed.activeNoteId)
     var isSameText = activeIdx >= 0 && (parsed.notes[activeIdx].text === root.text)
 
     root.notes = parsed.notes
     root.activeNoteId = parsed.activeNoteId
     if (root.notes.length === 0) {
-      root.notes = [NumiNotes.newNote()]
+      root.notes = [NumrNotes.tutorialNote()]
       root.activeNoteId = root.notes[0].id
     }
-    root.selectedNoteIndex = Math.max(0, NumiNotes.findIndex(root.notes, root.activeNoteId))
+    root.selectedNoteIndex = Math.max(0, NumrNotes.findIndex(root.notes, root.activeNoteId))
     root.rebuildNotes()
 
     // Only update the active editor text if the note changed, or if there is genuine text differences on disk
     if (!isSameActive || !isSameText) {
       root.text = root.notes[root.selectedNoteIndex].text
+    }
+
+    if (root.opened) {
+      root.evaluateNow()
     }
   }
 
@@ -284,7 +337,7 @@ Panel {
   }
 
   function rebuildNotes() {
-    var rows = NumiNotes.displayRows(root.notes)
+    var rows = NumrNotes.displayRows(root.notes)
     if (notesModel.count === rows.length) {
       // In-place update to prevent clearing the model and losing current selection/focus
       for (var i = 0; i < rows.length; i++) {
@@ -301,7 +354,7 @@ Panel {
 
   function newNote() {
     root.updateCurrentNoteMemory()
-    root.notes = NumiNotes.addNote(root.notes, NumiNotes.newNote())
+    root.notes = NumrNotes.addNote(root.notes, NumrNotes.newNote())
     root.activeNoteId = root.notes[root.notes.length - 1].id
     root.selectedNoteIndex = root.notes.length - 1
     root.resetSession()
@@ -314,9 +367,9 @@ Panel {
   function deleteNote() {
     if (root.notes.length === 0) return
     var idx = root.selectedNoteIndex
-    root.notes = NumiNotes.removeNoteAt(root.notes, idx)
+    root.notes = NumrNotes.removeNoteAt(root.notes, idx)
     if (root.notes.length === 0) {
-      root.notes = [NumiNotes.newNote()]
+      root.notes = [NumrNotes.newNote()]
     }
     root.selectedNoteIndex = Math.min(idx, root.notes.length - 1)
     root.activeNoteId = root.notes[root.selectedNoteIndex].id
@@ -324,6 +377,7 @@ Panel {
     root.text = root.notes[root.selectedNoteIndex].text
     root.rebuildNotes()
     root.saveNotes()
+    root.evaluateNow()
   }
 
   function switchNote(index, focusEditor = true) {
@@ -355,7 +409,7 @@ Panel {
     anchors.fill: parent
     bar: root.bar
     text: "\uf1ec"
-    tooltipText: "Numi calculator"
+    tooltipText: "Numr calculator"
 
     onPressed: function(b) {
       if (root.opened) root.close()
@@ -363,7 +417,7 @@ Panel {
     }
   }
 
-  NumiPopup {
+  NumrPopup {
     id: popup
     anchorItem: button
     owner: root
@@ -392,5 +446,9 @@ Panel {
     onClearAllClicked: root.clearAll()
     onDeleteNoteClicked: root.deleteNote()
     onEvaluateNowRequested: root.evaluateNow()
+    onEditorLineChanged: function(lineNum) {
+      root.currentEditorLine = lineNum
+      root.syncHighlight()
+    }
   }
 }

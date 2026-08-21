@@ -27,6 +27,7 @@ KeyboardPanel {
   signal clearAllClicked()
   signal deleteNoteClicked()
   signal evaluateNowRequested()
+  signal editorLineChanged(int lineNum)
 
   readonly property bool opened: open
 
@@ -40,6 +41,10 @@ KeyboardPanel {
   // --- Interface Functions ---
   function forceEditorFocus() {
     editor.forceActiveFocus()
+  }
+
+  function scrollToResultIndex(index) {
+    resultsList.scrollToIndex(index)
   }
 
   focusTarget: editor
@@ -115,13 +120,13 @@ KeyboardPanel {
           id: heroLabels
           anchors.left: heroIcon.right
           anchors.leftMargin: Style.space(14)
-          anchors.right: shortcutHint.left
+          anchors.right: parent.right
           anchors.rightMargin: Style.space(10)
           anchors.verticalCenter: parent.verticalCenter
           spacing: Style.space(2)
 
           Text {
-            text: "Numi Calculator"
+            text: "Numr Calculator"
             color: popup.bar.foreground
             font.family: popup.bar.fontFamily
             font.pixelSize: Style.font.title // Matches 14px Battery bold label
@@ -151,7 +156,7 @@ KeyboardPanel {
         Layout.fillHeight: true
         spacing: Style.spacing.panelGap
 
-        NumiSidebar {
+        NumrSidebar {
           id: sidebar
           bar: popup.bar
           notesModel: popup.notesModel
@@ -185,7 +190,7 @@ KeyboardPanel {
               borderSpec: Border.controlSpec(editor.activeFocus ? "focus" : (editorHover.hovered ? "hover-cursor" : "normal"), popup.bar.foreground, Color.accent)
               radius: Style.cornerRadius
             }
-            ScrollBar.vertical: NumiScrollBar {
+            ScrollBar.vertical: NumrScrollBar {
               foregroundColor: popup.bar.foreground
             }
 
@@ -209,13 +214,20 @@ KeyboardPanel {
               placeholderText: "20 inches in cm\nx = 5000\n5 * (1 + 2)"
               background: null  // themed background is on the ScrollView
 
+              onCursorPositionChanged: {
+                var txt = text || ""
+                var textUpToCursor = txt.substring(0, cursorPosition)
+                var line = textUpToCursor.split("\n").length - 1
+                popup.editorLineChanged(line)
+              }
+
               HoverHandler {
                 id: editorHover
               }
             }
           }
 
-          NumiResultList {
+          NumrResultList {
             id: resultsList
             bar: popup.bar
             numrAvailable: popup.numrAvailable

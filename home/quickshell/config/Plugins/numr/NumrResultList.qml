@@ -11,6 +11,16 @@ ColumnLayout {
   property bool numrAvailable: true   // Tracks CLI process presence
   property string statusText: ""      // Holds "evaluating...", "copied", or errors
   property alias resultModel: resultsList.model // Binds evaluation results data
+  property alias currentIndex: resultsList.currentIndex
+
+  function scrollToIndex(index) {
+    if (index >= 0 && index < resultsList.count) {
+      resultsList.currentIndex = index
+      resultsList.positionViewAtIndex(index, ListView.Contain)
+    } else {
+      resultsList.currentIndex = -1
+    }
+  }
 
   // --- Interface Signals ---
   signal resultClicked(int index)     // Emitted when a result row is clicked to trigger clipboard copy
@@ -60,11 +70,11 @@ ColumnLayout {
       boundsBehavior: Flickable.StopAtBounds
       interactive: contentHeight > height
 
-      ScrollBar.vertical: NumiScrollBar {
+      ScrollBar.vertical: NumrScrollBar {
         foregroundColor: root.bar ? root.bar.foreground : "white"
       }
 
-      delegate: NumiResultDelegate {
+      delegate: NumrResultDelegate {
         foreground: root.bar ? root.bar.foreground : "white"
         urgent: root.bar ? root.bar.urgent : "red"
         fontFamily: root.bar ? root.bar.fontFamily : "sans-serif"

@@ -19,7 +19,7 @@
         { "id": "quickshell.opencode" }
       ],
       "right": [
-        { "id": "nic.numi" },
+        { "id": "nic.numr" },
         { "id": "quickshell.tray" },
         { "id": "quickshell.bluetooth" },
         { "id": "quickshell.network" },

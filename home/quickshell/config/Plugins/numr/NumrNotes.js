@@ -9,11 +9,39 @@ const normalizeNote = (n) => {
   };
 };
 
-const newNote = () => ({
+const tutorialNoteText = `# Welcome to Numr
+# This is a live-evaluating scratchpad. Try editing!
+
+# --- Basic Arithmetic & Percentages ---
+20% of 150
+100 + 15%
+
+# --- Variables ---
+tax = 15%
+100 + tax
+
+# --- Unit Conversions ---
+5 km in miles
+22 C in F
+
+# --- Currency Conversion ---
+$100 in eur
+1 BTC in USD
+
+# --- Continuation (Use '_' or start with operator) ---
+_ * 2
++ 10
+
+# Comments can be documented using '#' at the beginning of a line.
+`;
+
+const newNote = (text = "") => ({
   id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
-  text: "",
+  text: String(text),
   updatedAt: new Date().toISOString()
 });
+
+const tutorialNote = () => newNote(tutorialNoteText);
 
 const noteTitle = (note) => {
   if (!note) return "";
@@ -103,6 +131,7 @@ if (typeof module !== "undefined") {
     parseNotes,
     normalizeNote,
     newNote,
+    tutorialNote,
     noteTitle,
     lineCount,
     findIndex,

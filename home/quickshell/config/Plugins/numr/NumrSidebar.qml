@@ -99,14 +99,13 @@ Item {
 
         Keys.onEnterPressed: {
           root.switchNoteRequested(currentIndex, true)
-          root.evaluateNow()
         }
 
-        ScrollBar.vertical: NumiScrollBar {
+        ScrollBar.vertical: NumrScrollBar {
           foregroundColor: root.bar ? root.bar.foreground : "white"
         }
 
-        delegate: NumiNoteDelegate {
+        delegate: NumrNoteDelegate {
           selected: index === notesList.currentIndex
           foreground: root.bar ? root.bar.foreground : "white"
           fontFamily: root.bar ? root.bar.fontFamily : "sans-serif"
