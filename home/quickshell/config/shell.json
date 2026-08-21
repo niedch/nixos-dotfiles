@@ -19,8 +19,8 @@
         { "id": "quickshell.opencode" }
       ],
       "right": [
-        { "id": "nic.numr" },
         { "id": "quickshell.tray" },
+        { "id": "nic.numr" },
         { "id": "quickshell.bluetooth" },
         { "id": "quickshell.network" },
         { "id": "quickshell.audio" },
