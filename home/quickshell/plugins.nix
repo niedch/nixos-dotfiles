@@ -21,8 +21,8 @@
     {
       owner = "niedch";
       repo = "omarchy-numr-plugin";
-      rev = "7e0ea04d7b894b3281c3372f9989f619e895a2ac";
-      sha256 = "sha256-LAf5IlkQXrGwjZU78a1ExuWImmIgSaqEzhQUeZblN8A=";
+      rev = "5f82a629594eefeaa0ea88613bb73277ac62a1cd";
+      sha256 = "sha256-Oell6HZOCvm9Xn9oKG7bhyZqr1nZCu9rDiINck5quoo=";
     }
   ];
 }
