@@ -45,6 +45,6 @@
 in
   pkgs.writeShellScriptBin "quickshell" ''
     export QS_CONFIG_PATH=${mergedConfig}
-    export PATH="${qs-network-status}/bin:${qs-network-speedtest}/bin:${qs-dns}/bin:${omarchy-battery-status}/bin:${omarchy-monitor-state}/bin:${omarchy-brightness-display}/bin:${omarchy-hyprland-monitor-scaling}/bin:${omarchy-hyprland-monitor-focused}/bin:${omarchy-hw-display}/bin:${omarchy-osd}/bin:${qs-volume}/bin:${omarchy-clipboard-paste-text}/bin:${omarchy-clipboard-paste-file}/bin:${omarchy-clipboard-open}/bin:${omarchy-reminder}/bin:${omarchy-notification-send}/bin:$PATH"
+    export PATH="${pkgs.numr}/bin:${qs-network-status}/bin:${qs-network-speedtest}/bin:${qs-dns}/bin:${omarchy-battery-status}/bin:${omarchy-monitor-state}/bin:${omarchy-brightness-display}/bin:${omarchy-hyprland-monitor-scaling}/bin:${omarchy-hyprland-monitor-focused}/bin:${omarchy-hw-display}/bin:${omarchy-osd}/bin:${qs-volume}/bin:${omarchy-clipboard-paste-text}/bin:${omarchy-clipboard-paste-file}/bin:${omarchy-clipboard-open}/bin:${omarchy-reminder}/bin:${omarchy-notification-send}/bin:$PATH"
     exec ${pkgs.quickshell}/bin/quickshell "$@"
   ''

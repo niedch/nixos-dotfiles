@@ -62,6 +62,7 @@ in {
       voxtype
       quickshell
       libqalculate
+      numr
       cliphist
       libxkbcommon
       curl

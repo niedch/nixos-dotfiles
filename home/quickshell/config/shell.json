@@ -20,6 +20,7 @@
       ],
       "right": [
         { "id": "quickshell.tray" },
+        { "id": "nic.numr" },
         { "id": "quickshell.bluetooth" },
         { "id": "quickshell.network" },
         { "id": "quickshell.audio" },
