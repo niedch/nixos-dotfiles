@@ -39,6 +39,14 @@ hl.window_rule({
     size   = { 1000, 750 },
 })
 
+hl.window_rule({
+	name   = "localsend-float",
+	match  = { class = "localsend" },
+	float  = true,
+	center = true,
+	size   = { 900, 700 },
+})
+
 hl.layer_rule({ no_anim = true, match = { namespace = "quickshell-menu" } })
 hl.layer_rule({ no_anim = true, match = { namespace = "quickshell-launcher" } })
 hl.layer_rule({ blur = false, match = { namespace = "quickshell" } })

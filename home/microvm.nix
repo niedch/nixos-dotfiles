@@ -31,7 +31,6 @@
     [
       docker-compose
       lazydocker
-      localsend
       unzip
       nixfmt
       fd
