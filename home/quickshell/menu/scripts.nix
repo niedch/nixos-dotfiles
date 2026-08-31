@@ -82,4 +82,16 @@
     name = "cmd-timer";
     deps = with pkgs; [bash coreutils ghostty libnotify gum gnugrep systemd];
   }
+  {
+    name = "qs-shell";
+    deps = with pkgs; [bash quickshell coreutils gawk procps];
+  }
+  {
+    name = "toggle-dnd";
+    deps = with pkgs; [bash coreutils quickshell gawk];
+  }
+  {
+    name = "toggle-touchpad";
+    deps = with pkgs; [bash coreutils hyprland jq];
+  }
 ]

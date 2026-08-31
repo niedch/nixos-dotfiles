@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 
+# Enable exit on error, error on undefined variables, and propagate pipe failures.
+set -euo pipefail
+
 [[ -f ~/.config/user-dirs.dirs ]] && source ~/.config/user-dirs.dirs
 OUTPUT_DIR="${XDG_VIDEOS_DIR:-$HOME/Videos}"
-STATE_FILE="${XDG_RUNTIME_DIR:-/tmp}/screenrecording"
+STATE_FILE="${XDG_RUNTIME_DIR:-/run/user/1000}/screenrecording"
 
 if [[ ! -d "$OUTPUT_DIR" ]]; then
   notify-send "Screen recording directory does not exist: $OUTPUT_DIR" -u critical -t 3000
@@ -23,6 +26,16 @@ done
 
 screenrecording_active() {
   [[ -f "$STATE_FILE" ]] && kill -0 "$(cat "$STATE_FILE")" 2>/dev/null
+}
+
+notify_quickshell() {
+  local qsid
+  qsid=$(quickshell list --all 2>/dev/null | awk '/^Instance / {gsub(":", "", $2); print $2; exit}' || true)
+  if [[ -n "$qsid" ]]; then
+    quickshell ipc -i "$qsid" call indicators-refresh refresh >/dev/null 2>&1 || true
+  else
+    quickshell ipc call indicators-refresh refresh >/dev/null 2>&1 || true
+  fi
 }
 
 start_screenrecording() {
@@ -48,6 +61,7 @@ start_screenrecording() {
   wl-screenrec --output "$monitor" "${audio_args[@]}" --filename "$filename" &
   echo "$!" > "$STATE_FILE"
   notify-send "Screen Recording" "Recording $monitor" -t 3000
+  notify_quickshell
 }
 
 stop_screenrecording() {
@@ -75,12 +89,14 @@ stop_screenrecording() {
   fi
 
   rm -f "$STATE_FILE"
+  notify_quickshell
 }
 
 if screenrecording_active; then
   stop_screenrecording
 elif [[ "$STOP_RECORDING" == "true" ]]; then
   rm -f "$STATE_FILE"
+  notify_quickshell
 else
   start_screenrecording
 fi

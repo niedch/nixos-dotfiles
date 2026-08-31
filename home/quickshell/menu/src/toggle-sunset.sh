@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Enable exit on error, error on undefined variables, and propagate pipe failures.
+set -euo pipefail
+
 ON_TEMP=4000
 OFF_TEMP=6000
 
@@ -11,19 +14,31 @@ ensure_running() {
 }
 
 get_temp() {
-  hyprctl hyprsunset temperature 2>/dev/null | grep -oE '[0-9]+' | head -1
+  hyprctl hyprsunset temperature 2>/dev/null | grep -oE '[0-9]+' | head -1 || true
+}
+
+notify_quickshell() {
+  local qsid
+  qsid=$(quickshell list --all 2>/dev/null | awk '/^Instance / {gsub(":", "", $2); print $2; exit}' || true)
+  if [[ -n "$qsid" ]]; then
+    quickshell ipc -i "$qsid" call indicators-refresh refresh >/dev/null 2>&1 || true
+  else
+    quickshell ipc call indicators-refresh refresh >/dev/null 2>&1 || true
+  fi
 }
 
 sunset_on() {
   ensure_running
   hyprctl hyprsunset temperature "$ON_TEMP"
   [[ -t 0 ]] || notify-send -u low "󰛨    Blue light filter on (${ON_TEMP}K)"
+  notify_quickshell
 }
 
 sunset_off() {
   ensure_running
   hyprctl hyprsunset temperature "$OFF_TEMP"
   [[ -t 0 ]] || notify-send -u low "󰛨    Blue light filter off (${OFF_TEMP}K)"
+  notify_quickshell
 }
 
 show_status() {

@@ -232,5 +232,8 @@ Singleton {
     target: "notifications"
     function toggle() { notifs.toggleCenter() }
     function clear() { notifs.clear() }
+    function toggleDnd(): void { notifs.toggleDnd() }
+    function setDnd(enabled: bool): void { notifs.dnd = enabled }
+    function getDnd(): bool { return notifs.dnd }
   }
 }

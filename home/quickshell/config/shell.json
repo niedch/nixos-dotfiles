@@ -9,12 +9,10 @@
         { "id": "quickshell.mpris" }
       ],
       "center": [
+        { "id": "quickshell.indicators" },
         { "id": "quickshell.clock" },
         { "id": "nic.omarchy-weather" },
         { "id": "quickshell.voxtype" },
-        { "id": "quickshell.screen-recording" },
-        { "id": "quickshell.idle" },
-        { "id": "quickshell.sunset" },
         { "id": "quickshell.notification-center" },
         { "id": "quickshell.opencode" }
       ],
@@ -24,7 +22,6 @@
         { "id": "quickshell.bluetooth" },
         { "id": "quickshell.network" },
         { "id": "quickshell.audio" },
-        { "id": "robzolkos.github" },
         { "id": "stappmus.activity-monitor" },
         { "id": "quickshell.monitor" },
         { "id": "quickshell.battery" }

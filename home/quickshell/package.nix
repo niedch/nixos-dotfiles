@@ -21,7 +21,13 @@
 
     # Install fetched plugins into Plugins/
     ${lib.concatMapStringsSep "\n" (p: ''
-        ln -sf ${fetchPlugin p} $out/Plugins/${p.repo}
+        if [ "${p.repo}" = "omarchy-systempulse" ]; then
+          cp -r ${fetchPlugin p} $out/Plugins/${p.repo}
+          chmod -R u+w $out/Plugins/${p.repo}
+          sed -i 's/onSettingsChanged: injectPanel()/onSettingsChanged: injectPanel()\n\n  function close() { closePanel() }/' $out/Plugins/${p.repo}/SysMon.qml
+        else
+          ln -sf ${fetchPlugin p} $out/Plugins/${p.repo}
+        fi
       '')
       plugins}
   '';

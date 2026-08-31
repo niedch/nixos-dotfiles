@@ -11,6 +11,7 @@ Scope {
 
   AppLauncher {}
   MenuPanel {}
+  IdleService {}
 
   // When PluginRegistry discovers plugins, sync bar-widget components
   // into BarWidgetRegistry so Bar.qml can load them dynamically.
