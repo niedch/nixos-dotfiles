@@ -139,6 +139,17 @@
               description = "Uptime Kuma Instance";
             };
           }
+          {
+            "Valheim" = {
+              icon = "valheim.png";
+              href = "steam://connect/dobby:2456";
+              description = "Dedicated Game Server";
+              widget = {
+                type = "valheim";
+                url = "udp://127.0.0.1:2457";
+              };
+            };
+          }
         ];
       }
       {
