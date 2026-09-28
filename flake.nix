@@ -1,5 +1,5 @@
 {
-  description = "Multi host Nixos + hyperland config";
+  description = "Multi-host NixOS dotfiles and configuration";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
@@ -29,11 +29,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nix-omarchy-theme = {
-      url = "github:niedch/nix-omarchy-theme";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     mux-session = {
       url = "github:niedch/mux-session";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -48,11 +43,6 @@
       url = "github:niedch/comd";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    opencode-waybar-status = {
-      url = "github:niedch/opencode-waybar-status";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs = {
@@ -60,14 +50,12 @@
     nixpkgs,
     microvm,
     home-manager,
-    nix-omarchy-theme,
     sops-nix,
     wlctl,
     nixos-hardware,
     mux-session,
     speedtest-tracker,
     comd,
-    opencode-waybar-status,
     ...
   } @ inputs: let
     mkSystem = extraModules:
@@ -145,15 +133,6 @@
         (mkHM (import ./home/microvm.nix))
       ];
     };
-
-    packages.x86_64-linux.quickshell = let
-      pkgs = nixpkgs.legacyPackages.x86_64-linux;
-    in
-      import ./home/quickshell/package.nix {
-        inherit pkgs;
-        inherit (pkgs) lib;
-        plugins = (import ./home/quickshell/plugins.nix {inherit (pkgs) lib;}).quickshell.plugins;
-      };
 
     packages.x86_64-linux.mux-session = import ./home/tools/mux-session/package.nix {
       pkgs = nixpkgs.legacyPackages.x86_64-linux;

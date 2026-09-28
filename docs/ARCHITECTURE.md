@@ -9,12 +9,11 @@ flake.nix
   │
   ├── inputs
   │   ├── nixpkgs (nixpkgs-unstable)
-  │   ├── home-manager (master, follows nixpkgs)
-  │   └── hyprland (github:hyprwm/Hyprland)
+  │   └── home-manager (master, follows nixpkgs)
   │
   ├── outputs.nixosConfigurations.desktop
   │     │
-  │     ├── hosts/desktop              # Host-specific config
+  │     ├── hosts/virtual-machine              # Host-specific config
   │     │   ├── default.nix            # Hostname, user, boot, networking
   │     │   └── hardware-configuration.nix  # Auto-generated hardware config
   │     │
@@ -23,14 +22,12 @@ flake.nix
   │     │   └── users.nix              # User accounts
   │     │
   │     ├── modules/desktop            # Desktop-only system modules
-  │     │   ├── hyprland.nix           # Hyprland system enable + env vars
-  │     │   ├── displaymanager.nix     # ly display manager
+  │     │   ├── kde.nix                # KDE Plasma 6 + SDDM
   │     │   └── fonts.nix             # Desktop fonts
   │     │
   │     └── home-manager (embedded NixOS module)
   │           └── home-manager.users.nic
-  │                 └── home/common/default.nix
-  │                       ├── home/hyprland   # Hyprland user config + keybinds
+  │                 └── home/desktop.nix
   │                       ├── home/nvim       # Neovim + dev tools
   │                       ├── home/zsh        # Zsh + oh-my-zsh + scripts
   │                       └── home/mise       # Mise dev tool version manager
@@ -57,9 +54,9 @@ flake.nix
 ## Key design decisions
 
 - **Multiple flake outputs** under `nixosConfigurations`. Home-manager is wired in via `home-manager.nixosModules.home-manager`, not as a standalone flake output.
-- **All inputs** (`hyprland`, `home-manager`) are passed to both NixOS and home-manager modules via `specialArgs` / `extraSpecialArgs`.
+- **All inputs** (`home-manager`, `sops-nix`, etc.) are passed to both NixOS and home-manager modules via `specialArgs` / `extraSpecialArgs`.
 - **Home-manager backup** is enabled (`backupFileExtension = "backup"`) to prevent collisions with existing dotfiles.
-- **Modules split by role**: Desktop-only modules (Hyprland, display manager, fonts) live in `modules/desktop/`. Server-only modules (SSH, firewall) live in `modules/server/`. Shared modules (Docker, users) live in `modules/common/`.
+- **Modules split by role**: Desktop-only modules (KDE Plasma 6, SDDM, fonts) live in `modules/desktop/`. Server-only modules (SSH, firewall) live in `modules/server/`. Shared modules (Docker, users) live in `modules/common/`.
 
 ## Three layers of configuration
 
@@ -68,4 +65,4 @@ flake.nix
 | System (NixOS) | Hostname, users, boot, networking, system packages | `hosts/desktop/default.nix` | `hosts/server/default.nix` |
 | Shared modules | System-wide features (Docker, users) | `modules/common/default.nix` | `modules/common/default.nix` |
 | Role modules | Desktop or server specific features | `modules/desktop/default.nix` | `modules/server/default.nix` |
-| User (home-manager) | User packages, dotfiles, shell, editors | `home/common/default.nix` | `home/server/default.nix` |
+| User (home-manager) | User packages, dotfiles, shell, editors | `home/desktop.nix` | `home/server/default.nix` |

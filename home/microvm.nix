@@ -2,14 +2,12 @@
   pkgs,
   lib,
   ...
-}: {
+}:
+{
   imports = [
     ./chromium
     ./ghostty
-    ./hyprland
-    ./quickshell
     ./media
-    ./themes
     ./tmux
     ./tools
     ./nvim
@@ -25,9 +23,10 @@
   home.stateVersion = "26.05";
   programs.home-manager.enable = true;
 
-  sops.secrets = lib.mkForce {};
+  sops.secrets = lib.mkForce { };
 
-  home.packages = with pkgs;
+  home.packages =
+    with pkgs;
     [
       docker-compose
       lazydocker

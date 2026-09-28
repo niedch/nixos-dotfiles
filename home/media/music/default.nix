@@ -28,7 +28,7 @@
           cat > "$CONFIG" << EOF
     [Setting]
     spotify_path = $WRITABLE/share/spotify
-    current_theme = Omarchy
+    current_theme = SpicetifyDefault
     inject_css = 1
     inject_theme_js = 1
     replace_colors = 1

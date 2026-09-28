@@ -1,6 +1,6 @@
 # nixos-dotfiles
 
-Multi-host NixOS + Hyprland configuration managed via flakes and home-manager.
+Multi-host NixOS dotfiles and configuration managed via flakes and home-manager.
 
 ## Demo
 
@@ -39,7 +39,7 @@ flake.nix                     # Entry point, defines hosts + flake inputs
 ├── hosts/<host>/             # Host-specific NixOS config (hardware, boot, locale)
 ├── modules/                  # Reusable NixOS system modules
 │   ├── common/               #   Shared by all hosts (docker, sops, users, ssh)
-│   ├── desktop/              #   Desktop-only (Hyprland, Ly, fonts)
+│   ├── desktop/              #   Desktop-only (KDE Plasma, SDDM, fonts)
 │   └── server/               #   Server-only (SSH daemon, firewall)
 └── home/                     # Home-manager user configs
     ├── desktop.nix           #   Full desktop config (15+ submodules)
@@ -52,9 +52,9 @@ flake.nix                     # Entry point, defines hosts + flake inputs
 |------|-------------|
 | `hosts/` | Per-host NixOS configs — hardware, bootloader, kernel (desktop VM, laptop, dobby, rpi, microvm) |
 | `modules/common/` | Shared modules: Docker, SOPS secrets, SSH, users, binfmt (aarch64 emulation) |
-| `modules/desktop/` | Desktop modules: Hyprland compositor, Ly display manager, JetBrains Mono font |
+| `modules/desktop/` | Desktop modules: KDE Plasma 6 desktop, SDDM display manager, JetBrains Mono font |
 | `modules/server/` | Server modules: SSH daemon, firewall |
-| `home/` | Home-manager configs: Hyprland (Lua), Quickshell bar (QML), Ghostty terminal, Neovim (LazyVim), Zsh, Tmux, Chromium web apps, Omarchy themes (20+), and more |
+| `home/` | Home-manager configs: Ghostty terminal, Neovim (LazyVim), Zsh, Tmux, Chromium web apps, Omarchy themes (20+), and more |
 | `secrets/` | SOPS-encrypted with age key recipients |
 | `mise.toml` | Task runner (`mise run build/switch/format/cleanup`) |
 | `.github/workflows/` | CI for Nix store caching and pre-built paths |
@@ -65,7 +65,7 @@ Secrets are encrypted with [SOPS](https://github.com/getsops/sops) using [age](h
 
 ## Theming
 
-The [Omarchy theme system](https://github.com/niedch/nix-omarchy-theme) provides 20+ themes (kanso, catppuccin, nord, tokyo-night, gruvbox, etc.), symlinked to Hyprland, Waybar, Walker, and mako configs. Default theme: `kanso`.
+The [Omarchy theme system](https://github.com/niedch/nix-omarchy-theme) provides 20+ themes (kanso, catppuccin, nord, tokyo-night, gruvbox, etc.), linked to various app configs. Default theme: `kanso`.
 
 ## Chromium web apps
 

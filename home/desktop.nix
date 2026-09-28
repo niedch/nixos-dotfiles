@@ -2,13 +2,12 @@
   pkgs,
   lib,
   ...
-}: {
+}:
+{
   imports = [
     ./chromium
     ./ghostty
-    ./hyprland
     ./media
-    ./themes
     ./tmux
     ./tools
     ./nvim
@@ -18,7 +17,6 @@
     ./git
     ./ssh
     ./obsidian
-    ./quickshell
   ];
 
   home.username = "nic";
@@ -29,14 +27,14 @@
   sops.defaultSopsFile = ../secrets/secrets.yaml;
   sops.age.keyFile = "/home/nic/.config/sops/age/keys.txt";
 
-  home.packages = with pkgs;
+  home.packages =
+    with pkgs;
     [
       docker-compose
       lazydocker
       unzip
       nixfmt
       fd
-      jetbrains.idea
       weathr
       signal-desktop
     ]

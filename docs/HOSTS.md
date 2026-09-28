@@ -6,11 +6,11 @@ The flake is structured to support multiple hosts. Currently `desktop` and `serv
 
 Each host lives under `hosts/<name>/` and is registered in `flake.nix` under `nixosConfigurations`. All hosts share the same `modules/common` (Docker, users). Desktop and server have their own role-specific modules:
 
-- `modules/desktop/` - Hyprland, display manager, fonts
+- `modules/desktop/` - KDE Plasma 6, SDDM, fonts
 - `modules/server/` - SSH, firewall
 
 Home-manager configs are also split:
-- `home/common/` - Full desktop config (all modules)
+- `home/desktop.nix` - Full desktop config (all modules)
 - `home/server/` - Minimal server config (tmux, zsh, nvim only)
 
 ## Adding a new host
@@ -66,7 +66,7 @@ nixosConfigurations = {
         home-manager.useUserPackages = true;
         home-manager.backupFileExtension = "backup";
         home-manager.extraSpecialArgs = { inherit inputs; };
-        home-manager.users.nic = import ./home/common/default.nix;
+        home-manager.users.nic = import ./home/desktop.nix;
       }
     ];
   };
@@ -81,7 +81,7 @@ sudo nixos-rebuild switch --flake .#laptop
 
 ## Per-host overrides
 
-If a host needs different home-manager config, create a variant under `home/` (e.g. `home/laptop/`) and reference it instead of `home/common/default.nix`.
+If a host needs different home-manager config, create a variant under `home/` (e.g. `home/laptop/`) and reference it instead of `home/desktop.nix`.
 
 ## Server setup
 

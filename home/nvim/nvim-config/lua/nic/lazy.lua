@@ -18,11 +18,6 @@ if vim.g.has_lsp then
 	table.insert(plugins, { import = "nic.plugins.lsp" })
 end
 
-local theme_file = vim.fn.expand("~/.local/share/themes/current/neovim.lua")
-if vim.loop.fs_stat(theme_file) then
-	vim.list_extend(plugins, dofile(theme_file))
-end
-
 require("lazy").setup(plugins, {
 	lockfile = vim.fn.expand("~/Projects/nixos-dotfiles/home/nvim/nvim-config/lazy-lock.json"),
 	change_detection = {

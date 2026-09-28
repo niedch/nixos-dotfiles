@@ -4,8 +4,7 @@
   ...
 }: {
   imports = [
-    ./hyprland.nix
-    ./displaymanager.nix
+    ./kde.nix
     ./fonts.nix
     ./steam.nix
     ./rclone.nix
@@ -22,8 +21,7 @@
   # media (USB drives, SD cards) to /run/media/$USER/<label>.
   services.udisks2.enable = true;
 
-  # UPower daemon + D-Bus service backing the quickshell battery widget's
-  # Quickshell.Services.UPower reads (battery level, state, on-battery flag).
+  # UPower daemon + D-Bus service for monitoring power and battery level.
   services.upower.enable = true;
 
   services.fwupd = {
