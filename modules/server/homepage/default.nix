@@ -142,10 +142,12 @@
           {
             "Valheim" = {
               icon = "valheim.png";
-              href = "steam://connect/dobby:2456";
+              href = "steam://connect/dobby:2457";
+              target = "_self";
               description = "Dedicated Game Server";
               widget = {
-                type = "valheim";
+                type = "gamedig";
+                serverType = "valheim";
                 url = "udp://127.0.0.1:2457";
               };
             };

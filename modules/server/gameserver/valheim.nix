@@ -22,7 +22,7 @@
       -port 2456 \
       -world ${lib.escapeShellArg worldName} \
       -password "$password" \
-      -public 0 \
+      -public 1 \
       -backups 0
   '';
 
