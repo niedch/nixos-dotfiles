@@ -1,10 +1,11 @@
 {
   pkgs,
   lib,
+  inputs,
   ...
 }: {
   imports = [
-    ./kde.nix
+    inputs.nixarchy.nixosModules.nixarchy
     ./fonts.nix
     ./steam.nix
     ./rclone.nix
@@ -12,6 +13,11 @@
     ./samba-mount.nix
     ./password-manager.nix
   ];
+
+  programs.nixarchy = {
+    enable = true;
+    user = "nic";
+  };
 
   # dconf D-Bus service is required for gsettings changes to propagate through
   # xdg-desktop-portal to apps like Chromium (prefers-color-scheme).
