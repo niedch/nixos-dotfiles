@@ -1,17 +1,6 @@
 {
   description = "Multi-host NixOS dotfiles and configuration";
 
-  nixConfig = {
-    extra-substituters = [
-      "https://nixarchy.cachix.org"
-      "https://hyprland.cachix.org"
-    ];
-    extra-trusted-public-keys = [
-      "nixarchy.cachix.org-1:05JOuIlsQOWY2/5DQMq7JEA1hwlhgvmMWowMfka8mMM="
-      "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIITemDosxrE9/Kb+PfYvE="
-    ];
-  };
-
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
@@ -54,13 +43,6 @@
       url = "github:niedch/comd";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    nixarchy = {
-      url = "github:olafkfreund/nixarchy";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.sops-nix.follows = "sops-nix";
-      inputs.home-manager.follows = "home-manager";
-    };
   };
 
   outputs = {
@@ -74,7 +56,6 @@
     mux-session,
     speedtest-tracker,
     comd,
-    nixarchy,
     ...
   } @ inputs: let
     mkSystem = extraModules:
