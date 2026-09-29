@@ -17,7 +17,10 @@
   programs.nixarchy = {
     enable = true;
     user = "nic";
+    flake = "/home/nic/Projects/nixos-dotfiles";
   };
+
+  environment.pathsToLink = [ "/share/omarchy" ];
 
   # dconf D-Bus service is required for gsettings changes to propagate through
   # xdg-desktop-portal to apps like Chromium (prefers-color-scheme).

@@ -7,19 +7,19 @@
   programs.nixarchy.neovim = "off";
 
   programs.nixarchy.defaultPlugins = {
-    rebuild = true;
-    pkg = true;
+    rebuild = false;
+    pkg = false;
     flatsnap = false;
     gitlab = false;
-    github = false;
+    github = true;
     herdr = false;
     podman = false;
     distrobox = false;
-    microvm = true;
+    microvm = false;
     devenv = true;
     plugin-browser = true;
-    omatheme = true;
+    omatheme = false;
     ai-mirror = false;
-    menu = true;
+    menu = false;
   };
 }
