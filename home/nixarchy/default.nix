@@ -1,6 +1,7 @@
 {inputs, ...}: {
   imports = [
     inputs.nixarchy.homeManagerModules.nixarchy
+    ./hypr/default.nix
   ];
 
   programs.nixarchy.enable = true;
