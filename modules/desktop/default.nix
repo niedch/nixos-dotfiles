@@ -20,6 +20,8 @@
     flake = "/home/nic/Projects/nixos-dotfiles";
   };
 
+  programs.nixarchyThemeEngine.targets.ghostty = false;
+
   environment.pathsToLink = [ "/share/omarchy" ];
 
   # dconf D-Bus service is required for gsettings changes to propagate through

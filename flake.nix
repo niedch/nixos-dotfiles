@@ -111,6 +111,7 @@
         ./modules/desktop
         ./modules/server/glances.nix
         nixos-hardware.nixosModules.dell-precision-5530
+        ./hosts/laptop/nixarchy-apps.nix
         (mkHM (import ./home/desktop.nix))
       ];
 

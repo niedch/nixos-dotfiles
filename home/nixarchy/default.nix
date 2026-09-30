@@ -7,7 +7,7 @@
   programs.nixarchy.neovim = "off";
 
   programs.nixarchy.defaultPlugins = {
-    rebuild = false;
+    rebuild = true;
     pkg = false;
     flatsnap = false;
     gitlab = false;
