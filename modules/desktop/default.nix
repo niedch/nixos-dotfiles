@@ -12,17 +12,8 @@
     ./gnome-calendar.nix
     ./samba-mount.nix
     ./password-manager.nix
+    ./nixarchy.nix
   ];
-
-  programs.nixarchy = {
-    enable = true;
-    user = "nic";
-    flake = "/home/nic/Projects/nixos-dotfiles";
-  };
-
-  programs.nixarchyThemeEngine.targets.ghostty = false;
-
-  environment.pathsToLink = [ "/share/omarchy" ];
 
   # dconf D-Bus service is required for gsettings changes to propagate through
   # xdg-desktop-portal to apps like Chromium (prefers-color-scheme).
@@ -48,10 +39,4 @@
     lib.mkForce "${pkgs.fwupd}/bin/fwupdmgr refresh --ignore-embargo";
 
   systemd.timers.fwupd-refresh.enable = false;
-
-  # localsend uses this port for LAN discovery and file transfer
-  networking.firewall = {
-    allowedTCPPorts = [53317];
-    allowedUDPPorts = [53317];
-  };
 }

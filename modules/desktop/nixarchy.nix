@@ -1,8 +1,21 @@
-# Why: modules/AGENTS.md#applications-available-through-the-omarchy-menu-as
-{ ... }:
 {
-  programs.nixarchy.apps = {
+  pkgs,
+  lib,
+  inputs,
+  ...
+}:
+{
+  programs.nixarchy = {
+    enable = true;
+    user = "nic";
+    flake = "/home/nic/Projects/nixos-dotfiles";
+  };
 
+  programs.nixarchyThemeEngine.targets.ghostty = false;
+
+  environment.pathsToLink = [ "/share/omarchy" ];
+
+  programs.nixarchy.apps = {
     # ── Service ─────────────────────────────────────────────────────
     # _1password.enable = true;  #@ _1password  # unfree — Needs the module, not the package: unlocking requires a setuid helper that only programs._1password-gui installs. Set `settings.polkitPolicyOwners = [ "yourname" ]`.
     #   _1password.settings = { };  #@ _1password.settings
@@ -25,7 +38,7 @@
     # ── Terminal ────────────────────────────────────────────────────
     # alacritty.enable = true;  #@ alacritty
     # foot.enable = true;  #@ foot
-    # ghostty.enable = true; # @ ghostty
+    ghostty.enable = true; # @ ghostty
     # kitty.enable = true;  #@ kitty
 
     # ── AI ──────────────────────────────────────────────────────────
@@ -84,18 +97,14 @@
     # ── Gaming ──────────────────────────────────────────────────────
     # heroic.enable = true;  #@ heroic
     # lutris.enable = true;  #@ lutris
-    # minecraft.enable = true;  #@ minecraft
+    # minecraft.enable = true; # @ minecraft
     # retroarch.enable = true;  #@ retroarch  # Ships 13 free cores. For more -- including snes9x, genesis-plus-gx, mame and dolphin, which nixpkgs marks unfree -- set allowUnfree and override the package:   apps.retroarch.package =     pkgs.retroarch.withCores (c: [ c.snes9x c.mame c.dolphin ]);
     # steam.enable = true;  #@ steam  # unfree — A module, not a package: Steam needs an FHS wrapper to run at all.
     #   steam.settings = { };  #@ steam.settings
-    # xbox-controllers.enable = true; # @ xbox-controllers  # A kernel driver, so it is a hardware option rather than a package.
-    # xbox-controllers.settings = { }; # @ xbox-controllers.settings
+    xbox-controllers.enable = true; # @ xbox-controllers  # A kernel driver, so it is a hardware option rather than a package.
+    xbox-controllers.settings = { }; # @ xbox-controllers.settings
 
     # ── Preinstalls ─────────────────────────────────────────────────
-    # obsidian.enable = true; # @ obsidian  # unfree — Preinstalled upstream, opt-in here because it is unfree. Theme syncing needs the Omarchy theme selected under Appearance > Themes in the app; omarchy-theme-set-obsidian writes it on every theme change.
+    obsidian.enable = true; # @ obsidian  # unfree — Preinstalled upstream, opt-in here because it is unfree. Theme syncing needs the Omarchy theme selected under Appearance > Themes in the app; omarchy-theme-set-obsidian writes it on every theme change.
   };
 }
-
-# Offered by the Omarchy menu but with no nixpkgs equivalent:
-#   Brave Origin — Brave's managed build is AUR-only with no published source; enable apps.brave and put policies in /etc/brave/policies/managed, which stock Brave honours identically.
-#   Sublime Text — nixpkgs marks sublimetext4 broken over an insecure OpenSSL dependency; enabling it fails the rebuild.
