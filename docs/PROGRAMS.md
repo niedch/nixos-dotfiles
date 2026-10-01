@@ -4,7 +4,7 @@ Programs can be installed at two levels: **system-wide** (available to all users
 
 ## User-level packages (home-manager)
 
-Most GUI apps, CLI tools, and dev tools go here. Edit `home/common/default.nix`:
+Most GUI apps, CLI tools, and dev tools go here. Edit `home/desktop.nix`:
 
 ```nix
 { config, pkgs, ... }:
@@ -12,7 +12,6 @@ Most GUI apps, CLI tools, and dev tools go here. Edit `home/common/default.nix`:
 {
   home.packages = with pkgs; [
     git
-    quickshell
     dunst
     wl-clipboard
     ghostty
@@ -38,7 +37,6 @@ Some packages are better organized as self-contained modules under `home/<name>/
 | `home/nvim/` | `neovim`, `nodejs`, `go`, `cargo`, `rustc`, `gcc` | `~/.config/nvim/` |
 | `home/zsh/` | `fzf` | `~/.config/zsh/` |
 | `home/mise/` | `mise` | `~/.config/mise/config.toml` |
-| `home/hyprland/` | *(comes from flake input)* | `~/.config/hypr/hyprland.lua` |
 
 To add a program with its own dotfiles, [create a new module](MODULES.md#adding-a-new-home-manager-module).
 
@@ -84,7 +82,7 @@ Browse all available modules at https://nix-community.github.io/home-manager/opt
 
 | Goal | File | How |
 |---|---|---|
-| Install a CLI/GUI tool | `home/common/default.nix` | Add to `home.packages` |
-| Install a tool + its dotfiles | New file under `home/<name>/` | Create module, import in `home/common/default.nix` |
+| Install a CLI/GUI tool | `home/desktop.nix` | Add to `home.packages` |
+| Install a tool + its dotfiles | New file under `home/<name>/` | Create module, import in `home/desktop.nix` |
 | Install system-wide | `hosts/desktop/default.nix` | Add to `environment.systemPackages` |
-| Use home-manager declarative module | `home/common/default.nix` or new module | Use `programs.<name>` |
+| Use home-manager declarative module | `home/desktop.nix` or new module | Use `programs.<name>` |

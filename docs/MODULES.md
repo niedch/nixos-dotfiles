@@ -11,7 +11,7 @@ System modules configure system-wide features: services, kernel modules, package
 | File | Purpose |
 |---|---|
 | `default.nix` | Imports all submodules (add new modules here) |
-| `hyprland.nix` | Enables Hyprland, sets `NIXOS_OZONE_WL`, enables polkit + GPU |
+| docker.nix | Enables Docker daemon, adds user to docker group |
 
 ### Adding a new system module
 
@@ -33,7 +33,7 @@ System modules configure system-wide features: services, kernel modules, package
 {...}:
 {
   imports = [
-    ./hyprland.nix
+    ./sops.nix
     ./docker.nix
   ];
 }
@@ -48,7 +48,7 @@ If your module needs flake inputs (e.g. a pinned package from a flake input), ad
 ```nix
 { config, pkgs, inputs, ... }:
 {
-  # inputs.hyprland, inputs.home-manager, etc. available here
+  # inputs.home-manager, inputs.sops-nix, etc. available here
 }
 ```
 
@@ -60,8 +60,7 @@ Home-manager modules configure user-level features: dotfiles, user packages, she
 
 | Path | Purpose |
 |---|---|
-| `home/common/default.nix` | Central entry point, imports all submodules |
-| `home/hyprland/` | Hyprland WM config (Lua keybinds, autostart) |
+| `home/desktop.nix` | Central entry point, imports all submodules |
 | `home/zsh/` | Zsh + oh-my-zsh + custom scripts |
 | `home/nvim/` | Neovim (LazyVim) + dev tools |
 | `home/mise/` | Mise version manager + tool config |
@@ -81,16 +80,15 @@ Home-manager modules configure user-level features: dotfiles, user packages, she
 }
 ```
 
-2. Import it in `home/common/default.nix`:
+2. Import it in `home/desktop.nix`:
 
 ```nix
 {
   imports = [
-    ../hyprland
-    ../nvim
-    ../zsh
-    ../mise
-    ../kitty
+    ./nvim
+    ./zsh
+    ./mise
+    ./kitty
   ];
 }
 ```
@@ -102,4 +100,4 @@ Home-manager modules configure user-level features: dotfiles, user packages, she
 | `home.packages` | Install user packages | `pkgs.kitty` |
 | `xdg.configFile` | Deploy dotfiles | `source = ./kitty.conf` |
 | `programs.<name>` | Use home-manager's declarative module | `programs.zsh`, `programs.git` |
-| `wayland.windowManager` | WM config | `wayland.windowManager.hyprland` |
+| programs | Terminal/app configurations | programs.ghostty |

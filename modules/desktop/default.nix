@@ -1,11 +1,11 @@
 {
   pkgs,
   lib,
+  inputs,
   ...
 }: {
   imports = [
-    ./hyprland.nix
-    ./displaymanager.nix
+    inputs.nixarchy.nixosModules.nixarchy
     ./fonts.nix
     ./steam.nix
     ./rclone.nix
@@ -13,6 +13,16 @@
     ./samba-mount.nix
     ./password-manager.nix
   ];
+
+  programs.nixarchy = {
+    enable = true;
+    user = "nic";
+    flake = "/home/nic/Projects/nixos-dotfiles";
+  };
+
+  programs.nixarchyThemeEngine.targets.ghostty = false;
+
+  environment.pathsToLink = [ "/share/omarchy" ];
 
   # dconf D-Bus service is required for gsettings changes to propagate through
   # xdg-desktop-portal to apps like Chromium (prefers-color-scheme).
@@ -22,8 +32,7 @@
   # media (USB drives, SD cards) to /run/media/$USER/<label>.
   services.udisks2.enable = true;
 
-  # UPower daemon + D-Bus service backing the quickshell battery widget's
-  # Quickshell.Services.UPower reads (battery level, state, on-battery flag).
+  # UPower daemon + D-Bus service for monitoring power and battery level.
   services.upower.enable = true;
 
   services.fwupd = {

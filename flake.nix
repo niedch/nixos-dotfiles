@@ -1,5 +1,16 @@
 {
-  description = "Multi host Nixos + hyperland config";
+  description = "Multi-host NixOS dotfiles and configuration";
+
+  nixConfig = {
+    extra-substituters = [
+      "https://nixarchy.cachix.org"
+      "https://hyprland.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "nixarchy.cachix.org-1:05JOuIlsQOWY2/5DQMq7JEA1hwlhgvmMWowMfka8mMM="
+      "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIITemDosxrE9/Kb+PfYvE="
+    ];
+  };
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
@@ -29,11 +40,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nix-omarchy-theme = {
-      url = "github:niedch/nix-omarchy-theme";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     mux-session = {
       url = "github:niedch/mux-session";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -49,9 +55,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    opencode-waybar-status = {
-      url = "github:niedch/opencode-waybar-status";
+    nixarchy = {
+      url = "github:olafkfreund/nixarchy";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.sops-nix.follows = "sops-nix";
+      inputs.home-manager.follows = "home-manager";
     };
   };
 
@@ -60,14 +68,13 @@
     nixpkgs,
     microvm,
     home-manager,
-    nix-omarchy-theme,
     sops-nix,
     wlctl,
     nixos-hardware,
     mux-session,
     speedtest-tracker,
     comd,
-    opencode-waybar-status,
+    nixarchy,
     ...
   } @ inputs: let
     mkSystem = extraModules:
@@ -104,6 +111,7 @@
         ./modules/desktop
         ./modules/server/glances.nix
         nixos-hardware.nixosModules.dell-precision-5530
+        ./hosts/laptop/nixarchy-apps.nix
         (mkHM (import ./home/desktop.nix))
       ];
 
@@ -145,15 +153,6 @@
         (mkHM (import ./home/microvm.nix))
       ];
     };
-
-    packages.x86_64-linux.quickshell = let
-      pkgs = nixpkgs.legacyPackages.x86_64-linux;
-    in
-      import ./home/quickshell/package.nix {
-        inherit pkgs;
-        inherit (pkgs) lib;
-        plugins = (import ./home/quickshell/plugins.nix {inherit (pkgs) lib;}).quickshell.plugins;
-      };
 
     packages.x86_64-linux.mux-session = import ./home/tools/mux-session/package.nix {
       pkgs = nixpkgs.legacyPackages.x86_64-linux;

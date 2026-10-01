@@ -1,14 +1,14 @@
 {
   pkgs,
   lib,
+  inputs,
   ...
 }: {
   imports = [
+    ./nixarchy
     ./chromium
     ./ghostty
-    ./hyprland
     ./media
-    ./themes
     ./tmux
     ./tools
     ./nvim
@@ -18,7 +18,6 @@
     ./git
     ./ssh
     ./obsidian
-    ./quickshell
   ];
 
   home.username = "nic";
@@ -36,7 +35,6 @@
       unzip
       nixfmt
       fd
-      jetbrains.idea
       weathr
       signal-desktop
     ]
