@@ -8,7 +8,7 @@
     "windowTransition": "instant"
   },
   "voice": {
-    "enabled": false,
+    "enabled": true,
     "secondTap": "voice",
     "keys": "SUPER + SPACE"
   },
@@ -59,7 +59,7 @@
       "enabled": false
     },
     "extensions": {
-      "enabled": false
+      "enabled": true
     },
     "timer": {
       "enabled": true,
@@ -68,6 +68,12 @@
     },
     "ai": {
       "enabled": false
+    },
+    "browser-search": {
+      "enabled": true,
+      "prefix": "br",
+      "history": false,
+      "bookmarks": false
     }
   }
 }

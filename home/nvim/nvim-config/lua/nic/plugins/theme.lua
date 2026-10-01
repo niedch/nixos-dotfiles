@@ -34,7 +34,15 @@ local function load_theme_specs()
       pattern = "VeryLazy",
       once = true,
       callback = function()
-        pcall(vim.cmd.colorscheme, colorscheme)
+        if type(colorscheme) == "function" then
+          pcall(colorscheme)
+          -- Inline colorscheme functions apply highlights directly and don't
+          -- emit ColorScheme, so fire it ourselves so hooks like
+          -- after/plugin/transparency.lua run.
+          vim.api.nvim_exec_autocmds("ColorScheme", { pattern = "*" })
+        else
+          pcall(vim.cmd.colorscheme, colorscheme)
+        end
       end,
     })
   end

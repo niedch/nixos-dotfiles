@@ -1,11 +1,19 @@
-{inputs, ...}: {
+{
+  inputs,
+  ...
+}:
+{
   imports = [
     inputs.nixarchy.homeManagerModules.nixarchy
     ./hypr/default.nix
+    ./theme.nix
   ];
 
   programs.nixarchy.enable = true;
-  programs.nixarchy.neovim = "off";
+
+  programs.nixarchy = {
+    neovim = "off";
+  };
 
   programs.nixarchy.defaultPlugins = {
     rebuild = true;
