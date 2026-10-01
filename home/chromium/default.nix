@@ -61,11 +61,6 @@
       sha256 = "sha256-fmf7jmxDAC4Jx9Nj87FYpxbcCfQEPMBYvMAbIGu9CX0=";
     }
     {
-      name = "Youtube";
-      url = "https://www.youtube.com/";
-      sha256 = "sha256-y2rbGYQ7ZFvCJxgfUnRvAemo/abBEzjKwjxZd8fSOGw=";
-    }
-    {
       name = "Twitch";
       url = "https://www.twitch.tv/";
       sha256 = "sha256-PwTSKGIAQhu4rQxJlXeo+0Ei1kWd0Ks/wBTPnC8GiWM=";
@@ -84,12 +79,6 @@
       name = "Discord";
       url = "https://discord.com/channels/@me";
       sha256 = "sha256-Q51DlMl/2XLwrAR7UDh35Ley44dvw92ePp7MOP0Ojlo=";
-    }
-    {
-      name = "Whatsapp";
-      url = "https://web.whatsapp.com/";
-      sha256 = "sha256-X7icJI6OfjNFIp3sos3/k8EPlMswZ0veNqsdsbtkPac=";
-      faviconDomain = "whatsapp.com";
     }
     {
       name = "Willhaben";

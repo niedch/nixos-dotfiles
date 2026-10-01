@@ -7,6 +7,7 @@
     inputs.nixarchy.homeManagerModules.nixarchy
     ./hypr/default.nix
     ./theme.nix
+    ./plugins.nix
   ];
 
   programs.nixarchy.enable = true;
