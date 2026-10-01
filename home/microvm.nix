@@ -15,7 +15,6 @@
     ./mise
     ./opencode
     ./git
-    ./obsidian
   ];
 
   home.username = "nic";
