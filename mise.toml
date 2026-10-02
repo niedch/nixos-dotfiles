@@ -18,7 +18,7 @@ nix run nixpkgs#nvd -- diff "$prev" result
 [tasks.switch]
 description = "Switch to a NixOS configuration with sudo (e.g. laptop, desktop, dobby)"
 usage = '''arg "<host>" help="Host configuration name"'''
-run = "nh os switch . -H ${usage_host?}"
+run = "nh os switch . -H ${usage_host?} -- --accept-flake-config"
 
 [tasks.nvim]
 description = "Run neovim with bundled config"
