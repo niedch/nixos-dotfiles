@@ -1,13 +1,9 @@
-{
-  inputs,
-  ...
-}:
-{
+{inputs, ...}: {
   imports = [
     inputs.nixarchy.homeManagerModules.nixarchy
     ./hypr/default.nix
     ./theme.nix
-    ./plugins.nix
+    ./plugins
   ];
 
   programs.nixarchy.enable = true;

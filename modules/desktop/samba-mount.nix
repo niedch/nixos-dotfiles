@@ -43,8 +43,9 @@ lib.mkIf config.sops.enable {
       "x-systemd.after=samba-credentials.service"
       "x-systemd.requires=network-online.target"
       "x-systemd.after=network-online.target"
-      "x-systemd.device-timeout=15s"
       "x-systemd.mount-timeout=30s"
+      "x-systemd.automount"
+      "nofail"
       "_netdev"
     ];
   };

@@ -1,0 +1,112 @@
+{
+  "version": 1,
+  "idle": {
+    "screensaver": 150,
+    "lock": 300
+  },
+  "bar": {
+    "position": "top",
+    "transparent": true,
+    "centerAnchor": "omarchy.clock",
+    "layout": {
+      "left": [
+        {
+          "id": "nixarchy.menu"
+        },
+        {
+          "id": "omarchy.workspaces"
+        }
+      ],
+      "center": [
+        {
+          "id": "omarchy.indicators"
+        },
+        {
+          "id": "omarchy.clock",
+          "format": "dddd HH:mm",
+          "formatAlt": "d MMMM 'W'ww yyyy",
+          "verticalFormat": "HH\n—\nmm"
+        },
+        {
+          "id": "omarchy.keyboard-layout"
+        },
+        {
+          "id": "omarchy.weather"
+        },
+        {
+          "id": "omarchy.system-update"
+        },
+        {
+          "id": "io.github.olafkfreund.nixi-button"
+        }
+      ],
+      "right": [
+        {
+          "id": "omarchy.tray"
+        },
+        {
+          "id": "io.github.nobledoodle.omarchroma"
+        },
+        {
+          "id": "nixarchy.rebuild"
+        },
+        {
+          "id": "io.github.olafkfreund.nixarchy-plugin-browser"
+        },
+        {
+          "id": "nixarchy.pkg"
+        },
+        {
+          "id": "nixarchy.microvm"
+        },
+        {
+          "id": "olafkfreund.ai-mirror"
+        },
+        {
+          "id": "omarchy.agents"
+        },
+        {
+          "id": "omarchy.bluetooth"
+        },
+        {
+          "id": "io.github.thisisgm.omapods"
+        },
+        {
+          "id": "omarchy.network"
+        },
+        {
+          "id": "omarchy.audio"
+        },
+        {
+          "id": "omarchy.monitor"
+        },
+        {
+          "id": "omarchy.power"
+        }
+      ]
+    }
+  },
+  "plugins": [
+    {
+      "id": "io.github.olafkfreund.nixi"
+    },
+    {
+      "id": "nixarchy.flatsnap"
+    },
+    {
+      "id": "olafkfreund.github-actions"
+    },
+    {
+      "id": "olafkfreund.gitlab-pipelines"
+    },
+    {
+      "id": "aziz.hyprforge"
+    }
+  ],
+  "cloneSourceRestores": [
+    "nixarchy.menu"
+  ],
+  "disabledPlugins": [
+    "omarchy.menu"
+  ]
+}
