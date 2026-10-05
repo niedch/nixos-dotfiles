@@ -48,6 +48,11 @@ hl.device({
   kb_layout = "at",
 })
 
+hl.device({
+  name = "corne-choc-pro-keyboard",
+  kb_layout = "us",
+})
+
 -- Per-device layout for external keyboards.
 -- Capture the exact device name with (one keyboard plugged in at a time):
 --   hyprctl devices -j | jq -r '.keyboards[] | select(.name | test("keyboard")) | .name'

@@ -1,6 +1,7 @@
 { ... }: {
   imports = [
     ./omapods.nix
+    ./numr.nix
   ];
 
   # Declares the bar layout (and thus plugin enablement) for a fresh machine.

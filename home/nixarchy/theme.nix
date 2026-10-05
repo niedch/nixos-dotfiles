@@ -20,6 +20,10 @@ let
         sha256 = "sha256-QP3CGQ8lu4LMocyfrkFa+PYQSpNiqCOZVbcKRV/GVgo=";
       };
       wallpapers = {
+        "malboro-car.jpg" = {
+          url = "https://w.wallhaven.cc/full/d8/wallhaven-d8vvlo.png";
+          hash = "sha256-rdf7N8ux2R2cQaxDfhyXOGCstDDFy3wzBfWDci99M4k=";
+        };
       };
     };
 
@@ -32,24 +36,24 @@ let
 
   # Derive xdg.configFile entries from `themes`:
   #   omarchy/themes/<slug>  -> theme source (recursive)
-  themeConfigFiles = lib.mapAttrs'
-    (themeName: theme:
-      lib.nameValuePair "omarchy/themes/${themeName}" {
-        source = theme.source;
-        recursive = true;
-      })
-    themes;
+  themeConfigFiles = lib.mapAttrs' (
+    themeName: theme:
+    lib.nameValuePair "omarchy/themes/${themeName}" {
+      source = theme.source;
+      recursive = true;
+    }
+  ) themes;
 
   #   omarchy/backgrounds/<slug>/<file> -> fetched wallpaper
-  wallpaperFiles = lib.concatMapAttrs
-    (themeName: theme:
-      lib.mapAttrs'
-        (filename: img:
-          lib.nameValuePair "omarchy/backgrounds/${themeName}/${filename}" {
-            source = pkgs.fetchurl { inherit (img) url hash; };
-          })
-        theme.wallpapers)
-    themes;
+  wallpaperFiles = lib.concatMapAttrs (
+    themeName: theme:
+    lib.mapAttrs' (
+      filename: img:
+      lib.nameValuePair "omarchy/backgrounds/${themeName}/${filename}" {
+        source = pkgs.fetchurl { inherit (img) url hash; };
+      }
+    ) theme.wallpapers
+  ) themes;
 in
 {
   xdg.configFile = themeConfigFiles // wallpaperFiles;

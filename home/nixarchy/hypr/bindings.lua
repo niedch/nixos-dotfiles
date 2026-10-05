@@ -54,3 +54,10 @@ hl.bind("CTRL + ALT + j", hl.dsp.workspace.toggle_special("j-workspace"), { desc
 hl.bind("CTRL + ALT + l", hl.dsp.workspace.toggle_special("l-workspace"), { description = "Move to L workspace" })
 hl.bind("CTRL + ALT + s", hl.dsp.workspace.toggle_special("s-workspace"), { description = "Move to S workspace" })
 
+
+-- Workspaces (Ctrl+Alt row)
+local ctrl_alt_keys = { "q", "w", "e", "r", "t", "y", "u", "i", "o", "p" }
+for i, key in ipairs(ctrl_alt_keys) do
+	hl.bind("CTRL + ALT + " .. key,              hl.dsp.focus({ workspace = i }), { description = string.format("Focus workspace %d", i) })
+	hl.bind("CTRL + ALT + SHIFT + " .. key,      hl.dsp.window.move({ workspace = i }), { description = string.format("Move to workspace %d", i) })
+end
