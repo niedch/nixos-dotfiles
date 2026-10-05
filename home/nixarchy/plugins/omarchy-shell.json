@@ -7,14 +7,19 @@
   "bar": {
     "position": "top",
     "transparent": true,
-    "centerAnchor": "omarchy.clock",
+    "centerAnchor": "tmn73.calendar",
     "layout": {
       "left": [
         {
           "id": "nixarchy.menu"
         },
         {
-          "id": "omarchy.workspaces"
+          "id": "jgarza.workspace-styles",
+          "count": 5,
+          "decoration": "underline",
+          "animation": "none",
+          "glyphSet": "kanji",
+          "indicatorColor": "muted"
         }
       ],
       "center": [
@@ -22,7 +27,7 @@
           "id": "omarchy.indicators"
         },
         {
-          "id": "omarchy.clock",
+          "id": "tmn73.calendar",
           "format": "dddd HH:mm",
           "formatAlt": "d MMMM 'W'ww yyyy",
           "verticalFormat": "HH\n—\nmm"
@@ -32,15 +37,12 @@
         },
         {
           "id": "omarchy.weather"
-        },
-        {
-          "id": "omarchy.system-update"
-        },
-        {
-          "id": "io.github.olafkfreund.nixi-button"
         }
       ],
       "right": [
+        {
+          "id": "crmne.mpris"
+        },
         {
           "id": "omarchy.tray"
         },
@@ -104,12 +106,12 @@
     },
     {
       "id": "aziz.hyprforge"
+    },
+    {
+      "id": "io.github.sirjul1337.lock-explorer",
+      "design": "poster"
     }
   ],
-  "cloneSourceRestores": [
-    "nixarchy.menu"
-  ],
-  "disabledPlugins": [
-    "omarchy.menu"
-  ]
+  "cloneSourceRestores": ["nixarchy.menu", "io.github.sirjul1337.lock-explorer"],
+  "disabledPlugins": ["omarchy.menu", "omarchy.lock"]
 }

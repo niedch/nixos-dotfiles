@@ -24,6 +24,7 @@ local mainMod = "SUPER"
 
 -- Disable a default binding Scrolling window mode
 hl.unbind("SUPER + L")
+hl.unbind("SUPER + J")
 
 -- Logitech MX Keys examples:
 -- o.bind("SUPER + SHIFT + S", nil, "omarchy-capture-screenshot")
