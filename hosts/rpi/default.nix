@@ -9,6 +9,12 @@
   boot.loader.grub.enable = false;
   boot.loader.generic-extlinux-compatible.enable = true;
 
+  # Pin to the 6.12 LTS kernel. The 6.18.x series has a known ethernet
+  # regression on Raspberry Pi (lan78xx/smsc95xx/bcmgenet drivers) that
+  # leaves the Pi bootable but with no network. Revisit once upstream
+  # confirms the fix is in a newer stable release.
+  boot.kernelPackages = pkgs.linuxPackages_6_12;
+
   networking.hostName = "rpi";
   networking.networkmanager.enable = true;
   networking.extraHosts = ''
