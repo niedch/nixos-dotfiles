@@ -16,10 +16,10 @@
         {
           "id": "jgarza.workspace-styles",
           "count": 5,
-          "decoration": "underline",
+          "decoration": "bold",
           "animation": "none",
           "glyphSet": "kanji",
-          "indicatorColor": "muted"
+          "indicatorColor": "accent"
         }
       ],
       "center": [
