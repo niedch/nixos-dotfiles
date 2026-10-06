@@ -43,7 +43,7 @@
     {
       name = "Slack";
       url = "https://app.slack.com/client/T2M6RN37H/C2M6Y5066";
-      sha256 = "sha256-3vONfw6TIFUEiBaCgZTV6voOvziOTzYs/wnJ1+6cmos=";
+      sha256 = "sha256-mWmYlEbtwtgTbh1Ripodyka2d39LMXLsCADMjtzOX+A=";
     }
     {
       name = "Google Mail";
@@ -121,7 +121,7 @@
     {
       name = "Homebridge";
       url = "http://rpi:8581";
-      sha256 = "sha256-cZWpdxzW2KWyEzueE79Rj0MxAc/X9PVXDelYk8oi9H0=";
+      sha256 = "sha256-54Z9G6DA+3Zsx82OGHL3GwcDsIZyoh0Zr350WhNC48w=";
       faviconDomain = "homebridge.io";
     }
     {

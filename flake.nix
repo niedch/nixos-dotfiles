@@ -101,9 +101,12 @@
   in {
     nixosConfigurations = {
       desktop = mkSystem [
-        ./hosts/virtual-machine
+        ./hosts/desktop
         ./modules/common
+        ./modules/common/syncthing.nix
         ./modules/desktop
+        ./modules/server/glances.nix
+        ./hosts/laptop/nixarchy-apps.nix
         (mkHM (import ./home/desktop.nix))
       ];
 
