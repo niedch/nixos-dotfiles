@@ -15,6 +15,7 @@
     owner = "root";
     group = "root";
     mode = "0400";
+    restartUnits = ["homepage-dashboard.service"];
   };
 
   services.homepage-dashboard = {
@@ -94,6 +95,18 @@
               icon = "samba-server.png";
               href = "//dobby/share";
               description = "Network File Share";
+            };
+          }
+          {
+            Syncthing = {
+              icon = "syncthing.png";
+              href = "http://127.0.0.1:8384";
+              description = "File Synchronization";
+              widget = {
+                type = "syncthing";
+                url = "http://127.0.0.1:8384";
+                key = "{{HOMEPAGE_VAR_SYNCTHING_KEY}}";
+              };
             };
           }
           {

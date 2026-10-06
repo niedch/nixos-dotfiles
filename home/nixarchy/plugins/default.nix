@@ -7,6 +7,7 @@
     ./lock.nix
     ./calendar.nix
     ./meteobar.nix
+    ./syncshell.nix
   ];
 
   # Declares the bar layout (and thus plugin enablement) for a fresh machine.
