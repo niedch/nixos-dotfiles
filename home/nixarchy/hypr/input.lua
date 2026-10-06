@@ -53,6 +53,12 @@ hl.device({
   kb_layout = "us",
 })
 
+-- ROCCAT Vulcan AIMO external keyboard (Austrian QWERTZ).
+hl.device({
+  name = "roccat-roccat-vulcan-aimo",
+  kb_layout = "at",
+})
+
 -- Per-device layout for external keyboards.
 -- Capture the exact device name with (one keyboard plugged in at a time):
 --   hyprctl devices -j | jq -r '.keyboards[] | select(.name | test("keyboard")) | .name'

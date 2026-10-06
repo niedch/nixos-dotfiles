@@ -15,15 +15,15 @@ hl.monitor({ output = "", mode = "preferred", position = "auto", scale = omarchy
 
 
 hl.monitor({
-	output   = "desc:Iiyama North America PL2760H 1164004201390",
-	mode     = "1920x1080@144Hz",
+	output   = "desc:iiyama Corporation PL2760H 1164004201390",
+	mode     = "1920x1080@143.98Hz",
 	position = "auto-left",
 	scale    = omarchy_monitor_scale,
 })
 
 hl.monitor({
-	output   = "desc:Iiyama North America PL2760Q 1154112201014",
-	mode     = "1920x1080@144Hz",
+	output   = "desc:iiyama Corporation PL2760Q 1154112201014",
+	mode     = "2560x1440@143.86Hz",
 	position = "auto-right",
 	scale    = omarchy_monitor_scale,
 })

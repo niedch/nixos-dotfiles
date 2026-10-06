@@ -9,6 +9,11 @@
   # Bootloader.
   boot.loader.limine = {
     enable = true;
+    extraEntries = ''
+    /Windows
+        protocol: efi
+        path: guid(7c9af531-af22-4b28-b76e-775b75c08b2f):/EFI/Microsoft/Boot/bootmgfw.efi
+    '';
   };
   boot.loader.efi.canTouchEfiVariables = true;
 
@@ -50,6 +55,22 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
+  };
+
+  # Graphics and NVIDIA Driver
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
+
+  services.xserver.videoDrivers = [ "nvidia" ];
+
+  hardware.nvidia = {
+    modesetting.enable = true;
+    open = true;
+    nvidiaSettings = true;
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    powerManagement.enable = false;
   };
 
   # Allow unfree packages
