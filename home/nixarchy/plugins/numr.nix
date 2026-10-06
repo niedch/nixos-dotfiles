@@ -7,6 +7,13 @@
   };
 
   home.packages = with pkgs; [
-    numr
+    # numr's Cargo.toml sets `panic = "abort"` in the release profile. nixpkgs'
+    # checkPhase runs `cargo test --release`, which fails to link the test
+    # targets (compiled with `panic = "unwind"`) against dependencies compiled
+    # with `panic = "abort"`. The binary itself builds fine, so skip the broken
+    # test compilation.
+    (numr.overrideAttrs (old: {
+      doCheck = false;
+    }))
   ];
 }
