@@ -110,6 +110,7 @@
       laptop = mkSystem [
         ./hosts/laptop
         ./modules/common
+        ./modules/common/syncthing.nix
         ./modules/desktop
         ./modules/server/glances.nix
         nixos-hardware.nixosModules.dell-precision-5530
@@ -134,6 +135,7 @@
       dobby = mkSystem [
         ./hosts/dobby
         ./modules/common
+        ./modules/common/syncthing.nix
         nixos-hardware.nixosModules.common-pc-ssd
         ./modules/server/openssh.nix
         ./modules/server/immich.nix
