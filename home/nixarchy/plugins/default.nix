@@ -6,6 +6,7 @@
     ./workspace-styles.nix
     ./lock.nix
     ./calendar.nix
+    ./meteobar.nix
   ];
 
   # Declares the bar layout (and thus plugin enablement) for a fresh machine.
