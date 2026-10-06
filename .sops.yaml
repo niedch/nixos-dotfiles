@@ -4,7 +4,7 @@ keys:
   - &host_vm age16q0t68ehuldfkmqte2kpa9pj4hpjdh05fnczqr0wgrzqy4up8swq74ar8g
   - &host_rpi age1zpq27cmrclffrh6jyuxnnfwtafuqvdgl7tartcdystgzxm6eue7sgatuyr
   - &host_dobby age1nmp02p66tanun20d72fvr59fslfnadktl7faxha3nghq22437f9qlkwa93
-  - &host_desktop age1778x4s4hlzvndq0q4kqzrypdv9ytaujawj69tsnpm9d6afkxyd4sz94elc
+  - &host_desktop age18se32hfzautvyhc3l6ljc9pj4z7330eafwxt7cn63zjjh54q09kqfsyw05
 
 creation_rules:
   - path_regex: ^secrets/secrets\.yaml$
