@@ -20,6 +20,9 @@
           "animation": "none",
           "glyphSet": "kanji",
           "indicatorColor": "accent"
+        },
+        {
+          "id": "crmne.mpris"
         }
       ],
       "center": [
@@ -40,9 +43,6 @@
         }
       ],
       "right": [
-        {
-          "id": "crmne.mpris"
-        },
         {
           "id": "omarchy.tray"
         },
