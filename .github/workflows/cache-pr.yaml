@@ -14,7 +14,7 @@ jobs:
     runs-on: [self-hosted, nix, harmonia]
     strategy:
       matrix:
-        host: [laptop, raspberry-pi, dobby, microvm]
+        host: [laptop, raspberry-pi, dobby, desktop]
     steps:
       - uses: actions/checkout@v7
       - run: nix build ".#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel" --print-out-paths --no-link --accept-flake-config
