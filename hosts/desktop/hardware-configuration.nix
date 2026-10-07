@@ -24,6 +24,18 @@
       options = [ "fmask=0077" "dmask=0077" ];
     };
 
+  fileSystems."/media/hdd" =
+    { device = "/dev/disk/by-uuid/d1b55889-68c0-462a-827a-8d01b1b1e9d4";
+      fsType = "ext4";
+      options = [ "nofail" "x-gvfs-show" "x-gvfs-name=HDD" ];
+    };
+
+  fileSystems."/media/windows" =
+    { device = "/dev/disk/by-uuid/01DCCF4AEEDB20E0";
+      fsType = "ntfs3";
+      options = [ "nofail" "force" "x-gvfs-show" "x-gvfs-name=Windows" ];
+    };
+
   swapDevices = [ ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";

@@ -100,7 +100,7 @@
           {
             Syncthing = {
               icon = "syncthing.png";
-              href = "http://127.0.0.1:8384";
+              href = "http://dobby:8384";
               description = "File Synchronization";
               widget = {
                 type = "syncthing";

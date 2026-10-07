@@ -11,13 +11,14 @@
     dobby.id = "YKTFECV-IXRAGEA-RUZJOPB-GPHZQ5O-NLY7LX3-OLL5TFL-JZGHP4B-XVCSNQD";
     laptop.id = "HGIVVTS-CIYDDOY-VLBG544-Y4Q4TH6-JCIJEKM-LUGJ7CV-SK7DNZL-AQCLFAB";
     iphone.id = "FLZ43AZ-7JF3KFZ-P7ACF4P-2NA2C5E-S2G2VJF-7DQ2P7Y-6CWFCAC-AHR5CAP";
+    desktop.id = "C73UHHZ-VJKVUN2-E5C5NVU-BY62OAL-LKCXJDG-K2LI3HR-7WYBE57-WXE5QQC";
   };
   folders."obsidian-vault" = {
     id = "obsidian-vault";
     label = "Obsidian Vault";
     path = "/home/nic/Projects/obsidian-vault";
     type = "sendreceive";
-    devices = ["dobby" "laptop" "iphone"];
+    devices = ["dobby" "laptop" "iphone" "desktop"];
   };
 in {
   services.syncthing = {
