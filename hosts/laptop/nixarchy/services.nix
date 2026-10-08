@@ -2,7 +2,7 @@
 { ... }:
 {
     # ── Development ──────────────────────────────────────
-    # programs.nixarchy.services.devenv.enable = true;  #@ devenv  # Per-project development environments that activate when you cd in. Bundled because it is a package plus an activation hook in each of bash, zsh and fish, and a cache to keep the first use from being a compile.
+    programs.nixarchy.services.devenv.enable = true;  #@ devenv  # Per-project development environments that activate when you cd in. Bundled because it is a package plus an activation hook in each of bash, zsh and fish, and a cache to keep the first use from being a compile.
     # programs.nixarchy.services.microvm.enable = true;  #@ microvm  # Permanent NixOS sandboxes from a template, booted with no image build and no bootloader -- the host's own /nix/store, shared read-only. Bundled because declaring a machine is what turns on the system user, the kvm group grant, the kernel modules and the microvm CLI; a machine you never declare gets none of them.
     # virtualisation.podman.enable = true;  #@ podman  # Rootless containers next to Docker, which stays the default engine -- the `docker` command keeps meaning Docker. Brings the Podman panel with it (Super+Alt+O); Boxes turns podman on as well.
     # virtualisation.waydroid.enable = true;  #@ waydroid  # Android apps in a container on your own kernel. No CPU emulation, so it is fast -- and ARM-only apps will not run without a translation layer (libhoudini/libndk) that Waydroid does not ship and nixpkgs does not package. Needs the binder kernel module, which mainline has and a custom kernel may not, and ships without the Play Store. For apps that refuse to run in a container at all, scrcpy mirrors a real phone instead.

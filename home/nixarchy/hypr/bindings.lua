@@ -62,3 +62,10 @@ for i, key in ipairs(ctrl_alt_keys) do
 	hl.bind("CTRL + ALT + " .. key,              hl.dsp.focus({ workspace = i }), { description = string.format("Focus workspace %d", i) })
 	hl.bind("CTRL + ALT + SHIFT + " .. key,      hl.dsp.window.move({ workspace = i }), { description = string.format("Move to workspace %d", i) })
 end
+
+-- Cycle the active workspace to the next monitor.
+-- SUPER+TAB was "Next workspace"; CTRL+ALT+TAB was "Focus on next monitor".
+hl.unbind("SUPER + TAB")
+hl.unbind("CTRL + ALT + TAB")
+o.bind("SUPER + TAB", "Cycle workspace to next monitor", "$HOME/.config/hypr/cycle-workspace-monitor.sh")
+o.bind("CTRL + ALT + TAB", "Cycle workspace to next monitor", "$HOME/.config/hypr/cycle-workspace-monitor.sh")

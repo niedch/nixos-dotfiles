@@ -1,4 +1,6 @@
 {pkgs, ...}: let
+  chromium = pkgs.chromium.override { enableWideVine = true; };
+
   fetchFavicon = {
     name,
     url,
@@ -27,7 +29,7 @@
     iconPath = fetchFavicon {inherit name url sha256 faviconDomain;};
   in {
     inherit name;
-    exec = "${pkgs.chromium}/bin/chromium --start-maximized --app=${url}";
+    exec = "${chromium}/bin/chromium --start-maximized --app=${url}";
     icon = "${iconPath}";
     terminal = false;
     type = "Application";
@@ -156,6 +158,8 @@ in {
 
   programs.chromium = {
     enable = true;
+
+    package = chromium;
 
     commandLineArgs = [
       "--ignore-gpu-blocklist"

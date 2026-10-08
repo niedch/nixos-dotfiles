@@ -14,4 +14,9 @@
   xdg.configFile."hypr/input.lua" = {
     source = ./input.lua;
   };
+
+  xdg.configFile."hypr/cycle-workspace-monitor.sh" = {
+    source = ./cycle-workspace-monitor.sh;
+    executable = true;
+  };
 }
