@@ -68,13 +68,13 @@
           "id": "nic.numr"
         },
         {
-          "id": "omarchy.bluetooth"
+          "id": "io.github.ilyazar.syncthing"
         },
         {
           "id": "io.github.thisisgm.omapods"
         },
         {
-          "id": "io.github.ilyazar.syncthing"
+          "id": "omarchy.bluetooth"
         },
         {
           "id": "omarchy.network"

@@ -2,9 +2,34 @@
   pkgs,
   lib,
   config,
+  inputs,
+  osConfig,
   ...
 }:
 let
+  # Hyprland's own flake package — the exact compositor the running session
+  # uses (nixarchy sets programs.hyprland.package to this, not nixpkgs').
+  # Its bin/ holds hyprctl, which omarchy-restart-shell needs to relaunch the
+  # shell through Hyprland.
+  hyprland = inputs.nixarchy.inputs.hyprland.packages.${pkgs.system}.hyprland;
+
+  # The canonical OMARCHY_PATH: nixarchy's generated "tree" mirror, not the raw
+  # package's share/omarchy. Pointing omarchy-restart-shell at the raw package
+  # made it target the wrong tree during activation, so it failed to kill the
+  # running shell and hit "already running".
+  omarchyPath = osConfig.programs.nixarchy.tree or "${config.programs.nixarchy.package}/share/omarchy";
+
+  # Omarchy's scripts are unwrapped, so their runtime binaries — quickshell,
+  # qs, jq — are NOT in the package's bin/. In the session they come from
+  # /run/current-system/sw/bin via systemPackages, but the activation PATH is
+  # minimal, so omarchy-restart-shell couldn't find them: its kill and
+  # readiness checks silently no-oped ("already running" → "did not become
+  # ready"). Put them (and hyprctl) on PATH explicitly.
+  omarchyBinPath = lib.makeBinPath (
+    [ config.programs.nixarchy.package hyprland ]
+    ++ (osConfig.programs.nixarchy.package.passthru.runtimeDeps or [])
+  );
+
   # One entry per theme, keyed by the theme slug (must match the dir name
   # Omarchy uses, e.g. ~/.local/state/omarchy/current/theme.name).
   #   source     = where the theme itself is fetched from (git).
@@ -70,8 +95,8 @@ in
   # changes (e.g. the Ghostty background opacity) reach the staging dir at
   # ~/.local/state/omarchy/current/theme without a manual `omarchy theme refresh`.
   home.activation.omarchyShellRestart = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    export PATH="${config.programs.nixarchy.package}/bin:$PATH"
-    export OMARCHY_PATH="${config.programs.nixarchy.package}/share/omarchy"
-    omarchy theme refresh || true
+    export PATH="${omarchyBinPath}:$PATH"
+    export OMARCHY_PATH="${omarchyPath}"
+    omarchy restart shell
   '';
 }
