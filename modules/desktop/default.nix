@@ -8,6 +8,7 @@
     inputs.nixarchy.nixosModules.nixarchy
     ./fonts.nix
     ./steam.nix
+    ./virt-manager.nix
     ./rclone.nix
     ./gnome-calendar.nix
     ./samba-mount.nix

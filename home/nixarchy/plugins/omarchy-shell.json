@@ -53,16 +53,13 @@
           "id": "nixarchy.rebuild"
         },
         {
+          "id": "olafkfreund.github-actions"
+        },
+        {
           "id": "io.github.olafkfreund.nixarchy-plugin-browser"
         },
         {
-          "id": "nixarchy.pkg"
-        },
-        {
-          "id": "nixarchy.microvm"
-        },
-        {
-          "id": "olafkfreund.ai-mirror"
+          "id": "nixarchy.devenv"
         },
         {
           "id": "omarchy.agents"
@@ -100,6 +97,9 @@
     },
     {
       "id": "nixarchy.flatsnap"
+    },
+    {
+      "id": "nixarchy.devenv"
     },
     {
       "id": "olafkfreund.github-actions"

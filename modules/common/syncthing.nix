@@ -20,6 +20,34 @@
     type = "sendreceive";
     devices = ["dobby" "laptop" "iphone" "desktop"];
   };
+  folders."downloads" = {
+    id = "downloads";
+    label = "Downloads";
+    path = "/home/nic/Downloads";
+    type = "sendreceive";
+    devices = ["dobby" "laptop" "desktop"];
+  };
+  folders."images" = {
+    id = "images";
+    label = "Images";
+    path = "/home/nic/Pictures";
+    type = "sendreceive";
+    devices = ["dobby" "laptop" "desktop"];
+  };
+  folders."videos" = {
+    id = "videos";
+    label = "Videos";
+    path = "/home/nic/Videos";
+    type = "sendreceive";
+    devices = ["dobby" "laptop" "desktop"];
+  };
+  folders."documents" = {
+    id = "documents";
+    label = "Documents";
+    path = "/home/nic/Documents";
+    type = "sendreceive";
+    devices = ["dobby" "laptop" "desktop"];
+  };
 in {
   services.syncthing = {
     enable = true;
