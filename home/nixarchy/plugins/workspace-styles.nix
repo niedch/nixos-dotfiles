@@ -1,4 +1,8 @@
-{ pkgs, lib, ... }: {
+{
+  pkgs,
+  lib,
+  ...
+}: {
   programs.nixarchy.plugins.workspace-styles.src = pkgs.fetchgit {
     name = "omarchy-workspace-styles";
     url = "https://github.com/jgarza9788/workspace-styles.git";

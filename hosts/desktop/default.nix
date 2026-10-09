@@ -1,18 +1,19 @@
-{ config, pkgs, ... }:
-
 {
-  imports =
-    [
-      ./hardware-configuration.nix
-    ];
+  config,
+  pkgs,
+  ...
+}: {
+  imports = [
+    ./hardware-configuration.nix
+  ];
 
   # Bootloader.
   boot.loader.limine = {
     enable = true;
     extraEntries = ''
-    /Windows
-        protocol: efi
-        path: guid(7c9af531-af22-4b28-b76e-775b75c08b2f):/EFI/Microsoft/Boot/bootmgfw.efi
+      /Windows
+          protocol: efi
+          path: guid(7c9af531-af22-4b28-b76e-775b75c08b2f):/EFI/Microsoft/Boot/bootmgfw.efi
     '';
   };
   boot.loader.efi.canTouchEfiVariables = true;
@@ -63,7 +64,7 @@
     enable32Bit = true;
   };
 
-  services.xserver.videoDrivers = [ "nvidia" ];
+  services.xserver.videoDrivers = ["nvidia"];
 
   hardware.nvidia = {
     modesetting.enable = true;
@@ -76,7 +77,7 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  nix.settings.experimental-features = [ "nix-command" "flakes"];
+  nix.settings.experimental-features = ["nix-command" "flakes"];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -85,5 +86,4 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "25.11"; # Did you read the comment?
-
 }

@@ -61,7 +61,7 @@ in {
       devices = devices;
       folders = folders;
     };
-    extraFlags = [ "--gui-apikey=$(cat ${config.sops.secrets.SYNCTHING_API_KEY.path})" ];
+    extraFlags = ["--gui-apikey=$(cat ${config.sops.secrets.SYNCTHING_API_KEY.path})"];
   };
 
   # Ensure the parent of the synced folder exists on hosts where it does not

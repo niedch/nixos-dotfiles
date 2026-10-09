@@ -1,13 +1,11 @@
-{ pkgs, ... }:
-let
+{pkgs, ...}: let
   raw = pkgs.fetchgit {
     name = "omarchy-lock-explorer";
     url = "https://github.com/SirJul1337/omarchy-lock-explorer.git";
     rev = "b6ed7bded638483bce77604d239e365e16452517";
     hash = "sha256-zilpNyTorPXMByKSNcKkTSXf7PF8KJlTlaZdblxBL5s=";
   };
-in
-{
+in {
   # The plugin's source mentions `pacman` in a few prose strings and optional
   # `extras/` scripts, which nixarchy's plugin-lock check refuses on NixOS.
   # Those are all optional (qt6-multimedia = video designs, qt6-imageformats =

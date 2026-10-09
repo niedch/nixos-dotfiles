@@ -1,4 +1,8 @@
-{ pkgs, lib, ... }: {
+{
+  pkgs,
+  lib,
+  ...
+}: {
   programs.nixarchy.plugins.mpris.src = pkgs.fetchgit {
     name = "omarchy-mpris";
     url = "https://github.com/crmne/omarchy-mpris.git";

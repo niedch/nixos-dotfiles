@@ -2,8 +2,7 @@
   pkgs,
   lib,
   ...
-}:
-{
+}: {
   imports = [
     ./chromium
     ./ghostty
@@ -22,10 +21,9 @@
   home.stateVersion = "26.05";
   programs.home-manager.enable = true;
 
-  sops.secrets = lib.mkForce { };
+  sops.secrets = lib.mkForce {};
 
-  home.packages =
-    with pkgs;
+  home.packages = with pkgs;
     [
       docker-compose
       lazydocker

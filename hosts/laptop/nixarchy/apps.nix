@@ -1,8 +1,6 @@
 # Why: modules/AGENTS.md#applications-available-through-the-omarchy-menu-as
-{ ... }:
-{
+{...}: {
   programs.nixarchy.apps = {
-
     # ── Service ─────────────────────────────────────────────────────
     # _1password.enable = true;  #@ _1password  # unfree — Needs the module, not the package: unlocking requires a setuid helper that only programs._1password-gui installs. Set `settings.polkitPolicyOwners = [ "yourname" ]`.
     #   _1password.settings = { };  #@ _1password.settings
@@ -95,7 +93,7 @@
     # obsidian.enable = true; # @ obsidian  # unfree — Preinstalled upstream, opt-in here because it is unfree. Theme syncing needs the Omarchy theme selected under Appearance > Themes in the app; omarchy-theme-set-obsidian writes it on every theme change.
   };
 }
-
 # Offered by the Omarchy menu but with no nixpkgs equivalent:
 #   Brave Origin — Brave's managed build is AUR-only with no published source; enable apps.brave and put policies in /etc/brave/policies/managed, which stock Brave honours identically.
 #   Sublime Text — nixpkgs marks sublimetext4 broken over an insecure OpenSSL dependency; enabling it fails the rebuild.
+

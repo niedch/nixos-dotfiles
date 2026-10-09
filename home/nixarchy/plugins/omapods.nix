@@ -2,8 +2,7 @@
   pkgs,
   lib,
   ...
-}:
-let
+}: let
   omapods-src = pkgs.fetchgit {
     name = "omarchy-pods";
     url = "https://github.com/thisisgm/omarchy-pods.git";
@@ -30,7 +29,7 @@ let
       pkgs.openssl
       pkgs.libpulseaudio
     ];
-    cmakeFlags = [ "-DBUILD_TESTING=OFF" ];
+    cmakeFlags = ["-DBUILD_TESTING=OFF"];
     meta = with lib; {
       description = "librepods AirPods daemon (fork bundled with omarchy-pods)";
       license = licenses.gpl3Only;
@@ -38,21 +37,20 @@ let
       mainProgram = "librepods";
     };
   };
-in
-{
+in {
   programs.nixarchy.plugins.omapods.src = omapods-src;
 
-  home.packages = [ librepods ];
+  home.packages = [librepods];
 
   systemd.user.services.librepods = {
     Unit = {
       Description = "librepods AirPods daemon";
-      After = [ "graphical-session.target" ];
-      PartOf = [ "graphical-session.target" ];
+      After = ["graphical-session.target"];
+      PartOf = ["graphical-session.target"];
     };
     Service = {
       Type = "simple";
-      Environment = [ "QT_LOGGING_RULES=openpods.debug=false" ];
+      Environment = ["QT_LOGGING_RULES=openpods.debug=false"];
       ExecStart = "${librepods}/bin/librepods --headless";
       Restart = "on-failure";
       RestartSec = 5;
@@ -63,7 +61,7 @@ in
       ConfigurationDirectoryMode = "0700";
       ProtectSystem = "strict";
       ProtectHome = "read-only";
-      ReadWritePaths = [ "%t" ];
+      ReadWritePaths = ["%t"];
       PrivateTmp = true;
       NoNewPrivileges = true;
       CapabilityBoundingSet = "";
@@ -80,7 +78,7 @@ in
       RestrictAddressFamilies = "AF_UNIX AF_BLUETOOTH AF_NETLINK";
     };
     Install = {
-      WantedBy = [ "graphical-session.target" ];
+      WantedBy = ["graphical-session.target"];
     };
   };
 }

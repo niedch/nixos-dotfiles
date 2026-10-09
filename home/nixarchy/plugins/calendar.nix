@@ -1,5 +1,9 @@
-{ pkgs, lib, config, ... }:
-let
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}: let
   src = pkgs.fetchgit {
     name = "omarchy-calendar";
     url = "https://github.com/tmn73/omarchy-calendar.git";
@@ -14,8 +18,7 @@ let
     ps.recurring-ical-events
     ps.tzdata
   ]);
-in
-{
+in {
   programs.nixarchy.plugins.calendar.src = src;
 
   # The iCal config is a secret, stored in sops as CALENDAR_CONFIG. Its
@@ -29,8 +32,8 @@ in
   systemd.user.services.omarchy-calendar-sync = {
     Unit = {
       Description = "Sync iCal calendars into the Omarchy calendar widget";
-      After = [ "network-online.target" ];
-      Wants = [ "network-online.target" ];
+      After = ["network-online.target"];
+      Wants = ["network-online.target"];
     };
     Service = {
       Type = "oneshot";
@@ -48,7 +51,7 @@ in
       AccuracySec = "30s";
     };
     Install = {
-      WantedBy = [ "timers.target" ];
+      WantedBy = ["timers.target"];
     };
   };
 }

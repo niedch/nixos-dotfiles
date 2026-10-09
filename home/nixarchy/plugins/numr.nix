@@ -1,4 +1,8 @@
-{ pkgs, lib, ... }: {
+{
+  pkgs,
+  lib,
+  ...
+}: {
   programs.nixarchy.plugins.numr.src = pkgs.fetchgit {
     name = "omarchy-numr";
     url = "https://github.com/niedch/omarchy-numr-plugin.git";

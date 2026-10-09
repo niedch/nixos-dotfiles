@@ -3,8 +3,7 @@
   lib,
   inputs,
   ...
-}:
-{
+}: {
   programs.nixarchy = {
     enable = true;
     user = "nic";
@@ -13,7 +12,7 @@
 
   programs.nixarchyThemeEngine.targets.ghostty = false;
 
-  environment.pathsToLink = [ "/share/omarchy" ];
+  environment.pathsToLink = ["/share/omarchy"];
 
   programs.nixarchy.apps = {
     # ── Service ─────────────────────────────────────────────────────
@@ -102,7 +101,7 @@
     # steam.enable = true;  #@ steam  # unfree — A module, not a package: Steam needs an FHS wrapper to run at all.
     #   steam.settings = { };  #@ steam.settings
     xbox-controllers.enable = true; # @ xbox-controllers  # A kernel driver, so it is a hardware option rather than a package.
-    xbox-controllers.settings = { }; # @ xbox-controllers.settings
+    xbox-controllers.settings = {}; # @ xbox-controllers.settings
 
     # ── Preinstalls ─────────────────────────────────────────────────
     obsidian.enable = true; # @ obsidian  # unfree — Preinstalled upstream, opt-in here because it is unfree. Theme syncing needs the Omarchy theme selected under Appearance > Themes in the app; omarchy-theme-set-obsidian writes it on every theme change.

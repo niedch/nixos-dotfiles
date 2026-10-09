@@ -1,5 +1,5 @@
 {pkgs, ...}: let
-  chromium = pkgs.chromium.override { enableWideVine = true; };
+  chromium = pkgs.chromium.override {enableWideVine = true;};
 
   fetchFavicon = {
     name,

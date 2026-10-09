@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{pkgs, ...}: {
   xdg.configFile."hypr/bindings.lua" = {
     source = ./bindings.lua;
   };
