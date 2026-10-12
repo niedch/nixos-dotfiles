@@ -307,6 +307,50 @@
         ];
       }
       {
+        "Desktop" = [
+          {
+            Desktop = {
+              icon = "glances.png";
+              href = "http://desktop:61208";
+              widget = {
+                type = "glances";
+                url = "http://desktop:61208";
+                metric = "info";
+                version = 4;
+              };
+            };
+          }
+          {
+            Storage = [
+              {
+                "Desktop Storage" = {
+                  icon = "glances.png";
+                  href = "http://desktop:61208";
+                  widget = {
+                    type = "glances";
+                    url = "http://desktop:61208";
+                    metric = "fs:/";
+                    version = 4;
+                  };
+                };
+              }
+              {
+                "Desktop HDD" = {
+                  icon = "glances.png";
+                  href = "http://desktop:61208";
+                  widget = {
+                    type = "glances";
+                    url = "http://desktop:61208";
+                    metric = "fs:/media/hdd";
+                    version = 4;
+                  };
+                };
+              }
+            ];
+          }
+        ];
+      }
+      {
         "Messages" = [
           {
             "Messages" = {

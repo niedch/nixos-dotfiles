@@ -102,5 +102,4 @@ in {
     export OMARCHY_PATH="${config.programs.nixarchy.package}/share/omarchy"
     omarchy theme refresh || true
   '';
-
 }

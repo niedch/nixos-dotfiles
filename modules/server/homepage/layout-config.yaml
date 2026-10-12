@@ -21,3 +21,8 @@ layout:
       columns: 2
   Laptop: {}
   Raspberry Pi: {}
+  Desktop:
+    style: column
+    Storage:
+      style: row
+      columns: 2
