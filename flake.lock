@@ -976,6 +976,7 @@
         "nixarchy-distrobox": "nixarchy-distrobox",
         "nixarchy-flatsnap": "nixarchy-flatsnap",
         "nixarchy-ghtui": "nixarchy-ghtui",
+        "nixarchy-gliff-manager": "nixarchy-gliff-manager",
         "nixarchy-gltui": "nixarchy-gltui",
         "nixarchy-herdr": "nixarchy-herdr",
         "nixarchy-hyprsettngs": "nixarchy-hyprsettngs",
@@ -1000,11 +1001,11 @@
         "zen-browser": "zen-browser"
       },
       "locked": {
-        "lastModified": 1791649564,
-        "narHash": "sha256-xfRkgS+7BVeGmalXJ6lycTrrulDsWnCQl33rdwEfJm4=",
+        "lastModified": 1791757619,
+        "narHash": "sha256-LzsJXB9zxn5JMc83ZGbEsNlj7K0En3qCbZCf1fm4RYI=",
         "owner": "olafkfreund",
         "repo": "nixarchy",
-        "rev": "7c0a13102b179f4be80e8a14594bd6684d5cb5b1",
+        "rev": "0d0a1ddfab8224d4f3bd962bdbedab6f083c7a7f",
         "type": "github"
       },
       "original": {
@@ -1103,6 +1104,32 @@
         "owner": "olafkfreund",
         "repo": "nixarchy-ghtui",
         "rev": "6d42838a371699af08b5f359466cf57c0542ca8a",
+        "type": "github"
+      }
+    },
+    "nixarchy-gliff-manager": {
+      "inputs": {
+        "home-manager": [
+          "nixarchy",
+          "home-manager"
+        ],
+        "nixpkgs": [
+          "nixarchy",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1791755428,
+        "narHash": "sha256-rmniKgXPSYCuctaHmS4GDlgXoBIa9kPiRArJh21PvUg=",
+        "owner": "olafkfreund",
+        "repo": "nixarchy-gliff-manager",
+        "rev": "71f87207096e425f56c53103b23f64fb8643f5d5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "olafkfreund",
+        "repo": "nixarchy-gliff-manager",
+        "rev": "71f87207096e425f56c53103b23f64fb8643f5d5",
         "type": "github"
       }
     },
@@ -1385,11 +1412,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1791373788,
-        "narHash": "sha256-c3oMt0QoE+4yiRk6u1m2L9ogjaUw0uTGn9yk808KkgE=",
+        "lastModified": 1791721963,
+        "narHash": "sha256-BYhx89XJltnRyQeuDKHVL5eSqbbfAcOKuDts7QRsrxQ=",
         "owner": "NixOS",
         "repo": "nixos-hardware",
-        "rev": "4bc63156b109ee7b4103e3ec30565c8c92bde435",
+        "rev": "60a624466c08787ee8303393b7d4752d1826f14f",
         "type": "github"
       },
       "original": {
@@ -1553,11 +1580,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1791639265,
-        "narHash": "sha256-51gxD0eLcJkxH2TYdhE+Qsf04yg3PRV7anCAqOFX70E=",
+        "lastModified": 1791710405,
+        "narHash": "sha256-mVD4XIc5JkqMW2K04IkFUzHgHmyJZlzw5ktfgMDCbKU=",
         "owner": "Mic92",
         "repo": "sops-nix",
-        "rev": "a8be3b14935d3532604c51c8dfe3021c73d1a885",
+        "rev": "ee48786c6f9160d2c1a084aac841f68195b8420c",
         "type": "github"
       },
       "original": {
