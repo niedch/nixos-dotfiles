@@ -48,6 +48,13 @@
     type = "sendreceive";
     devices = ["dobby" "laptop" "desktop"];
   };
+  folders."projects" = {
+    id = "projects";
+    label = "Projects";
+    path = "/home/nic/Projects";
+    type = "sendreceive";
+    devices = ["dobby" "laptop" "desktop"];
+  };
 in {
   services.syncthing = {
     enable = true;
