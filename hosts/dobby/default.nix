@@ -16,6 +16,8 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  boot.kernelPackages = pkgs.linuxPackages_7_2;
+
   networking.hostName = "dobby";
 
   # Expose the Syncthing web GUI on the LAN (reachable at http://dobby:8384).
