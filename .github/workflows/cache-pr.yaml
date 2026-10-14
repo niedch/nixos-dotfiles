@@ -17,7 +17,7 @@ jobs:
         host: [laptop, raspberry-pi, dobby, desktop]
     steps:
       - uses: actions/checkout@v7
-      - run: nix build ".#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel" --print-out-paths --no-link --accept-flake-config
+      - run: nix build ".#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel" --print-out-paths --no-link --accept-flake-config --fallback
       - run: nix copy --to /mnt/hdd/nix ".#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel"
       - if: success()
         run: /run/current-system/sw/bin/post-homepage-message-board "Cache built for ${{ matrix.host }}" success
