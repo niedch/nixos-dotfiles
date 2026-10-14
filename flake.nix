@@ -1,19 +1,6 @@
 {
   description = "Multi-host NixOS dotfiles and configuration";
 
-  nixConfig = {
-    extra-substituters = [
-      "https://hyprland.cachix.org"
-      "https://cache.thalheim.io"
-      "https://cache.nixos.org"
-    ];
-    extra-trusted-public-keys = [
-      "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIITemDosxrE9/Kb+PfYvE="
-      "cache.thalheim.io-1:R7msbosLEZKrxk/lKxf9BTjOOH7Ax3H0Qj0/6wiHOgc="
-      "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-    ];
-  };
-
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 

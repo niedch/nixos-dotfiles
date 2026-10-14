@@ -5,7 +5,6 @@
 }: {
   nix.settings = lib.mkIf (config.networking.hostName != "dobby") {
     substituters = [
-      "http://dobby:5000"
       "https://cache.nixos.org"
       "https://nixarchy.cachix.org"
       "https://hyprland.cachix.org"
