@@ -22,6 +22,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nixflix = {
+      url = "github:kiriwalawren/nixflix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nixos-hardware = {
       url = "github:NixOS/nixos-hardware";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -77,6 +82,7 @@
     speedtest-tracker,
     comd,
     nixarchy,
+    nixflix,
     ...
   } @ inputs: let
     mkSystem = extraModules:
@@ -149,7 +155,9 @@
         ./modules/server/glances.nix
         ./modules/server/gameserver
         speedtest-tracker.nixosModules.default
+        nixflix.nixosModules.default
         ./modules/server/homepage
+        ./modules/server/nixflix.nix
         (mkHM (import ./home/server.nix))
       ];
 

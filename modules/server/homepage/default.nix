@@ -351,6 +351,65 @@
         ];
       }
       {
+        "Media" = [
+          {
+            Jellyfin = {
+              href = "http://dobby:8096";
+              widget = {
+                type = "jellyfin";
+                url = "http://127.0.0.1:8096";
+                key = "{{HOMEPAGE_VAR_JELLYFIN_KEY}}";
+                version = 2;
+                enableBlocks = true;
+              };
+            };
+          }
+          {
+            Sonarr = {
+              href = "http://dobby:8989";
+              widget = {
+                type = "sonarr";
+                url = "http://127.0.0.1:8989";
+                key = "{{HOMEPAGE_VAR_SONARR_KEY}}";
+                enableQueue = true;
+              };
+            };
+          }
+          {
+            Radarr = {
+              href = "http://dobby:7878";
+              widget = {
+                type = "radarr";
+                url = "http://127.0.0.1:7878";
+                key = "{{HOMEPAGE_VAR_RADARR_KEY}}";
+                enableQueue = true;
+              };
+            };
+          }
+          {
+            Prowlarr = {
+              href = "http://dobby:9696";
+              widget = {
+                type = "prowlarr";
+                url = "http://127.0.0.1:9696";
+                key = "{{HOMEPAGE_VAR_PROWLARR_KEY}}";
+              };
+            };
+          }
+          {
+            qBittorrent = {
+              href = "http://dobby:8282";
+              widget = {
+                type = "qbittorrent";
+                url = "http://192.168.15.1:8282";
+                username = "admin";
+                password = "{{HOMEPAGE_VAR_QBITTORRENT_PASSWORD}}";
+              };
+            };
+          }
+        ];
+      }
+      {
         "Messages" = [
           {
             "Messages" = {

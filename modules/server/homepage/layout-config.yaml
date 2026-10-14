@@ -26,3 +26,4 @@ layout:
     Storage:
       style: row
       columns: 2
+  Media: {}

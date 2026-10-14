@@ -38,6 +38,12 @@
     {device = "/dev/disk/by-uuid/7fd88673-ec01-42d6-b12f-fce906820214";}
   ];
 
+  networking.nameservers = [
+    "1.1.1.1" # Cloudflare
+    "9.9.9.9" # Quad9
+  ];
+
+
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }

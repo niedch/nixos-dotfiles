@@ -89,6 +89,28 @@
         "todowrite": "deny"
       }
     },
+    "ams-agent": {
+      "description": "Searches Austrian AMS (jobs.ams.at) for job openings based on user criteria",
+      "mode": "subagent",
+      "model": "{env:OPENCODE_AGENT_MODEL}",
+      "prompt": "{file:./prompts/ams-agent.md}",
+      "permission": {
+        "edit": "deny",
+        "bash": "deny",
+        "todowrite": "deny"
+      }
+    },
+    "kununu-agent": {
+      "description": "Researches Austrian companies, employee reviews, salaries, and workplace culture on kununu.com/at",
+      "mode": "subagent",
+      "model": "{env:OPENCODE_AGENT_MODEL}",
+      "prompt": "{file:./prompts/kununu-agent.md}",
+      "permission": {
+        "edit": "deny",
+        "bash": "deny",
+        "todowrite": "deny"
+      }
+    },
     "pr-summarizer": {
       "description": "Summarizes GitHub pull request comments using gh CLI and deepseek-v4-flash",
       "mode": "subagent",
