@@ -70,7 +70,7 @@
     {
       name = "Reddit";
       url = "https://www.reddit.com/";
-      sha256 = "sha256-NjwuoqwsnmBuOG6ihwzxzGtB4Ldr8bHXgy7R98fZDdE=";
+      sha256 = "sha256-ZMVgcFjUBfyB0GaM9hxLDKNCaamBmZMjKBhqICBHKuU=";
     }
     {
       name = "HackerNews";

@@ -37,7 +37,7 @@ in {
             }
             {
               type = "Switch";
-              name = "qBittorrent";
+              name = "Downloader";
               on = "TRUE";
               state_cmd = "bash /var/lib/homebridge/scripts/qbittorrent_toggle.sh";
               polling = [
