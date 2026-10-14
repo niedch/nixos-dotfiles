@@ -6,6 +6,7 @@
   homebridgeScripts = pkgs.runCommand "homebridge-scripts" {} ''
     mkdir -p $out
     cp ${./usb_toggle.sh} $out/usb_toggle.sh
+    cp ${./qbittorrent_toggle.sh} $out/qbittorrent_toggle.sh
     chmod +x $out/*
   '';
 in {
@@ -27,6 +28,18 @@ in {
               name = "USB-1-1";
               on = "FALSE";
               state_cmd = "bash /var/lib/homebridge/scripts/usb_toggle.sh";
+              polling = [
+                {
+                  characteristic = "on";
+                  interval = 60;
+                }
+              ];
+            }
+            {
+              type = "Switch";
+              name = "qBittorrent";
+              on = "TRUE";
+              state_cmd = "bash /var/lib/homebridge/scripts/qbittorrent_toggle.sh";
               polling = [
                 {
                   characteristic = "on";
@@ -61,6 +74,11 @@ in {
   '';
 
   systemd.services.homebridge.serviceConfig.TimeoutStartSec = 600;
+  systemd.services.homebridge.path = [ pkgs.curl pkgs.coreutils ];
+
+  sops.secrets."qbittorrent/password" = {
+    owner = config.services.homebridge.user;
+  };
 
   systemd.services.usb-default-off = {
     description = "Unbind USB device 1-1 at boot (default off)";
