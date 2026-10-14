@@ -16,7 +16,7 @@ login() {
   local password
   password=$(cat "$SECRET_FILE")
 
-  COOKIE=$(curl -s -i \
+  COOKIE=$(curl -s -i --connect-timeout 4 --max-time 8 \
     --header "Referer: $QBIT_HOST" \
     --data-urlencode "username=admin" \
     --data-urlencode "password=$password" \
@@ -49,13 +49,13 @@ if [ "$ACTION" = "Set" ] && [ "$CHAR" = "On" ]; then
   fi
 
   if [ "$VALUE" = "1" ]; then
-    curl -s --header "Cookie: $COOKIE" --header "Referer: $QBIT_HOST" --data "hashes=all" "$QBIT_HOST/api/v2/torrents/start" >/dev/null 2>&1
-    curl -s --header "Cookie: $COOKIE" --header "Referer: $QBIT_HOST" --data "hashes=all" "$QBIT_HOST/api/v2/torrents/resume" >/dev/null 2>&1
+    curl -s --connect-timeout 4 --max-time 8 --header "Cookie: $COOKIE" --header "Referer: $QBIT_HOST" --data "hashes=all" "$QBIT_HOST/api/v2/torrents/start" >/dev/null 2>&1
+    curl -s --connect-timeout 4 --max-time 8 --header "Cookie: $COOKIE" --header "Referer: $QBIT_HOST" --data "hashes=all" "$QBIT_HOST/api/v2/torrents/resume" >/dev/null 2>&1
     mkdir -p "$(dirname "$STATE_FILE")" 2>/dev/null
     echo "1" > "$STATE_FILE"
   elif [ "$VALUE" = "0" ]; then
-    curl -s --header "Cookie: $COOKIE" --header "Referer: $QBIT_HOST" --data "hashes=all" "$QBIT_HOST/api/v2/torrents/stop" >/dev/null 2>&1
-    curl -s --header "Cookie: $COOKIE" --header "Referer: $QBIT_HOST" --data "hashes=all" "$QBIT_HOST/api/v2/torrents/pause" >/dev/null 2>&1
+    curl -s --connect-timeout 4 --max-time 8 --header "Cookie: $COOKIE" --header "Referer: $QBIT_HOST" --data "hashes=all" "$QBIT_HOST/api/v2/torrents/stop" >/dev/null 2>&1
+    curl -s --connect-timeout 4 --max-time 8 --header "Cookie: $COOKIE" --header "Referer: $QBIT_HOST" --data "hashes=all" "$QBIT_HOST/api/v2/torrents/pause" >/dev/null 2>&1
     mkdir -p "$(dirname "$STATE_FILE")" 2>/dev/null
     echo "0" > "$STATE_FILE"
   fi
@@ -65,7 +65,7 @@ elif [ "$ACTION" = "Get" ] && [ "$CHAR" = "On" ]; then
     fallback
   fi
 
-  torrents=$(curl -s --header "Cookie: $COOKIE" --header "Referer: $QBIT_HOST" "$QBIT_HOST/api/v2/torrents/info" 2>/dev/null)
+  torrents=$(curl -s --connect-timeout 4 --max-time 8 --header "Cookie: $COOKIE" --header "Referer: $QBIT_HOST" "$QBIT_HOST/api/v2/torrents/info" 2>/dev/null)
   if [ $? -ne 0 ] || [ -z "$torrents" ]; then
     fallback
   fi
