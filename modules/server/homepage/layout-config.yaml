@@ -23,7 +23,7 @@ layout:
   Raspberry Pi: {}
   Desktop:
     style: column
-    Storage:
+    "Desktop Storage":
       style: row
       columns: 2
   Media: {}

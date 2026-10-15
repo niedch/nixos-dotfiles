@@ -321,7 +321,7 @@
             };
           }
           {
-            Storage = [
+            "Desktop Storage" = [
               {
                 "Desktop Storage" = {
                   icon = "glances.png";
