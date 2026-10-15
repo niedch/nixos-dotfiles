@@ -1,9 +1,8 @@
 {
-  config,
-  lib,
   ...
-}: {
-  nix.settings = lib.mkIf (config.networking.hostName != "dobby") {
+}:
+{
+  nix.settings = {
     substituters = [
       "https://cache.nixos.org"
       "https://nixarchy.cachix.org"
