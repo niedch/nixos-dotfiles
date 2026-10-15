@@ -17,6 +17,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   boot.kernelPackages = pkgs.linuxPackages_7_2;
+  boot.kernelParams = [ "usb-storage.quirks=0bc2:2039:u" ];
 
   networking.hostName = "dobby";
 
@@ -32,6 +33,7 @@
 
   environment.systemPackages = with pkgs; [
     exfatprogs
+    smartmontools
   ];
 
   nix.settings.require-sigs = false;

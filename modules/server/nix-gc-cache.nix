@@ -1,4 +1,4 @@
-{...}: {
+{pkgs, ...}: {
   systemd.timers.nix-cache-gc = {
     wantedBy = ["timers.target"];
     timerConfig = {
@@ -11,6 +11,7 @@
   systemd.services.nix-cache-gc = {
     after = ["mnt-hdd.mount"];
     requires = ["mnt-hdd.mount"];
+    path = [ pkgs.nix pkgs.coreutils pkgs.findutils ];
     serviceConfig.Type = "oneshot";
     script = ''
       STORE=/mnt/hdd/nix

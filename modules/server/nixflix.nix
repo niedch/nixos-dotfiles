@@ -69,6 +69,23 @@
         hostConfig.password = {
           _secret = config.sops.secrets."prowlarr/password".path;
         };
+        indexers = [
+          {
+            name = "Knaben";
+            priority = 25;
+            appProfileId = 1;
+          }
+          {
+            name = "The Pirate Bay";
+            priority = 25;
+            appProfileId = 1;
+          }
+          {
+            name = "YTS";
+            priority = 25;
+            appProfileId = 1;
+          }
+        ];
       };
     };
 
