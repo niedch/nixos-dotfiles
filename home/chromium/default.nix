@@ -1,4 +1,4 @@
-{pkgs, ...}: let
+{pkgs, lib, ...}: let
   chromium = pkgs.chromium.override {enableWideVine = true;};
 
   fetchFavicon = {
@@ -39,7 +39,7 @@
   webApps = [
     {
       name = "Github";
-      url = "https://www.github.com";
+      url = "https://github.com";
       sha256 = "sha256-GoH7+/Co7+CoqaFvCVHmedu9oTH+AUoVAXYFYZmWjgY=";
     }
     {
@@ -71,11 +71,6 @@
       name = "Reddit";
       url = "https://www.reddit.com/";
       sha256 = "sha256-ZMVgcFjUBfyB0GaM9hxLDKNCaamBmZMjKBhqICBHKuU=";
-    }
-    {
-      name = "HackerNews";
-      url = "https://news.ycombinator.com/";
-      sha256 = "sha256-Nbd6mmGer2TKpwuzMqRhSU/IdLIAomIm+f1flCuI0K8=";
     }
     {
       name = "Discord";
@@ -121,12 +116,6 @@
       faviconDomain = "immich.app";
     }
     {
-      name = "Homebridge";
-      url = "http://rpi:8581";
-      sha256 = "sha256-54Z9G6DA+3Zsx82OGHL3GwcDsIZyoh0Zr350WhNC48w=";
-      faviconDomain = "homebridge.io";
-    }
-    {
       name = "LinkedIn";
       url = "http://linkedin.com";
       sha256 = "sha256-7ab+BahjjSjv5tJ92GfP8yWYVKAkA+I0xqdnfbWtVko=";
@@ -147,6 +136,36 @@
       name = "Instagram";
       url = "https://www.instagram.com";
       sha256 = "sha256-7zU488xJDlPF4+oAbob9T/WvGsblnA3YTzHnwEdeQw8=";
+    }
+    {
+      name = "Jellyfin";
+      url = "http://dobby:8096";
+      sha256 = "sha256-mcQOOy0c+UATbD6CpUHwIQWwi8erApUpYzNgiQf4zQI=";
+      faviconDomain = "www.jellyfin.org";
+    }
+    {
+      name = "Sonarr";
+      url = "http://dobby:8989";
+      sha256 = "sha256-XQqa9xSCOtwwwe7nqU9ifYFbmYD1lax1ix1EFs3RuQw=";
+      faviconDomain = "sonarr.tv";
+    }
+    {
+      name = "Radarr";
+      url = "http://dobby:7878";
+      sha256 = "sha256-iDVu/UJaCWKekYRAiDt3qifK//lUgPCCY3ZKI6LQ+3M=";
+      faviconDomain = "radarr.video";
+    }
+    {
+      name = "Prowlarr";
+      url = "http://dobby:9696";
+      sha256 = "sha256-/c9mYPvhtXNoI3HH4CCWaIOsTUbpJZvnqruge/i7SOg=";
+      faviconDomain = "prowlarr.com";
+    }
+    {
+      name = "QBittorrent";
+      url = "http://dobby:8282";
+      sha256 = "sha256-agVv8ll02TzUxQNJKJz/wEfF9EuH/Y80PP9ddbNHAjg=";
+      faviconDomain = "qbittorrent.org";
     }
   ];
 in {
