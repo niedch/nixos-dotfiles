@@ -14,12 +14,12 @@ in
     deckcraft
     gridcraft
     wordcraft
-    cadcraft
-    lightcraft
-    soundcraft
-    designcraft
+    # cadcraft
+    # lightcraft
+    # soundcraft
+    # designcraft
     filmcraft
-    effectcraft
+    # effectcraft
     pdfcraft
     figcraft
     craft-launcher
@@ -30,12 +30,12 @@ in
     deckcraft-cli
     gridcraft-cli
     wordcraft-cli
-    cadcraft-cli
-    lightcraft-cli
-    soundcraft-cli
-    designcraft-cli
+    # cadcraft-cli
+    # lightcraft-cli
+    # soundcraft-cli
+    # designcraft-cli
     filmcraft-cli
-    effectcraft-cli
+    # effectcraft-cli
     pdfcraft-cli
     figcraft-cli
   ];
