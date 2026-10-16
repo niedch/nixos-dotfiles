@@ -55,3 +55,6 @@ hl.workspace_rule({ workspace = "f[1]",   gaps_in = 0, gaps_out = 0, border_size
 -- Prime Video web app: keep fully opaque (no transparency).
 o.window("^chrome-www\\.amazon\\.de__gp_video_storefront-Default$", { tag = "-default-opacity", opacity = "1 1" })
 o.window("^chrome-www\\.twitch\\.-Default$", { tag = "-default-opacity", opacity = "1 1" })
+
+-- Special workspace clients: keep fully opaque (no transparency).
+o.window({ workspace = "s[true]" }, { tag = "-default-opacity", opacity = "1 1" })

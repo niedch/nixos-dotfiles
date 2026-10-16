@@ -9,15 +9,14 @@
     group = "runner";
     replace = true;
     serviceOverrides = {
-      ReadWritePaths = ["/mnt/hdd/nix"];
+      ReadWritePaths = ["/nix/var/nix/profiles/per-user/runner"];
       Environment = ["TMPDIR=/run/github-runner/nix-harmonia-runner"];
     };
   };
 
-  systemd.services.github-runner-nix-harmonia-runner = {
-    after = ["mnt-hdd.mount"];
-    requires = ["mnt-hdd.mount"];
-  };
+  systemd.tmpfiles.rules = [
+    "d /nix/var/nix/profiles/per-user/runner 0755 runner runner -"
+  ];
 
   sops.secrets.GITHUB_RUNNER_TOKEN = {};
 

@@ -1,87 +1,142 @@
 # Harmonia binary cache
 
-Dobby runs [harmonia](https://github.com/nix-community/harmonia) as a binary
-cache on port `5000`. Other hosts pull from it via `http://dobby:5000`
-(configured in `modules/common/cache-config.nix`).
+Dobby runs [harmonia](https://github.com/nix-community/harmonia) as a lightweight binary cache daemon on port `5000`. It serves dobby's local `/nix/store` directly over HTTP, allowing other machines on the local network (such as laptops and desktops) to pull pre-built store paths instead of building them locally.
 
 ## Architecture
 
-The cache is a **separate Nix store** from dobby's own `/nix/store`. It lives
-on the HDD at `/mnt/hdd/nix` (a "chroot" store, i.e. `--store /mnt/hdd/nix`).
+Unlike setups that maintain a secondary chroot store, Harmonia directly shares dobby's primary system Nix store:
 
-| Path | Purpose |
-|------|---------|
-| `/mnt/hdd/nix/nix/store/` | Store paths served to clients |
-| `/mnt/hdd/nix/nix/var/nix/db/db.sqlite` | SQLite DB harmonia reads for narinfo metadata |
-| `/mnt/hdd/nix/nix/var/nix/gcroots/auto/cache-keep` | GC roots written by `nix-cache-gc` |
+| Component | Path / Configuration | Purpose |
+|-----------|----------------------|---------|
+| **Service** | `modules/server/nix-cache.nix` | Runs Harmonia on port 5000, serving `/nix/store` signed by SOPS secret |
+| **Builder Workflow** | `.github/workflows/cache-pr.yaml` | Builds all host toplevels on `master` pushes directly into the local store |
+| **GC Roots** | `/nix/var/nix/profiles/per-user/runner/` | Per-host profile links registered by the runner to prevent premature GC |
+| **Garbage Collection** | `modules/common/nix-gc.nix` | Standard daily system GC with `--delete-older-than 5d` |
+| **Client Config** | `modules/common/cache-config.nix` | Configures substituters and trusted public keys on all nodes |
 
-- `modules/server/nix-cache.nix` — harmonia service (`real_nix_store = "/mnt/hdd/nix/nix/store"`).
-- `.github/workflows/cache-pr.yaml` — on push to `master`, the self-hosted runner builds each host and populates the cache with `nix copy --to /mnt/hdd/nix`.
-- `modules/server/nix-gc-cache.nix` — daily GC of the cache store.
+### Key Architectural Advantages
+- **Single store**: Harmonia reads `/nix/var/nix/db/db.sqlite` directly. There is no isolated SQLite DB to initialize or corrupt.
+- **Zero copy overhead**: Pre-built closures are already in `/nix/store`; no `nix copy` step is required between stores.
+- **Complete closures**: Building directly into the local store preserves both runtime closures and all build-time derivation dependencies needed for system activations.
 
-## Gotcha: never use `file://` for the copy target
+---
 
-`nix copy --to file:///mnt/hdd/nix` writes a **binary-cache directory**
-(`nix-cache-info`, `*.narinfo`, `nar/`), not a real store. Harmonia cannot
-serve that — it needs a real store with a SQLite DB. Use a bare path
-(`nix copy --to /mnt/hdd/nix`), which populates a real chroot store.
+## Cache Population
 
-Harmonia auto-derives `nix_db_path` from `real_nix_store` by replacing the
-trailing `store` with `var/nix/db/db.sqlite`. So `real_nix_store` must be
-`/mnt/hdd/nix/nix/store` (one `nix/` level deeper than the old, wrong
-`/mnt/hdd/nix/store`).
+The cache is automatically populated by the self-hosted GitHub Actions runner running on dobby:
 
-## Gotcha: copy the build closure too
-
-`nix copy --to /mnt/hdd/nix ".#<host>.config.system.build.toplevel"` copies only the
-*runtime* closure. A handful of system activation/generation scripts (`activate`,
-`dry-activate`, `stage-2-init.sh`, `extra-udev-rules`, `boot.json`,
-`ensure-all-wrappers-paths-exist`) are *build-time* inputs to the toplevel, so they
-would be missing and Nix would rebuild the activation subgraph locally. Pair the
-runtime copy with a derivation copy:
-
-    nix copy --to /mnt/hdd/nix --derivation ".#<host>.config.system.build.toplevel"
-
-The workflow does both.
-
-## Recovery steps (populate cache, then switch)
-
-> Order matters: harmonia refuses to start if its `db.sqlite` does not exist
-> yet, so populate the cache **before** switching dobby.
-
-1. **Wipe stale binary-cache artifacts** (frees `nar/` blobs; keeps the dir and
-   its `nixbld`-writable ownership so the runner can still write):
+1. **Trigger**: When changes merge into `master`, `.github/workflows/cache-pr.yaml` runs on the `[self-hosted, nix, harmonia]` runner.
+2. **Build command**: The runner builds the system toplevel for each matrix host (`laptop`, `raspberry-pi`, `dobby`, `desktop`) with an explicit `--profile` flag:
 
    ```bash
-   sudo find /mnt/hdd/nix -mindepth 1 -delete
+   nix build ".#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel" \
+     --print-out-paths \
+     --profile "/nix/var/nix/profiles/per-user/runner/cache-${{ matrix.host }}" \
+     --accept-flake-config --fallback
    ```
 
-2. **Commit and push** the fix to `master`. This triggers `cache-pr.yaml` on
-   the runner, which builds all hosts and copies each closure into
-   `/mnt/hdd/nix` as a real chroot store.
+3. **GC roots**: Pointing `--profile` to `/nix/var/nix/profiles/per-user/runner/cache-<host>` creates versioned profile generations (e.g. `cache-laptop-1-link`, `cache-laptop-2-link`). These symlinks act as active Nix GC roots, ensuring recent builds stay in the store.
+4. **Runner permissions**: `modules/server/github-runner.nix` grants the runner write access to `/nix/var/nix/profiles/per-user/runner` via systemd `ReadWritePaths` and a `systemd.tmpfiles` rule.
 
-3. **After the workflow finishes**, switch dobby:
+---
 
-   ```bash
-   mise run switch dobby
-   ```
+## Garbage Collection
 
-4. **Verify** harmonia serves the cache (expect `200`, not `404`/`000`):
+Cache retention and cleanup are completely managed by standard NixOS garbage collection via `modules/common/nix-gc.nix`:
 
-   ```bash
-   # on dobby:
-   curl -s -o /dev/null -w '%{http_code}\n' http://127.0.0.1:5000/nix-cache-info
+- **Automatic schedule**: Runs daily via `nix.gc.automatic = true` and `options = "--delete-older-than 5d"`.
+- **Profile pruning**: When `nix-collect-garbage --delete-older-than 5d` runs, it prunes runner profile generations older than 5 days in `/nix/var/nix/profiles/per-user/runner/`.
+- **Store path collection**: Store paths referenced only by deleted profile generations are automatically reclaimed. Store paths referenced by recent generations (or the active systems) are preserved.
+- **Notifications**: Message board notifications (`/run/current-system/sw/bin/post-homepage-message-board`) report GC start, completion, or failure to the dashboard.
 
-   # from another host (e.g. the laptop), use the hostname instead of 127.0.0.1:
-   curl -s -o /dev/null -w '%{http_code}\n' http://dobby:5000/nix-cache-info
+No separate GC scripts or auxiliary store GC roots are required.
 
-   # probe a real store path — substitute an actual hash from /mnt/hdd/nix/nix/store:
-   curl -s -o /dev/null -w '%{http_code}\n' http://dobby:5000/HASH.narinfo
-   ```
+---
 
-## Notes
+## Client Configuration
 
-- Cache hits only occur when a client's flake inputs + config exactly match
-  what the runner built on `master`. Keep clients in sync with `master`.
-- If the workflow's `nix copy` errors with an init failure, add an explicit
-  `nix store init --store /mnt/hdd/nix` step before the copy.
+Client hosts consume the cache through `modules/common/cache-config.nix`, which is imported by all systems via `modules/common/default.nix`:
+
+```nix
+{ config, ... }:
+{
+  nix.settings = {
+    substituters = [
+      "http://dobby:5000"
+      "https://cache.nixos.org"
+      "https://nixarchy.cachix.org"
+      "https://hyprland.cachix.org"
+    ];
+    trusted-public-keys = [
+      # Harmonia public key configured on dobby:
+      "<dobby-harmonia-public-key>"
+      "nixarchy.cachix.org-1:05JOuIlsQOWY2/5DQMq7JEA1hwlhgvmMWowMfka8mMM="
+      "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIITemDosxrE9/Kb+PfYvE="
+    ];
+  };
+}
+```
+
+*Note: On dobby itself, the local runner queries `http://127.0.0.1:5000` (configured in `modules/server/github-runner.nix`). Harmonia serves with `priority = 30` (configured in `modules/server/nix-cache.nix`), prioritizing dobby over upstream `cache.nixos.org` (priority 40).*
+
+> **Requirement for cache hits**: Clients only hit the cache when their flake inputs and configurations match what the runner built on `master`. Keep client repositories in sync with `master`.
+
+---
+
+## Verification Commands
+
+### 1. Verify Harmonia responds
+On dobby:
+```bash
+curl -i http://127.0.0.1:5000/nix-cache-info
+```
+
+From another host on the LAN:
+```bash
+curl -i http://dobby:5000/nix-cache-info
+```
+
+Expected response (`200 OK`):
+```text
+HTTP/1.1 200 OK
+content-type: text/x-nix-cache-info
+...
+StoreDir: /nix/store
+WantMassQuery: 1
+Priority: 30
+```
+
+### 2. Verify `narinfo` lookup for a cached path
+Find a store path hash from one of the runner's profile symlinks on dobby:
+```bash
+# Get the full target store path:
+STORE_PATH=$(readlink -f /nix/var/nix/profiles/per-user/runner/cache-laptop)
+HASH=$(basename "$STORE_PATH" | cut -d'-' -f1)
+
+# Check narinfo response:
+curl -i "http://dobby:5000/$HASH.narinfo"
+```
+Harmonia will return `200 OK` with store path metadata and its cryptographic signature (`Sig: ...`).
+
+### 3. Check runner profile generations and GC roots
+Inspect current profiles registered by the runner:
+```bash
+ls -la /nix/var/nix/profiles/per-user/runner/
+nix-env -p /nix/var/nix/profiles/per-user/runner/cache-laptop --list-generations
+```
+
+### 4. Metrics & Monitoring
+Harmonia exposes Prometheus metrics consumed by the Homepage dashboard:
+```bash
+curl -s http://127.0.0.1:5000/metrics | grep harmonia
+```
+
+---
+
+## One-Time Cleanup (Legacy Chroot Store)
+
+The previous cache architecture stored paths in a separate chroot store at `/mnt/hdd/nix`. If this directory is still present on dobby, it is now obsolete and safe to delete to reclaim disk space:
+
+```bash
+sudo rm -rf /mnt/hdd/nix
+```

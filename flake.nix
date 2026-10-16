@@ -142,7 +142,6 @@
         ./modules/server/openssh.nix
         ./modules/server/immich.nix
         ./modules/server/nix-cache.nix
-        ./modules/server/nix-gc-cache.nix
         ./modules/server/samba.nix
         ./modules/server/github-runner.nix
         ./modules/server/glances.nix
