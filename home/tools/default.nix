@@ -1,4 +1,4 @@
-{ ... }: {
+{...}: {
   imports = [
     ./mux-session
     ./comd.nix

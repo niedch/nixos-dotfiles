@@ -2,11 +2,9 @@
   inputs,
   pkgs,
   ...
-}:
-let
+}: let
   craftPkgs = inputs.nixcraft.packages.${pkgs.stdenv.hostPlatform.system};
-in
-{
+in {
   home.packages = with craftPkgs; [
     # Desktop GUI Applications
     photocraft

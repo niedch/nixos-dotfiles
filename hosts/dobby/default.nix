@@ -17,7 +17,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   boot.kernelPackages = pkgs.linuxPackages_7_2;
-  boot.kernelParams = [ "usb-storage.quirks=0bc2:2039:u" ];
+  boot.kernelParams = ["usb-storage.quirks=0bc2:2039:u"];
 
   networking.hostName = "dobby";
 
@@ -34,7 +34,23 @@
   environment.systemPackages = with pkgs; [
     exfatprogs
     smartmontools
+    intel-gpu-tools
+    libva-utils
   ];
+
+  # Hardware graphics and Intel media drivers (VA-API & Quick Sync Video)
+  hardware.graphics = {
+    enable = true;
+    extraPackages = with pkgs; [
+      intel-media-driver
+      vpl-gpu-rt
+    ];
+  };
+
+  # Force VA-API to prefer the modern Intel Media Driver (iHD)
+  environment.sessionVariables = {
+    LIBVA_DRIVER_NAME = "iHD";
+  };
 
   nix.settings.require-sigs = false;
   system.stateVersion = "25.11"; # Did you read the comment?

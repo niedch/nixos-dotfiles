@@ -407,6 +407,16 @@
               };
             };
           }
+          {
+            Seerr = {
+              href = "http://dobby:5055";
+              widget = {
+                type = "seerr";
+                url = "http://127.0.0.1:5055";
+                key = "{{HOMEPAGE_VAR_SEERR_KEY}}";
+              };
+            };
+          }
         ];
       }
       {

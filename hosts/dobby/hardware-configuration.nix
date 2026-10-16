@@ -43,7 +43,6 @@
     "9.9.9.9" # Quad9
   ];
 
-
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }

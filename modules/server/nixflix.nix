@@ -1,15 +1,16 @@
-{ config, ... }: {
+{config, ...}: {
   sops.secrets = {
-    "sonarr/api_key" = { };
-    "sonarr/password" = { };
-    "radarr/api_key" = { };
-    "radarr/password" = { };
-    "prowlarr/api_key" = { };
-    "prowlarr/password" = { };
-    "jellyfin/api_key" = { };
-    "jellyfin/admin_password" = { };
-    "wireguard/conf" = { };
-    "qbittorrent/password" = { };
+    "sonarr/api_key" = {};
+    "sonarr/password" = {};
+    "radarr/api_key" = {};
+    "radarr/password" = {};
+    "prowlarr/api_key" = {};
+    "prowlarr/password" = {};
+    "jellyfin/api_key" = {};
+    "jellyfin/admin_password" = {};
+    "wireguard/conf" = {};
+    "qbittorrent/password" = {};
+    "seerr/api_key" = {};
     # "sabnzbd/api_key" = { };
     # "sabnzbd/nzb_key" = { };
     # "sabnzbd/username" = { };
@@ -98,6 +99,16 @@
     #   };
     # };
 
+    recyclarr = {
+      enable = true;
+    };
+
+    seerr = {
+      enable = true;
+      openFirewall = true;
+      apiKey._secret = config.sops.secrets."seerr/api_key".path;
+    };
+
     torrentClients.qbittorrent = {
       enable = true;
       openFirewall = true;
@@ -120,6 +131,11 @@
       enable = true;
       openFirewall = true;
       apiKey._secret = config.sops.secrets."jellyfin/api_key".path;
+      encoding = {
+        hardwareAccelerationType = "qsv";
+        enableTonemapping = true;
+        enableVppTonemapping = true;
+      };
       libraries.Shows.enableRealtimeMonitor = true;
       libraries.Movies.enableRealtimeMonitor = true;
       users.admin = {

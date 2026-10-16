@@ -76,8 +76,16 @@ in {
     host = "0.0.0.0";
     openFirewall = true;
     mediaLocation = "/mnt/hdd/immich";
+    accelerationDevices = [
+      "/dev/dri/renderD128"
+    ];
   };
   services.redis.servers.immich.logLevel = "warning";
+
+  users.users.immich.extraGroups = [
+    "video"
+    "render"
+  ];
 
   systemd.services.immich-server = {
     after = ["immich-bind-mounts.service"];
@@ -87,7 +95,11 @@ in {
         "/mnt/hdd/samba/immich-images"
         "/var/lib/immich"
       ];
-      SupplementaryGroups = ["users"];
+      SupplementaryGroups = [
+        "users"
+        "video"
+        "render"
+      ];
     };
   };
 

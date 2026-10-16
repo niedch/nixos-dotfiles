@@ -74,7 +74,7 @@ in {
   '';
 
   systemd.services.homebridge.serviceConfig.TimeoutStartSec = 600;
-  systemd.services.homebridge.path = [ pkgs.curl pkgs.coreutils ];
+  systemd.services.homebridge.path = [pkgs.curl pkgs.coreutils];
 
   sops.secrets."qbittorrent/password" = {
     owner = config.services.homebridge.user;
