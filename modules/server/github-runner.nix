@@ -20,17 +20,6 @@
 
   sops.secrets.GITHUB_RUNNER_TOKEN = {};
 
-  nix.settings = {
-    substituters = [
-      "http://127.0.0.1:5000"
-      "https://cache.nixos.org"
-    ];
-    trusted-users = [
-      "root"
-      "runner"
-    ];
-  };
-
   users.users.runner = {
     isSystemUser = true;
     group = "runner";
