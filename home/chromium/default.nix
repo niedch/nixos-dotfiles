@@ -106,7 +106,7 @@
     {
       name = "Grok";
       url = "https://grok.com/";
-      sha256 = "sha256-8RUKJdmd37pxZo0fEETFOv3V1lkEDVrJXsrbithPgO0=";
+      sha256 = "sha256-2HzWUXEiSN98X+AyNIJS9SuqwUvxfXs84cPFx6FjR44=";
       faviconDomain = "grok.com";
     }
     {
