@@ -55,6 +55,11 @@
       inputs.sops-nix.follows = "sops-nix";
       inputs.home-manager.follows = "home-manager";
     };
+
+    nixcraft = {
+      url = "github:niedch/nixcraft";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -70,6 +75,7 @@
     comd,
     nixarchy,
     nixflix,
+    nixcraft,
     ...
   } @ inputs: let
     mkSystem = extraModules:
