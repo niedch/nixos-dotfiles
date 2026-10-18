@@ -171,6 +171,12 @@
       sha256 = "sha256-agVv8ll02TzUxQNJKJz/wEfF9EuH/Y80PP9ddbNHAjg=";
       faviconDomain = "qbittorrent.org";
     }
+    {
+      name = "Seerr";
+      url = "http://dobby:5055";
+      sha256 = "sha256-ydq9D+6ybtB3s5QSxws5tsrnTFQvdvlgIdMdk34WFU4=";
+      faviconDomain = "seerr.dev";
+    }
   ];
 in {
   xdg.desktopEntries = builtins.listToAttrs (map (app: {
