@@ -17,12 +17,22 @@
 
   networking.hostName = "rpi";
   networking.networkmanager.enable = true;
+  networking.networkmanager.wifi.powersave = false;
   networking.extraHosts = ''
     127.0.0.1 rpi
     ::1 rpi
   '';
 
+  environment.systemPackages = with pkgs; [
+    iw
+  ];
+
   time.timeZone = "Europe/Vienna";
+
+  zramSwap = {
+    enable = true;
+    memoryPercent = 50;
+  };
 
   nix.settings = {
     experimental-features = ["nix-command" "flakes"];
