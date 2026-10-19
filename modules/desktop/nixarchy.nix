@@ -23,7 +23,7 @@
     # nordvpn.enable = true;  #@ nordvpn  # unfree
     # once.enable = true;  #@ once
     # signal.enable = true;  #@ signal
-    # spotify.enable = true;  #@ spotify  # unfree
+    spotify.enable = true;  #@ spotify  # unfree
 
     # ── Utility ─────────────────────────────────────────────────────
     # aether.enable = true;  #@ aether
