@@ -1,4 +1,8 @@
-{config, ...}: {
+{
+  config,
+  lib,
+  ...
+}: {
   sops.secrets = {
     "sonarr/api_key" = {};
     "sonarr/password" = {};
@@ -132,9 +136,12 @@
       openFirewall = true;
       apiKey._secret = config.sops.secrets."jellyfin/api_key".path;
       encoding = {
-        hardwareAccelerationType = "qsv";
-        enableTonemapping = true;
-        enableVppTonemapping = true;
+        hardwareAccelerationType = "vaapi";
+        vaapiDevice = "/dev/dri/renderD128";
+        enableDecodingColorDepth10Hevc = false;
+        enableDecodingColorDepth10Vp9 = false;
+        enableTonemapping = false;
+        enableVppTonemapping = false;
       };
       libraries.Shows.enableRealtimeMonitor = true;
       libraries.Movies.enableRealtimeMonitor = true;
@@ -165,5 +172,21 @@
     #     };
     #   };
     # };
+  };
+
+  users.users.jellyfin.extraGroups = [
+    "video"
+    "render"
+  ];
+
+  systemd.services.jellyfin.serviceConfig = {
+    SupplementaryGroups = [
+      "video"
+      "render"
+    ];
+    PrivateUsers = lib.mkForce false;
+    DeviceAllow = [
+      "/dev/dri/renderD128 rw"
+    ];
   };
 }

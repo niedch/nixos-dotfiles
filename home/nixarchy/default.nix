@@ -1,4 +1,8 @@
-{inputs, ...}: {
+{
+  inputs,
+  pkgs,
+  ...
+}: {
   imports = [
     inputs.nixarchy.homeManagerModules.nixarchy
     ./hypr/default.nix
@@ -9,6 +13,7 @@
   programs.nixarchy.enable = true;
 
   programs.nixarchy = {
+    package = pkgs.omarchy;
     neovim = "off";
   };
 

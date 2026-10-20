@@ -24,5 +24,6 @@
         );
     in
       patchDesktop pkgs.steam "steam" "^Exec=" "Exec=nvidia-offload ")
+      pkgs.r2modman
   ];
 }

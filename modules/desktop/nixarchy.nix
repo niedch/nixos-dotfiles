@@ -4,8 +4,30 @@
   inputs,
   ...
 }: {
+  # Issue when runing the gpu-screen-recorder so that quickshell app does not detect when gpu-screen-recorder is running. This fixes it
+  nixpkgs.overlays = [
+    inputs.nixarchy.overlays.default
+    (final: prev: {
+      omarchy = prev.omarchy.overrideAttrs (old: {
+        postPatch =
+          (old.postPatch or "")
+          + ''
+            substituteInPlace shell/plugins/bar/indicators/ScreenRecording.qml \
+              --replace-fail '"^gpu-screen-recorder"' '"(^|/)gpu-screen-recorder"'
+
+            substituteInPlace bin/omarchy-capture-screenrecording \
+              --replace-fail '"^gpu-screen-recorder"' '"(^|/)gpu-screen-recorder"'
+
+            substituteInPlace default/omarchy/omarchy-menu.jsonc \
+              --replace-fail "'^gpu-screen-recorder'" "'(^|/)gpu-screen-recorder'"
+          '';
+      });
+    })
+  ];
+
   programs.nixarchy = {
     enable = true;
+    package = pkgs.omarchy;
     user = "nic";
     flake = "/home/nic/Projects/nixos-dotfiles";
   };
@@ -23,7 +45,7 @@
     # nordvpn.enable = true;  #@ nordvpn  # unfree
     # once.enable = true;  #@ once
     # signal.enable = true;  #@ signal
-    spotify.enable = true;  #@ spotify  # unfree
+    spotify.enable = true; #@ spotify  # unfree
 
     # ── Utility ─────────────────────────────────────────────────────
     # aether.enable = true;  #@ aether
