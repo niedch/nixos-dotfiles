@@ -5,7 +5,8 @@
   inputs,
   osConfig,
   ...
-}: let
+}:
+let
   # Hyprland's own flake package — the exact compositor the running session
   # uses (nixarchy sets programs.hyprland.package to this, not nixpkgs').
   # Its bin/ holds hyprctl, which omarchy-restart-shell needs to relaunch the
@@ -16,7 +17,8 @@
   # package's share/omarchy. Pointing omarchy-restart-shell at the raw package
   # made it target the wrong tree during activation, so it failed to kill the
   # running shell and hit "already running".
-  omarchyPath = osConfig.programs.nixarchy.tree or "${config.programs.nixarchy.package}/share/omarchy";
+  omarchyPath =
+    osConfig.programs.nixarchy.tree or "${config.programs.nixarchy.package}/share/omarchy";
 
   # Omarchy's scripts are unwrapped, so their runtime binaries — quickshell,
   # qs, jq — are NOT in the package's bin/. In the session they come from
@@ -25,8 +27,11 @@
   # readiness checks silently no-oped ("already running" → "did not become
   # ready"). Put them (and hyprctl) on PATH explicitly.
   omarchyBinPath = lib.makeBinPath (
-    [config.programs.nixarchy.package hyprland]
-    ++ (osConfig.programs.nixarchy.package.passthru.runtimeDeps or [])
+    [
+      config.programs.nixarchy.package
+      hyprland
+    ]
+    ++ (osConfig.programs.nixarchy.package.passthru.runtimeDeps or [ ])
   );
 
   # One entry per theme, keyed by the theme slug (must match the dir name
@@ -56,6 +61,11 @@
           url = "https://w.wallhaven.cc/full/po/wallhaven-pomx99.jpg";
           hash = "sha256-FFdtO9YODPpVoOh5tzlurRLmCDiNoNHyBe6apDOGgiA=";
         };
+        "mist_drawing.jpg" = {
+          url = "https://w.wallhaven.cc/full/qr/wallhaven-qrp5xd.jpg";
+          hash = "sha256-mK1i+6Pl/nNsNLJ0Q3ZiY9y4+y1dILJ5Zf/vFHAZgRw=";
+        };
+
       };
     };
 
@@ -68,36 +78,32 @@
 
   # Derive xdg.configFile entries from `themes`:
   #   omarchy/themes/<slug>  -> theme source (recursive)
-  themeConfigFiles =
-    lib.mapAttrs' (
-      themeName: theme:
-        lib.nameValuePair "omarchy/themes/${themeName}" {
-          source = theme.source;
-          recursive = true;
-        }
-    )
-    themes;
+  themeConfigFiles = lib.mapAttrs' (
+    themeName: theme:
+    lib.nameValuePair "omarchy/themes/${themeName}" {
+      source = theme.source;
+      recursive = true;
+    }
+  ) themes;
 
   #   omarchy/backgrounds/<slug>/<file> -> fetched wallpaper
-  wallpaperFiles =
-    lib.concatMapAttrs (
-      themeName: theme:
-        lib.mapAttrs' (
-          filename: img:
-            lib.nameValuePair "omarchy/backgrounds/${themeName}/${filename}" {
-              source = pkgs.fetchurl {inherit (img) url hash;};
-            }
-        )
-        theme.wallpapers
-    )
-    themes;
-in {
+  wallpaperFiles = lib.concatMapAttrs (
+    themeName: theme:
+    lib.mapAttrs' (
+      filename: img:
+      lib.nameValuePair "omarchy/backgrounds/${themeName}/${filename}" {
+        source = pkgs.fetchurl { inherit (img) url hash; };
+      }
+    ) theme.wallpapers
+  ) themes;
+in
+{
   xdg.configFile = themeConfigFiles // wallpaperFiles;
 
   # Re-apply the active theme after every rebuild so Nix-controlled theme
   # changes (e.g. the Ghostty background opacity) reach the staging dir at
   # ~/.local/state/omarchy/current/theme without a manual `omarchy theme refresh`.
-  home.activation.omarchyThemeRefresh = lib.hm.dag.entryAfter ["writeBoundary"] ''
+  home.activation.omarchyThemeRefresh = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     export PATH="${config.programs.nixarchy.package}/bin:$PATH"
     export OMARCHY_PATH="${config.programs.nixarchy.package}/share/omarchy"
     omarchy theme refresh || true

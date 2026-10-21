@@ -1,6 +1,5 @@
 {
   lib,
-  config,
   ...
 }: {
   imports = [
@@ -12,6 +11,7 @@
     ./ssh.nix
     ./sops.nix
     ./message-board-client.nix
+    ./unfree.nix
   ];
 
   config = {
@@ -21,7 +21,6 @@
       experimental-features = ["nix-command" "flakes"];
       trusted-users = ["root" "nic"];
     };
-    nixpkgs.config.allowUnfree = true;
 
     programs.nix-ld.enable = true;
   };

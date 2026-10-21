@@ -69,6 +69,11 @@
       url = "github:niedch/nixcraft";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nix-lazy-apps = {
+      url = "github:niedch/nix-lazy-apps";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -85,6 +90,7 @@
     nixarchy,
     nixflix,
     nixcraft,
+    nix-lazy-apps,
     ...
   } @ inputs: let
     mkSystem = extraModules:
