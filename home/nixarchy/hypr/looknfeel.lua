@@ -58,3 +58,21 @@ o.window("^chrome-www\\.twitch\\.-Default$", { tag = "-default-opacity", opacity
 
 -- Special workspace clients: keep fully opaque (no transparency).
 o.window({ workspace = "s[true]" }, { tag = "-default-opacity", opacity = "1 1" })
+
+-- Enable global blur in Hyprland
+hl.config({
+  decoration = {
+    blur = {
+      enabled = true,
+      size = 3,
+      passes = 2,
+    },
+  },
+})
+
+-- -- Enable blur for the Omarchy status bar
+-- hl.layer_rule({
+--   match = { namespace = "^omarchy-bar$" },
+--   blur = true,
+--   ignore_alpha = 0.2,
+-- })

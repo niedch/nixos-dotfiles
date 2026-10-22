@@ -39,7 +39,6 @@
     enable = true;
     lazyPkgs = with pkgs; [
       r2modman
-      firefox
       intellij-idea
     ];
   };
