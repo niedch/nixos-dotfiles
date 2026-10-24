@@ -37,6 +37,7 @@
 
   programs.nix-lazy-apps = {
     enable = true;
+    follows = inputs.nixpkgs;
     lazyPkgs = with pkgs; [
       r2modman
       intellij-idea
