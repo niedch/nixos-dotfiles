@@ -1,4 +1,8 @@
-{config, ...}: {
+{
+  config,
+  lib,
+  ...
+}: {
   services.github-runners."nix-harmonia-runner" = {
     enable = true;
     url = "https://github.com/niedch/nixos-dotfiles";
@@ -9,6 +13,8 @@
     group = "runner";
     replace = true;
     serviceOverrides = {
+      Restart = lib.mkForce "always";
+      RestartSec = 5;
       ReadWritePaths = ["/nix/var/nix/profiles/per-user/runner"];
       Environment = ["TMPDIR=/run/github-runner/nix-harmonia-runner"];
     };

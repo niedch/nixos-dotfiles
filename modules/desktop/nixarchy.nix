@@ -5,25 +5,25 @@
   ...
 }: {
   # Issue when runing the gpu-screen-recorder so that quickshell app does not detect when gpu-screen-recorder is running. This fixes it
-  nixpkgs.overlays = [
-    inputs.nixarchy.overlays.default
-    (final: prev: {
-      omarchy = prev.omarchy.overrideAttrs (old: {
-        postPatch =
-          (old.postPatch or "")
-          + ''
-            substituteInPlace shell/plugins/bar/indicators/ScreenRecording.qml \
-              --replace-fail '"^gpu-screen-recorder"' '"(^|/)gpu-screen-recorder"'
-
-            substituteInPlace bin/omarchy-capture-screenrecording \
-              --replace-fail '"^gpu-screen-recorder"' '"(^|/)gpu-screen-recorder"'
-
-            substituteInPlace default/omarchy/omarchy-menu.jsonc \
-              --replace-fail "'^gpu-screen-recorder'" "'(^|/)gpu-screen-recorder'"
-          '';
-      });
-    })
-  ];
+  # nixpkgs.overlays = [
+  #   inputs.nixarchy.overlays.default
+  #   (final: prev: {
+  #     omarchy = prev.omarchy.overrideAttrs (old: {
+  #       postPatch =
+  #         (old.postPatch or "")
+  #         + ''
+  #           substituteInPlace shell/plugins/bar/indicators/ScreenRecording.qml \
+  #             --replace-fail '"^gpu-screen-recorder"' '"(^|/)gpu-screen-recorder"'
+  #
+  #           substituteInPlace bin/omarchy-capture-screenrecording \
+  #             --replace-fail '"^gpu-screen-recorder"' '"(^|/)gpu-screen-recorder"'
+  #
+  #           substituteInPlace default/omarchy/omarchy-menu.jsonc \
+  #             --replace-fail "'^gpu-screen-recorder'" "'(^|/)gpu-screen-recorder'"
+  #         '';
+  #     });
+  #   })
+  # ];
 
   programs.nixarchy = {
     enable = true;
