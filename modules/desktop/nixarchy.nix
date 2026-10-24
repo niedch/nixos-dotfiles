@@ -27,7 +27,6 @@
 
   programs.nixarchy = {
     enable = true;
-    package = pkgs.omarchy;
     user = "nic";
     flake = "/home/nic/Projects/nixos-dotfiles";
   };

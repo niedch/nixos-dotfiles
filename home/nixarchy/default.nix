@@ -1,6 +1,5 @@
 {
   inputs,
-  pkgs,
   ...
 }: {
   imports = [
@@ -13,7 +12,6 @@
   programs.nixarchy.enable = true;
 
   programs.nixarchy = {
-    package = pkgs.omarchy;
     neovim = "off";
   };
 
