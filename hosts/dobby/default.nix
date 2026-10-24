@@ -6,7 +6,8 @@
   lib,
   pkgs,
   ...
-}: {
+}:
+{
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -17,13 +18,16 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   boot.kernelPackages = pkgs.linuxPackages_7_2;
-  boot.kernelParams = ["usb-storage.quirks=0bc2:2039:u"];
+  boot.kernelParams = [
+    "usb-storage.quirks=0bc2:2039:u"
+    "ahci.mobile_lpm_policy=0"
+  ];
 
   networking.hostName = "dobby";
 
   # Expose the Syncthing web GUI on the LAN (reachable at http://dobby:8384).
   services.syncthing.guiAddress = "0.0.0.0:8384";
-  networking.firewall.allowedTCPPorts = [8384];
+  networking.firewall.allowedTCPPorts = [ 8384 ];
 
   networking.networkmanager.enable = true;
 
