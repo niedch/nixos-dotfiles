@@ -20,7 +20,7 @@ in {
     # effectcraft
     pdfcraft
     figcraft
-    craft-launcher
+    # craft-launcher
 
     # Headless CLI & MCP Automation Tools
     photocraft-cli

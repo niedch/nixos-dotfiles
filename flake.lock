@@ -1386,11 +1386,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792079891,
-        "narHash": "sha256-nGNBIJFF9t2bhmgXRvPLUd5T/QIp6aqj+TgU3YOM6G4=",
+        "lastModified": 1792926305,
+        "narHash": "sha256-gEN9X1mUN/W0PFhbmHdieUuQGOxo2hBDM7ZnZ4mjHuQ=",
         "owner": "niedch",
         "repo": "nixcraft",
-        "rev": "cd476c63a123d60680839ab7ff7e147c85416780",
+        "rev": "223da6691cabc511308461940f61673d0301fdbd",
         "type": "github"
       },
       "original": {

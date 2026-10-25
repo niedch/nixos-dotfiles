@@ -5,4 +5,9 @@ in {
     opencode
     jq
   ];
+
+  xdg.configFile."opencode" = {
+    source = ./config;
+    recursive = true;
+  };
 }

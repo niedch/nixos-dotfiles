@@ -1,8 +1,8 @@
 {...}: {
   imports = [
-    ./kdenlive
-    ./video
-    ./image
-    ./docs
+    # ./kdenlive
+    # ./video
+    # ./image
+    # ./docs
   ];
 }
