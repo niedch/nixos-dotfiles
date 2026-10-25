@@ -59,7 +59,7 @@
     };
 
     nixarchy = {
-      url = "github:olafkfreund/nixarchy";
+      url = "github:olafkfreund/nixarchy/release";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.sops-nix.follows = "sops-nix";
       inputs.home-manager.follows = "home-manager";
