@@ -29,6 +29,7 @@
     enable = true;
     user = "nic";
     flake = "/home/nic/Projects/nixos-dotfiles";
+    mcp = false;
   };
 
   programs.nixarchyThemeEngine.targets.ghostty = false;
