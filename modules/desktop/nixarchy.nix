@@ -37,6 +37,13 @@
 
   environment.pathsToLink = ["/share/omarchy"];
 
+  # SDDM Autologin
+  services.displayManager.autoLogin = {
+    enable = true;
+    user = "nic";
+  };
+  services.displayManager.defaultSession = "omarchy";
+
   programs.nixarchy.apps = {
     # ── Service ─────────────────────────────────────────────────────
     # _1password.enable = true;  #@ _1password  # unfree — Needs the module, not the package: unlocking requires a setuid helper that only programs._1password-gui installs. Set `settings.polkitPolicyOwners = [ "yourname" ]`.

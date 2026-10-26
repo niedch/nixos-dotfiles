@@ -6,8 +6,8 @@
   raw = pkgs.fetchgit {
     name = "syncshell";
     url = "https://github.com/omarchy-QOL/syncshell.git";
-    rev = "487cb557e20d4112560c6d9c51d7b204e1fc1068";
-    hash = "sha256-KL/thX/7OeMqMsQYH108KR1ed5Xdoe9F4YA7SsgHePA=";
+    rev = "3cd6060132550f63fd4636d6519081275793cfd9";
+    hash = "sha256-8bmqv5wbbU3WHRjmZjoUZtlO0XzVphISEWDeJeBqtyM=";
   };
 in {
   # The bundled Go core is statically linked and runs on NixOS, but it is

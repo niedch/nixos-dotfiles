@@ -7,8 +7,8 @@
   src = pkgs.fetchgit {
     name = "omarchy-calendar";
     url = "https://github.com/tmn73/omarchy-calendar.git";
-    rev = "1b1a4983bf617485fe223fab6a11f1eb5113d9e0";
-    hash = "sha256-SVYIBmMLaY3A5b8WHQ/jUJfZE05kGEAxvPxCYNezIJs=";
+    rev = "c1ee7874540c117771f53e2f84cde60750271261";
+    hash = "sha256-U3Jq8Pjy8tyZPXF3tu0pzj6F1xOhIiBt4cmsniMqfDs=";
   };
 
   # The iCal sync needs icalendar + recurring-ical-events; tzdata makes
