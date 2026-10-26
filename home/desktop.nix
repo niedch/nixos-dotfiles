@@ -8,7 +8,6 @@
     ./nixarchy
     ./chromium
     ./ghostty
-    ./media
     ./tmux
     ./tools
     ./nvim

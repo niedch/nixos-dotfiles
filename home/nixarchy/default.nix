@@ -17,7 +17,7 @@
     flatsnap = false;
     gitlab = false;
     github = true;
-    herdr = false;
+    herdr = true;
     podman = false;
     distrobox = false;
     microvm = false;

@@ -6,7 +6,6 @@
   imports = [
     ./chromium
     ./ghostty
-    ./media
     ./tmux
     ./tools
     ./nvim
