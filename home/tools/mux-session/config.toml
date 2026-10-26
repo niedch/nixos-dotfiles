@@ -13,7 +13,7 @@ window_name = "Runner"
 [[default.window]]
 window_name = "OpenCode"
 cmd = """
-opencode .
+herdr-opencode
 """
 
 
@@ -38,7 +38,7 @@ cmd = "btop"
 
 [[project.window]]
 window_name = "opencode"
-cmd = "opencode"
+cmd = "herdr-opencode"
 
 [[project.window]]
 window_name = "Fetcher"
@@ -69,7 +69,7 @@ cmd = "lazydocker"
 
 [[project.window]]
 window_name = "opencode"
-cmd = "opencode"
+cmd = "herdr-opencode"
 
 [[project.window]]
 window_name = "Fetcher"

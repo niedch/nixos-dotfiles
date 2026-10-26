@@ -16,6 +16,7 @@
     ./opencode
     ./git
     ./ssh
+    ./herdr
   ];
 
   home.username = "nic";
