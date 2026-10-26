@@ -1,7 +1,4 @@
-{
-  inputs,
-  ...
-}: {
+{inputs, ...}: {
   imports = [
     inputs.nixarchy.homeManagerModules.nixarchy
     ./hypr/default.nix

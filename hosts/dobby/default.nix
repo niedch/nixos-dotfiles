@@ -6,8 +6,7 @@
   lib,
   pkgs,
   ...
-}:
-{
+}: {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -27,7 +26,7 @@
 
   # Expose the Syncthing web GUI on the LAN (reachable at http://dobby:8384).
   services.syncthing.guiAddress = "0.0.0.0:8384";
-  networking.firewall.allowedTCPPorts = [ 8384 ];
+  networking.firewall.allowedTCPPorts = [8384];
 
   networking.networkmanager.enable = true;
 

@@ -13,11 +13,24 @@
     enable = true;
   };
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.timeout = 1;
+
+  # Fastboot, quiet boot & systemd in initrd
+  # Note: boot.initrd.systemd.enable was removed upstream in Nixpkgs (systemd in initrd is now unconditionally default)
+  boot.kernelParams = [
+    "quiet"
+    "loglevel=3"
+    "systemd.show_status=auto"
+    "rd.udev.log_level=3"
+    "udev.log_priority=3"
+    "fastboot"
+  ];
 
   networking.hostName = "laptop";
 
   networking.networkmanager.enable = true;
-  networking.wireless.enable = true;
+  systemd.services.NetworkManager-wait-online.enable = false;
+  systemd.services.systemd-udev-settle.enable = false;
 
   hardware.bluetooth.enable = true;
 

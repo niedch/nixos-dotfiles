@@ -1,4 +1,8 @@
-{pkgs, lib, ...}: let
+{
+  pkgs,
+  lib,
+  ...
+}: let
   raw = pkgs.fetchgit {
     name = "omarchy-lock-explorer";
     url = "https://github.com/SirJul1337/omarchy-lock-explorer.git";

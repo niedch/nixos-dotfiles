@@ -3,6 +3,7 @@
   "autoupdate": false,
   "default_agent": "plan",
   "lsp": true,
+  "todo": true,
   // ----------------------------- Providers -------------------------------
   "provider": {
     "opencode-go": {

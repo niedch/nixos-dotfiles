@@ -20,6 +20,7 @@
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/d7e2eef7-8bb1-4d02-9b1f-437eaf902f2e";
     fsType = "ext4";
+    options = ["noatime"];
   };
 
   fileSystems."/boot" = {
@@ -31,13 +32,13 @@
   fileSystems."/media/hdd" = {
     device = "/dev/disk/by-uuid/d1b55889-68c0-462a-827a-8d01b1b1e9d4";
     fsType = "ext4";
-    options = ["nofail" "x-gvfs-show" "x-gvfs-name=HDD"];
+    options = ["nofail" "noatime" "x-systemd.automount" "x-gvfs-show" "x-gvfs-name=HDD"];
   };
 
   fileSystems."/media/windows" = {
     device = "/dev/disk/by-uuid/01DCCF4AEEDB20E0";
     fsType = "ntfs3";
-    options = ["nofail" "force" "x-gvfs-show" "x-gvfs-name=Windows"];
+    options = ["nofail" "force" "noatime" "x-systemd.automount" "x-gvfs-show" "x-gvfs-name=Windows"];
   };
 
   swapDevices = [];
