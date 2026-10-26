@@ -13,11 +13,6 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
-    microvm = {
-      url = "github:astro/microvm.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     nixflix = {
       url = "github:kiriwalawren/nixflix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -79,7 +74,6 @@
   outputs = {
     self,
     nixpkgs,
-    microvm,
     home-manager,
     sops-nix,
     wlctl,
@@ -167,13 +161,6 @@
         ./modules/server/nixflix.nix
         (mkHM (import ./home/server.nix))
       ];
-
-      microvm = mkSystem [
-        ./hosts/microvm
-        ./modules/common
-        ./modules/desktop
-        (mkHM (import ./home/microvm.nix))
-      ];
     };
 
     packages.x86_64-linux.mux-session = import ./home/tools/mux-session/package.nix {
@@ -181,16 +168,13 @@
       mux-session = mux-session.packages.x86_64-linux.default;
     };
 
-    packages.x86_64-linux.opencode = import ./home/opencode/package.nix {
+    packages.x86_64-linux.opencode = import ./home/agents/opencode/package.nix {
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
     };
 
     packages.x86_64-linux.nvim = import ./home/nvim/package.nix {
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
     };
-
-    packages.x86_64-linux.microvm =
-      self.nixosConfigurations.microvm.config.microvm.declaredRunner;
 
     devShells.x86_64-linux.default = let
       pkgs = nixpkgs.legacyPackages.x86_64-linux;

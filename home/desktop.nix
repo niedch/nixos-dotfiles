@@ -1,9 +1,8 @@
 {
   pkgs,
-  lib,
-  inputs,
   ...
-}: {
+}:
+{
   imports = [
     ./nixarchy
     ./chromium
@@ -13,10 +12,9 @@
     ./nvim
     ./zsh
     ./mise
-    ./opencode
     ./git
     ./ssh
-    ./herdr
+    ./agents
   ];
 
   home.username = "nic";
@@ -27,7 +25,8 @@
   sops.defaultSopsFile = ../secrets/secrets.yaml;
   sops.age.keyFile = "/home/nic/.config/sops/age/keys.txt";
 
-  home.packages = with pkgs;
+  home.packages =
+    with pkgs;
     [
       docker-compose
       lazydocker

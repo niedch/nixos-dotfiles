@@ -791,31 +791,10 @@
     "microvm": {
       "inputs": {
         "nixpkgs": [
-          "nixpkgs"
-        ],
-        "spectrum": "spectrum"
-      },
-      "locked": {
-        "lastModified": 1792810338,
-        "narHash": "sha256-0DS+A3BsygKRpKe0qmUWVDSfKqpIHZCpHJagAklE0o4=",
-        "owner": "astro",
-        "repo": "microvm.nix",
-        "rev": "4876e2ae2de6ce225f4ccf664ae441128aa3f03a",
-        "type": "github"
-      },
-      "original": {
-        "owner": "astro",
-        "repo": "microvm.nix",
-        "type": "github"
-      }
-    },
-    "microvm_2": {
-      "inputs": {
-        "nixpkgs": [
           "nixarchy",
           "nixpkgs"
         ],
-        "spectrum": "spectrum_2"
+        "spectrum": "spectrum"
       },
       "locked": {
         "lastModified": 1788518164,
@@ -988,7 +967,7 @@
         "hyprland": "hyprland",
         "mcp-nixarchy": "mcp-nixarchy",
         "mcp-servers-nix": "mcp-servers-nix",
-        "microvm": "microvm_2",
+        "microvm": "microvm",
         "nix-flatpak": "nix-flatpak",
         "nix-index-database": "nix-index-database",
         "nix-skills": "nix-skills",
@@ -1627,7 +1606,6 @@
       "inputs": {
         "comd": "comd",
         "home-manager": "home-manager",
-        "microvm": "microvm",
         "mux-session": "mux-session",
         "nix-lazy-apps": "nix-lazy-apps",
         "nixarchy": "nixarchy",
@@ -1661,22 +1639,6 @@
       }
     },
     "spectrum": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1786032750,
-        "narHash": "sha256-+Ba/kIn5BjvV7PN8bWOo7RoqgTY/Yv2M7qeMf3wS2Ag=",
-        "ref": "refs/heads/main",
-        "rev": "77d2389874bb092b8dbf05ecc5b1030372e80e98",
-        "revCount": 1417,
-        "type": "git",
-        "url": "https://spectrum-os.org/git/spectrum"
-      },
-      "original": {
-        "type": "git",
-        "url": "https://spectrum-os.org/git/spectrum"
-      }
-    },
-    "spectrum_2": {
       "flake": false,
       "locked": {
         "lastModified": 1785761586,
