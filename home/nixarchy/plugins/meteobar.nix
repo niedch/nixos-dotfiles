@@ -2,17 +2,17 @@
   raw = pkgs.fetchgit {
     name = "meteobar";
     url = "https://github.com/mryll/meteobar.git";
-    rev = "4793dd2b988254110407eeadac61b974f264a708";
-    hash = "sha256-kPX61LXQbWoHNB7ez8Cb7vd+MPZuJh1M8BjlGmhShXA=";
+    rev = "0bf888488c98551b64b191b822e381ef96d849ec";
+    hash = "sha256-Nr5/BvQOCgjk1LvCnynGR3hOaY3ol5aUsiG1ragR2kg=";
   };
 
   meteobar = pkgs.rustPlatform.buildRustPackage {
     pname = "meteobar";
-    version = "0.5.4";
+    version = "0.5.8";
     src = raw;
     nativeBuildInputs = [pkgs.pkg-config];
     buildInputs = [pkgs.openssl];
-    cargoHash = "sha256-8/uuSj/mbnpktiU2K291QEcEF90cOJJ+mYX8Mjt3Rok=";
+    cargoHash = "sha256-NeksKf1l01z1f9hNl+2Ys1lZr/k59ig4T4dtXUulul8=";
   };
 in {
   # nixarchy's plugin validation rejects any bundled .qml/.js/.sh/.bash file

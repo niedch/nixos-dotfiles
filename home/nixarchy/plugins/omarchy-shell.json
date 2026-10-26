@@ -115,7 +115,10 @@
     },
     {
       "id": "io.github.sirjul1337.lock-explorer",
-      "design": "poster"
+      "design": "zen",
+      "openAs": "full",
+      "wakeGraceMs": 500,
+      "blankMs": 30000
     }
   ],
   "cloneSourceRestores": ["nixarchy.menu", "io.github.sirjul1337.lock-explorer"],

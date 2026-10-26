@@ -9,9 +9,8 @@
     ./plugins
   ];
 
-  programs.nixarchy.enable = true;
-
   programs.nixarchy = {
+    enable = true;
     neovim = "off";
   };
 
@@ -33,9 +32,5 @@
   };
 
   xdg.configFile."omarchy/nixarchy-menu.json".source = ./nixarchy-menu.json;
-
-  xdg.configFile."omarchy/shell.toml".text = ''
-    [bar]
-    background-alpha = 0.7
-  '';
+  xdg.configFile."omarchy/shell.toml".source = ./omarchy-shell.toml;
 }

@@ -1,9 +1,9 @@
-{pkgs, ...}: let
+{pkgs, lib, ...}: let
   raw = pkgs.fetchgit {
     name = "omarchy-lock-explorer";
     url = "https://github.com/SirJul1337/omarchy-lock-explorer.git";
-    rev = "b6ed7bded638483bce77604d239e365e16452517";
-    hash = "sha256-zilpNyTorPXMByKSNcKkTSXf7PF8KJlTlaZdblxBL5s=";
+    rev = "04690c45f14c5680952b7098dcc2bf9ad58a0568";
+    hash = "sha256-md6+2mLodDoBWQdCSRY+hd1Beq6OIKD/u1siRdQlEeU=";
   };
 in {
   # The plugin's source mentions `pacman` in a few prose strings and optional
