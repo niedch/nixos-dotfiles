@@ -14,6 +14,14 @@
     neovim = "off";
   };
 
+# SDDM Autologin
+  services.displayManager.autoLogin = {
+    enable = true;
+    user = "nic";
+  };
+  services.displayManager.defaultSession = "omarchy";
+
+
   programs.nixarchy.defaultPlugins = {
     rebuild = true;
     pkg = false;
