@@ -28,8 +28,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    wlctl = {
-      url = "github:aashish-thapa/wlctl";
+    helium = {
+      url = "github:oxcl/nix-flake-helium-browser";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -76,7 +76,7 @@
     nixpkgs,
     home-manager,
     sops-nix,
-    wlctl,
+    helium,
     nixos-hardware,
     mux-session,
     speedtest-tracker,

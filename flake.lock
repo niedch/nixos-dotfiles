@@ -261,6 +261,26 @@
         "type": "github"
       }
     },
+    "helium": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1792675705,
+        "narHash": "sha256-vpXmfb8qlS8LBySH713mg/kj707/VOKF737ixag351A=",
+        "owner": "oxcl",
+        "repo": "nix-flake-helium-browser",
+        "rev": "fe59343ee1fb7c25964ed3853bad3ddca10f65fe",
+        "type": "github"
+      },
+      "original": {
+        "owner": "oxcl",
+        "repo": "nix-flake-helium-browser",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -894,11 +914,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792830872,
-        "narHash": "sha256-4OJNwXqrnM+SDI+uFQ8uCYkPxh5ffKJL3UULyHkurrU=",
+        "lastModified": 1793103235,
+        "narHash": "sha256-+dNTiuIbeJxd5HMlI3t+pjbC9AOkRonlaky03BmV2QI=",
         "owner": "niedch",
         "repo": "nix-lazy-apps",
-        "rev": "20ccc834a3a5209d79d221b0a914bc396d6f0c77",
+        "rev": "d02360be23b6f8e0ed40e00450830aad006b02d2",
         "type": "github"
       },
       "original": {
@@ -1605,6 +1625,7 @@
     "root": {
       "inputs": {
         "comd": "comd",
+        "helium": "helium",
         "home-manager": "home-manager",
         "mux-session": "mux-session",
         "nix-lazy-apps": "nix-lazy-apps",
@@ -1614,8 +1635,7 @@
         "nixos-hardware": "nixos-hardware_2",
         "nixpkgs": "nixpkgs_2",
         "sops-nix": "sops-nix",
-        "speedtest-tracker": "speedtest-tracker",
-        "wlctl": "wlctl"
+        "speedtest-tracker": "speedtest-tracker"
       }
     },
     "sops-nix": {
@@ -1797,26 +1817,6 @@
       "original": {
         "owner": "Maroka-chan",
         "repo": "VPN-Confinement",
-        "type": "github"
-      }
-    },
-    "wlctl": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1788059764,
-        "narHash": "sha256-ekrzW0MF8umqEopkcM1NCruC6X2G5nf3wQCVYzG+yAs=",
-        "owner": "aashish-thapa",
-        "repo": "wlctl",
-        "rev": "8a885dbbdf76e1b3ace99912f0f6f6ccfe53e0b8",
-        "type": "github"
-      },
-      "original": {
-        "owner": "aashish-thapa",
-        "repo": "wlctl",
         "type": "github"
       }
     },

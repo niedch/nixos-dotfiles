@@ -1,9 +1,12 @@
 {
+  config,
   pkgs,
-  lib,
+  inputs,
   ...
 }: let
-  chromium = pkgs.chromium.override {enableWideVine = true;};
+  helium = config.programs.helium.package.override {
+    inherit (config.programs.helium) flags;
+  };
 
   fetchFavicon = {
     name,
@@ -33,7 +36,7 @@
     iconPath = fetchFavicon {inherit name url sha256 faviconDomain;};
   in {
     inherit name;
-    exec = "${chromium}/bin/chromium --start-maximized --app=${url}";
+    exec = "${helium}/bin/helium --start-maximized --app=${url}";
     icon = "${iconPath}";
     terminal = false;
     type = "Application";
@@ -179,18 +182,18 @@
     }
   ];
 in {
+  imports = [ inputs.helium.homeModules.default ];
+
   xdg.desktopEntries = builtins.listToAttrs (map (app: {
       name = app.name;
       value = mkWebApp app;
     })
     webApps);
 
-  programs.chromium = {
+  programs.helium = {
     enable = true;
 
-    package = chromium;
-
-    commandLineArgs = [
+    flags = [
       "--ignore-gpu-blocklist"
       "--enable-gpu-rasterization"
       "--enable-features=Vulkan,UseSkiaRenderer"
@@ -198,8 +201,10 @@ in {
       "--disable-gpu-driver-bug-workarounds"
     ];
 
-    extensions = [
-      {id = "ghmbeldphafepmbegfdlkpapadhbakde";} # Proton Pass
-    ];
+    policies = {
+      ExtensionInstallForcelist = [
+        "ghmbeldphafepmbegfdlkpapadhbakde;https://clients2.google.com/service/update2/crx"
+      ];
+    };
   };
 }

@@ -5,7 +5,7 @@
 {
   imports = [
     ./nixarchy
-    ./chromium
+    ./browser
     ./ghostty
     ./tmux
     ./tools
