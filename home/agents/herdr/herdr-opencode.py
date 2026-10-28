@@ -184,6 +184,7 @@ def main() -> None:
     session = get_session_name(cli_arg)
     socket_path = get_socket_path(session)
 
+    # Ensure server is running
     if not is_socket(socket_path):
         subprocess.Popen(
             ["herdr", "--session", session, "server"],
@@ -196,23 +197,22 @@ def main() -> None:
             if is_socket(socket_path):
                 break
             time.sleep(0.1)
+        else:
+            sys.stderr.write(f"error: timed out waiting for herdr server socket at {socket_path}\n")
+            sys.exit(1)
 
-        pane_id = create_workspace(session)
+        time.sleep(0.2)
+
+    # Check and start agent in first pane if no agent is running
+    if not has_running_agent(session):
+        pane_id = get_first_pane_id(session)
         if not pane_id:
-            pane_id = "w1:p1"
-
-        time.sleep(1)
-        start_opencode_agent(session, pane_id)
-    else:
-        if not has_running_agent(session):
-            pane_id = get_first_pane_id(session)
+            pane_id = create_workspace(session)
             if not pane_id:
-                pane_id = create_workspace(session)
-                if not pane_id:
-                    pane_id = "w1:p1"
-                time.sleep(1)
+                pane_id = "w1:p1"
+            time.sleep(1)
 
-            start_opencode_agent(session, pane_id)
+        start_opencode_agent(session, pane_id)
 
     try:
         os.execvp("herdr", ["herdr", "--session", session])
