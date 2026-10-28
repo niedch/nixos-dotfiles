@@ -52,21 +52,38 @@
   {{ end }}
 
   {{ $disk := 0.0 }}
+  {{ $diskUsed := 0 }}
+  {{ $diskSize := 0 }}
   {{ if $fs.JSON.Exists "#(mnt_point==/).percent" }}
     {{ $disk = $fs.JSON.Float "#(mnt_point==/).percent" }}
+    {{ $diskUsed = $fs.JSON.Int "#(mnt_point==/).used" }}
+    {{ $diskSize = $fs.JSON.Int "#(mnt_point==/).size" }}
   {{ else if $fs.JSON.Exists "0.percent" }}
     {{ $disk = $fs.JSON.Float "0.percent" }}
+    {{ $diskUsed = $fs.JSON.Int "0.used" }}
+    {{ $diskSize = $fs.JSON.Int "0.size" }}
   {{ end }}
 
-  {{ $secDisk := 0.0 }}
   {{ $secMount := "" }}
+  {{ $secDisk := 0.0 }}
+  {{ $secUsed := 0 }}
+  {{ $secSize := 0 }}
   {{ if $fs.JSON.Exists "#(mnt_point==/media/hdd).percent" }}
-    {{ $secDisk = $fs.JSON.Float "#(mnt_point==/media/hdd).percent" }}
     {{ $secMount = "/media/hdd" }}
+    {{ $secDisk = $fs.JSON.Float "#(mnt_point==/media/hdd).percent" }}
+    {{ $secUsed = $fs.JSON.Int "#(mnt_point==/media/hdd).used" }}
+    {{ $secSize = $fs.JSON.Int "#(mnt_point==/media/hdd).size" }}
   {{ else if $fs.JSON.Exists "#(mnt_point==/mnt/hdd).percent" }}
-    {{ $secDisk = $fs.JSON.Float "#(mnt_point==/mnt/hdd).percent" }}
     {{ $secMount = "/mnt/hdd" }}
+    {{ $secDisk = $fs.JSON.Float "#(mnt_point==/mnt/hdd).percent" }}
+    {{ $secUsed = $fs.JSON.Int "#(mnt_point==/mnt/hdd).used" }}
+    {{ $secSize = $fs.JSON.Int "#(mnt_point==/mnt/hdd).size" }}
   {{ end }}
+
+  {{ $diskUsedGB := div ($diskUsed | toFloat) 1073741824.0 }}
+  {{ $diskSizeGB := div ($diskSize | toFloat) 1073741824.0 }}
+  {{ $secUsedGB := div ($secUsed | toFloat) 1073741824.0 }}
+  {{ $secSizeGB := div ($secSize | toFloat) 1073741824.0 }}
 
   <div class="server">
     <div class="server-info">
@@ -152,7 +169,15 @@
       <div class="flex-1">
         <div class="flex justify-between items-end size-h5">
           <div>DISK</div>
-          <div class="color-highlight text-very-compact">{{ $disk | toInt }} <span class="color-base">%</span></div>
+          <div class="color-highlight text-very-compact">
+            {{ if ge $diskSizeGB 1000.0 }}
+              {{ div $diskUsedGB 1024.0 | printf "%.1f" }}<span class="color-base size-h5">/</span>{{ div $diskSizeGB 1024.0 | printf "%.1f" }}<span class="color-base size-h5">T</span>
+            {{ else if gt $diskSizeGB 0.0 }}
+              {{ $diskUsedGB | printf "%.0f" }}<span class="color-base size-h5">/</span>{{ $diskSizeGB | printf "%.0f" }}<span class="color-base size-h5">G</span>
+            {{ else }}
+              {{ $disk | toInt }} <span class="color-base">%</span>
+            {{ end }}
+          </div>
         </div>
         <div data-popover-type="html">
           <div data-popover-html>
@@ -160,13 +185,27 @@
               <li class="flex">
                 <div class="size-h5">/</div>
                 <div class="value-separator"></div>
-                <div class="color-highlight text-very-compact">{{ $disk | printf "%.1f" }} <span class="color-base size-h5">%</span></div>
+                <div class="color-highlight text-very-compact">
+                  {{ if ge $diskSizeGB 1000.0 }}
+                    {{ div $diskUsedGB 1024.0 | printf "%.1f" }} <span class="color-base size-h5">/</span> {{ div $diskSizeGB 1024.0 | printf "%.1f" }} <span class="color-base size-h5">TB</span>
+                  {{ else }}
+                    {{ $diskUsedGB | printf "%.0f" }} <span class="color-base size-h5">/</span> {{ $diskSizeGB | printf "%.0f" }} <span class="color-base size-h5">GB</span>
+                  {{ end }}
+                  <span class="color-subdue font-normal">({{ $disk | printf "%.0f" }}%)</span>
+                </div>
               </li>
               {{ if gt $secDisk 0.0 }}
                 <li class="flex">
                   <div class="size-h5">{{ $secMount }}</div>
                   <div class="value-separator"></div>
-                  <div class="color-highlight text-very-compact">{{ $secDisk | printf "%.1f" }} <span class="color-base size-h5">%</span></div>
+                  <div class="color-highlight text-very-compact">
+                    {{ if ge $secSizeGB 1000.0 }}
+                      {{ div $secUsedGB 1024.0 | printf "%.1f" }} <span class="color-base size-h5">/</span> {{ div $secSizeGB 1024.0 | printf "%.1f" }} <span class="color-base size-h5">TB</span>
+                    {{ else }}
+                      {{ $secUsedGB | printf "%.0f" }} <span class="color-base size-h5">/</span> {{ $secSizeGB | printf "%.0f" }} <span class="color-base size-h5">GB</span>
+                    {{ end }}
+                    <span class="color-subdue font-normal">({{ $secDisk | printf "%.0f" }}%)</span>
+                  </div>
                 </li>
               {{ end }}
             </ul>
