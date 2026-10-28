@@ -1,0 +1,14 @@
+<div class="flex justify-between text-center">
+  <div>
+    <div class="color-highlight size-h3">{{ .JSON.Int "photos" | formatNumber }}</div>
+    <div class="size-h6">PHOTOS</div>
+  </div>
+  <div>
+    <div class="color-highlight size-h3">{{ .JSON.Int "videos" | formatNumber }}</div>
+    <div class="size-h6">VIDEOS</div>
+  </div>
+  <div>
+    <div class="color-highlight size-h3">{{ div (.JSON.Int "usage" | toFloat) 1073741824 | toInt | formatNumber }}GB</div>
+    <div class="size-h6">USAGE</div>
+  </div>
+</div>

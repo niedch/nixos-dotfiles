@@ -126,7 +126,7 @@ nix-env -p /nix/var/nix/profiles/per-user/runner/cache-laptop --list-generations
 ```
 
 ### 4. Metrics & Monitoring
-Harmonia exposes Prometheus metrics consumed by the Homepage dashboard:
+Harmonia exposes Prometheus metrics consumed by the Glance dashboard:
 ```bash
 curl -s http://127.0.0.1:5000/metrics | grep harmonia
 ```

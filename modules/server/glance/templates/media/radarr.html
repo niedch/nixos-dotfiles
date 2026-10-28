@@ -1,0 +1,14 @@
+<div class="flex justify-between text-center">
+  <div>
+    <div class="color-highlight size-h3">{{ len (.JSON.Array "") }}</div>
+    <div class="size-h6">MOVIES</div>
+  </div>
+  <div>
+    <div class="color-highlight size-h3">{{ (.Subrequest "missing").JSON.Int "totalRecords" }}</div>
+    <div class="size-h6">MISSING</div>
+  </div>
+  <div>
+    <div class="color-highlight size-h3">{{ (.Subrequest "queue").JSON.Int "totalRecords" }}</div>
+    <div class="size-h6">QUEUED</div>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+{{- $activeStreams := 0 -}}
+{{- range .JSON.Array "" -}}
+  {{- if .Exists "NowPlayingItem" -}}
+    {{- $activeStreams = add $activeStreams 1 -}}
+  {{- end -}}
+{{- end -}}
+<div class="flex justify-between text-center">
+  <div>
+    <div class="{{ if gt $activeStreams 0 }}color-positive{{ else }}color-highlight{{ end }} size-h3">{{ $activeStreams }}</div>
+    <div class="size-h6{{ if gt $activeStreams 0 }} color-positive{{ end }}">STREAMS</div>
+  </div>
+  <div>
+    <div class="color-highlight size-h3">{{ (.Subrequest "counts").JSON.Int "MovieCount" }}</div>
+    <div class="size-h6">MOVIES</div>
+  </div>
+  <div>
+    <div class="color-highlight size-h3">{{ (.Subrequest "counts").JSON.Int "SeriesCount" }}</div>
+    <div class="size-h6">SERIES</div>
+  </div>
+</div>

@@ -1,9 +1,11 @@
-{pkgs, ...}: let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   gcStarted = pkgs.writeShellScript "nix-gc-started" ''
     /run/current-system/sw/bin/post-homepage-message-board "Nix garbage collection started" info
-  '';
-  gcDone = pkgs.writeShellScript "nix-gc-done" ''
-    /run/current-system/sw/bin/post-homepage-message-board "Nix garbage collection completed" success
   '';
   gcFailed = pkgs.writeShellScript "nix-gc-failed" ''
     /run/current-system/sw/bin/post-homepage-message-board "Nix garbage collection failed" error
@@ -21,8 +23,24 @@ in {
     after = ["network-online.target"];
     serviceConfig = {
       ExecStartPre = [gcStarted];
-      ExecStartPost = [gcDone];
     };
+    script = lib.mkForce ''
+      set -euo pipefail
+
+      # In systemd services, stderr is connected to a journal socket which cannot be reopened via /dev/stderr.
+      # Re-routing stderr through a pipe ensures /dev/stderr can be opened by tee.
+      exec 2> >(cat)
+
+      OUTPUT="$(${config.nix.package.out}/bin/nix-collect-garbage ${config.nix.gc.options} | tee /dev/stderr)"
+
+      SUMMARY="$(printf '%s\n' "$OUTPUT" | grep -oE '[0-9]+ store paths deleted, [^[:space:]]+ [a-zA-Z]+ freed' | tail -n 1 || true)"
+
+      if [ -n "$SUMMARY" ]; then
+        /run/current-system/sw/bin/post-homepage-message-board "Nix garbage collection completed ($SUMMARY)" success
+      else
+        /run/current-system/sw/bin/post-homepage-message-board "Nix garbage collection completed" success
+      fi
+    '';
   };
 
   systemd.services.nix-gc-failure = {

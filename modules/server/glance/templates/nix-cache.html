@@ -1,0 +1,43 @@
+{{ if not (.JSON.Exists "data.result") }}
+  <p class="color-negative text-center">Unable to query Prometheus</p>
+{{ else }}
+  {{ $hits := .JSON.Float "data.result.0.value.1" }}
+  {{ $missesSub := .Subrequest "misses" }}
+  {{ $misses := $missesSub.JSON.Float "data.result.0.value.1" }}
+  {{ $downloadsSub := .Subrequest "downloads" }}
+  {{ $downloads := $downloadsSub.JSON.Float "data.result.0.value.1" }}
+  {{ $nar404Sub := .Subrequest "nar404" }}
+  {{ $nar404 := $nar404Sub.JSON.Float "data.result.0.value.1" }}
+
+  {{ $total := add $hits $misses }}
+  {{ $hitRate := 0.0 }}
+  {{ if gt $total 0.0 }}
+    {{ $hitRate = mul (div $hits $total) 100.0 }}
+  {{ end }}
+
+  <div class="flex justify-between text-center margin-block-3">
+    <div>
+      <div class="size-h3 {{ if ge $hitRate 80.0 }}color-positive{{ else if ge $hitRate 50.0 }}color-primary{{ else }}color-highlight{{ end }}">
+        {{ if gt $total 0.0 }}{{ $hitRate | printf "%.1f%%" }}{{ else }}—{{ end }}
+      </div>
+      <div class="size-h6">HIT RATE</div>
+    </div>
+    <div>
+      <div class="color-highlight size-h3">{{ $hits | toInt | formatNumber }}</div>
+      <div class="size-h6">HITS</div>
+    </div>
+    <div>
+      <div class="color-highlight size-h3">{{ $downloads | toInt | formatNumber }}</div>
+      <div class="size-h6">DOWNLOADS</div>
+    </div>
+  </div>
+  
+  <div class="flex justify-between color-subdue size-small margin-top-10 padding-top-8" style="border-top: 1px solid var(--color-subdue-background, rgba(255,255,255,0.08));">
+    <span>Misses: <span class="color-highlight font-semibold">{{ $misses | toInt | formatNumber }}</span></span>
+    {{ if gt $nar404 0.0 }}
+      <span>NAR 404s: <span class="color-negative font-semibold">{{ $nar404 | toInt | formatNumber }}</span></span>
+    {{ else }}
+      <span>Errors: <span class="color-positive font-semibold">0</span></span>
+    {{ end }}
+  </div>
+{{ end }}

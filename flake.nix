@@ -151,7 +151,7 @@
         ./modules/server/gameserver
         speedtest-tracker.nixosModules.default
         nixflix.nixosModules.default
-        ./modules/server/homepage
+        ./modules/server/glance
         ./modules/server/nixflix.nix
         (mkHM (import ./home/server.nix))
       ];

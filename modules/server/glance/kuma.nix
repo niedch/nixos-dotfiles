@@ -3,10 +3,14 @@
   pkgs,
   ...
 }: let
-  provisionPython = pkgs.python3.withPackages (ps: [ps.uptime-kuma-api]);
+  provisionPython = pkgs.python3.withPackages (ps: [
+    ps.uptime-kuma-api
+    ps.packaging
+    ps.requests
+  ]);
 
   provisionScript = pkgs.writeText "uptime-kuma-provision.py" ''
-    import time, sys
+    import requests, sys, time
     from uptime_kuma_api import UptimeKumaApi
 
     password_path = sys.argv[1]
@@ -61,6 +65,45 @@
             maxretries=3,
         )
         print("Created Raspberry PI monitor")
+
+    # Ensure default status page exists
+    status_pages = api.get_status_pages()
+    if not any(sp["slug"] == "default" for sp in status_pages):
+        api.add_status_page("default", "default")
+        print("Created default status page")
+
+    monitors = api.get_monitors()
+    all_monitor_ids = {m["id"] for m in monitors}
+
+    # Fetch publicGroupList safely via HTTP REST endpoint.
+    # Note: api.get_status_page() and api.save_status_page() from uptime-kuma-api 1.2.x
+    # are incompatible with Uptime Kuma 2.x (which returns 'incidents' instead of 'incident',
+    # and has extra config fields that break _build_status_page_data).
+    current_monitor_ids = set()
+    try:
+        resp = requests.get("http://127.0.0.1:3001/api/status-page/default", timeout=10)
+        if resp.status_code == 200:
+            current_groups = resp.json().get("publicGroupList", [])
+            current_monitor_ids = {
+                m["id"]
+                for group in current_groups
+                for m in group.get("monitorList", [])
+            }
+    except Exception as e:
+        print(f"Warning: could not fetch status page publicGroupList: {e}")
+
+    if current_monitor_ids != all_monitor_ids:
+        page_config = api._call("getStatusPage", "default")["config"]
+        icon = page_config.get("icon") or "/icon.svg"
+        new_public_group_list = [
+            {
+                "name": "Services",
+                "weight": 1,
+                "monitorList": [{"id": m["id"]} for m in sorted(monitors, key=lambda m: m["name"])],
+            }
+        ]
+        api._call("saveStatusPage", ("default", page_config, icon, new_public_group_list))
+        print("Updated default status page publicGroupList")
 
     api.disconnect()
   '';

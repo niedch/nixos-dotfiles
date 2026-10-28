@@ -1,0 +1,99 @@
+{{ if not (.JSON.Exists "data") }}
+  <p class="color-subdue text-center">No speedtest results yet</p>
+{{ else }}
+  {{ $stats := .Subrequest "stats" }}
+
+  {{ $avgDownload := $stats.JSON.Float "avg_download" }}
+  {{ if eq $avgDownload 0.0 }}
+    {{ $avgDownload = div ($stats.JSON.Float "data.download.avg_bits") 8 }}
+  {{ end }}
+
+  {{ $avgUpload := $stats.JSON.Float "avg_upload" }}
+  {{ if eq $avgUpload 0.0 }}
+    {{ $avgUpload = div ($stats.JSON.Float "data.upload.avg_bits") 8 }}
+  {{ end }}
+
+  {{ $avgPing := $stats.JSON.Float "avg_ping" }}
+  {{ if eq $avgPing 0.0 }}
+    {{ $avgPing = $stats.JSON.Float "data.ping.avg" }}
+  {{ end }}
+
+  {{ $downloadChange := 0.0 }}
+  {{ if gt $avgDownload 0.0 }}
+    {{ $downloadChange = percentChange (.JSON.Float "data.download") $avgDownload }}
+  {{ end }}
+
+  {{ $uploadChange := 0.0 }}
+  {{ if gt $avgUpload 0.0 }}
+    {{ $uploadChange = percentChange (.JSON.Float "data.upload") $avgUpload }}
+  {{ end }}
+
+  {{ $pingChange := 0.0 }}
+  {{ if gt $avgPing 0.0 }}
+    {{ $pingChange = percentChange (.JSON.Float "data.ping") $avgPing }}
+  {{ end }}
+
+  <div class="flex justify-between text-center margin-block-3">
+    <div>
+      {{ if gt $avgDownload 0.0 }}
+        <div class="size-small {{ if gt $downloadChange 0.0 }}color-positive{{ else if lt $downloadChange 0.0 }}color-negative{{ else }}color-primary{{ end }}" style="display: inline-flex; align-items: center;">
+          {{ $downloadChange | printf "%+.1f%%" }}
+          {{ if gt $downloadChange 0.0 }}
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" style="height: 1em; margin-left: 0.25em;">
+              <path fill-rule="evenodd" d="M9.808 4.057a.75.75 0 0 1 .92-.527l3.116.849a.75.75 0 0 1 .528.915l-.823 3.121a.75.75 0 0 1-1.45-.382l.337-1.281a23.484 23.484 0 0 0-3.609 3.056.75.75 0 0 1-1.07.01L6 8.06l-3.72 3.72a.75.75 0 1 1-1.06-1.061l4.25-4.25a.75.75 0 0 1 1.06 0l1.756 1.755a25.015 25.015 0 0 1 3.508-2.85l-1.46-.398a.75.75 0 0 1-.526-.92Z" clip-rule="evenodd" />
+            </svg>
+          {{ else if lt $downloadChange 0.0 }}
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" style="height: 1em; margin-left: 0.25em;">
+              <path fill-rule="evenodd" d="M1.22 4.22a.75.75 0 0 1 1.06 0L6 7.94l2.761-2.762a.75.75 0 0 1 1.158.12 24.9 24.9 0 0 1 2.718 5.556l.729-1.261a.75.75 0 0 1 1.299.75l-1.591 2.755a.75.75 0 0 1-1.025.275l-2.756-1.591a.75.75 0 1 1 .75-1.3l1.097.634a23.417 23.417 0 0 0-1.984-4.211L6.53 9.53a.75.75 0 0 1-1.06 0L1.22 5.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+            </svg>
+          {{ end }}
+        </div>
+      {{ end }}
+      <div class="color-highlight size-h3">{{ .JSON.Float "data.download_bits" | mul 0.000001 | printf "%.1f" }}</div>
+      <div class="size-h6">DOWNLOAD</div>
+    </div>
+
+    <div>
+      {{ if gt $avgUpload 0.0 }}
+        <div class="size-small {{ if gt $uploadChange 0.0 }}color-positive{{ else if lt $uploadChange 0.0 }}color-negative{{ else }}color-primary{{ end }}" style="display: inline-flex; align-items: center;">
+          {{ $uploadChange | printf "%+.1f%%" }}
+          {{ if gt $uploadChange 0.0 }}
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" style="height: 1em; margin-left: 0.25em;">
+              <path fill-rule="evenodd" d="M9.808 4.057a.75.75 0 0 1 .92-.527l3.116.849a.75.75 0 0 1 .528.915l-.823 3.121a.75.75 0 0 1-1.45-.382l.337-1.281a23.484 23.484 0 0 0-3.609 3.056.75.75 0 0 1-1.07.01L6 8.06l-3.72 3.72a.75.75 0 1 1-1.06-1.061l4.25-4.25a.75.75 0 0 1 1.06 0l1.756 1.755a25.015 25.015 0 0 1 3.508-2.85l-1.46-.398a.75.75 0 0 1-.526-.92Z" clip-rule="evenodd" />
+            </svg>
+          {{ else if lt $uploadChange 0.0 }}
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" style="height: 1em; margin-left: 0.25em;">
+              <path fill-rule="evenodd" d="M1.22 4.22a.75.75 0 0 1 1.06 0L6 7.94l2.761-2.762a.75.75 0 0 1 1.158.12 24.9 24.9 0 0 1 2.718 5.556l.729-1.261a.75.75 0 0 1 1.299.75l-1.591 2.755a.75.75 0 0 1-1.025.275l-2.756-1.591a.75.75 0 1 1 .75-1.3l1.097.634a23.417 23.417 0 0 0-1.984-4.211L6.53 9.53a.75.75 0 0 1-1.06 0L1.22 5.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+            </svg>
+          {{ end }}
+        </div>
+      {{ end }}
+      <div class="color-highlight size-h3">{{ .JSON.Float "data.upload_bits" | mul 0.000001 | printf "%.1f" }}</div>
+      <div class="size-h6">UPLOAD</div>
+    </div>
+
+    <div>
+      {{ if gt $avgPing 0.0 }}
+        <div class="size-small {{ if lt $pingChange 0.0 }}color-positive{{ else if gt $pingChange 0.0 }}color-negative{{ else }}color-primary{{ end }}" style="display: inline-flex; align-items: center;">
+          {{ $pingChange | printf "%+.1f%%" }}
+          {{ if lt $pingChange 0.0 }}
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" style="height: 1em; margin-left: 0.25em;">
+              <path fill-rule="evenodd" d="M1.22 4.22a.75.75 0 0 1 1.06 0L6 7.94l2.761-2.762a.75.75 0 0 1 1.158.12 24.9 24.9 0 0 1 2.718 5.556l.729-1.261a.75.75 0 0 1 1.299.75l-1.591 2.755a.75.75 0 0 1-1.025.275l-2.756-1.591a.75.75 0 1 1 .75-1.3l1.097.634a23.417 23.417 0 0 0-1.984-4.211L6.53 9.53a.75.75 0 0 1-1.06 0L1.22 5.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+            </svg>
+          {{ else if gt $pingChange 0.0 }}
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" style="height: 1em; margin-left: 0.25em;">
+              <path fill-rule="evenodd" d="M9.808 4.057a.75.75 0 0 1 .92-.527l3.116.849a.75.75 0 0 1 .528.915l-.823 3.121a.75.75 0 0 1-1.45-.382l.337-1.281a23.484 23.484 0 0 0-3.609 3.056.75.75 0 0 1-1.07.01L6 8.06l-3.72 3.72a.75.75 0 1 1-1.06-1.061l4.25-4.25a.75.75 0 0 1 1.06 0l1.756 1.755a25.015 25.015 0 0 1 3.508-2.85l-1.46-.398a.75.75 0 0 1-.526-.92Z" clip-rule="evenodd" />
+            </svg>
+          {{ end }}
+        </div>
+      {{ end }}
+      <div class="color-highlight size-h3">{{ .JSON.Float "data.ping" | printf "%.0f ms" }}</div>
+      <div class="size-h6">
+        PING
+        {{ if .JSON.Exists "data.data.ping.jitter" }}
+          <span class="color-subdue font-normal">(±{{ .JSON.Float "data.data.ping.jitter" | printf "%.1f" }})</span>
+        {{ end }}
+      </div>
+    </div>
+  </div>
+{{ end }}

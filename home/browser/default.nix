@@ -131,7 +131,7 @@
       sha256 = "sha256-djLQvpk2bDPeXUNmAHVfmNCJ8jbzxXHCTnCUv5zl+f0=";
     }
     {
-      name = "Homepage";
+      name = "Dashboard";
       url = "http://dobby:8082";
       sha256 = "sha256-3Xi5WD5lVLnYLVOlgNwETtzYT6wAf7DIEeIrzStB0iE=";
       faviconDomain = "https://gethomepage.dev/";

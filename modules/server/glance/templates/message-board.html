@@ -1,0 +1,17 @@
+{{ $messages := .JSON.Array "" }}
+{{ if eq (len $messages) 0 }}
+  <p class="color-subdue text-center">No messages</p>
+{{ else }}
+  <ul class="list list-gap-10 list-with-separator collapsible-container" data-collapse-after="6">
+    {{ range $messages }}
+      <li class="flex items-center justify-between gap-10">
+        <div class="min-width-0">
+          <span class="color-highlight text-truncate block">{{ .String "name" }}</span>
+        </div>
+        <div class="color-subdue size-h6 shrink-0 text-right">
+          {{ .String "label" }}
+        </div>
+      </li>
+    {{ end }}
+  </ul>
+{{ end }}
