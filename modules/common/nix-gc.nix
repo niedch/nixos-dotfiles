@@ -4,9 +4,6 @@
   pkgs,
   ...
 }: let
-  gcStarted = pkgs.writeShellScript "nix-gc-started" ''
-    /run/current-system/sw/bin/post-homepage-message-board "Nix garbage collection started" info
-  '';
   gcFailed = pkgs.writeShellScript "nix-gc-failed" ''
     /run/current-system/sw/bin/post-homepage-message-board "Nix garbage collection failed" error
   '';
@@ -21,9 +18,6 @@ in {
     onFailure = ["nix-gc-failure.service"];
     wants = ["network-online.target"];
     after = ["network-online.target"];
-    serviceConfig = {
-      ExecStartPre = [gcStarted];
-    };
     script = lib.mkForce ''
       set -euo pipefail
 
