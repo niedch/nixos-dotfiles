@@ -100,6 +100,38 @@
     )
     themes;
 in {
+  # Workaround: Upstream Nixarchy / Omarchy cursor fallback bug (Omarchy v4.5.0-rc2).
+  # Omarchy's startup script sets the cursor to "default" on boot, but on NixOS
+  # no default icon theme alias exists out-of-the-box, nor are system icon paths
+  # automatically picked up. This block installs Bibata-Modern-Ice and uses
+  # dotIcons to link ~/.icons/default to it, ensuring GTK, X11, and Hyprland find
+  # a valid cursor theme.
+  #
+  # Safe to remove once fixed upstream in Nixarchy/Omarchy.
+  #
+  # To test if fixed upstream:
+  #   1. Comment out `home.pointerCursor` and `gtk.enable = true;` below (and the
+  #      cursor overrides in `home/nixarchy/hypr/looknfeel.lua`).
+  #   2. Rebuild (`nixarchy-apply` or `nixos-rebuild switch`).
+  #   3. Reboot or log out/in, then check:
+  #        hyprctl getcursor
+  #        hyprctl setcursor default 24
+  #      If the cursor retains the proper theme and doesn't revert to the built-in
+  #      fallback, or if Nixarchy upstream updates `startup-cursor.lua` to properly
+  #      resolve icon search paths / themes, this workaround can be deleted.
+  home.pointerCursor = {
+    enable = true;
+    package = pkgs.bibata-cursors;
+    name = "Bibata-Modern-Ice";
+    size = 24;
+    dotIcons.enable = true;
+    gtk.enable = true;
+    x11.enable = true;
+    hyprcursor.enable = true;
+  };
+
+  gtk.enable = true;
+
   xdg.configFile = themeConfigFiles // wallpaperFiles;
 
   # Re-apply the active theme after every rebuild so Nix-controlled theme
