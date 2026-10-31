@@ -1,8 +1,8 @@
 {inputs, ...}: {
   imports = [
     inputs.nixarchy.homeManagerModules.nixarchy
-    ./hypr/default.nix
     ./theme.nix
+    ./hypr
     ./plugins
   ];
 

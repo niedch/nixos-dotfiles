@@ -30,8 +30,6 @@
 
   networking.networkmanager.enable = true;
 
-  programs.zsh.enable = true;
-
   time.timeZone = "Europe/Vienna";
 
   environment.systemPackages = with pkgs; [

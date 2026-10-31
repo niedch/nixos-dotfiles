@@ -14,6 +14,7 @@
     ./samba-mount.nix
     ./password-manager.nix
     ./nixarchy.nix
+    ./lazy.nix
   ];
 
   # dconf D-Bus service is required for gsettings changes to propagate through

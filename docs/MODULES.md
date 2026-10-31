@@ -13,6 +13,19 @@ System modules configure system-wide features: services, kernel modules, package
 | `default.nix` | Imports all submodules (add new modules here) |
 | docker.nix | Enables Docker daemon, adds user to docker group |
 
+## Desktop & Nixarchy modules (`modules/desktop/`)
+
+Desktop hosts (`laptop`, `desktop`) import desktop-specific modules and the **Nixarchy** desktop environment suite.
+
+| Path | Purpose | Documentation |
+|---|---|---|
+| `modules/desktop/default.nix` | Desktop base: fonts, SDDM, display manager, audio, and Nixarchy module import | [Nixarchy Guide](NIXARCHY.md#1-overview--architecture) |
+| `modules/desktop/nixarchy.nix` | Base Nixarchy system settings, package overlays, cursor patches, and theme flags | [Nixarchy Guide](NIXARCHY.md#3-core-system-settings-programsnixarchy) |
+| `hosts/laptop/nixarchy/` | Per-host declarative Nixarchy services (`services.nix`), apps (`apps.nix`), and advanced settings (`advanced.nix`) | [Nixarchy Guide](NIXARCHY.md#2-configuration-scopes--flake-integration) |
+| `home/nixarchy/` | Home Manager Nixarchy module, Waybar/Omarchy panel plugins, custom launcher menu, and Neovim integration | [Nixarchy Guide](NIXARCHY.md#8-home-manager-integration--plugins-home-managerusersuserprogramsnixarchy) |
+
+For complete documentation on all Nixarchy settings, local AI options, bundled services, applications catalogue, theme engine, and fleet options, see **[Nixarchy Configuration & Options Guide](NIXARCHY.md)**.
+
 ### Adding a new system module
 
 1. Create a file in `modules/common/`:
@@ -61,6 +74,7 @@ Home-manager modules configure user-level features: dotfiles, user packages, she
 | Path | Purpose |
 |---|---|
 | `home/desktop.nix` | Central entry point, imports all submodules |
+| `home/nixarchy/` | Nixarchy Home Manager module, panel plugins, launcher menu, themes ([Guide](NIXARCHY.md#8-home-manager-integration--plugins-home-managerusersuserprogramsnixarchy)) |
 | `home/zsh/` | Zsh + oh-my-zsh + custom scripts |
 | `home/nvim/` | Neovim (LazyVim) + dev tools |
 | `home/mise/` | Mise version manager + tool config |

@@ -1,32 +1,30 @@
 {
   pkgs,
-  lib,
   inputs,
   ...
 }: {
-  # Issue when runing the gpu-screen-recorder so that quickshell app does not detect when gpu-screen-recorder is running. This fixes it
-  # nixpkgs.overlays = [
-  #   inputs.nixarchy.overlays.default
-  #   (final: prev: {
-  #     omarchy = prev.omarchy.overrideAttrs (old: {
-  #       postPatch =
-  #         (old.postPatch or "")
-  #         + ''
-  #           substituteInPlace shell/plugins/bar/indicators/ScreenRecording.qml \
-  #             --replace-fail '"^gpu-screen-recorder"' '"(^|/)gpu-screen-recorder"'
-  #
-  #           substituteInPlace bin/omarchy-capture-screenrecording \
-  #             --replace-fail '"^gpu-screen-recorder"' '"(^|/)gpu-screen-recorder"'
-  #
-  #           substituteInPlace default/omarchy/omarchy-menu.jsonc \
-  #             --replace-fail "'^gpu-screen-recorder'" "'(^|/)gpu-screen-recorder'"
-  #         '';
-  #     });
-  #   })
-  # ];
+  nixpkgs.overlays = [
+    inputs.nixarchy.overlays.default
+    (final: prev: {
+      omarchy = prev.omarchy.overrideAttrs (old: {
+        postPatch =
+          (old.postPatch or "")
+          + ''
+            # Workaround: Omarchy v4.5.0-rc2 cursor fallback bug on NixOS.
+            # Ensures XCURSOR_PATH includes NixOS system icon paths, and replaces the
+            # unresolvable 'default' cursor fallback with 'Bibata-Modern-Ice'.
+            # Can be removed once fixed upstream in Omarchy/Nixarchy.
+            substituteInPlace default/hypr/startup-cursor.lua \
+              --replace-fail ':/usr/share/icons:/usr/share/pixmaps' ':/run/current-system/sw/share/icons:/usr/share/icons:/usr/share/pixmaps' \
+              --replace-fail 'return theme or "default"' 'return theme or "Bibata-Modern-Ice"'
+          '';
+      });
+    })
+  ];
 
   programs.nixarchy = {
     enable = true;
+    package = pkgs.omarchy;
     user = "nic";
     flake = "/home/nic/Projects/nixos-dotfiles";
     mcp = false;

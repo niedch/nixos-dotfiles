@@ -2,37 +2,8 @@
   pkgs,
   lib,
   config,
-  inputs,
-  osConfig,
   ...
 }: let
-  # Hyprland's own flake package — the exact compositor the running session
-  # uses (nixarchy sets programs.hyprland.package to this, not nixpkgs').
-  # Its bin/ holds hyprctl, which omarchy-restart-shell needs to relaunch the
-  # shell through Hyprland.
-  hyprland = inputs.nixarchy.inputs.hyprland.packages.${pkgs.system}.hyprland;
-
-  # The canonical OMARCHY_PATH: nixarchy's generated "tree" mirror, not the raw
-  # package's share/omarchy. Pointing omarchy-restart-shell at the raw package
-  # made it target the wrong tree during activation, so it failed to kill the
-  # running shell and hit "already running".
-  omarchyPath =
-    osConfig.programs.nixarchy.tree or "${config.programs.nixarchy.package}/share/omarchy";
-
-  # Omarchy's scripts are unwrapped, so their runtime binaries — quickshell,
-  # qs, jq — are NOT in the package's bin/. In the session they come from
-  # /run/current-system/sw/bin via systemPackages, but the activation PATH is
-  # minimal, so omarchy-restart-shell couldn't find them: its kill and
-  # readiness checks silently no-oped ("already running" → "did not become
-  # ready"). Put them (and hyprctl) on PATH explicitly.
-  omarchyBinPath = lib.makeBinPath (
-    [
-      config.programs.nixarchy.package
-      hyprland
-    ]
-    ++ (osConfig.programs.nixarchy.package.passthru.runtimeDeps or [])
-  );
-
   # One entry per theme, keyed by the theme slug (must match the dir name
   # Omarchy uses, e.g. ~/.local/state/omarchy/current/theme.name).
   #   source     = where the theme itself is fetched from (git).
@@ -100,38 +71,6 @@
     )
     themes;
 in {
-  # Workaround: Upstream Nixarchy / Omarchy cursor fallback bug (Omarchy v4.5.0-rc2).
-  # Omarchy's startup script sets the cursor to "default" on boot, but on NixOS
-  # no default icon theme alias exists out-of-the-box, nor are system icon paths
-  # automatically picked up. This block installs Bibata-Modern-Ice and uses
-  # dotIcons to link ~/.icons/default to it, ensuring GTK, X11, and Hyprland find
-  # a valid cursor theme.
-  #
-  # Safe to remove once fixed upstream in Nixarchy/Omarchy.
-  #
-  # To test if fixed upstream:
-  #   1. Comment out `home.pointerCursor` and `gtk.enable = true;` below (and the
-  #      cursor overrides in `home/nixarchy/hypr/looknfeel.lua`).
-  #   2. Rebuild (`nixarchy-apply` or `nixos-rebuild switch`).
-  #   3. Reboot or log out/in, then check:
-  #        hyprctl getcursor
-  #        hyprctl setcursor default 24
-  #      If the cursor retains the proper theme and doesn't revert to the built-in
-  #      fallback, or if Nixarchy upstream updates `startup-cursor.lua` to properly
-  #      resolve icon search paths / themes, this workaround can be deleted.
-  home.pointerCursor = {
-    enable = true;
-    package = pkgs.bibata-cursors;
-    name = "Bibata-Modern-Ice";
-    size = 24;
-    dotIcons.enable = true;
-    gtk.enable = true;
-    x11.enable = true;
-    hyprcursor.enable = true;
-  };
-
-  gtk.enable = true;
-
   xdg.configFile = themeConfigFiles // wallpaperFiles;
 
   # Re-apply the active theme after every rebuild so Nix-controlled theme
