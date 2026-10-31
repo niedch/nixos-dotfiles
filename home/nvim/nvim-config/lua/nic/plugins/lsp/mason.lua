@@ -34,6 +34,7 @@ return {
 			ensure_installed = {
 				"html",
 				"cssls",
+				"jsonls",
 				"sqlls",
 				"cucumber_language_server",
 				"lua_ls",

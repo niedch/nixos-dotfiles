@@ -25,21 +25,35 @@
           "id": "crmne.mpris"
         }
       ],
-      "center": [
+      "centerBegin": [
         {
           "id": "omarchy.indicators"
-        },
+        }
+      ],
+      "center": [
         {
           "id": "tmn73.calendar",
           "format": "dddd HH:mm",
           "formatAlt": "d MMMM 'W'ww yyyy",
           "verticalFormat": "HH\n—\nmm"
-        },
+        }
+      ],
+      "centerEnd": [
         {
           "id": "omarchy.keyboard-layout"
         },
         {
           "id": "mryll.meteobar"
+        },
+        {
+          "id": "omarchy.elsewhen",
+          "cities": [
+            {
+              "name": "Vienna",
+              "zone": "Europe/Vienna"
+            }
+          ],
+          "offsetMode": "utc"
         }
       ],
       "right": [
@@ -118,6 +132,9 @@
       "blankMs": 30000
     }
   ],
-  "cloneSourceRestores": ["nixarchy.menu", "io.github.sirjul1337.lock-explorer"],
+  "cloneSourceRestores": [
+    "nixarchy.menu",
+    "io.github.sirjul1337.lock-explorer"
+  ],
   "disabledPlugins": ["omarchy.menu", "omarchy.lock"]
 }

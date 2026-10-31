@@ -20,6 +20,7 @@ in {
         ripgrep
         gcc
         tree-sitter
+        jq
       ]
       ++ lib.optionals cfg.lsp.enable [
         nodejs
@@ -27,6 +28,7 @@ in {
         cargo
         rustc
         python3
+        vscode-langservers-extracted
       ];
 
     xdg.configFile."nvim".source = ./nvim-config;

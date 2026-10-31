@@ -23,6 +23,15 @@ return {
 				},
 			})
 
+			vim.lsp.config("jsonls", {
+				settings = {
+					json = {
+						schemas = require("schemastore").json.schemas(),
+						validate = { enable = true },
+					},
+				},
+			})
+
 			vim.diagnostic.config({
 				signs = {
 					text = {
