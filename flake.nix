@@ -153,6 +153,7 @@
         nixflix.nixosModules.default
         ./modules/server/glance
         ./modules/server/nixflix.nix
+        ./modules/server/gittea.nix
         (mkHM (import ./home/server.nix))
       ];
     };
