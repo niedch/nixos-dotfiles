@@ -23,6 +23,9 @@
           sha256 = "sha256-XuJzogTDxbOjOjkmnGzv2HiQva+mR5dYDa6vjqMjRsc=";
         };
       }
+      {
+        package = pkgs.vscode;
+      }
     ];
   };
 }
