@@ -14,22 +14,12 @@ local mainMod = "SUPER"
 -- To disable all preinstalled app/webapp bindings, set:
 --   omarchy_preinstalled_bindings = false
 
--- Add a new binding.
--- o.bind("SUPER + SHIFT + R", "SSH", "alacritty -e ssh your-server")
-
--- Change an existing binding by unbinding it first, then binding the key again.
--- This example changes SUPER+SPACE from the launcher to the Omarchy root menu.
--- hl.unbind("SUPER + SPACE")
--- o.bind("SUPER + SPACE", "Omarchy menu", "omarchy-menu toggle root")
-
--- Disable a default binding Scrolling window mode
-hl.unbind("SUPER + L")
+-- Unbind conflicting keys
 hl.unbind("SUPER + J")
-
--- Logitech MX Keys examples:
--- o.bind("SUPER + SHIFT + S", nil, "omarchy-capture-screenshot")
--- o.bind("SUPER + H", nil, "voxtype record toggle")
--- o.bind("SUPER + PERIOD", nil, "omarchy-shell shell toggle omarchy.emojis")
+hl.unbind("SUPER + L")
+hl.unbind("SUPER + S")
+hl.unbind("SUPER + TAB")
+hl.unbind("CTRL + ALT + TAB")
 
 -- nixarchy's own plugins (#766). The helper says so if one is turned off.
 o.bind("SUPER + ALT + N", "Packages", "nixarchy-plugin nixarchy.pkg")
@@ -48,24 +38,29 @@ o.bind("SUPER + ALT + U", "Plugin browser", "nixarchy-plugin io.github.olafkfreu
 o.bind("SUPER + SHIFT + ESCAPE", "ai-mirror: stop agent control", "ai-mirror control off")
 
 -- Special workspaces
-hl.bind(mainMod .. " + j", hl.dsp.workspace.toggle_special("j-workspace"), { description = "Toggle J workspace" })
-hl.bind(mainMod .. " + l", hl.dsp.workspace.toggle_special("l-workspace"), { description = "Toggle L workspace" })
-hl.bind(mainMod .. " + s", hl.dsp.workspace.toggle_special("s-workspace"), { description = "Toggle S workspace" })
-hl.bind("CTRL + ALT + j", hl.dsp.workspace.toggle_special("j-workspace"), { description = "Move to J workspace" })
-hl.bind("CTRL + ALT + l", hl.dsp.workspace.toggle_special("l-workspace"), { description = "Move to L workspace" })
-hl.bind("CTRL + ALT + s", hl.dsp.workspace.toggle_special("s-workspace"), { description = "Move to S workspace" })
+hl.bind("SUPER + J", hl.dsp.workspace.toggle_special("j-workspace"), { description = "Toggle J workspace" })
+hl.bind("SUPER + L", hl.dsp.workspace.toggle_special("l-workspace"), { description = "Toggle L workspace" })
+hl.bind("SUPER + S", hl.dsp.workspace.toggle_special("s-workspace"), { description = "Toggle S workspace" })
 
+hl.bind("CTRL + ALT + J", hl.dsp.window.move({ workspace = "special:j-workspace", follow = false }), { description = "Move window to J workspace" })
+hl.bind("CTRL + ALT + L", hl.dsp.window.move({ workspace = "special:l-workspace", follow = false }), { description = "Move window to L workspace" })
+hl.bind("CTRL + ALT + S", hl.dsp.window.move({ workspace = "special:s-workspace", follow = false }), { description = "Move window to S workspace" })
 
--- Workspaces (Ctrl+Alt row)
-local ctrl_alt_keys = { "q", "w", "e", "r", "t", "y", "u", "i", "o", "p" }
-for i, key in ipairs(ctrl_alt_keys) do
-	hl.bind("CTRL + ALT + " .. key,              hl.dsp.focus({ workspace = i }), { description = string.format("Focus workspace %d", i) })
-	hl.bind("CTRL + ALT + SHIFT + " .. key,      hl.dsp.window.move({ workspace = i }), { description = string.format("Move to workspace %d", i) })
+-- Classic global workspaces 1-10 cleanly
+for workspace = 1, 10 do
+	local key = "code:" .. tostring(workspace + 9)
+	o.rebind("SUPER + " .. key, "Switch to workspace " .. workspace, hl.dsp.focus({ workspace = tostring(workspace) }))
+	o.rebind("SUPER + SHIFT + " .. key, "Move window to workspace " .. workspace, hl.dsp.window.move({ workspace = tostring(workspace) }))
+	o.rebind("SUPER + SHIFT + ALT + " .. key, "Move window silently to workspace " .. workspace, hl.dsp.window.move({ workspace = tostring(workspace), follow = false }))
 end
 
--- Cycle the active workspace to the next monitor.
--- SUPER+TAB was "Next workspace"; CTRL+ALT+TAB was "Focus on next monitor".
-hl.unbind("SUPER + TAB")
-hl.unbind("CTRL + ALT + TAB")
-o.bind("SUPER + TAB", "Cycle workspace to next monitor", "$HOME/.config/hypr/cycle-workspace-monitor.sh")
-o.bind("CTRL + ALT + TAB", "Cycle workspace to next monitor", "$HOME/.config/hypr/cycle-workspace-monitor.sh")
+-- Corne-keyboard workspace bindings for Ctrl+Alt
+local ctrl_alt_keys = { "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P" }
+for i, key in ipairs(ctrl_alt_keys) do
+	hl.bind("CTRL + ALT + " .. key,              hl.dsp.focus({ workspace = tostring(i) }), { description = string.format("Focus workspace %d", i) })
+	hl.bind("CTRL + ALT + SHIFT + " .. key,      hl.dsp.window.move({ workspace = tostring(i) }), { description = string.format("Move to workspace %d", i) })
+end
+
+-- Cycle workspace to next monitor (native Hyprland dispatcher, no external script or jq needed)
+hl.bind("SUPER + TAB",      hl.dsp.workspace.move({ monitor = "+1" }), { description = "Cycle workspace to next monitor" })
+hl.bind("CTRL + ALT + TAB", hl.dsp.workspace.move({ monitor = "+1" }), { description = "Cycle workspace to next monitor" })

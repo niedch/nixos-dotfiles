@@ -23,12 +23,18 @@ hl.monitor({ output = "", mode = "preferred", position = "auto", scale = omarchy
 -- Portrait/rotated secondary monitor (transform: 1 = 90°, 3 = 270°).
 -- hl.monitor({ output = "DP-2", mode = "preferred", position = "auto", scale = 1, transform = 1 })
 
--- Middle monitor (anchor): iiyama PL2760Q
+-- External monitors: Middle (anchor) iiyama PL2760Q & Left iiyama PL2760H
 if hostname == "desktop" then
   hl.monitor({
     output   = "desc:iiyama Corporation PL2760Q 1154112201014",
     mode     = "2560x1440@143.86Hz",
     position = "0x0",
+    scale    = omarchy_monitor_scale,
+  })
+  hl.monitor({
+    output   = "desc:iiyama Corporation PL2760H 1164004201390",
+    mode     = "1920x1080@143.98Hz",
+    position = "auto-left",
     scale    = omarchy_monitor_scale,
   })
 else
@@ -38,15 +44,13 @@ else
     position = "0x0",
     scale    = omarchy_monitor_scale,
   })
+  hl.monitor({
+    output   = "desc:iiyama Corporation PL2760H 1164004201390",
+    mode     = "1920x1080@60Hz",
+    position = "auto-left",
+    scale    = omarchy_monitor_scale,
+  })
 end
-
--- Left monitor: iiyama PL2760H (1080p @ 144Hz)
-hl.monitor({
-  output   = "desc:iiyama Corporation PL2760H 1164004201390",
-  mode     = "1920x1080@143.98Hz",
-  position = "auto-left",
-  scale    = omarchy_monitor_scale,
-})
 
 -- Laptop display (far right when docked, standalone (0x0) when undocked): Sharp Corporation 0x149A
 hl.monitor({

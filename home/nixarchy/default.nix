@@ -25,9 +25,9 @@
     plugin-browser = true;
     omatheme = false;
     ai-mirror = false;
-    menu = true;
+    menu = false;
   };
 
-  xdg.configFile."omarchy/nixarchy-menu.json".source = ./nixarchy-menu.json;
+  # xdg.configFile."omarchy/nixarchy-menu.json".source = ./nixarchy-menu.json;
   xdg.configFile."omarchy/shell.toml".source = ./omarchy-shell.toml;
 }

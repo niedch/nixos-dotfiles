@@ -1,4 +1,8 @@
 {pkgs, ...}: {
+  xdg.configFile."hypr/hyprland.lua" = {
+    source = ./hyprland.lua;
+  };
+
   xdg.configFile."hypr/bindings.lua" = {
     source = ./bindings.lua;
   };
@@ -13,10 +17,5 @@
 
   xdg.configFile."hypr/input.lua" = {
     source = ./input.lua;
-  };
-
-  xdg.configFile."hypr/cycle-workspace-monitor.sh" = {
-    source = ./cycle-workspace-monitor.sh;
-    executable = true;
   };
 }

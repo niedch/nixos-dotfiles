@@ -11,15 +11,10 @@
     "layout": {
       "left": [
         {
-          "id": "nixarchy.menu"
+          "id": "omarchy.menu"
         },
         {
-          "id": "jgarza.workspace-styles",
-          "count": 5,
-          "decoration": "bold",
-          "animation": "none",
-          "glyphSet": "kanji",
-          "indicatorColor": "accent"
+          "id": "omarchy.workspaces"
         },
         {
           "id": "crmne.mpris"
@@ -136,5 +131,5 @@
     "nixarchy.menu",
     "io.github.sirjul1337.lock-explorer"
   ],
-  "disabledPlugins": ["omarchy.menu", "omarchy.lock"]
+  "disabledPlugins": ["omarchy.lock"]
 }

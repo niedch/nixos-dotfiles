@@ -3,7 +3,7 @@
     ./omapods.nix
     ./numr.nix
     ./media.nix
-    ./workspace-styles.nix
+    # ./workspace-styles.nix
     ./lock.nix
     ./calendar.nix
     ./meteobar.nix

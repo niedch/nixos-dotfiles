@@ -23,12 +23,12 @@
       SATA_LINKPWR_ON_AC = "med_power_with_dipm";
       SATA_LINKPWR_ON_BAT = "med_power_with_dipm";
       PCIE_ASPM_ON_AC = "default";
-      PCIE_ASPM_ON_BAT = "powersupersave";
-      RUNTIME_PM_ON_AC = "auto";
+      PCIE_ASPM_ON_BAT = "default";
+      RUNTIME_PM_ON_AC = "on";
       RUNTIME_PM_ON_BAT = "auto";
-      RUNTIME_PM_ALL_DRIVERS = 1;
+      RUNTIME_PM_DRIVER_DENYLIST = "amdgpu mei_me nouveau nvidia xhci_hcd";
       USB_AUTOSUSPEND = 1;
-      USB_BLACKLIST_PHONE = 1;
+      USB_EXCLUDE_PHONE = 1;
       START_CHARGE_THRESH_BAT0 = 85;
       STOP_CHARGE_THRESH_BAT0 = 90;
     };
