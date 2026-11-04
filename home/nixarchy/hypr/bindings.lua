@@ -42,9 +42,13 @@ hl.bind("SUPER + J", hl.dsp.workspace.toggle_special("j-workspace"), { descripti
 hl.bind("SUPER + L", hl.dsp.workspace.toggle_special("l-workspace"), { description = "Toggle L workspace" })
 hl.bind("SUPER + S", hl.dsp.workspace.toggle_special("s-workspace"), { description = "Toggle S workspace" })
 
-hl.bind("CTRL + ALT + J", hl.dsp.window.move({ workspace = "special:j-workspace", follow = false }), { description = "Move window to J workspace" })
-hl.bind("CTRL + ALT + L", hl.dsp.window.move({ workspace = "special:l-workspace", follow = false }), { description = "Move window to L workspace" })
-hl.bind("CTRL + ALT + S", hl.dsp.window.move({ workspace = "special:s-workspace", follow = false }), { description = "Move window to S workspace" })
+hl.bind("CTRL + ALT + J", hl.dsp.workspace.toggle_special("j-workspace"), { description = "Toggle J workspace" })
+hl.bind("CTRL + ALT + L", hl.dsp.workspace.toggle_special("l-workspace"), { description = "Toggle L workspace" })
+hl.bind("CTRL + ALT + S", hl.dsp.workspace.toggle_special("s-workspace"), { description = "Toggle S workspace" })
+
+hl.bind("CTRL + ALT + SHIFT + J", hl.dsp.window.move({ workspace = "special:j-workspace", follow = false }), { description = "Move window to J workspace" })
+hl.bind("CTRL + ALT + SHIFT + L", hl.dsp.window.move({ workspace = "special:l-workspace", follow = false }), { description = "Move window to L workspace" })
+hl.bind("CTRL + ALT + SHIFT + S", hl.dsp.window.move({ workspace = "special:s-workspace", follow = false }), { description = "Move window to S workspace" })
 
 -- Classic global workspaces 1-10 cleanly
 for workspace = 1, 10 do

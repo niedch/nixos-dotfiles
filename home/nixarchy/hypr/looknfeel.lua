@@ -70,15 +70,6 @@ hl.config({
   },
 })
 
--- Subtle workspace switch transition (gentle slide + fade)
-hl.animation({
-	leaf = "workspaces",
-	enabled = true,
-	speed = 2.8,
-	bezier = "easeInOutCubic",
-	style = "slidefade 15%",
-})
-
 -- Stabilize cursor and DRM rendering on multi-monitor setups (Intel UHD 630)
 hl.config({
   cursor = {
