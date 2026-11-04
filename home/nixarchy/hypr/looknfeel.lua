@@ -81,15 +81,16 @@ hl.config({
 })
 
 hl.config({
-	decoration = {
-		dim_inactive = true,
-		dim_strength = 0.14,
-	},
+  decoration = {
+    dim_inactive = false,
+  },
 })
 
+hl.curve("quickSnap", { type = "bezier", points = { { 0.05, 0.9 }, { 0.1, 1.05 } } })
+
 hl.animation({
-	leaf = "fadeDim",
-	enabled = true,
-	speed = 3.0,
-	bezier = "easeInOutCubic",
+  leaf = "border",
+  enabled = true,
+  speed = 6.0,
+  bezier = "quickSnap",
 })
