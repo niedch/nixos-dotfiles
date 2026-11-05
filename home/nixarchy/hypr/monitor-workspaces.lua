@@ -101,11 +101,12 @@ function M.move_to_monitor(direction)
     end
 
     local target = hl.get_monitor(direction)
-    if not target then
+    local monitor = target and target.name or (type(direction) == "string" and direction or nil)
+    if not monitor then
       return
     end
 
-    hl.dispatch(hl.dsp.workspace.move({ monitor = target.name }))
+    hl.dispatch(hl.dsp.workspace.move({ monitor = monitor }))
     hl.dispatch(hl.dsp.focus({ workspace = tostring(workspace.id) }))
   end, "o.workspaces.move_to_monitor(" .. literal(direction) .. ")")
 end
@@ -114,8 +115,9 @@ end
 function M.move_window_to_monitor(direction)
   return action(function()
     local target = hl.get_monitor(direction)
-    if target then
-      hl.dispatch(hl.dsp.window.move({ monitor = target.name }))
+    local monitor = target and target.name or (type(direction) == "string" and direction or nil)
+    if monitor then
+      hl.dispatch(hl.dsp.window.move({ monitor = monitor }))
     end
   end, "o.workspaces.move_window_to_monitor(" .. literal(direction) .. ")")
 end
