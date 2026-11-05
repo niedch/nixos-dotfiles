@@ -24,7 +24,7 @@
         };
       }
       {
-        package = pkgs.vscode;
+        package = pkgs.vscodium;
       }
     ];
   };

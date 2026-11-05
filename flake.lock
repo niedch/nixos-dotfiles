@@ -871,11 +871,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1793173052,
-        "narHash": "sha256-Mtksfo81vZNIjPkoYtc1woxWrptcswiHYhq6RXfPbj8=",
+        "lastModified": 1793882089,
+        "narHash": "sha256-Qu3YtZ3JM2bhsX0qpM8F4Pftx8QYOhrjK264XBkuIzA=",
         "owner": "niedch",
         "repo": "nix-lazy-apps",
-        "rev": "92000206791632e1b07fa66f95a98db567bd060b",
+        "rev": "562598dd397de23bdfe8a0141111ab9dc44d9c58",
         "type": "github"
       },
       "original": {
