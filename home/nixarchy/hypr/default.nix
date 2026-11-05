@@ -18,4 +18,12 @@
   xdg.configFile."hypr/input.lua" = {
     source = ./input.lua;
   };
+
+  xdg.configFile."hypr/monitor-workspaces.lua" = {
+    source = ./monitor-workspaces.lua;
+  };
+
+  xdg.configFile."default/hypr/monitor-workspaces.lua" = {
+    source = ./monitor-workspaces.lua;
+  };
 }

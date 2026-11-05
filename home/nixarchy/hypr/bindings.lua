@@ -15,9 +15,8 @@ local mainMod = "SUPER"
 --   omarchy_preinstalled_bindings = false
 
 -- Unbind conflicting keys
-hl.unbind("SUPER + J")
-hl.unbind("SUPER + L")
-hl.unbind("SUPER + S")
+hl.unbind("SUPER + G")
+hl.unbind("SUPER + H")
 hl.unbind("SUPER + TAB")
 hl.unbind("CTRL + ALT + TAB")
 
@@ -38,17 +37,14 @@ o.bind("SUPER + ALT + U", "Plugin browser", "nixarchy-plugin io.github.olafkfreu
 o.bind("SUPER + SHIFT + ESCAPE", "ai-mirror: stop agent control", "ai-mirror control off")
 
 -- Special workspaces
-hl.bind("SUPER + J", hl.dsp.workspace.toggle_special("j-workspace"), { description = "Toggle J workspace" })
-hl.bind("SUPER + L", hl.dsp.workspace.toggle_special("l-workspace"), { description = "Toggle L workspace" })
-hl.bind("SUPER + S", hl.dsp.workspace.toggle_special("s-workspace"), { description = "Toggle S workspace" })
+hl.bind("SUPER + H", hl.dsp.workspace.toggle_special("h-workspace"), { description = "Toggle H workspace" })
+hl.bind("SUPER + G", hl.dsp.workspace.toggle_special("g-workspace"), { description = "Toggle G workspace" })
 
-hl.bind("CTRL + ALT + J", hl.dsp.workspace.toggle_special("j-workspace"), { description = "Toggle J workspace" })
-hl.bind("CTRL + ALT + L", hl.dsp.workspace.toggle_special("l-workspace"), { description = "Toggle L workspace" })
-hl.bind("CTRL + ALT + S", hl.dsp.workspace.toggle_special("s-workspace"), { description = "Toggle S workspace" })
+hl.bind("CTRL + ALT + H", hl.dsp.workspace.toggle_special("h-workspace"), { description = "Toggle H workspace" })
+hl.bind("CTRL + ALT + G", hl.dsp.workspace.toggle_special("g-workspace"), { description = "Toggle G workspace" })
 
-hl.bind("CTRL + ALT + SHIFT + J", hl.dsp.window.move({ workspace = "special:j-workspace", follow = false }), { description = "Move window to J workspace" })
-hl.bind("CTRL + ALT + SHIFT + L", hl.dsp.window.move({ workspace = "special:l-workspace", follow = false }), { description = "Move window to L workspace" })
-hl.bind("CTRL + ALT + SHIFT + S", hl.dsp.window.move({ workspace = "special:s-workspace", follow = false }), { description = "Move window to S workspace" })
+hl.bind("CTRL + ALT + SHIFT + H", hl.dsp.window.move({ workspace = "special:g-workspace", follow = false }), { description = "Move window to H workspace" })
+hl.bind("CTRL + ALT + SHIFT + G", hl.dsp.window.move({ workspace = "special:h-workspace", follow = false }), { description = "Move window to G workspace" })
 
 -- Classic global workspaces 1-10 cleanly
 for workspace = 1, 10 do
