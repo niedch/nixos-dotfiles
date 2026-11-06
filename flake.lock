@@ -1335,26 +1335,6 @@
         "type": "github"
       }
     },
-    "nixcraft": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1793368138,
-        "narHash": "sha256-lOzDDTZoXJFApmbsKqv4B+PxIhNUGXa3NOOfOP0ZDT0=",
-        "owner": "niedch",
-        "repo": "nixcraft",
-        "rev": "9cd5a7bb64d2db6f54a24e122b4d86ebb5f9e01c",
-        "type": "github"
-      },
-      "original": {
-        "owner": "niedch",
-        "repo": "nixcraft",
-        "type": "github"
-      }
-    },
     "nixflix": {
       "inputs": {
         "mkdocs-catppuccin": "mkdocs-catppuccin",
@@ -1606,7 +1586,6 @@
         "mux-session": "mux-session",
         "nix-lazy-apps": "nix-lazy-apps",
         "nixarchy": "nixarchy",
-        "nixcraft": "nixcraft",
         "nixflix": "nixflix",
         "nixos-hardware": "nixos-hardware_2",
         "nixpkgs": "nixpkgs_2",

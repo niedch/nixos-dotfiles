@@ -55,11 +55,6 @@
       inputs.home-manager.follows = "home-manager";
     };
 
-    nixcraft = {
-      url = "github:niedch/nixcraft";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     nix-lazy-apps = {
       url = "github:niedch/nix-lazy-apps";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -77,7 +72,6 @@
     comd,
     nixarchy,
     nixflix,
-    nixcraft,
     nix-lazy-apps,
     ...
   } @ inputs: let

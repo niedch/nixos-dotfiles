@@ -5,6 +5,5 @@
     ./btop.nix
     ./direnv.nix
     ./localsend.nix
-    ./nixcraft.nix
   ];
 }

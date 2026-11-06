@@ -26,6 +26,27 @@
       {
         package = pkgs.vscodium;
       }
+      {
+        package = pkgs.photocraft;
+      }
+      {
+        package = pkgs.wordcraft;
+      }
+      {
+        package = pkgs.gridcraft;
+      }
+    # pkgs.vectorcraft
+    # pkgs.deckcraft
+    # pkgs.gridcraft
+    # pkgs.wordcraft
+    # # pkgs.# cadcraft
+    # # pkgs.# lightcraft
+    # # pkgs.# soundcraft
+    # # pkgs.# designcraft
+    # pkgs.filmcraft
+    # # pkgs.# effectcraft
+    # pkgs.pdfcraft
+    # pkgs.figcraft
     ];
   };
 }
