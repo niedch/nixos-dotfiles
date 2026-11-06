@@ -12,7 +12,7 @@
       if config.hardware.nvidia.prime.offload.enable
       then "nvidia-offload "
       else ""
-    }${pkgs.steam}/bin/steam "$@"
+    }${config.programs.steam.package}/bin/steam "$@"
   '';
 
   patchDesktop = pkg: appName: from: to:
@@ -39,6 +39,6 @@ in {
     ''))
 
     # Patch steam desktop entry to run steamLauncher
-    (patchDesktop pkgs.steam "steam" "^Exec=.*" "Exec=${steamLauncher}/bin/steam-launcher %U")
+    (patchDesktop config.programs.steam.package "steam" "^Exec=.*" "Exec=${steamLauncher}/bin/steam-launcher %U")
   ];
 }
