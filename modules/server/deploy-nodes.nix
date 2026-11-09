@@ -2,14 +2,12 @@
   config,
   lib,
   pkgs,
-  inputs ? { },
+  inputs ? {},
   ...
-}:
-let
+}: let
   cfg = config.services.deploy-nodes;
   deployPkg = inputs.deploy-rs.packages.${pkgs.system}.default or pkgs.deploy-rs;
-in
-{
+in {
   options.services.deploy-nodes = {
     enable = lib.mkEnableOption "automated deploy-rs systemd services";
 
@@ -37,13 +35,21 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    programs.ssh.extraConfig = ''
+      Host desktop laptop rpi dobby raspberry-pi
+        StrictHostKeyChecking no
+        UserKnownHostsFile /dev/null
+        GlobalKnownHostsFile /dev/null
+        LogLevel ERROR
+    '';
+
     systemd.services = lib.mkMerge (
       map (node: {
         "deploy-node-${node}" = {
           description = "Automated deploy-rs deployment for node ${node}";
-          wants = [ "network-online.target" ];
-          after = [ "network-online.target" ];
-          onFailure = [ "deploy-node-${node}-failure.service" ];
+          wants = ["network-online.target"];
+          after = ["network-online.target"];
+          onFailure = ["deploy-node-${node}-failure.service"];
           path = [
             deployPkg
             pkgs.nix
@@ -57,7 +63,10 @@ in
             Group = "users";
             KillMode = "process";
             TimeoutSec = "45m";
-            Environment = [ "HOME=/home/nic" "NIX_SSHOPTS=-o StrictHostKeyChecking=accept-new" ];
+            Environment = [
+              "HOME=/home/nic"
+              ''NIX_CONFIG="accept-flake-config = true"''
+            ];
             ExecStartPre = [
               (pkgs.writeShellScript "notify-deploy-${node}-start" "/run/current-system/sw/bin/post-homepage-message-board 'Deploying ${node} started' info")
             ];
@@ -70,29 +79,31 @@ in
 
         "deploy-node-${node}-failure" = {
           description = "Notify dashboard of deployment failure for ${node}";
-          wants = [ "network-online.target" ];
-          after = [ "network-online.target" ];
+          wants = ["network-online.target"];
+          after = ["network-online.target"];
           serviceConfig = {
             Type = "oneshot";
             User = "nic";
             ExecStart = pkgs.writeShellScript "notify-deploy-${node}-failure" "/run/current-system/sw/bin/post-homepage-message-board 'Deploying ${node} failed' error";
           };
         };
-      }) cfg.nodes
+      })
+      cfg.nodes
     );
 
     systemd.timers = lib.mkMerge (
       map (node: {
         "deploy-node-${node}" = {
           description = "Timer for automated deployment of node ${node}";
-          wantedBy = [ "timers.target" ];
+          wantedBy = ["timers.target"];
           timerConfig = {
             OnCalendar = cfg.schedule;
             Persistent = true;
             RandomizedDelaySec = "15m";
           };
         };
-      }) cfg.nodes
+      })
+      cfg.nodes
     );
 
     systemd.tmpfiles.rules = lib.mkIf (config.sops.secrets ? id_ed25519) [
