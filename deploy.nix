@@ -27,6 +27,12 @@ in
   sshOpts = [
     "-o"
     "StrictHostKeyChecking=no"
+    "-o"
+    "UserKnownHostsFile=/dev/null"
+    "-o"
+    "GlobalKnownHostsFile=/dev/null"
+    "-o"
+    "LogLevel=ERROR"
   ];
 
   nodes = {
