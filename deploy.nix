@@ -24,6 +24,11 @@ let
     nixosConfig: (deployPkgsFor nixosConfig.pkgs.system).deploy-rs.lib.activate.nixos nixosConfig;
 in
 {
+  sshOpts = [
+    "-o"
+    "StrictHostKeyChecking=no"
+  ];
+
   nodes = {
     dobby = {
       hostname = "dobby";

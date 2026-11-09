@@ -154,6 +154,7 @@
         ./modules/server/glance
         ./modules/server/nixflix.nix
         ./modules/server/gittea.nix
+        ./modules/server/deploy-nodes.nix
         (mkHM (import ./home/server.nix))
       ];
     };

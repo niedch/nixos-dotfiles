@@ -54,6 +54,12 @@
     LIBVA_DRIVER_NAME = "iHD";
   };
 
+  services.deploy-nodes = {
+    enable = true;
+    nodes = ["raspberry-pi" "dobby" "desktop" "laptop"];
+    schedule = "04:00";
+  };
+
   nix.settings.require-sigs = false;
   system.stateVersion = "25.11"; # Did you read the comment?
 }
