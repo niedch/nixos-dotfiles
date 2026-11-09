@@ -40,6 +40,23 @@ run = [
   "mise run remote-switch raspberry-pi nic@rpi",
 ]
 
+[tasks.deploy]
+description = "Deploy configuration to a host using deploy-rs (e.g. dobby, raspberry-pi, desktop, laptop)"
+usage = '''arg "<host>" help="Host node name to deploy (e.g. dobby, raspberry-pi, desktop, laptop)"'''
+run = "deploy .#${usage_host?}"
+
+[tasks.deploy-all]
+description = "Deploy configuration to all hosts using deploy-rs"
+run = "deploy ."
+
+[tasks.deploy-servers]
+description = "Deploy to all server nodes using deploy-rs (dobby, raspberry-pi)"
+run = "deploy --groups servers"
+
+[tasks.deploy-desktops]
+description = "Deploy to desktop and laptop using deploy-rs"
+run = "deploy --groups desktops"
+
 [tasks.rebuild]
 description = "Stage all changes, generate commit message, open editor to commit, and push"
 usage = '''arg "<host>" help="Host configuration name"'''

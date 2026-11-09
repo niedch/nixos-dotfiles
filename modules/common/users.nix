@@ -1,10 +1,10 @@
 {
-  config,
   pkgs,
-  inputs,
   ...
 }: {
   programs.zsh.enable = true;
+
+  security.sudo.wheelNeedsPassword = false;
 
   users.users.root.shell = pkgs.zsh;
 

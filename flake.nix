@@ -59,6 +59,11 @@
       url = "github:niedch/nix-lazy-apps";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    deploy-rs = {
+      url = "github:serokell/deploy-rs";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -73,6 +78,7 @@
     nixarchy,
     nixflix,
     nix-lazy-apps,
+    deploy-rs,
     ...
   } @ inputs: let
     mkSystem = extraModules:
@@ -177,7 +183,10 @@
           watchexec
           sops
           nh
+          pkgs.deploy-rs
         ];
       };
+
+    deploy = import ./deploy.nix {inherit self nixpkgs deploy-rs;};
   };
 }
