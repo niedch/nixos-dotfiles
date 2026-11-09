@@ -20,10 +20,6 @@ description = "Switch to a NixOS configuration with sudo (e.g. laptop, desktop, 
 usage = '''arg "<host>" help="Host configuration name"'''
 run = "nh os switch . -H ${usage_host?} -- --accept-flake-config --fallback"
 
-[tasks.nvim]
-description = "Run neovim with bundled config"
-run = "nix run .#nvim"
-
 [tasks.remote-switch]
 description = "Remote switch to a NixOS configuration via SSH (e.g. raspberry-pi)"
 usage = '''
