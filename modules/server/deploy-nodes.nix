@@ -41,6 +41,10 @@ in {
         UserKnownHostsFile /dev/null
         GlobalKnownHostsFile /dev/null
         LogLevel ERROR
+        BatchMode yes
+        IdentitiesOnly yes
+        IdentityFile /run/secrets/id_ed25519
+        IdentityFile /home/nic/.ssh/id_ed25519
     '';
 
     systemd.services = lib.mkMerge (

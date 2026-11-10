@@ -3,10 +3,8 @@
   nixpkgs,
   deploy-rs,
   ...
-}:
-let
-  deployPkgsFor =
-    system:
+}: let
+  deployPkgsFor = system:
     import nixpkgs {
       inherit system;
       overlays = [
@@ -20,10 +18,8 @@ let
       ];
     };
 
-  activateNode =
-    nixosConfig: (deployPkgsFor nixosConfig.pkgs.system).deploy-rs.lib.activate.nixos nixosConfig;
-in
-{
+  activateNode = nixosConfig: (deployPkgsFor nixosConfig.pkgs.system).deploy-rs.lib.activate.nixos nixosConfig;
+in {
   sshOpts = [
     "-o"
     "StrictHostKeyChecking=no"
@@ -33,12 +29,14 @@ in
     "GlobalKnownHostsFile=/dev/null"
     "-o"
     "LogLevel=ERROR"
+    "-o"
+    "BatchMode=yes"
   ];
 
   nodes = {
     dobby = {
       hostname = "dobby";
-      groups = [ "servers" ];
+      groups = ["servers"];
       profiles.system = {
         user = "root";
         sshUser = "nic";
@@ -48,7 +46,7 @@ in
 
     raspberry-pi = {
       hostname = "rpi";
-      groups = [ "servers" ];
+      groups = ["servers"];
       profiles.system = {
         user = "root";
         sshUser = "nic";
@@ -58,7 +56,7 @@ in
 
     desktop = {
       hostname = "desktop";
-      groups = [ "desktops" ];
+      groups = ["desktops"];
       profiles.system = {
         user = "root";
         sshUser = "nic";
@@ -68,7 +66,7 @@ in
 
     laptop = {
       hostname = "laptop";
-      groups = [ "desktops" ];
+      groups = ["desktops"];
       profiles.system = {
         user = "root";
         sshUser = "nic";
