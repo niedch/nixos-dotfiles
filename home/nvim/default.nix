@@ -21,6 +21,7 @@ in {
         gcc
         tree-sitter
         jq
+        curl
       ]
       ++ lib.optionals cfg.lsp.enable [
         nodejs
