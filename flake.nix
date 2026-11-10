@@ -155,6 +155,7 @@
         ./modules/server/nixflix.nix
         ./modules/server/gittea.nix
         ./modules/server/deploy-nodes.nix
+        ./modules/server/cockpit.nix
         (mkHM (import ./home/server.nix))
       ];
     };

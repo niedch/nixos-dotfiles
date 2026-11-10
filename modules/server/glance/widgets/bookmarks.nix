@@ -24,6 +24,10 @@
           title = "Valheim";
           url = "steam://connect/dobby:2457";
         }
+        {
+          title = "Cockpit";
+          url = "http://dobby:9292";
+        }
       ];
     }
     {
