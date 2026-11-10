@@ -16,7 +16,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.kernelPackages = pkgs.linuxPackages_7_2;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelParams = [
     "usb-storage.quirks=0bc2:2039:u"
     "ahci.mobile_lpm_policy=0"

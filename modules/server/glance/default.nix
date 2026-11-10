@@ -1,9 +1,10 @@
 {
   config,
   pkgs,
+  lib,
   ...
 }: let
-  inherit (import ./widgets/glances.nix) mkGlancesWidget;
+  inherit (import ./widgets/glances.nix {inherit lib;}) mkGlancesWidget;
   inherit (import ./widgets/search.nix) searchWidget clockWidget;
   bookmarksWidget = import ./widgets/bookmarks.nix;
   messageBoardWidget = import ./widgets/message-board.nix;
@@ -117,10 +118,12 @@ in {
                 (mkGlancesWidget {
                   name = "Dobby";
                   host = "localhost";
+                  detailed = true;
                 })
                 (mkGlancesWidget {
                   name = "Raspberry Pi";
                   host = "rpi";
+                  detailed = true;
                 })
               ];
             }
@@ -130,10 +133,12 @@ in {
                 (mkGlancesWidget {
                   name = "Desktop";
                   host = "desktop";
+                  detailed = true;
                 })
                 (mkGlancesWidget {
                   name = "Laptop";
                   host = "laptop";
+                  detailed = true;
                 })
               ];
             }

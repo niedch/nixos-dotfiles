@@ -1,3 +1,4 @@
+{{ $detailed := .Options.BoolOr "detailed" false }}
 {{ $fs := .Subrequest "fs" }}
 {{ $sensors := .Subrequest "sensors" }}
 
@@ -36,6 +37,15 @@
         </div>
         <div class="progress-bar progress-bar-combined"></div>
       </div>
+      {{ if $detailed }}
+        <div class="flex-1 server-stat-unavailable">
+          <div class="flex justify-between items-end size-h5">
+            <div>NET</div>
+            <div class="color-highlight text-very-compact">n/a</div>
+          </div>
+          <div class="progress-bar progress-bar-combined"></div>
+        </div>
+      {{ end }}
     </div>
   </div>
 {{ else }}
@@ -89,7 +99,48 @@
     <div class="server-info">
       <div class="server-details">
         <div class="server-name color-highlight size-h3">__SERVER_NAME__</div>
-        <div>online</div>
+        <div>
+          {{- if $detailed -}}
+            {{- $uptime := .Subrequest "uptime" -}}
+            {{- $uptimeRaw := $uptime.JSON.String "" -}}
+            {{- $uptimeDisplay := "" -}}
+            {{- $days := findMatch "\\d+\\s+days?" $uptimeRaw -}}
+            {{- if ne $days "" -}}
+              {{- $uptimeDisplay = concat "up " $days -}}
+            {{- else -}}
+              {{- $hours := findSubmatch "^(\\d+):" $uptimeRaw -}}
+              {{- if and (ne $hours "") (ne $hours "0") -}}
+                {{- $uptimeDisplay = concat "up " $hours "h" -}}
+              {{- else if ne $uptimeRaw "" -}}
+                {{- $uptimeDisplay = concat "up " $uptimeRaw -}}
+              {{- end -}}
+            {{- end -}}
+            {{- $system := .Subrequest "system" -}}
+            {{- $distro := $system.JSON.String "linux_distro" -}}
+            {{- $kernel := findMatch "^[0-9]+\\.[0-9]+" ($system.JSON.String "os_version") -}}
+            {{- if eq $kernel "" -}}
+              {{- $kernel = $system.JSON.String "os_version" -}}
+            {{- end -}}
+            {{- $sysStr := "" -}}
+            {{- if ne $distro "" -}}
+              {{- if ne $kernel "" -}}
+                {{- $sysStr = concat $distro " (Linux " $kernel ")" -}}
+              {{- else -}}
+                {{- $sysStr = $distro -}}
+              {{- end -}}
+            {{- else -}}
+              {{- $osName := $system.JSON.String "os_name" -}}
+              {{- if ne $kernel "" -}}
+                {{- $sysStr = concat $osName " " $kernel -}}
+              {{- else -}}
+                {{- $sysStr = $osName -}}
+              {{- end -}}
+            {{- end -}}
+            online{{ if ne $uptimeDisplay "" }} • {{ $uptimeDisplay }}{{ end }}{{ if ne $sysStr "" }} • {{ $sysStr }}{{ end }}
+          {{- else -}}
+            online
+          {{- end -}}
+        </div>
       </div>
       <div class="shrink-0" data-popover-type="html" data-popover-margin="0.2rem" data-popover-max-width="400px">
         <div data-popover-html>
@@ -218,6 +269,84 @@
           </div>
         </div>
       </div>
+      {{ if $detailed }}
+        {{ $network := .Subrequest "network" }}
+        {{ $rxRate := 0.0 }}
+        {{ $txRate := 0.0 }}
+        {{ $rxTotal := 0.0 }}
+        {{ $txTotal := 0.0 }}
+        {{ $linkSpeed := 0.0 }}
+        {{ range $iface := $network.JSON.Array "" }}
+          {{ if ne ($iface.String "interface_name") "lo" }}
+            {{ $rxRate = add $rxRate ($iface.Float "bytes_recv_rate_per_sec") }}
+            {{ $txRate = add $txRate ($iface.Float "bytes_sent_rate_per_sec") }}
+            {{ $rxTotal = add $rxTotal ($iface.Float "bytes_recv_gauge") }}
+            {{ $txTotal = add $txTotal ($iface.Float "bytes_sent_gauge") }}
+            {{ $linkSpeed = add $linkSpeed ($iface.Float "speed") }}
+          {{ end }}
+        {{ end }}
+
+        {{ $rxPercent := 0.0 }}
+        {{ $txPercent := 0.0 }}
+        {{ if gt $linkSpeed 0.0 }}
+          {{ $rxPercent = div (mul $rxRate 800.0) $linkSpeed }}
+          {{ $txPercent = div (mul $txRate 800.0) $linkSpeed }}
+          {{ if gt $rxPercent 100.0 }}{{ $rxPercent = 100.0 }}{{ end }}
+          {{ if gt $txPercent 100.0 }}{{ $txPercent = 100.0 }}{{ end }}
+        {{ end }}
+
+        <div class="flex-1">
+          <div class="flex justify-between items-end size-h5">
+            <div>NET</div>
+            <div class="color-highlight text-very-compact">
+              <span class="color-base size-h5">↓</span>{{ if ge $rxRate 1048576.0 }}{{ div $rxRate 1048576.0 | printf "%.1f" }}<span class="color-base size-h5">MB/s</span>{{ else }}{{ div $rxRate 1024.0 | printf "%.0f" }}<span class="color-base size-h5">KB/s</span>{{ end }}
+              <span class="color-base size-h5">/</span>
+              <span class="color-base size-h5">↑</span>{{ if ge $txRate 1048576.0 }}{{ div $txRate 1048576.0 | printf "%.1f" }}<span class="color-base size-h5">MB/s</span>{{ else }}{{ div $txRate 1024.0 | printf "%.0f" }}<span class="color-base size-h5">KB/s</span>{{ end }}
+            </div>
+          </div>
+          <div data-popover-type="html">
+            <div data-popover-html>
+              <div class="flex">
+                <div class="size-h5">TOTAL RX</div>
+                <div class="value-separator"></div>
+                <div class="color-highlight text-very-compact">
+                  {{ if ge $rxRate 1048576.0 }}{{ div $rxRate 1048576.0 | printf "%.1f" }} <span class="color-base size-h5">MB/s</span>{{ else }}{{ div $rxRate 1024.0 | printf "%.0f" }} <span class="color-base size-h5">KB/s</span>{{ end }}
+                  <span class="color-subdue font-normal">({{ if ge $rxTotal 1099511627776.0 }}{{ div $rxTotal 1099511627776.0 | printf "%.1f TB" }}{{ else if ge $rxTotal 1073741824.0 }}{{ div $rxTotal 1073741824.0 | printf "%.1f GB" }}{{ else if ge $rxTotal 1048576.0 }}{{ div $rxTotal 1048576.0 | printf "%.0f MB" }}{{ else }}{{ div $rxTotal 1024.0 | printf "%.0f KB" }}{{ end }})</span>
+                </div>
+              </div>
+              <div class="flex margin-top-3">
+                <div class="size-h5">TOTAL TX</div>
+                <div class="value-separator"></div>
+                <div class="color-highlight text-very-compact">
+                  {{ if ge $txRate 1048576.0 }}{{ div $txRate 1048576.0 | printf "%.1f" }} <span class="color-base size-h5">MB/s</span>{{ else }}{{ div $txRate 1024.0 | printf "%.0f" }} <span class="color-base size-h5">KB/s</span>{{ end }}
+                  <span class="color-subdue font-normal">({{ if ge $txTotal 1099511627776.0 }}{{ div $txTotal 1099511627776.0 | printf "%.1f TB" }}{{ else if ge $txTotal 1073741824.0 }}{{ div $txTotal 1073741824.0 | printf "%.1f GB" }}{{ else if ge $txTotal 1048576.0 }}{{ div $txTotal 1048576.0 | printf "%.0f MB" }}{{ else }}{{ div $txTotal 1024.0 | printf "%.0f KB" }}{{ end }})</span>
+                </div>
+              </div>
+              <ul class="list list-gap-2 margin-top-6 padding-top-6" style="border-top: 1px solid var(--color-subdue-background, rgba(255,255,255,0.08));">
+                {{ range $iface := $network.JSON.Array "" }}
+                  {{ if ne ($iface.String "interface_name") "lo" }}
+                    {{ $iRx := $iface.Float "bytes_recv_rate_per_sec" }}
+                    {{ $iTx := $iface.Float "bytes_sent_rate_per_sec" }}
+                    <li class="flex">
+                      <div class="size-h5">{{ $iface.String "interface_name" }}</div>
+                      <div class="value-separator"></div>
+                      <div class="color-highlight text-very-compact">
+                        ↓ {{ if ge $iRx 1048576.0 }}{{ div $iRx 1048576.0 | printf "%.1f" }} <span class="color-base size-h5">MB/s</span>{{ else }}{{ div $iRx 1024.0 | printf "%.0f" }} <span class="color-base size-h5">KB/s</span>{{ end }}
+                        <span class="color-base size-h5">/</span>
+                        ↑ {{ if ge $iTx 1048576.0 }}{{ div $iTx 1048576.0 | printf "%.1f" }} <span class="color-base size-h5">MB/s</span>{{ else }}{{ div $iTx 1024.0 | printf "%.0f" }} <span class="color-base size-h5">KB/s</span>{{ end }}
+                      </div>
+                    </li>
+                  {{ end }}
+                {{ end }}
+              </ul>
+            </div>
+            <div class="progress-bar progress-bar-combined">
+              <div class="progress-value{{ if ge $rxPercent 85.0 }} progress-value-notice{{ end }}" style="--percent: {{ $rxPercent }}"></div>
+              <div class="progress-value{{ if ge $txPercent 85.0 }} progress-value-notice{{ end }}" style="--percent: {{ $txPercent }}"></div>
+            </div>
+          </div>
+        </div>
+      {{ end }}
     </div>
   </div>
 {{ end }}
