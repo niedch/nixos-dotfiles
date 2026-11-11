@@ -1,5 +1,3 @@
-local mainMod = "SUPER"
-
 -- Keep only your personal keybinding overrides here. Add new bindings or
 -- unbind defaults before replacing them.
 
@@ -22,6 +20,7 @@ hl.unbind("SUPER + mouse_down")
 hl.unbind("SUPER + mouse_up")
 hl.unbind("CTRL + ALT + TAB")
 hl.unbind("CTRL + ALT + SHIFT + TAB")
+hl.unbind("SUPER + SHIFT + SPACE")
 
 -- nixarchy's own plugins (#766). The helper says so if one is turned off.
 o.bind("SUPER + ALT + N", "Packages", "nixarchy-plugin nixarchy.pkg")
