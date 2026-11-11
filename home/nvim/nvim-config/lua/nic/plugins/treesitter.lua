@@ -15,10 +15,11 @@ return {
 			},
 		},
 		config = function()
-			require("nvim-treesitter").setup({
-				auto_install = true,
-				-- autotag is typically provided by nvim-ts-autotag plugin which still hooks in here,
-				-- but since it's an external plugin we can leave it.
+			require("nvim-treesitter").setup()
+
+			-- Ensure required parsers are installed (runs async; no-op if already installed)
+			require("nvim-treesitter").install({
+				"http",
 			})
 
 			-- Native Neovim 0.10+ treesitter syntax highlighting & folding
