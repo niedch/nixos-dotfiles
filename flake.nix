@@ -190,6 +190,19 @@
         ];
       };
 
+    checks.x86_64-linux = let
+      pkgs = nixpkgs.legacyPackages.x86_64-linux;
+      evalCheck = host:
+        pkgs.runCommand "eval-check-${host}" {} ''
+          echo "${builtins.unsafeDiscardStringContext self.nixosConfigurations.${host}.config.system.build.toplevel.drvPath}" > $out
+        '';
+    in {
+      desktop = evalCheck "desktop";
+      laptop = evalCheck "laptop";
+      dobby = evalCheck "dobby";
+      raspberry-pi = evalCheck "raspberry-pi";
+    };
+
     deploy = import ./deploy.nix {inherit self nixpkgs deploy-rs;};
   };
 }
