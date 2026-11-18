@@ -4,7 +4,8 @@
 }:
 {
   imports = [
-    ./nixarchy
+    ./hyprland
+    ./noctalia
     ./browser
     ./ghostty
     ./tmux
@@ -15,6 +16,7 @@
     ./git
     ./ssh
     ./agents
+    ./media
   ];
 
   home.username = "nic";

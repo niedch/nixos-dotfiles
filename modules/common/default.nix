@@ -9,6 +9,7 @@
     ./sops.nix
     ./message-board-client.nix
     ./unfree.nix
+    ./glances.nix
   ];
 
   config = {

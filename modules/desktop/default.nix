@@ -1,11 +1,11 @@
 {
   pkgs,
   lib,
-  inputs,
   ...
 }: {
   imports = [
-    inputs.nixarchy.nixosModules.nixarchy
+    ./noctalia.nix
+    ./hyprland.nix
     ./fonts.nix
     ./steam.nix
     ./virt-manager.nix
@@ -13,7 +13,6 @@
     ./gnome-calendar.nix
     ./samba-mount.nix
     ./password-manager.nix
-    ./nixarchy.nix
     ./lazy.nix
   ];
 
@@ -24,6 +23,10 @@
   # udisks2 provides the daemon that udiskie talks to for mounting removable
   # media (USB drives, SD cards) to /run/media/$USER/<label>.
   services.udisks2.enable = true;
+
+  # GVfs provides virtual filesystem support, trash functionality (trash://),
+  # and volume management for desktop file managers like Nautilus.
+  services.gvfs.enable = true;
 
   # UPower daemon + D-Bus service for monitoring power and battery level.
   services.upower.enable = true;

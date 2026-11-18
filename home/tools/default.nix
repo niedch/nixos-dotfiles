@@ -5,5 +5,6 @@
     ./btop.nix
     ./direnv.nix
     ./localsend.nix
+    ./spotify.nix
   ];
 }

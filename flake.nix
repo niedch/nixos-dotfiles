@@ -4,9 +4,11 @@
   nixConfig = {
     extra-substituters = [
       "http://dobby:5000"
+        "https://noctalia.cachix.org" 
     ];
     extra-trusted-public-keys = [
       "dobby:rrZQzoRX5Glj/0fX+bFGJ6YUPoxb3z/hg5K84k2G8yo="
+        "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4=" 
     ];
   };
 
@@ -48,13 +50,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixarchy = {
-      url = "github:olafkfreund/nixarchy/release";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.sops-nix.follows = "sops-nix";
-      inputs.home-manager.follows = "home-manager";
-    };
-
     nix-lazy-apps = {
       url = "github:niedch/nix-lazy-apps";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -63,6 +58,11 @@
     deploy-rs = {
       url = "github:serokell/deploy-rs";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    noctalia = {
+      url = "github:noctalia-dev/noctalia";
+      inputs.nixpkgs.follows = "nixpkgs"; # this line is optional, prevents downloading two versions of nixpkgs but disables cache
     };
   };
 
@@ -74,8 +74,8 @@
     nixos-hardware,
     mux-session,
     speedtest-tracker,
+    noctalia,
     comd,
-    nixarchy,
     nixflix,
     nix-lazy-apps,
     deploy-rs,
@@ -107,8 +107,6 @@
         ./modules/common
         ./modules/common/syncthing.nix
         ./modules/desktop
-        ./modules/server/glances.nix
-        ./hosts/laptop/nixarchy-apps.nix
         (mkHM (import ./home/desktop.nix))
       ];
 
@@ -117,9 +115,7 @@
         ./modules/common
         ./modules/common/syncthing.nix
         ./modules/desktop
-        ./modules/server/glances.nix
         nixos-hardware.nixosModules.dell-precision-5530
-        ./hosts/laptop/nixarchy-apps.nix
         (mkHM (import ./home/desktop.nix))
       ];
 
