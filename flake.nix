@@ -143,7 +143,7 @@
         ./modules/server/nix-cache.nix
         ./modules/server/samba.nix
         ./modules/server/github-runner.nix
-        ./modules/server/glances.nix
+        ./modules/common/glances.nix
         ./modules/server/gameserver
         speedtest-tracker.nixosModules.default
         nixflix.nixosModules.default
