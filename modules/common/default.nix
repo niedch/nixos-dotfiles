@@ -10,6 +10,7 @@
     ./message-board-client.nix
     ./unfree.nix
     ./glances.nix
+    ./lunix.nix
   ];
 
   config = {

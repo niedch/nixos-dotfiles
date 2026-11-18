@@ -103,25 +103,24 @@
   in {
     nixosConfigurations = {
       desktop = mkSystem [
-        ./hosts/desktop
         ./modules/common
         ./modules/common/syncthing.nix
         ./modules/desktop
         (mkHM (import ./home/desktop.nix))
+        ./hosts/desktop
       ];
 
       laptop = mkSystem [
-        ./hosts/laptop
         ./modules/common
         ./modules/common/syncthing.nix
         ./modules/desktop
         nixos-hardware.nixosModules.dell-precision-5530
         (mkHM (import ./home/desktop.nix))
+        ./hosts/laptop
       ];
 
       raspberry-pi = mkSystem [
         # nixos-hardware.nixosModules.raspberry-pi-3
-        ./hosts/rpi
         ./modules/common/sops.nix
         ./modules/common/ssh.nix
         ./modules/common/users.nix
@@ -132,10 +131,10 @@
         ./modules/server
         ./modules/server/homebridge
         (mkHM (import ./home/server.nix))
+        ./hosts/rpi
       ];
 
       dobby = mkSystem [
-        ./hosts/dobby
         ./modules/common
         ./modules/common/syncthing.nix
         nixos-hardware.nixosModules.common-pc-ssd
@@ -154,6 +153,7 @@
         ./modules/server/deploy-nodes.nix
         ./modules/server/cockpit.nix
         (mkHM (import ./home/server.nix))
+        ./hosts/dobby
       ];
     };
 
