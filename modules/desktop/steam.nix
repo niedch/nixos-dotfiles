@@ -25,10 +25,11 @@
       ''
     );
 in {
+  programs.gamescope.enable = true;
   programs.steam = {
     enable = true;
-    extraCompatPackages = [
-      pkgs.proton-ge-bin
+    extraCompatPackages = with pkgs; [
+      proton-ge-bin
     ];
   };
 
@@ -40,5 +41,7 @@ in {
 
     # Patch steam desktop entry to run steamLauncher
     (patchDesktop config.programs.steam.package "steam" "^Exec=.*" "Exec=${steamLauncher}/bin/steam-launcher %U")
+
+    pkgs.mangohud
   ];
 }
