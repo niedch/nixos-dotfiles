@@ -1,16 +1,6 @@
 {pkgs, ...}: {
-  home.packages = with pkgs; [
-    kdePackages.okular
+  imports = [
+    ./pdf.nix
+    ./obsidian.nix
   ];
-
-  xdg.mime.enable = true;
-  xdg.mimeApps = {
-    enable = true;
-    defaultApplications = {
-      # documents
-      "application/pdf" = "org.kde.okular.desktop";
-      "application/epub+zip" = "org.kde.okular.desktop";
-      "application/postscript" = "org.kde.okular.desktop";
-    };
-  };
 }
