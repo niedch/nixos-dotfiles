@@ -1,6 +1,6 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
-    zathura
+    kdePackages.okular
   ];
 
   xdg.mime.enable = true;
@@ -8,9 +8,9 @@
     enable = true;
     defaultApplications = {
       # documents
-      "application/pdf" = "org.pwmt.zathura.desktop";
-      "application/epub+zip" = "org.pwmt.zathura.desktop";
-      "application/postscript" = "org.pwmt.zathura.desktop";
+      "application/pdf" = "org.kde.okular.desktop";
+      "application/epub+zip" = "org.kde.okular.desktop";
+      "application/postscript" = "org.kde.okular.desktop";
     };
   };
 }

@@ -25,17 +25,17 @@ hl.window_rule({
     size  = { 1080, 920 },
 })
 
--- Media viewers floating rules (mpv, qimgv, zathura)
+-- Media viewers floating rules (mpv, qimgv, okular)
 hl.window_rule({
     name   = "media-viewers-floating",
-    match  = { class = "^(mpv|qimgv|org\\.pwmt\\.zathura|zathura)$" },
+    match  = { class = "^(mpv|qimgv|org\\.kde\\.okular|okular)$" },
     float  = true,
     center = true,
 })
 
 hl.window_rule({
-    name  = "zathura-size",
-    match = { class = "^(org\\.pwmt\\.zathura|zathura)$" },
+    name  = "okular-size",
+    match = { class = "^(org\\.kde\\.okular|okular)$" },
     size  = "60% 80%",
 })
 
