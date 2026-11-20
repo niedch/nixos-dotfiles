@@ -13,6 +13,7 @@
     ./samba-mount.nix
     ./lazy.nix
     ./proton.nix
+    ./localsend.nix
   ];
 
   # dconf D-Bus service is required for gsettings changes to propagate through

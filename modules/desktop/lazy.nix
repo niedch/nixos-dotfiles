@@ -35,6 +35,9 @@
       {
         package = pkgs.gridcraft;
       }
+      {
+        package = pkgs.pdfcraft;
+      }
     # pkgs.vectorcraft
     # pkgs.deckcraft
     # pkgs.gridcraft

@@ -1,8 +1,9 @@
-{pkgs, ...}: let
+{ pkgs, ... }:
+let
   localsend-wrapped = pkgs.symlinkJoin {
     name = "localsend";
-    paths = [pkgs.localsend];
-    nativeBuildInputs = [pkgs.makeBinaryWrapper];
+    paths = [ pkgs.localsend ];
+    nativeBuildInputs = [ pkgs.makeBinaryWrapper ];
     postBuild = ''
       for bin in localsend localsend_app; do
         if [ -e "$out/bin/$bin" ]; then
@@ -13,8 +14,11 @@
       done
     '';
   };
-in {
-  home.packages = [
-    localsend-wrapped
-  ];
+in
+{
+  programs.localsend = {
+    enable = true;
+    openFirewall = true;
+    package = localsend-wrapped;
+  };
 }

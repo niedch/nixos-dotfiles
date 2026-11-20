@@ -13,6 +13,7 @@
       "image/gif" = "qimgv.desktop";
       "image/bmp" = "qimgv.desktop";
       "image/webp" = "qimgv.desktop";
+      "image/heic" = "qimgv.desktop";
     };
   };
 }
