@@ -329,7 +329,7 @@ enabled = true
 fingerprint = true
 grace_period_seconds = 0
 lock_before_suspend = false
-monitors = [ "DP-3" ]
+monitors = [ "DP-3", "DP-2" ]
 tint_color = "surface"
 tint_intensity = 0.30000001192092896
 transition = [ "fade" ]
@@ -346,7 +346,9 @@ widget_order = [
     "lockscreen-widget-0000000000000003",
     "lockscreen-widget-0000000000000004",
     "lockscreen-login-box@DP-1",
-    "lockscreen-login-box@DP-3"
+    "lockscreen-login-box@DP-3",
+    "lockscreen-login-box@HDMI-A-1",
+    "lockscreen-login-box@DP-2"
 ]
 
     [lockscreen_widgets.grid]
@@ -384,6 +386,36 @@ widget_order = [
         show_unlock_hint = true
         show_weather = true
 
+    [lockscreen_widgets.widget."lockscreen-login-box@DP-2"]
+    box_height = 196.0
+    box_width = 810.0
+    cx = 1280.0
+    cy = 1258.0
+    enabled = true
+    output = "DP-2"
+    placement_height = 1440.0
+    placement_width = 2560.0
+    rotation = 0.0
+    type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@DP-2".settings]
+        background_color = "surface_container"
+        background_opacity = 0.88
+        background_radius = 12.0
+        center_password_text = false
+        input_opacity = 1.0
+        input_radius = 6.0
+        layout = "regular"
+        show_caps_lock = true
+        show_keyboard_layout = true
+        show_login_button = true
+        show_media = true
+        show_media_controls = true
+        show_password_reveal = true
+        show_session_buttons = true
+        show_unlock_hint = true
+        show_weather = true
+
     [lockscreen_widgets.widget."lockscreen-login-box@DP-3"]
     box_height = 196.0
     box_width = 810.0
@@ -397,6 +429,36 @@ widget_order = [
     type = "login_box"
 
         [lockscreen_widgets.widget."lockscreen-login-box@DP-3".settings]
+        background_color = "surface_container"
+        background_opacity = 0.88
+        background_radius = 12.0
+        center_password_text = false
+        input_opacity = 1.0
+        input_radius = 6.0
+        layout = "regular"
+        show_caps_lock = true
+        show_keyboard_layout = true
+        show_login_button = true
+        show_media = true
+        show_media_controls = true
+        show_password_reveal = true
+        show_session_buttons = true
+        show_unlock_hint = true
+        show_weather = true
+
+    [lockscreen_widgets.widget."lockscreen-login-box@HDMI-A-1"]
+    box_height = 196.0
+    box_width = 810.0
+    cx = 960.0
+    cy = 898.0
+    enabled = true
+    output = "HDMI-A-1"
+    placement_height = 1080.0
+    placement_width = 1920.0
+    rotation = 0.0
+    type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@HDMI-A-1".settings]
         background_color = "surface_container"
         background_opacity = 0.88
         background_radius = 12.0
@@ -605,7 +667,7 @@ clipboard_auto_paste = "auto"
 clipboard_confirm_clear_history = true
 clipboard_enabled = true
 clipboard_history_max_entries = 100
-clipboard_image_action_command = ""
+clipboard_image_action_command = "satty -f -"
 clipboard_keep_from_closed_apps = true
 corner_radius_scale = 1.0
 date_format = "%A, %x"
@@ -628,7 +690,7 @@ screen_time_colorize_icons = false
 screen_time_enabled = false
 settings_expand_all_groups = false
 settings_show_advanced = true
-settings_window_translucent = false
+settings_window_translucent = true
 setup_wizard_enabled = true
 shared_gl_context = true
 show_close_buttons = true
@@ -864,7 +926,7 @@ builtin = "Kanagawa"
 community_palette = "Oxocarbon"
 custom_palette = ""
 mode = "dark"
-pure_black_dark = false
+pure_black_dark = true
 shell_mode = "follow"
 source = "wallpaper"
 sync_color_scheme = true
@@ -979,8 +1041,8 @@ type = "media"
 type = "yuta/meeting-bar:bar"
 
 [widget.network]
-peek = true
-show_label = true
+peek = false
+show_label = false
 type = "network"
 
 [widget.network_rx]
