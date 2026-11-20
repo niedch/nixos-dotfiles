@@ -25,6 +25,7 @@ in {
       ]
       ++ lib.optionals cfg.lsp.enable [
         nodejs
+        nixfmt
         go
         cargo
         rustc

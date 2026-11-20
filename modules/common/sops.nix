@@ -2,7 +2,8 @@
   config,
   lib,
   ...
-}: {
+}:
+{
   options.sops.enable = lib.mkEnableOption "SOPS secrets decryption";
 
   config = lib.mkMerge [
@@ -13,7 +14,7 @@
       # Add a secret:
       #   $ nix shell nixpkgs#sops -c bash -c 'cd /home/nic/Projects/nixos-dotfiles && sops set secrets/secrets.yaml "[\"<name>\"]" "$(jq -Rs . < <file>)"'
       sops.defaultSopsFile = ./../../secrets/secrets.yaml;
-      sops.age.sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
+      sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 
       sops.secrets = {
         GEMINI_API_KEY = {

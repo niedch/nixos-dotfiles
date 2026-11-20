@@ -1,14 +1,7 @@
 {
-  config,
   pkgs,
   ...
-}: let
-  javaRuntimeLibs = pkgs.buildEnv {
-    name = "java-runtime-libs";
-    paths = with pkgs; [libx11 libxext libxi libxrender libxtst];
-    pathsToLink = ["/lib"];
-  };
-in {
+}: {
   home.packages = with pkgs; [
     fzf
   ];
@@ -26,13 +19,8 @@ in {
     initContent = ''
       export MANPATH="/usr/local/man:$MANPATH"
       export LANG=en_US.UTF-8
-      if [[ -n $SSH_CONNECTION ]]; then
-          export EDITOR='vim'
-      else
-          export EDITOR='nvim'
-      fi
+      export EDITOR='nvim'
       export JDTLS_JVM_ARGS="-javaagent:$HOME/.config/nvim/lib/lombok.jar"
-      export LD_LIBRARY_PATH="${javaRuntimeLibs}/lib''${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
 
       export DISABLE_MAGIC_FUNCTIONS="true"
       export DISABLE_AUTO_TITLE="true"
