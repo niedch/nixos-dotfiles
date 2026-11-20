@@ -48,6 +48,7 @@ in {
   # Noctalia scans ~/.local/share/noctalia/plugins/<plugin>/ for local plugins
   xdg.dataFile."noctalia/plugins/airpods".source = airpods-src;
 
+
   # Installs librepods and librepods-ctl into PATH
   home.packages = [librepods];
 
