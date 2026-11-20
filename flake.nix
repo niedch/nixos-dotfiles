@@ -1,17 +1,6 @@
 {
   description = "Multi-host NixOS dotfiles and configuration";
 
-  nixConfig = {
-    extra-substituters = [
-      "http://dobby:5000"
-        "https://noctalia.cachix.org" 
-    ];
-    extra-trusted-public-keys = [
-      "dobby:rrZQzoRX5Glj/0fX+bFGJ6YUPoxb3z/hg5K84k2G8yo="
-        "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4=" 
-    ];
-  };
-
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 

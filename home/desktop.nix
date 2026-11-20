@@ -1,5 +1,4 @@
 {
-  pkgs,
   ...
 }:
 {
@@ -26,30 +25,4 @@
 
   sops.defaultSopsFile = ../secrets/secrets.yaml;
   sops.age.keyFile = "/home/nic/.config/sops/age/keys.txt";
-
-  home.packages =
-    with pkgs;
-    [
-      docker-compose
-      lazydocker
-      unzip
-      nixfmt
-      fd
-      weathr
-      signal-desktop
-    ]
-    ++ [
-      # AWT dependency for the eddi project
-      libX11
-      libxext
-      libxrender
-      libxi
-      libxtst
-    ]
-    ++ [
-      # Programming languages
-      nodejs
-      python3
-      gnumake
-    ];
 }

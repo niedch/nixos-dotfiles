@@ -10,10 +10,9 @@
     ./steam.nix
     ./virt-manager.nix
     ./rclone.nix
-    ./gnome-calendar.nix
     ./samba-mount.nix
-    ./password-manager.nix
     ./lazy.nix
+    ./proton.nix
   ];
 
   # dconf D-Bus service is required for gsettings changes to propagate through
