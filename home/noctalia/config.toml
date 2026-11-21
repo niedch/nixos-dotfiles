@@ -40,7 +40,7 @@ order = [ "main" ]
     concave_edge_corners = true
     contact_shadow = false
     enabled = true
-    end = [ "tray", "bar", "network", "airpods", "volume", "battery", "notifications", "session" ]
+    end = [ "tray", "bar", "network", "airpods", "presentation_mode", "volume", "battery", "notifications", "session" ]
     font_scale = 1.0
     font_weight = 500
     hover_highlight = true
@@ -149,7 +149,7 @@ width = 700
     type = "bluetooth"
 
     [[control_center.shortcuts]]
-    type = "caffeine"
+    type = "local/presentation-mode:presentation-mode-toggle"
 
     [[control_center.shortcuts]]
     type = "nightlight"
@@ -633,6 +633,12 @@ scale = 1.0
 [plugin_settings."hy4ri/herdr"]
 show_other_machines = false
 
+[plugin_settings."local/presentation-mode"]
+enable_dnd = true
+ghostty_font_size = 14
+inhibit_idle = true
+text_scaling_factor = "1.25"
+
 [plugin_settings."yuta/meeting-bar"]
 days = 2
 fullscreen_reminders = true
@@ -646,7 +652,7 @@ title_length = 28
 
 [plugins]
 auto_update = "all"
-enabled = [ "harveywuk/airpods", "hy4ri/herdr", "yuta/meeting-bar" ]
+enabled = [ "harveywuk/airpods", "hy4ri/herdr", "local/presentation-mode", "yuta/meeting-bar" ]
 
     [[plugins.source]]
     enabled = true
@@ -1056,6 +1062,9 @@ type = "sysmon"
 [widget.output_volume]
 device = "output"
 type = "volume"
+
+[widget.presentation_mode]
+type = "local/presentation-mode:presentation-mode"
 
 [widget.ram]
 stat = "ram_used"

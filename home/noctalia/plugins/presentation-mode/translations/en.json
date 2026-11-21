@@ -1,0 +1,17 @@
+{
+  "title": "Presentation Mode",
+  "active": "Presentation On",
+  "inactive": "Presentation Off",
+  "osd.enabled": "Presentation Mode On",
+  "osd.disabled": "Presentation Mode Off",
+  "tooltip.active": "Presentation Mode: Active (Click to disable)",
+  "tooltip.inactive": "Presentation Mode: Inactive (Click to enable)",
+  "settings.text_scaling_factor.label": "System Text Scaling Factor",
+  "settings.text_scaling_factor.description": "Desktop text scaling factor (e.g. 1.25).",
+  "settings.ghostty_font_size.label": "Ghostty Font Size",
+  "settings.ghostty_font_size.description": "Font size written to Ghostty presentation override configuration.",
+  "settings.inhibit_idle.label": "Inhibit Screen Sleep",
+  "settings.inhibit_idle.description": "Enable Noctalia caffeine to keep screen awake during presentations.",
+  "settings.enable_dnd.label": "Do Not Disturb",
+  "settings.enable_dnd.description": "Silence desktop notifications during presentations."
+}
