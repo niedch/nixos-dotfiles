@@ -5,11 +5,10 @@
     inputs.dms-plugin-registry.homeModules.default
     ./calendar.nix
     ./wallpapers.nix
+    ./airpods.nix
   ];
 
-  home.packages = with pkgs; [
-    librepods
-  ];
+  services.librepods.enable = true;
 
   programs.dank-calendar = {
     enable = true;

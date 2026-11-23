@@ -4,6 +4,9 @@
     inputs.dms-plugin-registry.nixosModules.default
   ];
 
+
+  programs.librepods.enable = true;
+
   programs.dank-material-shell = {
     enable = true;
     systemd = {
