@@ -7,10 +7,57 @@
   "dmsWindowsFloatingSeeded": [
     "hyprland"
   ],
+  "cursorSettings": {
+    "theme": "System Default",
+    "size": 14,
+    "niri": {
+      "hideWhenTyping": false,
+      "hideAfterInactiveMs": 0
+    },
+    "hyprland": {
+      "hideOnKeyPress": true,
+      "hideOnTouch": false,
+      "inactiveTimeout": 0,
+      "warpOnMonitorChange": -1
+    },
+    "dwl": {
+      "cursorHideTimeout": 0
+    },
+    "mango": {
+      "cursorHideTimeout": 0
+    }
+  },
   "density": "comfortable",
   "interfaceStyle": "classic",
   "blurEnabled": true,
   "blurBorderSeeded": true,
+  "matugenTemplateNiri": false,
+  "matugenTemplateMangowc": false,
+  "matugenTemplateQt5ct": false,
+  "matugenTemplateQt6ct": false,
+  "matugenTemplateQtengine": false,
+  "matugenTemplateFirefox": false,
+  "matugenTemplatePywalfox": false,
+  "matugenTemplateZenBrowser": false,
+  "matugenTemplateKitty": false,
+  "matugenTemplateFoot": false,
+  "matugenTemplateAlacritty": false,
+  "matugenTemplateNeovim": true,
+  "matugenTemplateWezterm": false,
+  "matugenTemplateDgop": false,
+  "matugenTemplateVscode": true,
+  "matugenTemplateEmacs": false,
+  "matugenTemplateZed": false,
+  "matugenTemplateNeovimSettings": {
+    "dark": {
+      "baseTheme": "kanagawa",
+      "harmony": 0.1
+    },
+    "light": {
+      "baseTheme": "kanagawa",
+      "harmony": 0.1
+    }
+  },
   "weatherLocation": "Amstetten, Niederösterreich",
   "weatherCoordinates": "48.1203262,14.8752424",
   "barConfigs": [
@@ -67,8 +114,8 @@
           "workspaceIndicatorStyle": "lines"
         },
         {
-          "id": "spacer",
           "enabled": true,
+          "id": "spacer",
           "size": 20
         },
         "music"

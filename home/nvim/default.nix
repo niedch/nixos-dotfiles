@@ -5,7 +5,6 @@
   ...
 }: let
   cfg = config.home.nvim;
-  nvim = import ./package.nix {inherit pkgs;};
 in {
   options.home.nvim = {
     lsp = {
@@ -16,7 +15,7 @@ in {
   config = {
     home.packages = with pkgs;
       [
-        nvim
+        neovim
         ripgrep
         gcc
         tree-sitter
@@ -33,7 +32,10 @@ in {
         vscode-langservers-extracted
       ];
 
-    xdg.configFile."nvim".source = ./nvim-config;
+    xdg.configFile."nvim" = {
+      source = ./nvim-config;
+      recursive = true;
+    };
 
     home.file.".config/nvim-lsp-enabled" = lib.mkIf cfg.lsp.enable {
       text = "";

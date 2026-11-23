@@ -27,6 +27,16 @@ local function set_transparency()
     "TelescopeBorder",
     "TelescopePromptBorder",
     "TelescopePromptTitle",
+    "SnacksPicker",
+    "SnacksPickerBorder",
+    "SnacksPickerBox",
+    "SnacksPickerBoxBorder",
+    "SnacksPickerList",
+    "SnacksPickerListBorder",
+    "SnacksPickerPreview",
+    "SnacksPickerPreviewBorder",
+    "SnacksPickerInput",
+    "SnacksPickerInputBorder",
 
     -- Neo-tree
     "NeoTreeNormal",
@@ -42,7 +52,9 @@ local function set_transparency()
   }
 
   for _, hl in ipairs(highlights) do
-    vim.api.nvim_set_hl(0, hl, { bg = "none" })
+    local def = vim.api.nvim_get_hl(0, { name = hl, link = false })
+    local updated = vim.tbl_extend("force", def, { bg = "none", ctermbg = "none" })
+    vim.api.nvim_set_hl(0, hl, updated)
   end
 end
 

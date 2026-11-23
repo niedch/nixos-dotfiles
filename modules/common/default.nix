@@ -1,4 +1,8 @@
-{lib, ...}: {
+{
+  lib,
+  pkgs,
+  ...
+}: {
   imports = [
     ./binfmt.nix
     ./cache-config.nix
@@ -22,5 +26,7 @@
     };
 
     programs.nix-ld.enable = true;
+
+    environment.systemPackages = [pkgs.acl];
   };
 }
