@@ -10,6 +10,9 @@
 
   services.librepods.enable = true;
 
+  systemd.user.services.dms.Service.Environment = [ "DMS_HIDE_TRAYIDS=librepods,openpods" ];
+  home.sessionVariables.DMS_HIDE_TRAYIDS = "librepods,openpods";
+
   programs.dank-calendar = {
     enable = true;
     systemd = {

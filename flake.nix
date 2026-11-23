@@ -63,6 +63,11 @@
       url = "github:duxlabs-dev/dux-calendar";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    dux-greeter = {
+      url = "github:duxlabs-dev/dux-greeter";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -76,6 +81,7 @@
     dms,
     dms-plugin-registry,
     dux-calendar,
+    dux-greeter,
     comd,
     nixflix,
     nix-lazy-apps,
