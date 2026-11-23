@@ -179,6 +179,5 @@
       "widgetTransparency": 0.9
     }
   ],
-  "calendarBackend": "dankcal",
   "configVersion": 42
 }

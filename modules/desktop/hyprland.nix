@@ -6,20 +6,6 @@
 
   services.displayManager.defaultSession = "hyprland";
 
-  # Hyprland is launched directly by greetd/dms-greeter, so nothing activates the
-  # passive graphical-session.target. This wrapper pulls it in as a dependency
-  # (graphical-session.target is RefuseManualStart=yes). autostart.lua starts it
-  # after exporting the Wayland environment.
-  systemd.user.targets.hyprland-session = {
-    Unit = {
-      Description = "Hyprland compositor session";
-      Documentation = [ "man:systemd.special(7)" ];
-      BindsTo = [ "graphical-session.target" ];
-      Wants = [ "graphical-session-pre.target" ];
-      After = [ "graphical-session-pre.target" ];
-    };
-  };
-
   security.polkit.enable = true;
 
   environment.systemPackages = with pkgs; [
