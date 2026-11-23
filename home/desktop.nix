@@ -4,7 +4,8 @@
 {
   imports = [
     ./hyprland
-    ./noctalia
+    # ./noctalia
+    ./dux
     ./browser
     ./ghostty
     ./tmux

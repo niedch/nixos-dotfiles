@@ -231,8 +231,8 @@ in {
     commandLineArgs = [
       "--ignore-gpu-blocklist"
       "--enable-gpu-rasterization"
-      "--enable-features=Vulkan,UseSkiaRenderer"
-      "--enable-features=VaapiVideoDecoder,VaapiVideoEncoder,UseMultiPlaneFormatForSoftwareOverlayVideo"
+      "--ozone-platform-hint=auto"
+      "--enable-features=Vulkan,UseSkiaRenderer,VaapiVideoDecoder,VaapiVideoEncoder,UseMultiPlaneFormatForSoftwareOverlayVideo,WebRTCPipeWireCapturer,WaylandWindowDecorations"
       "--disable-gpu-driver-bug-workarounds"
     ];
 

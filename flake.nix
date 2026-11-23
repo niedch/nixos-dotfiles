@@ -49,9 +49,19 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    noctalia = {
-      url = "github:noctalia-dev/noctalia";
-      inputs.nixpkgs.follows = "nixpkgs"; # this line is optional, prevents downloading two versions of nixpkgs but disables cache
+    dms = {
+      url = "github:duxlabs-dev/dux-shell/stable";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    dms-plugin-registry = {
+      url = "github:duxlabs-dev/dux-plugin-registry";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    dux-calendar = {
+      url = "github:duxlabs-dev/dux-calendar";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
@@ -63,7 +73,9 @@
     nixos-hardware,
     mux-session,
     speedtest-tracker,
-    noctalia,
+    dms,
+    dms-plugin-registry,
+    dux-calendar,
     comd,
     nixflix,
     nix-lazy-apps,

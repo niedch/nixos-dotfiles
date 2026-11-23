@@ -4,7 +4,7 @@
   ...
 }: {
   imports = [
-    ./noctalia.nix
+    ./dux.nix
     ./hyprland.nix
     ./fonts.nix
     ./steam.nix

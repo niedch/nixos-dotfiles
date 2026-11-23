@@ -1,0 +1,132 @@
+{
+  "currentThemeName": "dynamic",
+  "blurBorderEnabled": true,
+  "currentThemeCategory": "dynamic",
+  "matugenScheme": "scheme-fidelity",
+  "popupTransparency": 0.8,
+  "dmsWindowsFloatingSeeded": [
+    "hyprland"
+  ],
+  "density": "comfortable",
+  "interfaceStyle": "classic",
+  "blurEnabled": true,
+  "blurBorderSeeded": true,
+  "weatherLocation": "Amstetten, Niederösterreich",
+  "weatherCoordinates": "48.1203262,14.8752424",
+  "barConfigs": [
+    {
+      "attachToScreenEdge": false,
+      "autoHide": false,
+      "autoHideDelay": 250,
+      "autoHideStrict": false,
+      "barInsetPadding": 4,
+      "barLengthMode": "full",
+      "barLengthPadding": 0,
+      "barLengthPercent": 80,
+      "batteryColorMode": "theme",
+      "borderColor": "surfaceText",
+      "borderEnabled": false,
+      "borderOpacity": 1,
+      "borderThickness": 1,
+      "bottomGap": 0,
+      "centerWidgets": [
+        "music",
+        "clock",
+        "weather",
+        {
+          "enabled": true,
+          "id": "dcalUpcoming"
+        }
+      ],
+      "clickActionFollowMouse": false,
+      "clickThrough": false,
+      "enabled": true,
+      "followInterfaceStyle": false,
+      "fontScale": 1,
+      "gothCornerRadiusOverride": false,
+      "gothCornerRadiusValue": 12,
+      "gothCornersEnabled": false,
+      "hideOnFullscreen": false,
+      "hoverPopoutDelay": 150,
+      "hoverPopouts": false,
+      "iconScale": 1,
+      "id": "default",
+      "innerPadding": -5,
+      "leftWidgets": [
+        "launcherButton",
+        {
+          "id": "workspaceSwitcher",
+          "enabled": true,
+          "workspaceIndicatorStyle": "lines",
+          "showWorkspaceIndex": true,
+          "showWorkspaceName": false,
+          "showWorkspaceApps": false,
+          "showOccupiedWorkspacesOnly": true,
+          "showSpecialWorkspaces": true,
+          "overflowMode": "section",
+          "workspaceIndicatorRoundness": -1,
+          "workspaceIndicatorCompact": true
+        },
+        "focusedWindow"
+      ],
+      "maximizeDetection": true,
+      "maximizeWidgetIcons": false,
+      "maximizeWidgetText": false,
+      "middleClickAction": "none",
+      "name": "Main Bar",
+      "noBackground": false,
+      "openOnOverview": false,
+      "popupGapsAuto": true,
+      "popupGapsManual": 4,
+      "position": 0,
+      "rightClickAction": "none",
+      "rightWidgets": [
+        {
+          "enabled": true,
+          "id": "dockerManager"
+        },
+        "systemTray",
+        "clipboard",
+        {
+          "enabled": true,
+          "id": "librepods"
+        },
+        "cpuUsage",
+        "memUsage",
+        "notificationButton",
+        "battery",
+        "controlCenterButton"
+      ],
+      "screenPreferences": [
+        "all"
+      ],
+      "scrollEnabled": true,
+      "scrollXBehavior": "focusWindow",
+      "scrollYBehavior": "workspace",
+      "shadowColorMode": "default",
+      "shadowCustomColor": "#000000",
+      "shadowDirection": "top",
+      "shadowDirectionMode": "inherit",
+      "shadowIntensity": 0,
+      "shadowOpacity": 60,
+      "showOnLastDisplay": true,
+      "showOnWindowsOpen": false,
+      "spacing": 0,
+      "squareCorners": true,
+      "surfaceColor": "default",
+      "surfaceCustomColor": "#6750A4",
+      "transparency": 0.9,
+      "useOverlayLayer": false,
+      "visible": true,
+      "widgetFollowInterfaceStyle": false,
+      "widgetOutlineColor": "primary",
+      "widgetOutlineEnabled": false,
+      "widgetOutlineOpacity": 1,
+      "widgetOutlineThickness": 1,
+      "widgetPadding": 2,
+      "widgetStyle": "pills",
+      "widgetTransparency": 0.9
+    }
+  ],
+  "configVersion": 42
+}

@@ -59,6 +59,15 @@ hl.window_rule({
     no_initial_focus = true,
 })
 
+-- Dux calendar floating rule
+hl.window_rule({
+    name   = "dux-calendar-floating",
+    match  = { class = "^(dev\\.duxlabs\\.calendar)$" },
+    float  = true,
+    center = true,
+    size   = { 1100, 820 },
+})
+
 -- Streaming & workspace window rules
 hl.window_rule({
     name    = "streaming-opacity",
@@ -70,6 +79,14 @@ hl.window_rule({
     name    = "special-workspace-opacity",
     match   = { workspace = "s[true]" },
     opacity = "1.0 1.0",
+})
+
+hl.window_rule({
+    name       = "fullscreen-opacity",
+    match      = { fullscreen = true },
+    opaque     = true,
+    force_rgbx = true,
+    opacity    = "1.0 override 1.0 override 1.0 override",
 })
 
 -- Smart gaps

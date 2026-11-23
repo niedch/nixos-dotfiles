@@ -12,7 +12,10 @@ hl.bind(mainMod .. " + L",         hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + SHIFT + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + C",         hl.dsp.send_shortcut({ mods = "CTRL", key = "c", window = "activewindow" }))
 hl.bind(mainMod .. " + V",         hl.dsp.send_shortcut({ mods = "CTRL", key = "v", window = "activewindow" }))
-hl.bind(mainMod .. " + F",      hl.dsp.window.fullscreen())
+hl.unbind("SUPER + F")
+hl.bind(mainMod .. " + F", function()
+    hl.dispatch(hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" }))
+end)
 
 -- Noctalia IPC
 hl.bind(mainMod .. " + Space",        hl.dsp.exec_cmd(ipc .. "panel-toggle launcher"))
