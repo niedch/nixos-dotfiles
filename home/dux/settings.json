@@ -30,7 +30,6 @@
       "borderThickness": 1,
       "bottomGap": 0,
       "centerWidgets": [
-        "music",
         "clock",
         "weather",
         {
@@ -55,19 +54,24 @@
       "leftWidgets": [
         "launcherButton",
         {
-          "id": "workspaceSwitcher",
           "enabled": true,
-          "workspaceIndicatorStyle": "lines",
-          "showWorkspaceIndex": true,
-          "showWorkspaceName": false,
-          "showWorkspaceApps": false,
+          "id": "workspaceSwitcher",
+          "overflowMode": "section",
           "showOccupiedWorkspacesOnly": true,
           "showSpecialWorkspaces": true,
-          "overflowMode": "section",
+          "showWorkspaceApps": false,
+          "showWorkspaceIndex": true,
+          "showWorkspaceName": false,
+          "workspaceIndicatorCompact": true,
           "workspaceIndicatorRoundness": -1,
-          "workspaceIndicatorCompact": true
+          "workspaceIndicatorStyle": "lines"
         },
-        "focusedWindow"
+        {
+          "id": "spacer",
+          "enabled": true,
+          "size": 20
+        },
+        "music"
       ],
       "maximizeDetection": true,
       "maximizeWidgetIcons": false,
