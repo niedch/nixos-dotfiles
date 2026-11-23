@@ -232,7 +232,7 @@ in {
       "--ignore-gpu-blocklist"
       "--enable-gpu-rasterization"
       "--ozone-platform-hint=auto"
-      "--enable-features=Vulkan,UseSkiaRenderer,VaapiVideoDecoder,VaapiVideoEncoder,UseMultiPlaneFormatForSoftwareOverlayVideo,WebRTCPipeWireCapturer,WaylandWindowDecorations"
+      "--enable-features=UseSkiaRenderer,VaapiVideoDecoder,VaapiVideoEncoder,UseMultiPlaneFormatForSoftwareOverlayVideo,WebRTCPipeWireCapturer,WaylandWindowDecorations"
       "--disable-gpu-driver-bug-workarounds"
     ];
 
