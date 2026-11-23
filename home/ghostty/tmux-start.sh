@@ -1,6 +1,5 @@
+#!/usr/bin/env bash
 SESSION_NAME="ghostty"
-
-echo "Starting tmux-start"
 
 tmux has-session -t $SESSION_NAME 2>/dev/null
 

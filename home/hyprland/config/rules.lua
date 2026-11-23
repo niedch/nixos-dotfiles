@@ -1,26 +1,26 @@
--- Noctalia layer rules
+-- DMS layer rules
 hl.layer_rule({
-    name  = "noctalia-no-anim",
+    name  = "dms-no-anim",
     match = {
-        namespace = "^noctalia-(bar-.+|notification|dock|panel|attached-panel|osd|window-switcher)$",
+        namespace = "^dms:.*$",
     },
     no_anim = true,
 })
 
 hl.layer_rule({
-    name  = "noctalia-blur",
+    name  = "dms-blur",
     match = {
-        namespace = "^noctalia-(bar-.+|notification|dock|panel|attached-panel|osd|window-switcher)$",
+        namespace = "^dms:.*$",
     },
     ignore_alpha = 0.2,
     blur         = true,
     blur_popups  = true,
 })
 
--- Noctalia window rules
+-- DMS window rules
 hl.window_rule({
-    name  = "noctalia-settings",
-    match = { class = "dev.noctalia.Noctalia" },
+    name  = "dms-floating",
+    match = { class = "^(dev\\.duxlabs\\.shell)$" },
     float = true,
     size  = { 1080, 920 },
 })
@@ -36,7 +36,7 @@ hl.window_rule({
 hl.window_rule({
     name  = "okular-size",
     match = { class = "^(org\\.kde\\.okular|okular)$" },
-    size  = "60% 80%",
+    size  = { "monitor_w * 0.6", "monitor_h * 0.8" },
 })
 
 -- Steam floating rules

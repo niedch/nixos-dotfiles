@@ -3,6 +3,7 @@
     ./nvim
     ./zsh
     ./git
+    ./tmux
   ];
 
   programs.home-manager.enable = true;

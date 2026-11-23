@@ -1,5 +1,5 @@
 local mainMod     = "SUPER"
-local ipc         = "noctalia msg "
+local ipc         = "dms ipc call "
 local terminal    = "ghostty"
 local fileManager = "nautilus"
 
@@ -17,31 +17,30 @@ hl.bind(mainMod .. " + F", function()
     hl.dispatch(hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" }))
 end)
 
--- Noctalia IPC
-hl.bind(mainMod .. " + Space",        hl.dsp.exec_cmd(ipc .. "panel-toggle launcher"))
-hl.bind(mainMod .. " + S",            hl.dsp.exec_cmd(ipc .. "panel-toggle control-center"))
-hl.bind(mainMod .. " + comma",        hl.dsp.exec_cmd(ipc .. "settings-toggle"))
-hl.bind("ALT + Tab",                  hl.dsp.exec_cmd(ipc .. "window-switcher hold"))
-hl.bind("ALT + SHIFT + Tab",          hl.dsp.exec_cmd(ipc .. "window-switcher hold reverse"))
+-- DMS IPC
+hl.bind(mainMod .. " + Space",        hl.dsp.exec_cmd(ipc .. "spotlight toggle"))
+hl.bind(mainMod .. " + S",            hl.dsp.exec_cmd(ipc .. "control-center toggle"))
+hl.bind(mainMod .. " + comma",        hl.dsp.exec_cmd(ipc .. "settings focusOrToggle"))
+hl.bind("ALT + Tab",                  hl.dsp.exec_cmd(ipc .. "hypr toggleOverview"))
 
--- Screenshots (Noctalia built-in)
-hl.bind("Print",                      hl.dsp.exec_cmd(ipc .. "screenshot-fullscreen"))
-hl.bind(mainMod .. " + SHIFT + S",    hl.dsp.exec_cmd(ipc .. "panel-toggle screenshot"))
+-- Screenshots (DMS built-in)
+hl.bind("Print",                      hl.dsp.exec_cmd("dms screenshot full"))
+hl.bind(mainMod .. " + SHIFT + S",    hl.dsp.exec_cmd("dms screenshot"))
 
 -- Lock screen & Session power menu
-hl.bind(mainMod .. " + escape",        hl.dsp.exec_cmd(ipc .. "session lock"))
-hl.bind(mainMod .. " + SHIFT + L",     hl.dsp.exec_cmd(ipc .. "session lock"))
-hl.bind(mainMod .. " + SHIFT + Q",     hl.dsp.exec_cmd(ipc .. "panel-toggle session"))
+hl.bind(mainMod .. " + escape",        hl.dsp.exec_cmd(ipc .. "lock lock"))
+hl.bind(mainMod .. " + SHIFT + L",     hl.dsp.exec_cmd(ipc .. "lock lock"))
+hl.bind(mainMod .. " + SHIFT + Q",     hl.dsp.exec_cmd(ipc .. "powermenu toggle"))
 
 -- AI Mirror kill switch
 hl.bind(mainMod .. " + SHIFT + escape", hl.dsp.exec_cmd("ai-mirror control off"))
 
 -- Media & Brightness keys
-hl.bind("XF86AudioRaiseVolume",  hl.dsp.exec_cmd(ipc .. "volume-up"),     { locked = true, repeating = true })
-hl.bind("XF86AudioLowerVolume",  hl.dsp.exec_cmd(ipc .. "volume-down"),   { locked = true, repeating = true })
-hl.bind("XF86AudioMute",         hl.dsp.exec_cmd(ipc .. "volume-mute"),   { locked = true, repeating = true })
-hl.bind("XF86MonBrightnessUp",   hl.dsp.exec_cmd(ipc .. "brightness-up"), { locked = true, repeating = true })
-hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd(ipc .. "brightness-down"), { locked = true, repeating = true })
+hl.bind("XF86AudioRaiseVolume",  hl.dsp.exec_cmd(ipc .. "audio increment 3"),     { locked = true, repeating = true })
+hl.bind("XF86AudioLowerVolume",  hl.dsp.exec_cmd(ipc .. "audio decrement 3"),     { locked = true, repeating = true })
+hl.bind("XF86AudioMute",         hl.dsp.exec_cmd(ipc .. "audio mute"),            { locked = true })
+hl.bind("XF86MonBrightnessUp",   hl.dsp.exec_cmd(ipc .. 'brightness increment 5 ""'), { locked = true, repeating = true })
+hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd(ipc .. 'brightness decrement 5 ""'), { locked = true, repeating = true })
 
 -- Focus navigation (arrows & hjkl)
 hl.bind(mainMod .. " + left",  hl.dsp.focus({ direction = "left" }))

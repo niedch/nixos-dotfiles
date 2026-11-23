@@ -9,13 +9,20 @@ require("config.animations")
 require("config.input")
 require("config.rules")
 
-require("dms.colors")
-require("dms.outputs")
-require("dms.layout")
-require("dms.cursor")
-require("dms.input")
-require("dms.binds")
-require("dms.binds-user")
-require("dms.windowrules")
+-- Optional DMS modules (safely required in case DMS has not yet generated them)
+local dms_modules = {
+    "dms.colors",
+    "dms.outputs",
+    "dms.layout",
+    "dms.cursor",
+    "dms.input",
+    "dms.binds",
+    "dms.binds-user",
+    "dms.windowrules",
+}
+
+for _, mod in ipairs(dms_modules) do
+    pcall(require, mod)
+end
 
 require("config.keybindings")
