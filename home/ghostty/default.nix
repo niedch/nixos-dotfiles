@@ -7,6 +7,10 @@
     source = ./ghostty.config;
   };
 
+  xdg.configFile."ghostty/theme" = {
+    source = ./theme.config;
+  };
+
   xdg.configFile."ghostty/tmux-start.sh" = {
     source = ./tmux-start.sh;
     executable = true;

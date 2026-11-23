@@ -29,6 +29,8 @@
     size = 12;
   };
 
+  xdg.configFile."dms/koyagani-theme.json".source = ./koyagani-theme.json;
+
   programs.dank-material-shell = {
     enable = true;
     managePluginSettings = true;

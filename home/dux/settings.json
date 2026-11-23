@@ -1,7 +1,8 @@
 {
-  "currentThemeName": "dynamic",
+  "currentThemeName": "custom",
   "blurBorderEnabled": true,
-  "currentThemeCategory": "dynamic",
+  "currentThemeCategory": "custom",
+  "customThemeFile": "/home/nic/.config/dms/koyagani-theme.json",
   "matugenScheme": "scheme-neutral",
   "popupTransparency": 0.8,
   "dmsWindowsFloatingSeeded": [
@@ -125,7 +126,7 @@
       "maximizeWidgetText": false,
       "middleClickAction": "none",
       "name": "Main Bar",
-      "noBackground": false,
+      "noBackground": true,
       "openOnOverview": false,
       "popupGapsAuto": true,
       "popupGapsManual": 4,
@@ -176,7 +177,7 @@
       "widgetOutlineThickness": 1,
       "widgetPadding": 2,
       "widgetStyle": "pills",
-      "widgetTransparency": 0.9
+      "widgetTransparency": 1
     }
   ],
   "configVersion": 42

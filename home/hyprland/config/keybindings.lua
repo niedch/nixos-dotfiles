@@ -7,7 +7,6 @@ local fileManager = "nautilus"
 hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. " + E",      hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + W",      hl.dsp.window.close())
-hl.bind(mainMod .. " + M",      hl.dsp.exec_cmd("hyprctl dispatch 'hl.dsp.exit()'"))
 hl.bind(mainMod .. " + L",         hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + SHIFT + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + C",         hl.dsp.send_shortcut({ mods = "CTRL", key = "c", window = "activewindow" }))
@@ -18,8 +17,8 @@ hl.bind(mainMod .. " + F", function()
 end)
 
 -- DMS IPC
-hl.bind(mainMod .. " + Space",        hl.dsp.exec_cmd(ipc .. "spotlight toggle"))
-hl.bind(mainMod .. " + S",            hl.dsp.exec_cmd(ipc .. "control-center toggle"))
+-- hl.bind(mainMod .. " + Space",        hl.dsp.exec_cmd(ipc .. "spotlight toggle"))
+-- hl.bind(mainMod .. " + S",            hl.dsp.exec_cmd(ipc .. "control-center toggle"))
 hl.bind(mainMod .. " + comma",        hl.dsp.exec_cmd(ipc .. "settings focusOrToggle"))
 hl.bind("ALT + Tab",                  hl.dsp.exec_cmd(ipc .. "hypr toggleOverview"))
 
