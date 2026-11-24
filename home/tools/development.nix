@@ -1,7 +1,11 @@
 { pkgs, ... }: {
   home.packages =
+
     with pkgs;
     [
+      intellij-idea
+    ]
+    ++ [
       unzip
     ]
     ++ [
