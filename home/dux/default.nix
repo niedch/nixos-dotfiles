@@ -3,22 +3,12 @@
     inputs.dms.homeModules.dank-material-shell
     inputs.dux-calendar.homeModules.dank-calendar
     inputs.dms-plugin-registry.homeModules.default
-    ./calendar.nix
+    ./calendar
     ./wallpapers.nix
     ./airpods.nix
   ];
 
-  services.librepods.enable = true;
-
   home.sessionVariables.DMS_HIDE_TRAYIDS = "librepods,openpods";
-
-  programs.dank-calendar = {
-    enable = true;
-    systemd = {
-      enable = true;
-      restartIfChanged = true;
-    };
-  };
 
   home.pointerCursor = {
     enable = true;
@@ -30,6 +20,7 @@
   };
 
   xdg.configFile."dms/koyagani-theme.json".source = ./koyagani-theme.json;
+  services.librepods.enable = true;
 
   programs.dank-material-shell = {
     enable = true;
