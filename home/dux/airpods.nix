@@ -24,7 +24,7 @@ in {
       Service = {
         Type = "simple";
         Environment = ["QT_LOGGING_RULES=openpods.debug=false"];
-        ExecStart = "${cfg.package}/bin/librepods --headless";
+        ExecStart = "${cfg.package}/bin/librepods --hide";
         Restart = "on-failure";
         RestartSec = 5;
       };

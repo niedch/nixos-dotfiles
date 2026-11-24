@@ -20,6 +20,14 @@
       url = "https://w.wallhaven.cc/full/qr/wallhaven-qrp5xd.jpg";
       hash = "sha256-mK1i+6Pl/nNsNLJ0Q3ZiY9y4+y1dILJ5Zf/vFHAZgRw=";
     };
+    "background_3.jpg" = {
+      url = "https://raw.githubusercontent.com/niedch/omarchy-koyanagi-theme/63addbeb6df20cdee9cb007eec8fe81c95e3834f/backgrounds/background_3.jpg";
+      hash = "sha256-zHeCa5pStkUQqanUVww3KMehog5tSXrfEKPgd0fqgME=";
+    };
+    "background_4.jpg" = {
+      url = "https://raw.githubusercontent.com/niedch/omarchy-koyanagi-theme/63addbeb6df20cdee9cb007eec8fe81c95e3834f/backgrounds/background_4.jpg";
+      hash = "sha256-lXiDOMP6hBrQyzYsDfXaEt8aYmDMSHKP1Tl7QlCWVNk=";
+    };
   };
 in {
   xdg.configFile = lib.mapAttrs' (
