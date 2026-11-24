@@ -73,6 +73,12 @@
       sha256 = "sha256-Y+/P6e7aTMWJZcdYekhYhmEsv4eOzY/D5N1ZTbMaZ/0=";
     }
     {
+      name = "Google Maps";
+      description = "Google Maps service";
+      url = "https://www.google.com/maps";
+      sha256 = "sha256-S++poUypFJFdD0hvWZAHdth1j9gQWH/wwYxyTaN1ca4=";
+    }
+    {
       name = "Google Drive";
       description = "Cloud storage and file synchronization service";
       url = "https://drive.google.com/drive/home";
