@@ -1,9 +1,29 @@
 {
   pkgs,
   lib,
+  inputs,
   ...
 }: let
-  chromium = pkgs.chromium.override {enableWideVine = true;};
+  zenBeta = inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.beta;
+
+  userChrome = ''
+    /* Zen chromeless webapp window */
+    #navigator-toolbox {
+      visibility: collapse !important;
+    }
+    #zen-appcontent-navbar-wrapper {
+      display: none !important;
+    }
+    #zen-sidebar-top-buttons,
+    #TabsToolbar,
+    #nav-bar {
+      display: none !important;
+    }
+    :root {
+      --zen-element-separation: 0px !important;
+      --zen-native-inner-radius: 0px !important;
+    }
+  '';
 
   fetchFavicon = {
     name,
@@ -24,7 +44,7 @@
   in
     rawIcon;
 
-  mkWebApp = {
+  mkZenWebApp = {
     name,
     url,
     sha256,
@@ -37,11 +57,12 @@
   in
     {
       inherit name;
-      exec = "${chromium}/bin/chromium --start-maximized --app=${url}";
+      exec = "${zenBeta}/bin/zen-beta -P webapp --new-window --name webapp --class webapp ${url}";
       icon = "${iconPath}";
       terminal = false;
       type = "Application";
       categories = ["Network" "WebBrowser"];
+      settings = {StartupWMClass = "webapp";};
     }
     // lib.optionalAttrs (comment != null) {
       inherit comment;
@@ -223,27 +244,27 @@
     }
   ];
 in {
+  imports = [inputs.zen-browser.homeModules.default];
+
   xdg.desktopEntries = builtins.listToAttrs (map (app: {
       name = app.name;
-      value = mkWebApp app;
+      value = mkZenWebApp app;
     })
     webApps);
 
-  programs.chromium = {
+  programs.zen-browser = {
     enable = true;
-
-    package = chromium;
-
-    commandLineArgs = [
-      "--ignore-gpu-blocklist"
-      "--enable-gpu-rasterization"
-      "--ozone-platform-hint=auto"
-      "--enable-features=UseSkiaRenderer,VaapiVideoDecoder,VaapiVideoEncoder,UseMultiPlaneFormatForSoftwareOverlayVideo,WebRTCPipeWireCapturer,WaylandWindowDecorations"
-      "--disable-gpu-driver-bug-workarounds"
-    ];
-
-    extensions = [
-      {id = "ghmbeldphafepmbegfdlkpapadhbakde";} # Proton Pass
-    ];
+    profiles = {
+      default = {
+        id = 0;
+        isDefault = true;
+      };
+      webapp = {
+        id = 1;
+        isDefault = false;
+        settings."toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+        inherit userChrome;
+      };
+    };
   };
 }
