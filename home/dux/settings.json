@@ -59,8 +59,7 @@
       "harmony": 0.1
     }
   },
-  "weatherLocation": "Amstetten, Niederösterreich",
-  "weatherCoordinates": "48.1203262,14.8752424",
+  "useAutoLocation": true,
   "barConfigs": [
     {
       "attachToScreenEdge": false,

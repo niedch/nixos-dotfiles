@@ -82,11 +82,10 @@ hl.window_rule({
 })
 
 hl.window_rule({
-    name       = "fullscreen-opacity",
-    match      = { fullscreen = true },
-    opaque     = true,
-    force_rgbx = true,
-    opacity    = "1.0 override 1.0 override 1.0 override",
+    name    = "fullscreen-opacity",
+    match   = { fullscreen = true },
+    opaque  = true,
+    opacity = "1.0 override 1.0 override 1.0 override",
 })
 
 -- Smart gaps
