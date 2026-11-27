@@ -20,9 +20,6 @@
     }
   },
   "cursorSettings": {
-    "dwl": {
-      "cursorHideTimeout": 0
-    },
     "hyprland": {
       "hideOnKeyPress": true,
       "hideOnTouch": false,

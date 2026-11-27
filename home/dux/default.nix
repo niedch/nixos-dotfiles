@@ -3,21 +3,13 @@
     inputs.dms.homeModules.dank-material-shell
     inputs.dux-calendar.homeModules.dank-calendar
     inputs.dms-plugin-registry.homeModules.default
-    ./calendar
+    ./calendar.nix
+    ./cursor.nix
     ./wallpapers.nix
     ./airpods.nix
   ];
 
   home.sessionVariables.DMS_HIDE_TRAYIDS = "librepods,openpods";
-
-  home.pointerCursor = {
-    enable = true;
-    gtk.enable = true;
-    x11.enable = true;
-    package = pkgs.bibata-cursors;
-    name = "Bibata-Modern-Classic";
-    size = 12;
-  };
 
   xdg.configFile."dms/koyagani-theme.json".source = ./koyagani-theme.json;
   services.librepods.enable = true;
