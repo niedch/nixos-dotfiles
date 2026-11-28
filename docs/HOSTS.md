@@ -1,93 +1,41 @@
-# Multi-host setup
+# Hosts
 
-The flake is structured to support multiple hosts. Currently `desktop` and `server` are defined.
+Hosts compose features by name. Each host is a top-level module in `flake-modules/hosts/` that produces a `nixosConfigurations.<host>` entry via the `mkNixosSystem` helper.
 
-## How it works
+## Current hosts
 
-Each host lives under `hosts/<name>/` and is registered in `flake.nix` under `nixosConfigurations`. All hosts share the same `modules/common` (Docker, users). Desktop and server have their own role-specific modules:
+| flake attribute | hostname | system        | role                        |
+|-----------------|----------|---------------|-----------------------------|
+| `desktop`       | `desktop`| x86_64-linux  | desktop                     |
+| `laptop`        | `laptop` | x86_64-linux  | desktop (Dell Precision)    |
+| `dobby`         | `dobby`  | x86_64-linux  | server                      |
+| `raspberry-pi`  | `rpi`    | aarch64-linux | minimal server / homebridge |
 
-- `modules/desktop/` - KDE Plasma 6, SDDM, fonts
-- `modules/server/` - SSH, firewall
-
-Home-manager configs are also split:
-- `home/desktop.nix` - Full desktop config (all modules)
-- `home/server/` - Minimal server config (tmux, zsh, nvim only)
-
-## Adding a new host
-
-### 1. Create a host directory
-
-```bash
-mkdir -p hosts/laptop
-nixos-generate-config --root /mnt --dir ./hosts/laptop
-```
-
-This generates `hardware-configuration.nix` automatically. Create `default.nix` by hand:
+## Host composition
 
 ```nix
-# hosts/laptop/default.nix
-{ pkgs, ... }:
-
-{
-  imports = [ ./hardware-configuration.nix ];
-
-  boot.loader.systemd-boot.enable = true;
-
-  networking.hostName = "laptop";
-
-  networking.networkmanager.enable = true;
-  time.timeZone = "Europe/Vienna";
-
-  programs.zsh.enable = true;
-
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
-  system.stateVersion = "25.11";
+# flake-modules/hosts/desktop.nix
+{config, mkNixosSystem, ...}: {
+  flake.nixosConfigurations.desktop = mkNixosSystem {
+    modules = [
+      config.flake.modules.nixos.common
+      config.flake.modules.nixos.common-syncthing
+      config.flake.modules.nixos.desktop
+      ../../hosts/desktop        # host-local hardware config
+    ];
+    home = config.flake.modules.homeManager.home-desktop;
+  };
 }
 ```
 
-### 2. Register in `flake.nix`
+- `modules` lists NixOS features (by name) plus the host-local `../../hosts/<host>` module (hardware configuration, power tuning).
+- `home` references a home-manager profile bundle (`home-desktop` or `home-server`).
+- `raspberry-pi` deliberately selects individual `common-*` features rather than the `common` bundle (it omits docker, binfmt, glances, lunix, syncthing).
 
-Add a new entry alongside existing hosts:
+## Adding a host
 
-```nix
-nixosConfigurations = {
-  desktop = nixpkgs.lib.nixosSystem { ... };
-
-  laptop = nixpkgs.lib.nixosSystem {
-    system = "x86_64-linux";
-    specialArgs = { inherit inputs; };
-    modules = [
-      ./hosts/laptop
-      ./modules/common
-      ./modules/desktop  # or ./modules/server
-      home-manager.nixosModules.home-manager {
-        home-manager.useGlobalPkgs = true;
-        home-manager.useUserPackages = true;
-        home-manager.backupFileExtension = "backup";
-        home-manager.extraSpecialArgs = { inherit inputs; };
-        home-manager.users.nic = import ./home/desktop.nix;
-      }
-    ];
-  };
-};
-```
-
-### 3. Rebuild
-
-```bash
-sudo nixos-rebuild switch --flake .#laptop
-```
-
-## Per-host overrides
-
-If a host needs different home-manager config, create a variant under `home/` (e.g. `home/laptop/`) and reference it instead of `home/desktop.nix`.
-
-## Server setup
-
-The server configuration uses:
-- `modules/common/` - Shared modules (Docker, users)
-- `modules/server/` - Server-specific modules (SSH, firewall)
-- `home/server/` - Minimal home config (tmux, zsh, nvim only)
-
-To customize the server, edit files in `modules/server/` and `home/server/`.
+1. Create `hosts/<host>/` with `default.nix` + `hardware-configuration.nix` (generate with `nixos-generate-config`).
+2. Create `flake-modules/hosts/<host>.nix` composing the features you want.
+3. If it should be deployable via deploy-rs, add a node to `flake-modules/outputs/deploy.nix`.
+4. Add the host's age key as a recipient in `.sops.yaml` and re-encrypt `secrets/secrets.yaml` (see `docs/setup-sops.md`).
+5. Rebuild: `sudo nixos-rebuild switch --flake .#<host>`.
