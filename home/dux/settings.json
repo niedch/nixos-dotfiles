@@ -26,14 +26,7 @@
       "inactiveTimeout": 0,
       "warpOnMonitorChange": -1
     },
-    "mango": {
-      "cursorHideTimeout": 0
-    },
-    "niri": {
-      "hideAfterInactiveMs": 0,
-      "hideWhenTyping": false
-    },
-    "size": 14,
+    "size": 12,
     "theme": "System Default"
   },
   "acLockTimeout": 300,
