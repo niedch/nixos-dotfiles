@@ -1,5 +1,5 @@
-{ pkgs, ... }: {
-  flake.modules.homeManager.home-hyprland = { osConfig, ... }: {
+{ ... }: {
+  flake.modules.homeManager.home-hyprland = { osConfig, pkgs, ... }: {
     home.packages = with pkgs; [
       hyprland-preview-share-picker
     ];
