@@ -1,5 +1,5 @@
-{...}: {
-  flake.modules.homeManager.home-dux-cursor = {pkgs, ...}: {
+{ ... }: {
+  flake.modules.homeManager.home-dux-cursor = { pkgs, ... }: {
     home.pointerCursor = {
       enable = true;
       gtk.enable = true;

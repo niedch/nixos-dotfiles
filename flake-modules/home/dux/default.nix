@@ -1,5 +1,5 @@
-{config, inputs, ...}: {
-  flake.modules.homeManager.home-dux = {lib, ...}: {
+{ config, inputs, ... }: {
+  flake.modules.homeManager.home-dux = { lib, ... }: {
     imports = [
       inputs.dms.homeModules.dank-material-shell
       inputs.dux-calendar.homeModules.dank-calendar
