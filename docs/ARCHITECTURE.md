@@ -1,68 +1,113 @@
 # Architecture
 
-This flake defines two NixOS configurations (`desktop` and `server`) with home-manager embedded as a NixOS module.
+This repository follows the [dendritic pattern](https://github.com/mightyiam/dendritic): a *top-level configuration* (flake-parts) declares and evaluates lower-level configurations (NixOS, home-manager). Every `.nix` file except entry points is a top-level module of that configuration.
 
-## Data flow
+## Principles
 
-```
-flake.nix
-  │
-  ├── inputs
-  │   ├── nixpkgs (nixpkgs-unstable)
-  │   └── home-manager (master, follows nixpkgs)
-  │
-  ├── outputs.nixosConfigurations.desktop
-  │     │
-  │     ├── hosts/virtual-machine              # Host-specific config
-  │     │   ├── default.nix            # Hostname, user, boot, networking
-  │     │   └── hardware-configuration.nix  # Auto-generated hardware config
-  │     │
-  │     ├── modules/common             # Shared system-level modules
-  │     │   ├── docker.nix             # Docker daemon
-  │     │   └── users.nix              # User accounts
-  │     │
-  │     ├── modules/desktop            # Desktop-only system modules
-  │     │   ├── kde.nix                # KDE Plasma 6 + SDDM
-  │     │   └── fonts.nix             # Desktop fonts
-  │     │
-  │     └── home-manager (embedded NixOS module)
-  │           └── home-manager.users.nic
-  │                 └── home/desktop.nix
-  │                       ├── home/nvim       # Neovim + dev tools
-  │                       ├── home/zsh        # Zsh + oh-my-zsh + scripts
-  │                       └── home/mise       # Mise dev tool version manager
-  │
-  └── outputs.nixosConfigurations.server
-        │
-        ├── hosts/server               # Host-specific config
-        │   ├── default.nix            # Hostname, boot, networking
-        │   └── hardware-configuration.nix  # Hardware config
-        │
-        ├── modules/common             # Shared system-level modules
-        │
-        ├── modules/server             # Server-only system modules
-        │   └── openssh.nix            # SSH daemon + firewall
-        │
-        └── home-manager (embedded NixOS module)
-              └── home-manager.users.nic
-                    └── home/server/default.nix
-                          ├── home/tmux     # Tmux + scripts
-                          ├── home/zsh      # Zsh + oh-my-zsh + scripts
-                          └── home/nvim     # Neovim + dev tools
+1. **Every file is a top-level module.** Each `.nix` file under `flake-modules/` is a flake-parts module, auto-imported by `import-tree`.
+2. **Path names the feature.** Files can be moved/renamed freely; the feature name is set explicitly via `flake.modules.<class>.<name>`.
+3. **Lower-level modules are option values.** NixOS and home-manager modules are stored under `flake.modules.nixos.*` and `flake.modules.homeManager.*` as `lib.types.deferredModule` values, which merge by value.
+4. **Hosts compose features by name.** A host lists the feature names it wants; it does not trace through `imports`.
+
+## Top-level configuration
+
+`flake.nix` uses `flake-parts.lib.mkFlake` and imports:
+
+- `flake-modules/_lib` — declares `options.flake.modules` and injects `mkNixosSystem` via `_module.args`.
+- `import-tree ./flake-modules` — auto-imports every other module file (ignoring `/_` paths and `*.pkg.nix` files).
+
+```nix
+# flake.nix (abridged)
+outputs = inputs:
+  inputs.flake-parts.lib.mkFlake {inherit inputs;} {
+    systems = ["x86_64-linux"];
+    imports = [
+      ./flake-modules/_lib
+      (inputs.import-tree.filterNot (inputs.nixpkgs.lib.hasSuffix ".pkg.nix") ./flake-modules)
+    ];
+    _module.args.rootPath = ./.;
+  };
 ```
 
-## Key design decisions
+## Module classes
 
-- **Multiple flake outputs** under `nixosConfigurations`. Home-manager is wired in via `home-manager.nixosModules.home-manager`, not as a standalone flake output.
-- **All inputs** (`home-manager`, `sops-nix`, etc.) are passed to both NixOS and home-manager modules via `specialArgs` / `extraSpecialArgs`.
-- **Home-manager backup** is enabled (`backupFileExtension = "backup"`) to prevent collisions with existing dotfiles.
-- **Modules split by role**: Desktop-only modules (KDE Plasma 6, SDDM, fonts) live in `modules/desktop/`. Server-only modules (SSH, firewall) live in `modules/server/`. Shared modules (Docker, users) live in `modules/common/`.
+`_lib/default.nix` declares the module-class tree:
 
-## Three layers of configuration
+```nix
+options.flake.modules = lib.mkOption {
+  type = lib.types.lazyAttrsOf (lib.types.lazyAttrsOf lib.types.deferredModule);
+  default = {};
+};
+```
 
-| Layer | Scope | Desktop entry point | Server entry point |
-|---|---|---|---|
-| System (NixOS) | Hostname, users, boot, networking, system packages | `hosts/desktop/default.nix` | `hosts/server/default.nix` |
-| Shared modules | System-wide features (Docker, users) | `modules/common/default.nix` | `modules/common/default.nix` |
-| Role modules | Desktop or server specific features | `modules/desktop/default.nix` | `modules/server/default.nix` |
-| User (home-manager) | User packages, dotfiles, shell, editors | `home/desktop.nix` | `home/server/default.nix` |
+Feature modules contribute to it:
+
+```nix
+# flake-modules/nixos/desktop/hyprland.nix
+{...}: {
+  flake.modules.nixos.desktop-hyprland = {pkgs, ...}: {
+    programs.hyprland.enable = true;
+    # ...
+  };
+}
+```
+
+```nix
+# flake-modules/home/git/default.nix
+{...}: {
+  flake.modules.homeManager.home-git = {pkgs, lib, ...}: {
+    programs.git.enable = true;
+    # ...
+  };
+}
+```
+
+Bundles combine child features under one name:
+
+```nix
+# flake-modules/nixos/desktop/default.nix
+{config, lib, ...}: {
+  flake.modules.nixos.desktop = {pkgs, ...}: {
+    imports = with config.flake.modules.nixos; [
+      desktop-dux desktop-hyprland desktop-fonts # ...
+    ];
+    services.pipewire.enable = true;
+    # ...
+  };
+}
+```
+
+## Host composition
+
+A host module builds a `nixosConfigurations` entry via the `mkNixosSystem` helper:
+
+```nix
+# flake-modules/hosts/desktop.nix
+{config, mkNixosSystem, ...}: {
+  flake.nixosConfigurations.desktop = mkNixosSystem {
+    modules = [
+      config.flake.modules.nixos.common
+      config.flake.modules.nixos.common-syncthing
+      config.flake.modules.nixos.desktop
+      ../../hosts/desktop      # host-local hardware config
+    ];
+    home = config.flake.modules.homeManager.home-desktop;
+  };
+}
+```
+
+`mkNixosSystem` (in `_lib`) appends the sops-nix and home-manager NixOS modules, passes `inputs`/`rootPath` via `specialArgs`, and embeds home-manager as a NixOS module for user `nic`.
+
+## Outputs
+
+- `nixosConfigurations.{desktop,laptop,dobby,raspberry-pi}` — the four hosts.
+- `deploy` — deploy-rs nodes (see `flake-modules/outputs/deploy.nix`).
+- `packages.x86_64-linux.{mux-session,opencode}` — convenience wrappers.
+- `devShells.x86_64-linux.default` — the dev shell used by `.envrc`.
+- `checks.x86_64-linux.*` — evaluation checks, derived automatically from `nixosConfigurations`.
+
+## Conventions
+
+- `_`-prefixed paths and directories are ignored by import-tree (helpers, assets, widgets, templates).
+- `*.pkg.nix` files are package functions (not modules) and are excluded from auto-import.
+- `hosts/<host>/` holds host-local, non-feature data (hardware configuration, power tuning).

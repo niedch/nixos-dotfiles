@@ -96,16 +96,16 @@ nix copy <store-path> --to ssh://root@<pi-ip>
 ## 3. On your build machine — add binfmt emulation
 
 To build aarch64 packages on x86, you need QEMU binfmt support. The exact
-module is at `modules/common/binfmt.nix`:
+module is at `flake-modules/nixos/common/binfmt.nix`:
 
 ```nix
-# modules/common/binfmt.nix
+# flake-modules/nixos/common/binfmt.nix
 { ... }: {
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 }
 ```
 
-It's imported by `modules/common/default.nix`, which means `desktop` and
+It's imported by `flake-modules/nixos/common/default.nix`, which means `desktop` and
 `laptop` both get it automatically.
 
 Rebuild your build machine:
@@ -131,8 +131,8 @@ hosts/rpi/
 ├── default.nix            # Host config: hostname rpi, extlinux bootloader, nic user with SSH key
 └── hardware-configuration.nix   # Generated on the Pi
 
-modules/server/openssh.nix  # SSH daemon config + firewall
-modules/common/binfmt.nix   # Exact line:  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+flake-modules/nixos/server/openssh.nix  # SSH daemon config + firewall
+flake-modules/nixos/common/binfmt.nix   # Exact line:  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 ```
 
 ## 5. Build the Pi closure on your build machine

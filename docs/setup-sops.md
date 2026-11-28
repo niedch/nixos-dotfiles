@@ -2,11 +2,11 @@
 
 This covers adding a host's age key to the SOPS-encrypted `secrets/secrets.yaml`.
 For the flake registration steps (creating `hosts/<name>/`, adding it to
-`flake.nix`, rebuilding), see "Adding a host" in `AGENTS.md`.
+`flake.nix`, rebuilding), see "Adding a host" in `docs/HOSTS.md`.
 
 ## Prerequisites
 
-- The host imports `modules/common` (which pulls in `modules/common/sops.nix`).
+- The host imports `flake-modules/nixos/common` (which pulls in `flake-modules/nixos/common/sops.nix`).
 - An ed25519 SSH key exists on the host at the path the sops module reads:
   - **Servers** — `/etc/ssh/ssh_host_ed25519_key` (system-level `sshKeyPaths`)
   - **Desktop/laptop** — `~/.ssh/id_ed25519` (user-level; converted to age at
@@ -15,7 +15,7 @@ For the flake registration steps (creating `hosts/<name>/`, adding it to
 
 ## 1. Enable OpenSSH
 
-Ensure the host imports `modules/common` (or `modules/server/openssh.nix`
+Ensure the host imports `flake-modules/nixos/common` (or `flake-modules/nixos/server/openssh.nix`
 directly), then rebuild:
 
 ```bash

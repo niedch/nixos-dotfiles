@@ -1,0 +1,248 @@
+{...}: {
+  flake.modules.homeManager.home-browser = {pkgs, lib, ...}: let
+  chromium = pkgs.chromium.override {enableWideVine = true;};
+
+  fetchFavicon = {
+    name,
+    url,
+    sha256,
+    faviconDomain ? null,
+  }: let
+    sanitized = builtins.replaceStrings [" "] ["-"] name;
+    domain =
+      if faviconDomain != null
+      then faviconDomain
+      else builtins.head (builtins.match "https://([^/]+).*" url);
+    rawIcon = pkgs.fetchurl {
+      url = "https://www.google.com/s2/favicons?domain=${domain}&sz=256";
+      name = "${sanitized}-favicon.png";
+      inherit sha256;
+    };
+  in
+    rawIcon;
+
+  mkWebApp = {
+    name,
+    url,
+    sha256,
+    faviconDomain ? null,
+    description ? null,
+    comment ? description,
+    ...
+  }: let
+    iconPath = fetchFavicon {inherit name url sha256 faviconDomain;};
+  in
+    {
+      inherit name;
+      exec = "${chromium}/bin/chromium --start-maximized --app=${url}";
+      icon = "${iconPath}";
+      terminal = false;
+      type = "Application";
+      categories = ["Network" "WebBrowser"];
+    }
+    // lib.optionalAttrs (comment != null) {
+      inherit comment;
+    };
+
+  webApps = [
+    {
+      name = "Github";
+      description = "Code hosting and software collaboration platform";
+      url = "https://github.com";
+      sha256 = "sha256-GoH7+/Co7+CoqaFvCVHmedu9oTH+AUoVAXYFYZmWjgY=";
+    }
+    {
+      name = "Youtube";
+      description = "Online video streaming and sharing platform";
+      url = "https://youtube.com";
+      sha256 = "sha256-y2rbGYQ7ZFvCJxgfUnRvAemo/abBEzjKwjxZd8fSOGw=";
+    }
+    {
+      name = "Slack";
+      description = "Team communication and messaging platform";
+      url = "https://app.slack.com/client/T2M6RN37H/C2M6Y5066";
+      sha256 = "sha256-mWmYlEbtwtgTbh1Ripodyka2d39LMXLsCADMjtzOX+A=";
+    }
+    {
+      name = "Google Mail";
+      description = "Gmail web email service";
+      url = "https://mail.google.com/mail/u/0";
+      sha256 = "sha256-Y+/P6e7aTMWJZcdYekhYhmEsv4eOzY/D5N1ZTbMaZ/0=";
+    }
+    {
+      name = "Google Maps";
+      description = "Google Maps service";
+      url = "https://www.google.com/maps";
+      sha256 = "sha256-S++poUypFJFdD0hvWZAHdth1j9gQWH/wwYxyTaN1ca4=";
+    }
+    {
+      name = "Google Drive";
+      description = "Cloud storage and file synchronization service";
+      url = "https://drive.google.com/drive/home";
+      sha256 = "sha256-fuA69CVNn4VrCPc+NPizUmurse15VLVVexFnwyOKkZw=";
+    }
+    {
+      name = "Amazon Prime";
+      description = "Prime Video movie and TV streaming";
+      url = "https://www.amazon.de/gp/video/storefront";
+      sha256 = "sha256-fmf7jmxDAC4Jx9Nj87FYpxbcCfQEPMBYvMAbIGu9CX0=";
+    }
+    {
+      name = "Twitch";
+      description = "Live video streaming platform";
+      url = "https://www.twitch.tv/";
+      sha256 = "sha256-PwTSKGIAQhu4rQxJlXeo+0Ei1kWd0Ks/wBTPnC8GiWM=";
+    }
+    {
+      name = "Reddit";
+      description = "Social news aggregation and discussion forums";
+      url = "https://www.reddit.com/";
+      sha256 = "sha256-NjwuoqwsnmBuOG6ihwzxzGtB4Ldr8bHXgy7R98fZDdE=";
+    }
+    {
+      name = "Discord";
+      description = "Voice, video, and text communication platform";
+      url = "https://discord.com/channels/@me";
+      sha256 = "sha256-Q51DlMl/2XLwrAR7UDh35Ley44dvw92ePp7MOP0Ojlo=";
+    }
+    {
+      name = "Willhaben";
+      description = "Austrian marketplace and classifieds";
+      url = "https://www.willhaben.at/iad";
+      sha256 = "sha256-0AXzy1WvWV+s/84IOzF5HLRJHXUML9ap0/hSAj2JMVE=";
+    }
+    {
+      name = "Parquet";
+      description = "Portfolio performance and investment tracking";
+      url = "https://app.parqet.com/p/64b6a3073306abbdfb6634ca";
+      sha256 = "sha256-YAAVyEp58SlCG7aci4PhYv+qNyaL2m17RV+OoJaqKAQ=";
+    }
+    {
+      name = "Autoscout24";
+      description = "Online vehicle marketplace and car search";
+      url = "https://www.autoscout24.at";
+      sha256 = "sha256-1qg93YWOaPGj4V44XCixqGQKFjI3Z8iqi1J04/gD8fE=";
+    }
+    {
+      name = "ICloud";
+      description = "Apple cloud storage and web services";
+      url = "https://www.icloud.com/";
+      sha256 = "sha256-O+rCyHdWrOmbxHS5dQoJQRJntODA1fptQq06fREMEOc=";
+    }
+    {
+      name = "Schwab";
+      description = "Charles Schwab investment accounts and financial services";
+      url = "https://client.schwab.com/app/accounts/summary/";
+      sha256 = "sha256-qi5H4olBvxjJu11zS9FDRhmFtTcUqvnG9vMIs4azRaA=";
+      faviconDomain = "schwab.com";
+    }
+    {
+      name = "Grok";
+      description = "Conversational AI assistant by xAI";
+      url = "https://grok.com/";
+      sha256 = "sha256-2HzWUXEiSN98X+AyNIJS9SuqwUvxfXs84cPFx6FjR44=";
+      faviconDomain = "grok.com";
+    }
+    {
+      name = "Immich";
+      description = "Self-hosted photo and video backup and management";
+      url = "http://dobby:2283";
+      sha256 = "sha256-cGUuF6CpOGF1GwIlzg8iQNO1B+IXG2+6Vjjs3ZOXK4c=";
+      faviconDomain = "immich.app";
+    }
+    {
+      name = "LinkedIn";
+      description = "Professional networking and career platform";
+      url = "http://linkedin.com";
+      sha256 = "sha256-7ab+BahjjSjv5tJ92GfP8yWYVKAkA+I0xqdnfbWtVko=";
+      faviconDomain = "linkedin.com";
+    }
+    {
+      name = "Karriere";
+      description = "Austrian job search and career portal";
+      url = "https://www.karriere.at";
+      sha256 = "sha256-djLQvpk2bDPeXUNmAHVfmNCJ8jbzxXHCTnCUv5zl+f0=";
+    }
+    {
+      name = "Dashboard";
+      description = "Homepage dashboard for self-hosted services";
+      url = "http://dobby:8082";
+      sha256 = "sha256-3Xi5WD5lVLnYLVOlgNwETtzYT6wAf7DIEeIrzStB0iE=";
+      faviconDomain = "https://gethomepage.dev/";
+    }
+    {
+      name = "Instagram";
+      description = "Photo and video sharing social network";
+      url = "https://www.instagram.com";
+      sha256 = "sha256-7zU488xJDlPF4+oAbob9T/WvGsblnA3YTzHnwEdeQw8=";
+    }
+    {
+      name = "Jellyfin";
+      description = "Self-hosted media streaming system";
+      url = "http://dobby:8096";
+      sha256 = "sha256-mcQOOy0c+UATbD6CpUHwIQWwi8erApUpYzNgiQf4zQI=";
+      faviconDomain = "www.jellyfin.org";
+    }
+    {
+      name = "Sonarr";
+      description = "Automated TV series collection manager and PVR";
+      url = "http://dobby:8989";
+      sha256 = "sha256-XQqa9xSCOtwwwe7nqU9ifYFbmYD1lax1ix1EFs3RuQw=";
+      faviconDomain = "sonarr.tv";
+    }
+    {
+      name = "Radarr";
+      description = "Automated movie collection manager and PVR";
+      url = "http://dobby:7878";
+      sha256 = "sha256-iDVu/UJaCWKekYRAiDt3qifK//lUgPCCY3ZKI6LQ+3M=";
+      faviconDomain = "radarr.video";
+    }
+    {
+      name = "Prowlarr";
+      description = "Indexer manager and proxy for torrent and Usenet indexers";
+      url = "http://dobby:9696";
+      sha256 = "sha256-/c9mYPvhtXNoI3HH4CCWaIOsTUbpJZvnqruge/i7SOg=";
+      faviconDomain = "prowlarr.com";
+    }
+    {
+      name = "QBittorrent";
+      description = "Web interface for qBittorrent download client";
+      url = "http://dobby:8282";
+      sha256 = "sha256-agVv8ll02TzUxQNJKJz/wEfF9EuH/Y80PP9ddbNHAjg=";
+      faviconDomain = "qbittorrent.org";
+    }
+    {
+      name = "Seerr";
+      description = "Media request and discovery management service";
+      url = "http://dobby:5055";
+      sha256 = "sha256-ydq9D+6ybtB3s5QSxws5tsrnTFQvdvlgIdMdk34WFU4=";
+      faviconDomain = "seerr.dev";
+    }
+  ];
+in {
+  xdg.desktopEntries = builtins.listToAttrs (map (app: {
+      name = app.name;
+      value = mkWebApp app;
+    })
+    webApps);
+
+  programs.chromium = {
+    enable = true;
+
+    package = chromium;
+
+    commandLineArgs = [
+      "--ignore-gpu-blocklist"
+      "--enable-gpu-rasterization"
+      "--ozone-platform-hint=auto"
+      "--enable-features=UseSkiaRenderer,VaapiVideoDecoder,VaapiVideoEncoder,UseMultiPlaneFormatForSoftwareOverlayVideo,WebRTCPipeWireCapturer,WaylandWindowDecorations"
+      "--disable-gpu-driver-bug-workarounds"
+    ];
+
+    extensions = [
+      {id = "ghmbeldphafepmbegfdlkpapadhbakde";} # Proton Pass
+    ];
+  };
+}
+  ;
+}

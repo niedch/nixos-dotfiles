@@ -1,117 +1,58 @@
 # Modules
 
-There are two kinds of modules in this setup: **NixOS system modules** and **home-manager user modules**.
+This repo follows the [dendritic pattern](https://github.com/mightyiam/dendritic): every `.nix` file under `flake-modules/` is a top-level flake-parts module, auto-imported. Modules are grouped by *class*.
 
-## NixOS system modules (`modules/common/`)
+## Module classes
 
-System modules configure system-wide features: services, kernel modules, packages available to all users, etc.
+Lower-level modules are stored as `deferredModule` option values under two classes:
 
-### Current modules
+- `flake.modules.nixos.<name>` — NixOS (system) modules.
+- `flake.modules.homeManager.<name>` — home-manager (user) modules.
 
-| File | Purpose |
-|---|---|
-| `default.nix` | Imports all submodules (add new modules here) |
-| docker.nix | Enables Docker daemon, adds user to docker group |
-
-## Desktop & Nixarchy modules (`modules/desktop/`)
-
-Desktop hosts (`laptop`, `desktop`) import desktop-specific modules and the **Nixarchy** desktop environment suite.
-
-| Path | Purpose | Documentation |
-|---|---|---|
-| `modules/desktop/default.nix` | Desktop base: fonts, SDDM, display manager, audio, and Nixarchy module import | [Nixarchy Guide](NIXARCHY.md#1-overview--architecture) |
-| `modules/desktop/nixarchy.nix` | Base Nixarchy system settings, package overlays, cursor patches, and theme flags | [Nixarchy Guide](NIXARCHY.md#3-core-system-settings-programsnixarchy) |
-| `hosts/laptop/nixarchy/` | Per-host declarative Nixarchy services (`services.nix`), apps (`apps.nix`), and advanced settings (`advanced.nix`) | [Nixarchy Guide](NIXARCHY.md#2-configuration-scopes--flake-integration) |
-| `home/nixarchy/` | Home Manager Nixarchy module, Waybar/Omarchy panel plugins, custom launcher menu, and Neovim integration | [Nixarchy Guide](NIXARCHY.md#8-home-manager-integration--plugins-home-managerusersuserprogramsnixarchy) |
-
-For complete documentation on all Nixarchy settings, local AI options, bundled services, applications catalogue, theme engine, and fleet options, see **[Nixarchy Configuration & Options Guide](NIXARCHY.md)**.
-
-### Adding a new system module
-
-1. Create a file in `modules/common/`:
+Each feature module is a top-level flake-parts module that sets one of these:
 
 ```nix
-# modules/common/docker.nix
-{ config, pkgs, ... }:
-
-{
-  virtualisation.docker.enable = true;
-  users.users.nic.extraGroups = [ "docker" ];
+# flake-modules/nixos/desktop/fonts.nix
+{...}: {
+  flake.modules.nixos.desktop-fonts = {pkgs, ...}: {
+    fonts.packages = [pkgs.nerd-fonts.jetbrains-mono];
+  };
 }
 ```
 
-2. Import it in `modules/common/default.nix`:
+## Bundles
+
+A bundle is a feature whose only job is to import other features by name (and optionally add shared config):
 
 ```nix
-{...}:
-{
-  imports = [
-    ./sops.nix
-    ./docker.nix
-  ];
+# flake-modules/nixos/desktop/default.nix
+{config, ...}: {
+  flake.modules.nixos.desktop = {pkgs, ...}: {
+    imports = with config.flake.modules.nixos; [
+      desktop-dux
+      desktop-hyprland
+      # ...
+    ];
+    services.pipewire.enable = true;
+  };
 }
 ```
 
-That's it — it's now active for all hosts.
+## Naming
 
-### Modules that need input access
+- System features: `<group>-<name>` under `flake.modules.nixos` (e.g. `desktop-hyprland`, `server-immich`, `common-docker`).
+- Home features: `home-<name>` under `flake.modules.homeManager` (e.g. `home-git`, `home-nvim`, `home-media-video`).
 
-If your module needs flake inputs (e.g. a pinned package from a flake input), add `inputs` to the function args. It's passed through automatically via `specialArgs` in `flake.nix`:
+## Auto-import & exclusions
 
-```nix
-{ config, pkgs, inputs, ... }:
-{
-  # inputs.home-manager, inputs.sops-nix, etc. available here
-}
-```
+`import-tree` auto-imports every `.nix` file under `flake-modules/`, except:
 
-## Home-manager modules (`home/<name>/`)
+- paths containing `/_` (helpers, assets, templates — e.g. `glance/_widgets/`, `glance/_templates/`)
+- files ending in `.pkg.nix` (package functions — e.g. `mux-session.pkg.nix`, `opencode.pkg.nix`)
 
-Home-manager modules configure user-level features: dotfiles, user packages, shell config, window manager keybinds.
+`flake-modules/_lib` is imported explicitly in `flake.nix`; it declares the `flake.modules` option and the `mkNixosSystem` host builder.
 
-### Current modules
+## Adding a module
 
-| Path | Purpose |
-|---|---|
-| `home/desktop.nix` | Central entry point, imports all submodules |
-| `home/nixarchy/` | Nixarchy Home Manager module, panel plugins, launcher menu, themes ([Guide](NIXARCHY.md#8-home-manager-integration--plugins-home-managerusersuserprogramsnixarchy)) |
-| `home/zsh/` | Zsh + oh-my-zsh + custom scripts |
-| `home/nvim/` | Neovim (LazyVim) + dev tools |
-| `home/mise/` | Mise version manager + tool config |
-
-### Adding a new home-manager module
-
-1. Create a directory under `home/`:
-
-```nix
-# home/kitty/default.nix
-{ config, pkgs, ... }:
-
-{
-  home.packages = with pkgs; [ kitty ];
-
-  xdg.configFile."kitty/kitty.conf".source = ./kitty.conf;
-}
-```
-
-2. Import it in `home/desktop.nix`:
-
-```nix
-{
-  imports = [
-    ./nvim
-    ./zsh
-    ./mise
-    ./kitty
-  ];
-}
-```
-
-### Deployment patterns
-
-| Pattern | Use case | Example |
-|---|---|---|
-| `home.packages` | Install user packages | `pkgs.kitty` |
-| `xdg.configFile` | Deploy dotfiles | `source = ./kitty.conf` |
-| `programs.<name>` | Use home-manager's declarative module | `programs.zsh`, `programs.git` |
-| programs | Terminal/app configurations | programs.ghostty |
+1. Create the file (a feature or a bundle) under the appropriate `flake-modules/` directory.
+2. Reference it from a bundle or a host module by name. No manual `imports` of file paths is needed.

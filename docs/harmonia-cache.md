@@ -8,11 +8,11 @@ Unlike setups that maintain a secondary chroot store, Harmonia directly shares d
 
 | Component | Path / Configuration | Purpose |
 |-----------|----------------------|---------|
-| **Service** | `modules/server/nix-cache.nix` | Runs Harmonia on port 5000, serving `/nix/store` signed by SOPS secret |
+| **Service** | `flake-modules/nixos/server/nix-cache.nix` | Runs Harmonia on port 5000, serving `/nix/store` signed by SOPS secret |
 | **Builder Workflow** | `.github/workflows/cache-pr.yaml` | Builds all host toplevels on `master` pushes directly into the local store |
 | **GC Roots** | `/nix/var/nix/profiles/per-user/runner/` | Per-host profile links registered by the runner to prevent premature GC |
-| **Garbage Collection** | `modules/common/nix-gc.nix` | Standard daily system GC with `--delete-older-than 5d` |
-| **Client Config** | `modules/common/cache-config.nix` | Configures substituters and trusted public keys on all nodes |
+| **Garbage Collection** | `flake-modules/nixos/common/nix-gc.nix` | Standard daily system GC with `--delete-older-than 5d` |
+| **Client Config** | `flake-modules/nixos/common/cache-config.nix` | Configures substituters and trusted public keys on all nodes |
 
 ### Key Architectural Advantages
 - **Single store**: Harmonia reads `/nix/var/nix/db/db.sqlite` directly. There is no isolated SQLite DB to initialize or corrupt.
@@ -36,13 +36,13 @@ The cache is automatically populated by the self-hosted GitHub Actions runner ru
    ```
 
 3. **GC roots**: Pointing `--profile` to `/nix/var/nix/profiles/per-user/runner/cache-<host>` creates versioned profile generations (e.g. `cache-laptop-1-link`, `cache-laptop-2-link`). These symlinks act as active Nix GC roots, ensuring recent builds stay in the store.
-4. **Runner permissions**: `modules/server/github-runner.nix` grants the runner write access to `/nix/var/nix/profiles/per-user/runner` via systemd `ReadWritePaths` and a `systemd.tmpfiles` rule.
+4. **Runner permissions**: `flake-modules/nixos/server/github-runner.nix` grants the runner write access to `/nix/var/nix/profiles/per-user/runner` via systemd `ReadWritePaths` and a `systemd.tmpfiles` rule.
 
 ---
 
 ## Garbage Collection
 
-Cache retention and cleanup are completely managed by standard NixOS garbage collection via `modules/common/nix-gc.nix`:
+Cache retention and cleanup are completely managed by standard NixOS garbage collection via `flake-modules/nixos/common/nix-gc.nix`:
 
 - **Automatic schedule**: Runs daily via `nix.gc.automatic = true` and `options = "--delete-older-than 5d"`.
 - **Profile pruning**: When `nix-collect-garbage --delete-older-than 5d` runs, it prunes runner profile generations older than 5 days in `/nix/var/nix/profiles/per-user/runner/`.
@@ -55,7 +55,7 @@ No separate GC scripts or auxiliary store GC roots are required.
 
 ## Client Configuration
 
-Client hosts consume the cache through `modules/common/cache-config.nix`, which is imported by all systems via `modules/common/default.nix`:
+Client hosts consume the cache through `flake-modules/nixos/common/cache-config.nix`, which is imported by all systems via `flake-modules/nixos/common/default.nix`:
 
 ```nix
 { config, ... }:
@@ -64,20 +64,20 @@ Client hosts consume the cache through `modules/common/cache-config.nix`, which 
     substituters = [
       "http://dobby:5000"
       "https://cache.nixos.org"
-      "https://nixarchy.cachix.org"
+      "https://noctalia.cachix.org"
       "https://hyprland.cachix.org"
     ];
     trusted-public-keys = [
       # Harmonia public key configured on dobby:
       "dobby:rrZQzoRX5Glj/0fX+bFGJ6YUPoxb3z/hg5K84k2G8yo="
-      "nixarchy.cachix.org-1:05JOuIlsQOWY2/5DQMq7JEA1hwlhgvmMWowMfka8mMM="
+      "noctalia.cachix.org-1:05JOuIlsQOWY2/5DQMq7JEA1hwlhgvmMWowMfka8mMM="
       "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIITemDosxrE9/Kb+PfYvE="
     ];
   };
 }
 ```
 
-*Note: On dobby itself, the local runner queries `http://127.0.0.1:5000` (configured in `modules/server/github-runner.nix`). Harmonia serves with `priority = 30` (configured in `modules/server/nix-cache.nix`), prioritizing dobby over upstream `cache.nixos.org` (priority 40).*
+*Note: On dobby itself, the local runner queries `http://127.0.0.1:5000` (configured in `flake-modules/nixos/server/github-runner.nix`). Harmonia serves with `priority = 30` (configured in `flake-modules/nixos/server/nix-cache.nix`), prioritizing dobby over upstream `cache.nixos.org` (priority 40).*
 
 > **Requirement for cache hits**: Clients only hit the cache when their flake inputs and configurations match what the runner built on `master`. Keep client repositories in sync with `master`.
 
